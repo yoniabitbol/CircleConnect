@@ -11,7 +11,7 @@ const DB = process.env.DB
 mongoose.connect(DB, {
     useNewUrlParser: true
 }).then(con => {
-    console.log('Server-DB Connection Successful ✅')
+    console.log('Server-DB Connection Successful!')
 })
 
 app.get('/', (req, res) => {
