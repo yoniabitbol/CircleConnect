@@ -1,0 +1,39 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "no-console": "warn",
+    "react/react-in-jsx-scope": "off",
+    "object-curly-newline": [
+      "error",
+      {"multiline": true}
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "max-len": ["warn", { "code": 120 }],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": ["function-declaration", "arrow-function"],
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error", {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }]
+  }
+}
