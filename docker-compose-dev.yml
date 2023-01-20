@@ -6,7 +6,6 @@ services:
     stdin_open: true
     build:
       context: ./client/
-      dockerfile: dev.Dockerfile
     ports:
       - "${DEV_CLIENT_PORT}:${DEV_CLIENT_PORT}"
     volumes:
@@ -18,7 +17,6 @@ services:
     image: server-dev
     build:
       context: ./server/
-      dockerfile: dev.Dockerfile
     ports:
       - "${DEV_SERVER_PORT}:${DEV_SERVER_PORT}"
     environment:
