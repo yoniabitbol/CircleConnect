@@ -12,6 +12,8 @@ mongoose.connect(DB).then(() => {
   console.log('Server-DB Connection Successful!');
 });
 
+console.log(process.env.FIREBASE_SA);
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World');
 });

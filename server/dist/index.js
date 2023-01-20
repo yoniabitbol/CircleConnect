@@ -13,6 +13,7 @@ const DB = process.env.DB;
 mongoose_1.default.connect(DB).then(() => {
     console.log('Server-DB Connection Successful!');
 });
+console.log(process.env.FIREBASE_SA);
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
