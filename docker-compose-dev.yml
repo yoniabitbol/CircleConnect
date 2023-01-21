@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  client:
+    image: client-dev
+    stdin_open: true
+    build:
+      context: ./client/
+    ports:
+      - "${DEV_CLIENT_PORT}:${DEV_CLIENT_PORT}"
+    volumes:
+      - ./client/:/app/client
+      - /app/client/node_modules
+    depends_on:
+      - server
+  server:
+    image: server-dev
+    build:
+      context: ./server/
+    ports:
+      - "${DEV_SERVER_PORT}:${DEV_SERVER_PORT}"
+    environment:
+      - DB=${DB}
+    volumes:
+      - ./server/:/app/server
+      - /app/server/node_modules
