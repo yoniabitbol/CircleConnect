@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import inputFieldModel from '../../Models/InputFieldModel';
 import InputField from './InputField';
 import classes from './style.module.css';
+import ThirdPartyLogin from "./ThirdPartyLogin";
 
 const SubmissionForm:React.FC<{ fields: inputFieldModel[], header:string, buttonField:string }> = (props) => {
   const { fields, header, buttonField } = props;
@@ -30,7 +31,7 @@ const SubmissionForm:React.FC<{ fields: inputFieldModel[], header:string, button
                     <button type='submit' className="block mt-4 w-full px-2 py-3 rounded-lg bg-signup-button text-white hover:bg-signup-button-hover shadow-xl shadow-placeholder-purple">{buttonField}</button>
                 </Form>
             </Formik>
-
+          <ThirdPartyLogin/>
         </div>
     );
 };

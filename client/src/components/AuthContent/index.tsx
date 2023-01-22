@@ -23,8 +23,8 @@ const AuthContent : React.FC = () => {
          
         </div>
       </div>
-      <div className={classes.maskot}>
-        <img src='Maskot/img.png'/>
+      <div className="w-2/3 left-2/3">
+        <img className="w-max left-64" src='Maskot/img.png'/>
       </div>
     </div>
    
