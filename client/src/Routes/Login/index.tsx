@@ -11,10 +11,10 @@ const Login: React.FC = () => {
       placeholder: 'Email',
       type: 'email',
       Error: {
-        name: 'emial',
+        name: 'email',
         component: 'div'
       }
-      
+
     },
     {
       id: 2,
@@ -27,7 +27,7 @@ const Login: React.FC = () => {
       }
     }
   ]
-  
+
   return (
     <div className="flex justify-center">
       <AuthContent/>

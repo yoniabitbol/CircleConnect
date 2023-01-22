@@ -4,10 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 const AuthContent: React.FC = () => {
   const location = useLocation();
   return (
-    <div className="">
-      <div className="w-1/2">
-        <div className="h-full flex">
-          <div className="block w-1/2 mx-auto self-center">
+
+          <div>
             <h1 className="text-4xl font-bold">CircleConnect</h1>
             <h2 className="text-2xl font-medium mt-3">
               Connect, Collaborate, and Grow Your Circle
@@ -28,12 +26,7 @@ const AuthContent: React.FC = () => {
               </div>
             )}
           </div>
-        </div>
-      </div>
-      <div className="w-2/3 left-2/3">
-        <img className="w-max left-64" src="Maskot/img.png" />
-      </div>
-    </div>
+
   );
 };
 
