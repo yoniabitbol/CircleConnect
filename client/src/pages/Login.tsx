@@ -1,42 +1,27 @@
-import { useEffect, useState } from 'react';
-// import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase/config';
-import useGoogle from '../hooks/useGoogle';
+// import { useState } from 'react';
+import useLogout from '../hooks/useLogout';
 
 function Login() {
-  const { /* error, */ loginGoogle } = useGoogle();
-  const [localAuth, setLocalAuth] = useState(false || window.localStorage.getItem('auth') === 'true');
-  const googleSignIn = (event: { preventDefault: () => void; }) => {
+  // const [email, setEmail] = useState('');
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
+  // const [password, setPassword] = useState('');
+  const { logout } = useLogout();
+
+  const handleSubmit = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
-    loginGoogle()
-      .then((data: { user: any; }) => {
-        if (data) {
-          setLocalAuth(true);
-          window.localStorage.setItem('auth', 'true');
-        }
-      })
-      .catch((err: any) => {
-        console.log(err.message);
-      });
+    logout();
   };
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        user.getIdToken().then((token) => {
-          window.localStorage.setItem('auth', 'true');
-          console.log(token);
-        });
-      } else {
-        setLocalAuth(false);
-        window.localStorage.setItem('auth', 'true');
-      }
-    });
-  }, []);
-
   return (
     <div>
-      { localAuth ? <h1> Logged In </h1> : <button type="button" onClick={googleSignIn}> Google Log in </button>}
+      <form>
+        {/* <input type="firstName" placeholder="firstName" onChange={(e) => { setFirstName(e.target.value); }} /> */}
+        {/* <input type="lastName" placeholder="lastName" onChange={(e) => { setLastName(e.target.value); }} /> */}
+        {/* <input type="email" placeholder="Email" onChange={(e) => { setEmail(e.target.value); }} /> */}
+        {/* <input type="password" placeholder="Password" onChange={(e) => { setPassword(e.target.value); }} /> */}
+        <button type="submit" onClick={handleSubmit}>Login </button>
+        {/* {error && <p>{error}</p>} */}
+      </form>
     </div>
   );
 }

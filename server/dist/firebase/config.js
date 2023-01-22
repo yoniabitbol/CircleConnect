@@ -8,5 +8,5 @@ const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config({ path: './../.env' });
 firebase_admin_1.default.initializeApp({
-    credential: firebase_admin_1.default.credential.cert(process.env.FIREBASE_SA),
+    credential: firebase_admin_1.default.credential.cert(JSON.parse(process.env.FIREBASE_SA)),
 });

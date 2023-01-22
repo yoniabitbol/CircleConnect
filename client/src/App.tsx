@@ -1,9 +1,9 @@
-import Login from './pages/Login';
+import LoginGoogle from './pages/LoginGoogle';
 
 function App() {
   return (
     <div>
-      <Login />
+      <LoginGoogle />
     </div>
   );
 }
