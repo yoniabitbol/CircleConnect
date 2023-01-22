@@ -58,7 +58,7 @@ const SignUp: React.FC = () => {
             </div>
           </div>
 
-          <div className="hidden lg:block lg:absolute lg:-bottom-64 lg:right-0">
+          <div className="hidden lg:block lg:absolute lg:-bottom-20 lg:-right-20">
             <img
                 className="h-96"
                 src="Maskot/img.png"
