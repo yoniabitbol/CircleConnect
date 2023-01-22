@@ -27,6 +27,7 @@ const Login: React.FC = () => {
       }
     }
   ]
+  
   return (
     <div className="flex justify-center">
       <AuthContent/>
