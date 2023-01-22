@@ -15,3 +15,11 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.form {
+    position: absolute;
+    width: 369px;
+    height: 698.46px;
+    left: 892px;
+    top: 100px;
+}

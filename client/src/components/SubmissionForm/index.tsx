@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import inputFieldModel from '../../Models/InputFieldModel';
 import InputField from './InputField';
+import classes from './style.module.css';
 
 const SubmissionForm:React.FC<{ fields: inputFieldModel[], header:string, buttonField:string }> = (props) => {
   const { fields, header, buttonField } = props;
@@ -9,7 +10,7 @@ const SubmissionForm:React.FC<{ fields: inputFieldModel[], header:string, button
     console.log('test')
   };
   return (
-    <div>
+    <div className={classes.form}>
       <h1 className="text-3xl font-medium">{header}</h1>
       <Formik
         onSubmit={onSubmitHandler}
