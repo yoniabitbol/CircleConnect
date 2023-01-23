@@ -23,7 +23,7 @@ const AuthContent: React.FC = () => {
               <div className="font-medium mt-3">
                 If you don&apos;t already have an account <br /> You can{" "}
                 <Link to="/signup" className="text-blue-500">
-                  Sign-up here
+                  Sign up here
                 </Link>
               </div>
             )}
