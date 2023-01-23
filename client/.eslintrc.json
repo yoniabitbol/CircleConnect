@@ -9,15 +9,16 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   "rules": {
     "no-console": "warn",
     "react/react-in-jsx-scope": "off",
-    "object-curly-newline": [
-      "error",
-      {"multiline": true}
-    ],
+    "object-curly-newline": ["error", { "multiline": true }],
     "react/jsx-props-no-spreading": "off",
     "max-len": ["warn", { "code": 120 }],
     "react/function-component-definition": [
@@ -28,10 +29,12 @@
       }
     ],
     "@typescript-eslint/no-unused-vars": [
-      "error", {
+      "error",
+      {
         "argsIgnorePattern": "^_",
         "varsIgnorePattern": "^_",
         "ignoreRestSiblings": true
-      }]
+      }
+    ]
   }
 }

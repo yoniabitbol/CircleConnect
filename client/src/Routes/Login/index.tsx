@@ -1,40 +1,16 @@
 import React from "react";
 import AuthContent from "../../components/AuthContent";
 import SubmissionForm from "../../components/SubmissionForm";
-import InputFieldModel from "../../Models/InputFieldModel";
+import { LoginFields } from "../../lib/InputFieldModels";
+
 
 const Login: React.FC = () => {
-  const fields : InputFieldModel[] = [
-    {
-      id: 1,
-      name: 'email',
-      placeholder: 'Email',
-      type: 'email',
-      Error: {
-        name: 'email',
-        component: 'div'
-      }
-
-    },
-    {
-      id: 2,
-      name: 'password',
-      placeholder: 'Password',
-      type: 'password',
-      Error: {
-        name: 'password',
-        component: "div"
-      }
-    }
-  ]
-
   return (
-    <div className="flex justify-center">
-      <AuthContent/>
-      <div className="w-1/2">
-        <div className="w-1/2 mx-auto">
-          <SubmissionForm header='Login' fields={fields} buttonField='Login'/>
-        </div>
+    <div className="lg:flex justify-center lg:text-left text-center">
+      <AuthContent />
+      <SubmissionForm header="Login" fields={LoginFields} buttonField="Login" />
+      <div className="hidden lg:block lg:absolute lg:left-1/3 lg:bottom-40">
+        <img className="h-96" src="Mascot/img.png" alt="logo" />
       </div>
     </div>
   );
