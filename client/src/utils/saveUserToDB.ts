@@ -1,4 +1,4 @@
-const url = 'http://localhost:4100/api/users';
+const url = `http://localhost:${process.env.REACT_BACKEND_PORT}/api/users`;
 
 async function saveUserToDB(token: string, email: string, name: string, user_id: string) {
   const res = await fetch(url, {
