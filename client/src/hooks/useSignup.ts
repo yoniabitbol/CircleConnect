@@ -14,7 +14,7 @@ const useSignup = () => {
     setError(null);
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
-      await dispatch({ type: 'LOGIN', payload: response.user });
+      await dispatch('LOGIN', response.user);
       await updateProfile(response.user, { displayName: `${firstName} ${lastName}` });
       const token = await response.user.getIdToken();
       const dbRes = await saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid);

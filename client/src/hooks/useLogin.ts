@@ -5,15 +5,14 @@ import { auth } from '../firebase/config';
 
 const useLogin = () => {
   const [error, setError] = useState(null);
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+
   const { dispatch } = useAuthContext();
 
   const login = (email: string, password: string) => {
     setError(null);
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        dispatch({ type: 'LOGIN', payload: res.user });
+        dispatch('LOGIN', res.user);
       }).catch((err) => {
         alert(err.message);
       });

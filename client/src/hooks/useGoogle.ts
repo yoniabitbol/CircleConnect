@@ -14,7 +14,7 @@ const useGoogle = () => {
     setError(null);
     try {
       const response = await signInWithPopup(auth, provider);
-      await dispatch({ type: 'LOGIN', payload: response.user });
+      await dispatch('LOGIN', response.user);
       const token = await response.user.getIdToken();
       const dbRes = await saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid);
       console.log(dbRes);

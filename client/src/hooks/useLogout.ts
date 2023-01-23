@@ -10,7 +10,7 @@ const useLogout = () => {
   const logout = () => {
     signOut(auth)
       .then(() => {
-        dispatch({ type: 'LOGOUT' });
+        dispatch('LOGOUT', {});
       })
       .catch((err) => {
         console.log(err.message);
