@@ -17,7 +17,8 @@ const useSignup = () => {
       await dispatch({ type: 'LOGIN', payload: response.user });
       await updateProfile(response.user, { displayName: `${firstName} ${lastName}` });
       const token = await response.user.getIdToken();
-      const dbRes = await saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid);
+      const dbRes = await
+      saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid);
       console.log(dbRes);
       return response.user;
     } catch (err: any) {
