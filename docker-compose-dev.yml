@@ -21,6 +21,7 @@ services:
       - "${DEV_SERVER_PORT}:${DEV_SERVER_PORT}"
     environment:
       - DB=${DB}
+      - FIREBASE_SA=${FIREBASE_SA}
     volumes:
       - ./server/:/app/server
       - /app/server/node_modules
