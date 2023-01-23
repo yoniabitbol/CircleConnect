@@ -10,7 +10,7 @@ const Login: React.FC = () => {
       <AuthContent />
       <SubmissionForm header="Login" fields={LoginFields} buttonField="Login" />
       <div className="hidden lg:block lg:absolute lg:left-1/3 lg:bottom-40">
-        <img className="h-96" src="Maskot/img.png" alt="logo" />
+        <img className="h-96" src="Mascot/img.png" alt="logo" />
       </div>
     </div>
   );
