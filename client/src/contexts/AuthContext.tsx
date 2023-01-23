@@ -5,7 +5,6 @@ import { auth } from '../firebase/config';
 export const AuthContext = createContext({
   user: null,
   authIsReady: false,
-  dispatch: (_type: string, _payload: object) => { },
 });
 
 export const authReducer = (state: any, action: { type: any; payload: any; }) => {

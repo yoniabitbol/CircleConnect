@@ -12,9 +12,10 @@ const useGoogle = () => {
   const provider = new GoogleAuthProvider();
   const loginGoogle : any = async () => {
     setError(null);
+
     try {
       const response = await signInWithPopup(auth, provider);
-      await dispatch('LOGIN', response.user);
+      await dispatch({ type: 'LOGIN', payload: response.user });
       const token = await response.user.getIdToken();
       const dbRes = await saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid);
       console.log(dbRes);
