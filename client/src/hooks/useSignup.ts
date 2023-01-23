@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase/config';
 import useAuthContext from './useAuthContext';
+import saveUserToDB from '../utils/saveUserToDB';
 
 const useSignup = () => {
   const [error, setError] = useState(null);
@@ -12,39 +13,18 @@ const useSignup = () => {
   const signup = async (email: string, password: string, firstName: string, lastName: string) => {
     setError(null);
     try {
-      const response = await createUserWithEmailAndPassword(auth, email, password)
-        .then((res) => {
-          dispatch({
-            type: 'LOGIN',
-            payload: res.user,
-          });
-          updateProfile(res.user, { displayName: `${firstName} ${lastName}` }).then(() => {
-            console.log('Firebase displayName Updated.');
-          });
-          return res.user;
-        }).catch((err) => {
-          alert(err.message);
-        });
-      // maybe remove
-      return response;
+      const response = await createUserWithEmailAndPassword(auth, email, password);
+      await dispatch({ type: 'LOGIN', payload: response.user });
+      await updateProfile(response.user, { displayName: `${firstName} ${lastName}` });
+      const token = await response.user.getIdToken();
+      const dbRes = await saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid);
+      console.log(dbRes);
+      return response.user;
     } catch (err: any) {
       setError(err);
       console.log(err.messaage);
       return error;
     }
-    // createUserWithEmailAndPassword(auth, email, password)
-    //   .then((res) => {
-    //     dispatch({
-    //       type: 'LOGIN',
-    //       payload: res.user,
-    //     });
-    //     updateProfile(res.user, { displayName: `${firstName} ${lastName}` }).then(() => {
-    //       console.log('Firebase displayName Updated.');
-    //     });
-    //     return res.user;
-    //   }).catch((err) => {
-    //     alert(err.message);
-    //   });
   };
 
   return { error, signup };

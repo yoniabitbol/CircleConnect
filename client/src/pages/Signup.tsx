@@ -1,7 +1,5 @@
 import { useState, FormEvent } from 'react';
 import useSignup from '../hooks/useSignup';
-import saveUserToDB from '../utils/saveUserToDB';
-// import { auth } from '../firebase/config';
 
 function Signup() {
   const [email, setUsername] = useState('');
@@ -12,10 +10,8 @@ function Signup() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    signup(email, password, firstName, lastName).then((res: any) => {
-      saveUserToDB(res.accessToken, email, `${firstName} ${lastName}`, res.uid).then((resp) => {
-        console.log('User successfully added: ', resp);
-      });
+    signup(email, password, firstName, lastName).then(() => {
+      console.log('User successfully added');
     });
   };
 

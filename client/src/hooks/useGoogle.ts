@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import useAuthContext from './useAuthContext';
 import { auth } from '../firebase/config';
+import saveUserToDB from '../utils/saveUserToDB';
 
 const useGoogle = () => {
   const [error, setError] = useState(null);
@@ -12,15 +13,12 @@ const useGoogle = () => {
   const loginGoogle : any = async () => {
     setError(null);
     try {
-      const response = await signInWithPopup(auth, provider)
-        .then((res) => {
-          dispatch({ type: 'LOGIN', payload: res.user });
-          return res.user;
-        }).catch((err) => {
-          console.log(err);
-        });
-      // maybe remove
-      return response;
+      const response = await signInWithPopup(auth, provider);
+      await dispatch({ type: 'LOGIN', payload: response.user });
+      const token = await response.user.getIdToken();
+      const dbRes = await saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid);
+      console.log(dbRes);
+      return response.user;
     } catch (err: any) {
       setError(err);
       console.log(err.messaage);
