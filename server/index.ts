@@ -8,9 +8,13 @@ const port = 4000;
 dotenv.config({ path: './../.env' });
 const DB = process.env.DB as string;
 
-mongoose.connect(DB).then(() => {
-  console.log('Server-DB Connection Successful!');
-});
+if (DB) {
+  mongoose.connect(DB).then(() => {
+    console.log('Server-DB Connection Successful!');
+  });
+} else {
+    console.log('No Server-DB Connection Specified!');
+}
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World');
