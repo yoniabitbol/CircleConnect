@@ -9,20 +9,42 @@ const useSignup = () => {
   // @ts-ignore
   const { dispatch } = useAuthContext();
 
-  const signup = (email: string, password: string, firstName: string, lastName: string) => {
+  const signup = async (email: string, password: string, firstName: string, lastName: string) => {
     setError(null);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        dispatch({
-          type: 'LOGIN',
-          payload: res.user,
+    try {
+      const response = await createUserWithEmailAndPassword(auth, email, password)
+        .then((res) => {
+          dispatch({
+            type: 'LOGIN',
+            payload: res.user,
+          });
+          updateProfile(res.user, { displayName: `${firstName} ${lastName}` }).then(() => {
+            console.log('Firebase displayName Updated.');
+          });
+          return res.user;
+        }).catch((err) => {
+          alert(err.message);
         });
-        updateProfile(res.user, { displayName: `${firstName} ${lastName}` }).then(() => {
-          console.log('Profile Updated.');
-        });
-      }).catch((err) => {
-        alert(err.message);
-      });
+      // maybe remove
+      return response;
+    } catch (err: any) {
+      setError(err);
+      console.log(err.messaage);
+      return error;
+    }
+    // createUserWithEmailAndPassword(auth, email, password)
+    //   .then((res) => {
+    //     dispatch({
+    //       type: 'LOGIN',
+    //       payload: res.user,
+    //     });
+    //     updateProfile(res.user, { displayName: `${firstName} ${lastName}` }).then(() => {
+    //       console.log('Firebase displayName Updated.');
+    //     });
+    //     return res.user;
+    //   }).catch((err) => {
+    //     alert(err.message);
+    //   });
   };
 
   return { error, signup };

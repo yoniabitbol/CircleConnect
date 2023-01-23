@@ -8,11 +8,14 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = __importDefault(require("./app"));
 dotenv_1.default.config({ path: './../.env' });
 const DB = process.env.DB;
+const connectionOptions = {
+    dbName: process.env.NODE_ENV,
+};
 mongoose_1.default.set('strictQuery', false);
-mongoose_1.default.connect(DB).then(() => {
+mongoose_1.default.connect(DB, connectionOptions).then(() => {
     console.log('Server-DB Connection Successful!');
 });
-const port = 4000;
+const port = 4100;
 app_1.default.listen(port, () => {
     console.log(`App listening on port ${port}`);
 });

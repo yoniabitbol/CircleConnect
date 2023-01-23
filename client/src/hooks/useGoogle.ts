@@ -15,9 +15,11 @@ const useGoogle = () => {
       const response = await signInWithPopup(auth, provider)
         .then((res) => {
           dispatch({ type: 'LOGIN', payload: res.user });
+          return res.user;
         }).catch((err) => {
-          console.log('tawl', err);
+          console.log(err);
         });
+      // maybe remove
       return response;
     } catch (err: any) {
       setError(err);
