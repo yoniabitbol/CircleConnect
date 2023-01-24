@@ -3,14 +3,12 @@ import AuthContent from "../../components/AuthContent";
 import SubmissionForm from "../../components/SubmissionForm";
 import { LoginFields } from "../../lib/InputFieldModels";
 import useLogin from '../../hooks/useLogin';
-import { initialValuesLogin } from "../../lib/InputFieldModels";
-import {initialValuesModel} from "../../Models/InputFieldModel";
 
 
 const Login: React.FC = () => {
   const { error, login } = useLogin();
 
-    const onSubmitHandler = (values: initialValuesModel) => {
+    const onSubmitHandler = (values: any) => {
       login(values.email, values.password);
     }
   return (
@@ -22,7 +20,6 @@ const Login: React.FC = () => {
         header="Login"
         fields={LoginFields}
         buttonField="Login"
-        initialValues={initialValuesLogin}
       />
       <div className="hidden lg:block lg:absolute lg:left-1/3 lg:bottom-40">
         <img className="h-96" src="Mascot/img.png" alt="logo" />

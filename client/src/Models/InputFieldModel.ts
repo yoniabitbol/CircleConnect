@@ -7,16 +7,7 @@ interface InputFieldModel {
     name: string;
     placeholder: string;
     type: string | undefined;
-    
-    validation: (value: string) => string;
     Error: ErrorModel | undefined
-}
-
-export interface initialValuesModel {
-    firstName?: string;
-    lastName?: string;
-    email: string;
-    password: string;
 }
 
 export default InputFieldModel;

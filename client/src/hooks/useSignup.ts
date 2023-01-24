@@ -10,7 +10,7 @@ const useSignup = () => {
   // @ts-ignore
   const { dispatch } = useAuthContext();
 
-  const signup = async (email: string, password: string, firstName: string | undefined, lastName: string | undefined) => {
+  const signup = async (email: string, password: string, firstName: string, lastName: string) => {
     setError(null);
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
