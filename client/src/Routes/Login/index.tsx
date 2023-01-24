@@ -6,20 +6,20 @@ import useLogin from '../../hooks/useLogin';
 
 
 const Login: React.FC = () => {
-  const {error, login} = useLogin();
+  const { error, login } = useLogin();
 
     const onSubmitHandler = (values: any) => {
-      login(values.email, values.password)
+      login(values.email, values.password);
     }
   return (
     <div className="lg:flex justify-center lg:text-left text-center">
       <AuthContent />
-      <SubmissionForm 
-        error={error} 
-        onSubmit={onSubmitHandler} 
-        header="Login" 
-        fields={LoginFields} 
-        buttonField="Login" 
+      <SubmissionForm
+        error={error}
+        onSubmit={onSubmitHandler}
+        header="Login"
+        fields={LoginFields}
+        buttonField="Login"
       />
       <div className="hidden lg:block lg:absolute lg:left-1/3 lg:bottom-40">
         <img className="h-96" src="Mascot/img.png" alt="logo" />
