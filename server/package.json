@@ -5,8 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "build": "npx tsc",
-    "start:dev": "NODE_ENV=development concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
-    "start:prod": "NODE_ENV=production node dist/server.js",
+    "start:dev": "cross-env NODE_ENV=development concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
+    "start:prod": "cross-env NODE_ENV=production node dist/server.js",
     "test": "jest --coverage",
     "lint": "npx eslint . --ext .ts"
   },
