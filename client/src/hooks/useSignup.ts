@@ -10,7 +10,10 @@ const useSignup = () => {
   // @ts-ignore
   const { dispatch } = useAuthContext();
 
-  const signup = async (email: string, password: string, firstName: string, lastName: string) => {
+  const signup = async (email: string,
+                        password: string,
+                        firstName: string | undefined,
+                        lastName: string | undefined) => {
     setError(null);
     try {
       const response = await createUserWithEmailAndPassword(auth, email, password);
@@ -19,11 +22,12 @@ const useSignup = () => {
       const token = await response.user.getIdToken();
       const dbRes = await
       saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid)
-          .catch((err) => console.log('DB err ', err));
+          .catch((err) => {throw new Error(err)});
+      // eslint-disable-next-line no-console
       console.log(dbRes);
       return response.user;
     } catch (err: any) {
-      console.log(err);
+      throw new Error(err);
       return error;
     }
   };
