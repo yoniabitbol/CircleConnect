@@ -18,12 +18,12 @@ const useSignup = () => {
       await updateProfile(response.user, { displayName: `${firstName} ${lastName}` });
       const token = await response.user.getIdToken();
       const dbRes = await
-      saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid);
+      saveUserToDB(token, response.user.email as string, response.user.displayName as string, response.user.uid)
+          .catch((err) => console.log('DB err ', err));
       console.log(dbRes);
       return response.user;
     } catch (err: any) {
-      setError(err);
-      console.log(err.messaage);
+      console.log(err);
       return error;
     }
   };
