@@ -17,15 +17,23 @@ const getUser = (req: Request, res: Response) => {
 
 const createUser = async (req: Request, res: Response) => {
   try {
-    // maybe add some better handling for duplicate users
-    const newUser = await User.create(req.body);
-    res.status(201).json({
-      status: 'success',
-      data: {
-        user: newUser,
-      },
-    });
-    // }
+    const checkUser = await User.findOne({ user_id: req.body.user_id });
+    if (!checkUser) {
+      const newUser = await User.create(req.body);
+      res.status(201).json({
+        status: 'success',
+        data: {
+          user: newUser,
+        },
+      });
+    } else {
+      res.status(201).json({
+        status: 'user exists',
+        data: {
+          user: checkUser,
+        },
+      });
+    }
   } catch (err) {
     res.status(400).json({
       status: `ERROR: ${err}`,
