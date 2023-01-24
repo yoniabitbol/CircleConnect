@@ -26,14 +26,14 @@ const LoginFields: InputFieldModel[] = [
 const SignUpFields: InputFieldModel[] = [
   {
     id: 1,
-    name: "fname",
+    name: "firstName",
     placeholder: "First Name",
     type: undefined,
     Error: undefined,
   },
   {
     id: 2,
-    name: "lname",
+    name: "lastName",
     placeholder: "Last Name",
     type: undefined,
     Error: undefined,
@@ -57,13 +57,6 @@ const SignUpFields: InputFieldModel[] = [
       name: "password",
       component: "div",
     },
-  },
-  {
-    id: 5,
-    name: "password2",
-    placeholder: "Confirm password",
-    type: "password",
-    Error: undefined,
   },
 ];
 
