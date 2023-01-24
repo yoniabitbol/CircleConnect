@@ -1,4 +1,7 @@
+import useGoogle from "../../../hooks/useGoogle";
+
 const ThirdPartyLogin: React.FC = () => {
+  const { loginGoogle } = useGoogle();
   return (
     <div className="flex justify-center">
       <div className="flex flex-col items-center mt-10">
@@ -9,6 +12,7 @@ const ThirdPartyLogin: React.FC = () => {
           <div className="w-1/2">
             <div className="flex justify-center">
               <img
+                onClick={loginGoogle}
                 className="cursor-pointer"
                 src="https://img.icons8.com/color/48/000000/google-logo.png"
               />
