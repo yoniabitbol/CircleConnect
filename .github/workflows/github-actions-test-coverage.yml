@@ -7,14 +7,15 @@ on:
 jobs:
   coverage:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./server
     steps:
       - uses: actions/checkout@v3
       - uses: ArtiomTr/jest-coverage-report-action@v2
-        working-directory: ./server
         id: coverage
         with:
           output: report-markdown
       - uses: marocchino/sticky-pull-request-comment@v2
-        working-directory: ./server
         with:
           message: ${{ steps.coverage.outputs.report }}
