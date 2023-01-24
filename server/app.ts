@@ -2,12 +2,15 @@ import cors from 'cors';
 import express, { Request, Response } from 'express';
 import userRoutes from './routes/userRoutes';
 import decodeToken from './middleware/decodeToken';
+import usingAuth from './usingAuth';
 
 const app = express();
 
-app.use(express.json());
-app.use(cors());
-app.use(decodeToken);
+if (usingAuth) {
+  app.use(express.json());
+  app.use(cors());
+  app.use(decodeToken);
+}
 
 app.use('/api/users', userRoutes);
 
