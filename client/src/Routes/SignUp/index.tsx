@@ -8,7 +8,7 @@ import { initialValuesModel } from "../../Models/InputFieldModel";
 const SignUp: React.FC = () => {
     const { error, signup } = useSignup();
     const onSubmitHandler = (values: initialValuesModel) => {
-      
+      console.log('test')
         signup(values.email, values.password, values.firstName, values.lastName)
             .catch((err) => {
             console.log('Response:', err);

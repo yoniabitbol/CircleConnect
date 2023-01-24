@@ -9,6 +9,7 @@ function validateEmail(value: string) {
     error = "Invalid email address";
   }
     return error;
+  
    }
    
     function validatePassword(value: string) {
@@ -61,7 +62,10 @@ const SignUpFields: InputFieldModel[] = [
     placeholder: "First Name",
     type: undefined,
     validation: validateName,
-    Error: undefined,
+    Error: {
+        name: "firstName",
+        component: "div",
+    }
   },
   {
     id: 2,
@@ -69,7 +73,10 @@ const SignUpFields: InputFieldModel[] = [
     placeholder: "Last Name",
     type: undefined,
     validation: validateName,
-    Error: undefined,
+    Error: {
+        name: "lastName",
+        component: "div",
+    }
   },
   {
     id: 3,

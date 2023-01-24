@@ -13,6 +13,7 @@ const useSignup = () => {
   const signup = async (email: string, password: string, firstName: string | undefined, lastName: string | undefined) => {
     setError(null);
     try {
+      console.log('email', email, 'password', password, 'firstName', firstName, 'lastName', lastName);
       const response = await createUserWithEmailAndPassword(auth, email, password);
       await dispatch({ type: 'LOGIN', payload: response.user });
       await updateProfile(response.user, { displayName: `${firstName} ${lastName}` });

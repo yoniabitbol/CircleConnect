@@ -13,8 +13,7 @@ const SubmissionForm: React.FC<{
   onSubmit: (values: initialValuesModel) => void;
   initialValues: initialValuesModel;
 }> = (props) => {
-  const { fields, header, buttonField, onSubmit, initialValues } = props;
-  // const [isFormSubmitted, setIsFormSubmitted] = React.useState(false);
+  const { fields, header, buttonField,  initialValues, onSubmit } = props;
   return (
     <div className="lg:w-1/2 lg:mt-0 mt-20">
       <div className="lg:w-1/2 w-2/3 mx-auto">
@@ -27,6 +26,7 @@ const SubmissionForm: React.FC<{
           // These also need to be dynamic
           initialValues={initialValues}
         >
+          {({ errors, touched }) => (
           <Form className=" ">
             {fields.map((field) => (
               <InputField
@@ -35,7 +35,9 @@ const SubmissionForm: React.FC<{
                 name={field.name}
                 placeholder={field.placeholder}
                 Error={field.Error}
-                // validation={field.validation}
+                errors={errors}
+                touched={touched}
+                validation={field.validation}
                 // isFormSubmitted={isFormSubmitted}
               />
             ))}
@@ -47,7 +49,7 @@ const SubmissionForm: React.FC<{
             >
               {buttonField}
             </button>
-          </Form>
+          </Form>)}
         </Formik>
         <ThirdPartyLogin />
       </div>
