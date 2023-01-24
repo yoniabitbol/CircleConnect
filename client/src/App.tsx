@@ -10,7 +10,7 @@ function App() {
           {authIsReady && (
               <BrowserRouter>
                   <Routes>
-                      <Route path="/" element={user ? <p>Logged in</p> : <Navigate to='/login' />} />
+                      <Route path="/" element={user ? <p>User Profile Here</p> : <Navigate to='/login' />} />
                       <Route path="/signup" element={!user ? <SignUp /> : <Navigate to='/' />} />
                       <Route path="/login" element={!user ? <Login /> : <Navigate to='/' />} />
                   </Routes>
