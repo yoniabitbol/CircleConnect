@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "start:dev": "NODE_ENV=development concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "start:prod": "NODE_ENV=production node dist/index.js",
-    "test": "jest",
+    "test": "jest --coverage",
     "lint": "npx eslint . --ext .ts"
   },
   "keywords": [],
