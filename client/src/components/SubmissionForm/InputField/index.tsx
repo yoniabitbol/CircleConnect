@@ -7,11 +7,8 @@ const InputField: React.FC<{
   type: string | undefined;
   name: string;
   placeholder: string;
-  Error: ErrorModel | undefined;
-  errors: any;
-    touched: any;
-  validation: any;
-    // isFormSubmitted: boolean;
+  Error: ErrorModel;
+  validation: (value : string) => string;
 }> = (props) => {
   const { type, name, placeholder, Error,  validation  } = props;
   return (
@@ -23,7 +20,7 @@ const InputField: React.FC<{
         placeholder={placeholder}
         validate={validation}
       />
-      {Error && <div className="left-2/3"><ErrorMessage className="text-red-400" name={Error.name} component={Error.component} /></div>}
+      {Error && <ErrorMessage className="text-red-400" name={Error.name} component={Error.component} />}
     </div>
   );
 };

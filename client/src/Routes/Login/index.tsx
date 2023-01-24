@@ -12,12 +12,14 @@ const Login: React.FC = () => {
 
     const onSubmitHandler = (values: initialValuesModel) => {
       login(values.email, values.password);
+      if(error) {
+        throw new Error(error)
+      }
     }
   return (
     <div className="lg:flex justify-center lg:text-left text-center">
       <AuthContent />
       <SubmissionForm
-        error={error}
         onSubmit={onSubmitHandler}
         header="Login"
         fields={LoginFields}

@@ -6,7 +6,6 @@ import InputField from "./InputField";
 import ThirdPartyLogin from "./ThirdPartyLogin";
 
 const SubmissionForm: React.FC<{
-  error: string | null;
   fields: inputFieldModel[];
   header: string;
   buttonField: string;
@@ -20,13 +19,8 @@ const SubmissionForm: React.FC<{
         <h1 className="text-3xl font-medium">{header}</h1>
         <Formik
           onSubmit={onSubmit}
-
-          // Frontend validation needs to be added to lib folder and imported here
-
-          // These also need to be dynamic
           initialValues={initialValues}
         >
-          {({ errors, touched }) => (
           <Form className=" ">
             {fields.map((field) => (
               <InputField
@@ -35,10 +29,7 @@ const SubmissionForm: React.FC<{
                 name={field.name}
                 placeholder={field.placeholder}
                 Error={field.Error}
-                errors={errors}
-                touched={touched}
                 validation={field.validation}
-                // isFormSubmitted={isFormSubmitted}
               />
             ))}
             <button
@@ -49,7 +40,7 @@ const SubmissionForm: React.FC<{
             >
               {buttonField}
             </button>
-          </Form>)}
+          </Form>
         </Formik>
         <ThirdPartyLogin />
       </div>

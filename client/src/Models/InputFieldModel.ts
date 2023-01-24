@@ -9,7 +9,7 @@ interface InputFieldModel {
     type: string | undefined;
     
     validation: (value: string) => string;
-    Error: ErrorModel | undefined
+    Error: ErrorModel;
 }
 
 export interface initialValuesModel {

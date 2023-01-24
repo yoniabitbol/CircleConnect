@@ -7,19 +7,18 @@ import { initialValuesSignUp } from "../../lib/InputFieldModels";
 import { initialValuesModel } from "../../Models/InputFieldModel";
 const SignUp: React.FC = () => {
     const { error, signup } = useSignup();
-    const onSubmitHandler = (values: initialValuesModel) => {
-      console.log('test')
-        signup(values.email, values.password, values.firstName, values.lastName)
-            .catch((err) => {
-            console.log('Response:', err);
-        })
+    const onSubmitHandler = async (values: initialValuesModel) => {
+        await signup(values.email, values.password, values.firstName, values.lastName)
+        if(error) {
+          throw new Error(error)
+        }
+        
     }
 
   return (
     <div className="lg:flex justify-center lg:text-left text-center">
       <AuthContent />
       <SubmissionForm
-        error={error}
         header="Sign up"
         fields={SignUpFields}
         buttonField="Register"
