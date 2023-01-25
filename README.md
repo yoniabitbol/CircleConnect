@@ -2,33 +2,58 @@
 
   <img src="./client/public/Brand Logo/officccccc.jpg" alt="logo" width="200" height="auto" />
   <h1>CircleConnect</h1>
-  
+
   <p>
     Connect, Collaborate, and Grow Your Circle! 
   </p>
   
   
 <!-- Badges -->
-<!-- <p>
-  <a href="https://github.com/yoniabitbol/CircleConnect/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/Louis3797/awesome-readme-template" alt="contributors" />
-  </a>
-  <a href="">
-    <img src="https://img.shields.io/github/last-commit/Louis3797/awesome-readme-template" alt="last update" />
-  </a>
-  <a href="https://github.com/Louis3797/awesome-readme-template/network/members">
-    <img src="https://img.shields.io/github/forks/Louis3797/awesome-readme-template" alt="forks" />
-  </a>
-  <a href="https://github.com/Louis3797/awesome-readme-template/stargazers">
-    <img src="https://img.shields.io/github/stars/Louis3797/awesome-readme-template" alt="stars" />
-  </a>
-  <a href="https://github.com/Louis3797/awesome-readme-template/issues/">
-    <img src="https://img.shields.io/github/issues/Louis3797/awesome-readme-template" alt="open issues" />
-  </a>
-  <a href="https://github.com/Louis3797/awesome-readme-template/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/Louis3797/awesome-readme-template.svg" alt="license" />
-  </a>
-</p> -->
+<p align='center'>
+         <!-- <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="JavaScript"
+                        src="https://img.shields.io/badge/-Javascript-F0DB4F?style=for-the-badge&labelColor=black&logo=javascript&logoColor=F0DB4F">
+        </a> -->
+        <!-- HTML -->
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="TypeScript"
+                        src="https://img.shields.io/badge/-Typescript-007acc?style=for-the-badge&labelColor=black&logo=typescript&logoColor=007acc">
+        </a>
+        <!-- CSS  -->
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="React"
+                        src="https://img.shields.io/badge/-React-61DBFB?style=for-the-badge&labelColor=black&logo=react&logoColor=61DBFB">
+        </a>
+        <!-- JavaScript -->
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="Next"
+                        src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white">
+        </a>
+        <!-- Python -->
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="NodeJS"
+                        src="https://img.shields.io/badge/-Nodejs-3C873A?style=for-the-badge&labelColor=black&logo=node.js&logoColor=3C873A">
+        </a>
+        <!-- C++ -->
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="Express"
+                        src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white">
+        </a>
+        <!-- Arduino -->
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="MongoDB"
+                        src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white">
+        </a>
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="GraphQl"
+                        src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white">
+        </a>
+        <!-- Arduino -->
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="SASS"
+                        src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black">
+        </a>
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="Tailwind"
+                        src="https://img.shields.io/badge/Tailwind%20CSS-092749?style=for-the-badge&logo=tailwindcss&logoColor=06B6D4&labelColor=000000">
+        </a>
+        <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="Vs Code"
+                        src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white">
+        </a>
+           <a href="https://github.com/yoniabitbol/CircleConnect" target="_blank"><img alt="Git"
+                        src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white">
+        </a>
+</p>
    
 <!-- <h4>
     <a href="https://github.com/Louis3797/awesome-readme-template/">View Demo</a>
@@ -50,10 +75,9 @@
 - [About the Project](#star2-about-the-project)
   - [Screenshots](#camera-screenshots)
   - [Tech Stack](#space_invader-tech-stack)
-  - [Features](#dart-features)
   - [Environment Variables](#key-environment-variables)
 - [Getting Started](#toolbox-getting-started)
-- [Contact](#handshake-contact)
+- [Contributors](#handshake-contributors)
 
 <!-- About the Project -->
 
@@ -64,7 +88,7 @@
 ### :camera: Screenshots
 
 <div align="center"> 
-  <img src="https://user-images.githubusercontent.com/91300383/212593657-21f3cb91-9dbe-4f1e-8f0f-881aaedbaa4d.png" alt="screenshot" />
+  <img src="https://user-images.githubusercontent.com/91300383/212593657-21f3cb91-9dbe-4f1e-8f0f-881aaedbaa4d.png" alt="screenshot" width='400'/>
   <p align="justify">CircleConnect is a professional networking platform that aims to connect professionals and businesses from all industries. Similar to LinkedIn, CircleConnect allows users to create and share professional profiles, connect with other users, and share and view job listings. With its user-friendly interface, CircleConnect makes it easy for professionals to connect with others in their industry and expand their professional network. Whether you're looking for a new job opportunity, seeking to connect with other professionals in your field, or looking to expand your business, CircleConnect provides the tools you need to succeed.
   </p>
 </div>
@@ -154,7 +178,7 @@ Start the app by using Docker in the root
 
 <!-- Contact -->
 
-## :handshake: Contact
+## :handshake: Contributors
 
 | Name             | ID       | GitHub                              |
 | ---------------- | -------- | ----------------------------------- |
@@ -165,4 +189,4 @@ Start the app by using Docker in the root
 | Evan Greenstein  | 40173229 | https://github.com/EvanGreener      |
 | Matteo Mazzone   | 40174614 | https://github.com/mattmazzone      |
 | William Wells    | 40111253 | https://github.com/RealWilliamWells |
-| Luca Dallaire    | 40132255 |                                     |
+| Luca Dallaire    | 40132255 | https://github.com/lucadallaire     |
