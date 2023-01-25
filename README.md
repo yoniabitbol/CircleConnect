@@ -180,13 +180,14 @@ Start the app by using Docker in the root
 
 ## :handshake: Contributors
 
-| Name             | ID       | GitHub                              |
-| ---------------- | -------- | ----------------------------------- |
-| Adir Ben-David   | 40190551 | https://github.com/beezzyy          |
-| Jonathan Abitbol | 40190550 | https://github.com/yoniabitbol      |
-| Reuven Ostrofsky | 40188881 | https://github.com/Reuven1203       |
-| Ankita Ingle     | 40120124 | https://github.com/ingleankita      |
-| Evan Greenstein  | 40173229 | https://github.com/EvanGreener      |
-| Matteo Mazzone   | 40174614 | https://github.com/mattmazzone      |
-| William Wells    | 40111253 | https://github.com/RealWilliamWells |
-| Luca Dallaire    | 40132255 | https://github.com/lucadallaire     |
+| Name             | ID       | GitHub                                |
+| ---------------- | -------- | ------------------------------------- |
+| Adir Ben-David   | 40190551 | https://github.com/beezzyy            |
+| Jonathan Abitbol | 40190550 | https://github.com/yoniabitbol        |
+| Reuven Ostrofsky | 40188881 | https://github.com/Reuven1203         |
+| Ankita Ingle     | 40120124 | https://github.com/ingleankita        |
+| Evan Greenstein  | 40173229 | https://github.com/EvanGreener        |
+| Matteo Mazzone   | 40174614 | https://github.com/mattmazzone        |
+| William Wells    | 40111253 | https://github.com/RealWilliamWells   |
+| Kevin Rwigamba   | 40176765 | https://github.com/KevinArmstrong-dev |
+| Luca Dallaire    | 40132255 | https://github.com/lucadallaire       |
