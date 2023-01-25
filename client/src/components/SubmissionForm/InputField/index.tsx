@@ -1,14 +1,16 @@
 import React from "react";
 import { Field, ErrorMessage } from "formik";
 import { ErrorModel } from "../../../Models/InputFieldModel";
+// import {useState} from 'react';
 
 const InputField: React.FC<{
   type: string | undefined;
   name: string;
   placeholder: string;
-  Error: ErrorModel | undefined;
+  Error: ErrorModel;
+  validation: (value : string) => string;
 }> = (props) => {
-  const { type, name, placeholder, Error } = props;
+  const { type, name, placeholder, Error,  validation  } = props;
   return (
     <div>
       <Field
@@ -16,8 +18,9 @@ const InputField: React.FC<{
         type={type}
         name={name}
         placeholder={placeholder}
+        validate={validation}
       />
-      {Error && <ErrorMessage name={Error.name} component={Error.component} />}
+      {Error && <ErrorMessage className="text-red-400" name={Error.name} component={Error.component} />}
     </div>
   );
 };

@@ -1,9 +1,8 @@
 import React from "react";
 import { Formik, Form, FormikHelpers } from "formik";
-import inputFieldModel from "../../Models/InputFieldModel";
-import InputField from "./InputField";
-
+import inputFieldModel, { initialValuesModel } from "../../Models/InputFieldModel";
 import ThirdPartyLogin from "./ThirdPartyLogin";
+import InputField from "./InputField";
 
 // this needs to be dynamic or imported from a file
 interface SignupValues {
@@ -23,9 +22,10 @@ const SubmissionForm: React.FC<{
   fields: inputFieldModel[];
   header: string;
   buttonField: string;
+  onSubmit: (values: initialValuesModel) => void;
+  initialValues: initialValuesModel;
 }> = (props) => {
   const { fields, header, buttonField } = props;
-
   return (
     <div className="lg:w-1/2 lg:mt-0 mt-20">
       <div className="lg:w-1/2 w-2/3 mx-auto">
@@ -56,12 +56,14 @@ const SubmissionForm: React.FC<{
                 name={field.name}
                 placeholder={field.placeholder}
                 Error={field.Error}
+                validation={field.validation}
               />
             ))}
             <button
               type="submit"
               className="block mt-4 w-full px-2 py-3 rounded-lg bg-signup-button
                text-white hover:bg-signup-button-hover shadow-xl shadow-placeholder-purple"
+              
             >
               {buttonField}
             </button>

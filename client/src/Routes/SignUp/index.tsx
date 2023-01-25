@@ -2,8 +2,20 @@ import React from "react";
 import SubmissionForm from "../../components/SubmissionForm";
 import AuthContent from "../../components/AuthContent";
 import { SignUpFields } from "../../lib/InputFieldModels";
+import useSignup from "../../hooks/useSignup";
+import { initialValuesSignUp } from "../../lib/InputFieldModels";
+import { initialValuesModel } from "../../Models/InputFieldModel";
 
 const SignUp: React.FC = () => {
+    const { error, signup } = useSignup();
+    const onSubmitHandler = async (values: initialValuesModel) => {
+        await signup(values.email, values.password, values.firstName, values.lastName)
+        if(error) {
+          throw new Error(error)
+        }
+        
+    }
+
   return (
     <div className="lg:flex justify-center lg:text-left text-center">
       <AuthContent />
@@ -11,6 +23,8 @@ const SignUp: React.FC = () => {
         header="Sign up"
         fields={SignUpFields}
         buttonField="Register"
+        onSubmit={onSubmitHandler}
+        initialValues= {initialValuesSignUp}
       />
 
       <div className="hidden lg:block lg:absolute lg:left-1/3 lg:bottom-40">
