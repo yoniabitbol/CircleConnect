@@ -160,6 +160,8 @@ Go to the project directory
 
 Install dependencies
 
+Prerequesite: Install and run Docker
+
 ```bash
   cd client
   docker build . -t client-dev
