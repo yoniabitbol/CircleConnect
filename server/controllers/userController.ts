@@ -42,11 +42,36 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-const updateUser = (req: Request, res: Response) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'Edit user not implemented yet',
-  });
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const filter = { user_id: req.body.user_id };
+    const update = {
+      profile: {
+        photo: req.body.profile.photo,
+        education: req.body.profile.education,
+        awards: req.body.profile.awards,
+        work: req.body.profile.work,
+        contact_info: {
+          phone_number: req.body.profile.contact_info.phone_number,
+          contact_email: req.body.profile.contact_info.contact_email,
+        },
+      },
+    };
+    const updatedUser = await User.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+    res.status(201).json({
+      status: 'success',
+      data: {
+        user: updatedUser,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `ERROR: ${err}`,
+      message: 'error updating user',
+    });
+  }
 };
 
 const deleteUser = (req: Request, res: Response) => {

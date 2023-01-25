@@ -16,6 +16,34 @@ const userSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
   },
+  profile: {
+    photo: {
+      type: String,
+    },
+    education: {
+      type: String,
+    },
+    awards: {
+      type: String,
+    },
+    work: {
+      type: String,
+    },
+    contact_info: {
+      phone_number: {
+        type: String,
+      },
+      contact_email: {
+        type: String,
+      },
+    },
+    // connections: {
+    //   type: Array if User IDs
+    // },
+    bio: {
+      type: String,
+    },
+  },
 });
 
 const User = mongoose.model('User', userSchema);
