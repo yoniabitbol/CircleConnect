@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="./client/public/Brand Logo/officccccc.jpg" alt="logo" width="200" height="auto" />
+  <img src="https://media.discordapp.net/attachments/680253377254522900/1067905721519329361/officccccc-removebg-preview.png" alt="logo" width="200" height="auto" />
   <h1>CircleConnect</h1>
 
   <p>
@@ -162,10 +162,9 @@ Install dependencies
 
 ```bash
   cd client
-  npm install
   docker build . -t client-dev
+
   cd ../server
-  npm install
   docker build . -t server-dev
 ```
 
