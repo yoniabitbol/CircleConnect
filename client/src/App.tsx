@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
 import Profile from "./Routes/Profile";
@@ -10,7 +10,6 @@ function App() {
   return (
       <>
       {authIsReady && (
-        <BrowserRouter>
           <Routes>
             <Route path="/" element={user ? <p>Logged in</p> : <Navigate to="signup" />} />
             <Route path="/*" element={<AuthHeader />}>
@@ -18,8 +17,7 @@ function App() {
             <Route path="login" element={!user ? <Login /> : <Navigate to='/' />} />
             <Route path="profile" element={<Profile />} />
             </Route>
-          </Routes>
-        </BrowserRouter>)
+          </Routes>)
       }
       </>
   );

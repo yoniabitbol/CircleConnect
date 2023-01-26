@@ -1,8 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';;
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from './contexts/AuthContext';
+import {BrowserRouter} from 'react-router-dom';
+
 import './index.css';
 
 const root = ReactDOM.createRoot(
@@ -11,7 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <AuthContextProvider>
-      <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </AuthContextProvider>
   </React.StrictMode>,
 );
