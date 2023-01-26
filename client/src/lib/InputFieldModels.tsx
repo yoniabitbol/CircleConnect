@@ -9,9 +9,9 @@ function validateEmail(value: string) {
     error = "Invalid email address";
   }
     return error;
-  
+
    }
-   
+
     function validatePassword(value: string) {
         let error ="";
         if (!value) {
@@ -102,10 +102,25 @@ const SignUpFields: InputFieldModel[] = [
   },
 ];
 
+const forgotPassFields: any = [
+    {
+        id: 1,
+        name: "email",
+        placeholder: "Email",
+        type: "email",
+        validation: validateEmail,
+        Error: {
+            name: "email",
+            component: "div",
+        }
+    }]
+
 const initialValuesLogin: initialValuesModel = {
   email:"",
   password:""
 }
+
+const intialValuesForgotPass: any = {email:""}
 
 const initialValuesSignUp: initialValuesModel = {
     firstName:"",
@@ -115,4 +130,4 @@ const initialValuesSignUp: initialValuesModel = {
 }
 
 
-export { LoginFields, SignUpFields, initialValuesLogin, initialValuesSignUp };
+export { LoginFields, SignUpFields, initialValuesLogin, initialValuesSignUp, forgotPassFields, intialValuesForgotPass };
