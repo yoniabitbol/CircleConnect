@@ -27,7 +27,7 @@ const createUser = async (req: Request, res: Response) => {
         },
       });
     } else {
-      res.status(201).json({
+      res.status(200).json({
         status: 'user exists',
         data: {
           user: checkUser,

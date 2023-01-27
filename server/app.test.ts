@@ -1,11 +1,12 @@
 import request from 'supertest';
 import app from './app';
-import User from "./models/userModel";
+import User from './models/userModel';
+
 const mockingoose = require('mockingoose');
 
 jest.mock('./usingAuth', () => ({
-    default: false,
-    __esModule: true,
+  default: false,
+  __esModule: true,
 }));
 
 describe('Request default route', () => {
@@ -20,43 +21,45 @@ describe('Request default route', () => {
 });
 
 describe('Request invalid route', () => {
-    test('', (done) => {
-        request(app)
-            .get('/test')
-            .then((response) => {
-                expect(response.statusCode).toBe(400);
-                done();
-            });
-    });
+  test('', (done) => {
+    request(app)
+      .get('/test')
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        done();
+      });
+  });
 });
 
 describe('Request get all users', () => {
-    test('', (done) => {
-        request(app)
-            .get('/api/users')
-            .then((response) => {
-                expect(response.statusCode).toBe(500);
-                expect(response.text).toBe('{"status":"error","message":"Get all users not implemented yet"}');
-                done();
-            });
-    });
+  test('', (done) => {
+    request(app)
+      .get('/api/users')
+      .then((response) => {
+        expect(response.statusCode).toBe(500);
+        expect(response.text).toBe('{"status":"error","message":"Get all users not implemented yet"}');
+        done();
+      });
+  });
 });
 
 describe('Request create user', () => {
-    test('', (done) => {
-        mockingoose(User).toReturn({ user_id: "testUser", name: "testUser", email: "testUser" },
-            'findOne');
+  test('', (done) => {
+    mockingoose(User).toReturn(
+      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      'findOne',
+    );
 
-        request(app)
-            .post('/api/users')
-            .send({"user_id": "test"})
-            .then((response) => {
-                expect(response.statusCode).toBe(201);
-                expect(response.text).toContain('{"status":"user exists","data":{"user":{"user_id":' +
-                    '"testUser","name":"testUser","email":"testuser","_id":');
-                done();
-            });
-    });
+    request(app)
+      .post('/api/users')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(200 || 201);
+        expect(response.text).toContain('{"status":"user exists","data":{"user":{"user_id":'
+                    + '"testUser","name":"testUser","email":"testuser","_id":' || '{"status":"success","data":{"user":{"user_id":');
+        done();
+      });
+  });
 });
 
 // describe('Request create user no user specified error', () => {
@@ -72,7 +75,7 @@ describe('Request create user', () => {
 //     });
 // });
 
-//describe('Request get specific users', () => {
+// describe('Request get specific users', () => {
 //    test('', (done) => {
 //        request(app)
 //            .get('/api/users/test')
@@ -82,4 +85,4 @@ describe('Request create user', () => {
 //                done();
 //            });
 //    });
-//});
+// });
