@@ -8,13 +8,22 @@ const getAllUsers = (req: Request, res: Response) => {
   });
 };
 
-const getUser = (req: Request, res: Response) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'Get user not implemented yet',
-  });
+const getUser = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ user_id: req.body.user_id });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user,
+      },
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      status: `ERROR: ${err}`,
+      message: 'error getting user',
+    });
+  }
 };
-
 const createUser = async (req: Request, res: Response) => {
   try {
     const checkUser = await User.findOne({ user_id: req.body.user_id });

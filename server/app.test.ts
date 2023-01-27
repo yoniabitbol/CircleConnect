@@ -43,7 +43,6 @@ describe('Request get all users', () => {
   });
 });
 
-
 //Tests failing with 400 code for some reason - need to investigate
 // describe('Request create user', () => {
 //   test('', (done) => {
