@@ -14,10 +14,10 @@ const Banner: React.FC<{
   };
 }> = ({ banner }) => {
   return (
-    <div className="w-2/3 m-5 rounded-md bg-slate-200">
+    <div className="lg:w-2/3 w-4/5 m-5 pb-5 rounded-md bg-slate-200 mx-auto">
       <div>
         <img
-          className="w-full h-64 object-cover"
+          className="w-full lg:h-64 h-32 object-cover rounded-t-md"
           src={banner.backdrop}
           alt="backdrop"
         />
@@ -36,12 +36,18 @@ const Banner: React.FC<{
         <h3 className="text-lg font-semibold">{banner.location}</h3>
       </div>
 
-      <div className="flex mt-5">
-        <div className="flex flex-col justify-center mr-5">
-          <h1 className="text-lg font-semibold ">{banner.connections}</h1>
-          <h2 className="text-lg font-semibold ">Connections</h2>
-        </div>
+      <div className="flex flex-col justify-center mt-5 ml-5">
+        <h1 className="text-lg font-semibold ">
+          {banner.connections} Connections
+        </h1>
       </div>
+
+      {/* click contact info to display a modal */}
+      {/* <div className="flex flex-col justify-center ml-5">
+        <h1 className="text-lg font-semibold ">{banner.email}</h1>
+        <h1 className="text-lg font-semibold ">{banner.phone}</h1>
+        <h1 className="text-lg font-semibold ">{banner.website}</h1>
+      </div> */}
     </div>
   );
 };

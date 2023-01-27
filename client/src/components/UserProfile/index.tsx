@@ -205,14 +205,13 @@ const UserProfile: React.FC = () => {
     ],
   };
 
-  console.log(User);
   return (
     <div>
       <Banner banner={User.banner} />
-      <Description />
-      <Projects />
-      <Skills />
-      <Experience />
+      <Description summary={User.summary} />
+      <Projects projects={User.projects} />
+      <Skills skills={User.skills} />
+      <Experience experience={User.experience}/>
       <Education />
       <Languages />
       <Awards />
