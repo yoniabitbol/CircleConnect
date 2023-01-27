@@ -11,6 +11,9 @@ export const Logger = createLogger({
     format.errors({ stack: true }),
   ),  
   transports: [
+    new transports.Console({
+      format: format.printf(log => log.message),
+    }),
     new DailyRotateFile({
       level: 'info',
       dirname: './logs',
