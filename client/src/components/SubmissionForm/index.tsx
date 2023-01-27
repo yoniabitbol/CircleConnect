@@ -13,8 +13,9 @@ const SubmissionForm: React.FC<{
   buttonField: string;
   onSubmit: (values: initialValuesModel) => void;
   initialValues: initialValuesModel;
+  error?: any;
 }> = (props) => {
-  const { fields, header, buttonField,  initialValues, onSubmit } = props;
+  const { fields, header, buttonField,  initialValues, onSubmit, error } = props;
   const location = useLocation();
   return (
     <div className="lg:w-1/2 lg:mt-0 mt-20">
@@ -24,6 +25,7 @@ const SubmissionForm: React.FC<{
           onSubmit={onSubmit}
           initialValues={initialValues}
           validateOnChange={false}
+          validateOnBlur={false}
         >
           <Form className=" ">
             {fields.map((field) => (
@@ -45,6 +47,7 @@ const SubmissionForm: React.FC<{
             >
               {buttonField}
             </button>
+            {error && <div className="text-red-400 my-4 text-center text-xl">Password invalid</div>}
           </Form>
         </Formik>
         {(location.pathname === '/signup' || location.pathname === '/login') && <ThirdPartyLogin />}

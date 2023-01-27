@@ -3,17 +3,7 @@ import {initialValuesModel} from "../Models/InputFieldModel";
 import { fetchSignInMethodsForEmail } from 'firebase/auth';
 import { auth } from '../firebase/config';
 
-function validateEmail(value: string) {
-  let error ="";
-  if (!value) {
-    error = "Email is required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-    error = "Invalid email address";
-  }
-    return error;
-
-   }
-   
+ 
    async function validateEmailSignUp(value: string){
      let error ="";
      if (!value) {
@@ -29,7 +19,7 @@ function validateEmail(value: string) {
      return error;
    }
    
-   async function  validateForgotPasswordEmail(value: string) {
+   async function  validateEmailDoesNotExist(value: string) {
        let error ="";
      if (!value) {
        error = "Email is required";
@@ -71,7 +61,7 @@ const LoginFields: InputFieldModel[] = [
     name: "email",
     placeholder: "Email",
     type: "email",
-    validation: validateEmail,
+    validation: validateEmailDoesNotExist,
     Error: {
       name: "email",
       component: "div",
@@ -143,7 +133,7 @@ const forgotPassFields = [
         name: "email",
         placeholder: "Email",
         type: "email",
-        validation: validateForgotPasswordEmail,
+        validation: validateEmailDoesNotExist,
         Error: {
             name: "email",
             component: "div",
