@@ -45,20 +45,10 @@ const createUser = async (req: Request, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const filter = { user_id: req.body.user_id };
-    const update = {
-      profile: {
-        photo: req.body.profile.photo,
-        education: req.body.profile.education,
-        awards: req.body.profile.awards,
-        work: req.body.profile.work,
-        contact_info: {
-          phone_number: req.body.profile.contact_info.phone_number,
-          contact_email: req.body.profile.contact_info.contact_email,
-        },
-      },
-    };
+    const update = req.body;
     const updatedUser = await User.findOneAndUpdate(filter, update, {
       new: true,
+      upsert: true,
     });
     res.status(201).json({
       status: 'success',
