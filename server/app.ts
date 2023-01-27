@@ -6,11 +6,13 @@ import usingAuth from './usingAuth';
 
 const app = express();
 
-if (usingAuth) {
-  app.use(express.json());
-  app.use(cors());
-  app.use(decodeToken);
-}
+app.use(express.json())
+
+// if (usingAuth) {
+//   app.use(express.json());
+//   app.use(cors());
+//   app.use(decodeToken);
+// }
 
 app.use('/api/users', userRoutes);
 
