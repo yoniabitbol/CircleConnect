@@ -1,5 +1,7 @@
 import InputFieldModel from "../Models/InputFieldModel";
-import {initialValuesModel} from "../Models/InputFieldModel"
+import {initialValuesModel} from "../Models/InputFieldModel";
+import { fetchSignInMethodsForEmail } from 'firebase/auth';
+import { auth } from '../firebase/config';
 
 function validateEmail(value: string) {
   let error ="";
@@ -9,9 +11,29 @@ function validateEmail(value: string) {
     error = "Invalid email address";
   }
     return error;
-  
+
    }
    
+   async function  validateForgotPasswordEmail(value: string) {
+       let error ="";
+     if (!value) {
+       error = "Email is required";
+     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+       error = "Invalid email address";
+     }else{
+       const err = await  fetchSignInMethodsForEmail(auth, value).catch((er) => {console.log(er)})
+       if(err?.length === 0) {
+         error = "Email is not registered"
+       }
+     }
+     
+     return error
+   
+     
+   }
+   
+   
+
     function validatePassword(value: string) {
         let error ="";
         if (!value) {
@@ -102,10 +124,25 @@ const SignUpFields: InputFieldModel[] = [
   },
 ];
 
+const forgotPassFields: any = [
+    {
+        id: 1,
+        name: "email",
+        placeholder: "Email",
+        type: "email",
+        validation: validateForgotPasswordEmail,
+        Error: {
+            name: "email",
+            component: "div",
+        }
+    }]
+
 const initialValuesLogin: initialValuesModel = {
   email:"",
   password:""
 }
+
+const intialValuesForgotPass: any = {email:""}
 
 const initialValuesSignUp: initialValuesModel = {
     firstName:"",
@@ -115,4 +152,4 @@ const initialValuesSignUp: initialValuesModel = {
 }
 
 
-export { LoginFields, SignUpFields, initialValuesLogin, initialValuesSignUp };
+export { LoginFields, SignUpFields, initialValuesLogin, initialValuesSignUp, forgotPassFields, intialValuesForgotPass };
