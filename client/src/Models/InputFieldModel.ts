@@ -8,7 +8,7 @@ interface InputFieldModel {
     placeholder: string;
     type: string | undefined;
 
-    validation: (value: string) => string;
+    validation: (value: string) => any;
     Error: ErrorModel;
 }
 

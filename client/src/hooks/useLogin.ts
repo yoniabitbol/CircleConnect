@@ -15,6 +15,7 @@ const useLogin = () => {
       .then((res) => {
         dispatch({ type: 'LOGIN', payload: res.user });
       }).catch((err) => {
+        setError(err.message);
         console.log(err.message);
       });
   };
