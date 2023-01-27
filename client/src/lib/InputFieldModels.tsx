@@ -14,6 +14,21 @@ function validateEmail(value: string) {
 
    }
    
+   async function validateEmailSignUp(value: string){
+     let error ="";
+     if (!value) {
+       error = "Email is required";
+     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+       error = "Invalid email address";
+     }else{
+       const err = await fetchSignInMethodsForEmail(auth, value)
+       if(err?.length !== 0) {
+         error = "Email already registered"
+       }
+     }
+     return error;
+   }
+   
    async function  validateForgotPasswordEmail(value: string) {
        let error ="";
      if (!value) {
@@ -21,14 +36,12 @@ function validateEmail(value: string) {
      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
        error = "Invalid email address";
      }else{
-       const err = await  fetchSignInMethodsForEmail(auth, value).catch((er) => {console.log(er)})
+       const err = await  fetchSignInMethodsForEmail(auth, value)
        if(err?.length === 0) {
          error = "Email is not registered"
        }
      }
-     
      return error
-   
      
    }
    
@@ -105,7 +118,7 @@ const SignUpFields: InputFieldModel[] = [
     name: "email",
     placeholder: "Email",
     type: "email",
-    validation: validateEmail,
+    validation: validateEmailSignUp,
     Error: {
       name: "email",
       component: "div",
@@ -124,7 +137,7 @@ const SignUpFields: InputFieldModel[] = [
   },
 ];
 
-const forgotPassFields: any = [
+const forgotPassFields = [
     {
         id: 1,
         name: "email",
