@@ -74,14 +74,15 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-const deleteUser = (req: Request, res: Response) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'Delete user not implemented yet',
-  });
-};
+// const deleteUser = (req: Request, res: Response) => {
+//   res.status(500).json({
+//     status: 'error',
+//     message: 'Delete user not implemented yet',
+//   });
+// };
 
 export default {
   // getAllUsers,
-  getUser, createUser, updateUser, deleteUser,
+  getUser, createUser, updateUser,
+  // , deleteUser,
 };

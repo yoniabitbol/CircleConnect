@@ -31,17 +31,17 @@ describe('Request invalid route', () => {
   });
 });
 
-describe('Request get all users', () => {
-  test('', (done) => {
-    request(app)
-      .get('/api/users')
-      .then((response) => {
-        expect(response.statusCode).toBe(500);
-        expect(response.text).toBe('{"status":"error","message":"Get all users not implemented yet"}');
-        done();
-      });
-  });
-});
+// describe('Request get all users', () => {
+//   test('', (done) => {
+//     request(app)
+//       .get('/api/users')
+//       .then((response) => {
+//         expect(response.statusCode).toBe(500);
+//         expect(response.text).toBe('{"status":"error","message":"Get all users not implemented yet"}');
+//         done();
+//       });
+//   });
+// });
 
 //Tests failing with 400 code for some reason - need to investigate
 // describe('Request create user', () => {
