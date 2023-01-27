@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.route('/').get(UserController.getUser).post(UserController.createUser).patch(UserController.updateUser);
 
-router.route(':id').get(UserController.getUser)
-  .delete(UserController.deleteUser);
+router.route(':id').delete(UserController.deleteUser);
+// .get(UserController.getAllUsers)
 
 export default router;

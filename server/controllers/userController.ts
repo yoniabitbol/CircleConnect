@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
 
-const getAllUsers = (req: Request, res: Response) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'Get all users not implemented yet',
-  });
-};
+// const getAllUsers = (req: Request, res: Response) => {
+//   res.status(500).json({
+//     status: 'error',
+//     message: 'Get all users not implemented yet',
+//   });
+// };
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    const user = await User.findOne({ user_id: req.body.user_id });
+    const user = await User.findOne({ user_id: req.query.user_id });
     res.status(200).json({
       status: 'success',
       data: {
@@ -25,6 +25,7 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 const createUser = async (req: Request, res: Response) => {
+  console.log(req.query);
   try {
     const checkUser = await User.findOne({ user_id: req.body.user_id });
     if (!checkUser) {
@@ -81,5 +82,6 @@ const deleteUser = (req: Request, res: Response) => {
 };
 
 export default {
-  getAllUsers, getUser, createUser, updateUser, deleteUser,
+  // getAllUsers,
+  getUser, createUser, updateUser, deleteUser,
 };
