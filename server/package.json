@@ -41,6 +41,7 @@
     "express": "^4.18.2",
     "firebase-admin": "^11.5.0",
     "mockingoose": "^2.16.2",
+    "moment": "^2.29.4",
     "mongoose": "^6.8.3",
     "morgan": "^1.10.0",
     "typescript": "^4.9.4",

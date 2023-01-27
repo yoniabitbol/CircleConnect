@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createLogger, format, transports } from 'winston';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import DailyRotateFile from 'winston-daily-rotate-file';
 
 export const Logger = createLogger({
@@ -9,10 +10,10 @@ export const Logger = createLogger({
     }),
     format.json(),
     format.errors({ stack: true }),
-  ),  
+  ),
   transports: [
     new transports.Console({
-      format: format.printf(log => log.message),
+      format: format.printf((log) => log.message),
     }),
     new DailyRotateFile({
       level: 'info',
@@ -45,9 +46,11 @@ export const RequestLogger = createLogger({
   ),
   transports: [
     new transports.Console(
-      {level: 'http',
-      format: format.printf(log => (log.method + " - " + log.status + " - " + log.url + " - " + log.response_time + "ms")),
-      }),
+      {
+        level: 'http',
+        format: format.printf((log) => (`${log.method} - ${log.status} - ${log.url} - ${log.response_time}ms`)),
+      },
+    ),
     new DailyRotateFile({
       level: 'http',
       dirname: './logs',
