@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import {BrowserRouter, Link} from 'react-router-dom';
 
 import App from './App';
 
@@ -19,20 +18,17 @@ jest.mock('./hooks/useAuthContext', () => ({
 describe('Check and validate page navigation', () => {
   test('', async () => {
     render(
-      <BrowserRouter>
-        <Link to={'/signup'} />
         <App />
-      </BrowserRouter>
     );
 
     expect(
-        screen.getByText('Register'),
+        screen.getByText('Or continue with'),
     ).toBeInTheDocument();
 
-    await userEvent.click(screen.getByText('Login here'))
+    await userEvent.click(screen.getByText('Sign up here'))
 
     expect(
-        screen.getByText('Or continue with'),
+        screen.getByText('Register'),
     ).toBeInTheDocument();
   });
 });
