@@ -5,6 +5,7 @@ import { SignUpFields } from "../../lib/InputFieldModels";
 import useSignup from "../../hooks/useSignup";
 import { initialValuesSignUp } from "../../lib/InputFieldModels";
 import { initialValuesModel } from "../../Models/InputFieldModel";
+
 const SignUp: React.FC = () => {
     const { error, signup } = useSignup();
     const onSubmitHandler = async (values: initialValuesModel) => {
