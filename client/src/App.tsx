@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
+import Profile from "./Routes/Profile";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
@@ -32,6 +33,10 @@ function App() {
               <Route
                 path="login"
                 element={!user ? <Login /> : <Navigate to="/" />}
+              />
+              <Route
+                path="profile"
+                element={!user ? <Profile /> : <Navigate to="/" />}
               />
               <Route
                 path="forgot"
