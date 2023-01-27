@@ -1,7 +1,7 @@
 import React from "react";
 
 import Banner from "./Banner";
-import Description from "./Description";
+import Summary from "./Summary";
 import Projects from "./Projects";
 import Skills from "./Skills";
 import Experience from "./Experience";
@@ -208,10 +208,10 @@ const UserProfile: React.FC = () => {
   return (
     <div>
       <Banner banner={User.banner} />
-      <Description summary={User.summary} />
+      <Summary summary={User.summary} />
       <Projects projects={User.projects} />
       <Skills skills={User.skills} />
-      <Experience experience={User.experience}/>
+      <Experience experience={User.experience} />
       <Education />
       <Languages />
       <Awards />

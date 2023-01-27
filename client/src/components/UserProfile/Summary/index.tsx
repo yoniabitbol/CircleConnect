@@ -1,6 +1,6 @@
 import React from "react";
 
-const Description: React.FC<{
+const Summary: React.FC<{
   summary: string;
 }> = ({ summary }) => {
   return (
@@ -11,4 +11,4 @@ const Description: React.FC<{
   );
 };
 
-export default Description;
+export default Summary;
