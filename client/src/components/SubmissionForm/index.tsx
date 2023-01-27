@@ -23,6 +23,7 @@ const SubmissionForm: React.FC<{
         <Formik
           onSubmit={onSubmit}
           initialValues={initialValues}
+          validateOnChange={false}
         >
           <Form className=" ">
             {fields.map((field) => (

@@ -19,7 +19,6 @@ const Login: React.FC = () => {
   return (
     <div className="lg:flex justify-center lg:text-left text-center">
       <AuthContent />
-      
       <SubmissionForm
         onSubmit={onSubmitHandler}
         header="Login"
