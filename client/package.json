@@ -1,11 +1,15 @@
 {
   "name": "client",
+  "jest": {
+    "coveragePathIgnorePatterns": ["src/contexts/AuthContext", "src/hooks", "src/index.ts", "src/reportWebVitals",
+      "src/firebase", "src/lib", "src/Models"]
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage",
+    "test": "react-scripts test --coverage .",
     "eject": "react-scripts eject",
     "lint": "npx eslint . --ext .ts,.tsx"
   },
