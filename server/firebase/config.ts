@@ -3,7 +3,7 @@ import admin from 'firebase-admin';
 import dotenv from 'dotenv';
 import usingAuth from '../usingAuth';
 
-if (usingAuth) {
+if (usingAuth()) {
   dotenv.config({path: './../.env'});
 
   admin.initializeApp({
