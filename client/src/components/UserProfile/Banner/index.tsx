@@ -13,10 +13,9 @@ const Banner: React.FC<{
     picture: string;
     backdrop: string;
   };
-  handleEdit: () => void;
+
   edit: boolean;
-  updatedBanner: any;
-}> = ({ banner, handleEdit, edit }) => {
+}> = ({ banner, edit }) => {
   return (
     <div>
       {edit ? (
@@ -65,7 +64,7 @@ const Banner: React.FC<{
 
           <div>
             <button
-              onClick={() => handleEdit()}
+              type="submit"
               className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
             >
               Save Profile
@@ -110,7 +109,7 @@ const Banner: React.FC<{
 
           <div>
             <button
-              onClick={() => handleEdit()}
+              type="submit"
               className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
             >
               Edit Profile

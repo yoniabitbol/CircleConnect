@@ -78,7 +78,8 @@ interface Usertypes {
 const UserProfile: React.FC = () => {
   // Make a request to the server to get the user's profile data
   // and then render the components below
-  const User: Usertypes = {
+
+  const [User, setUser] = useState<Usertypes>({
     banner: {
       name: "John Doe",
       title: "Software Engineer",
@@ -205,18 +206,13 @@ const UserProfile: React.FC = () => {
           "I took an introductory computer science course at UC Berkeley.",
       },
     ],
-  };
+  });
 
   // Profile Editable state
   const [editable, setEditable] = useState(false);
 
   const editProfile = () => {
     setEditable(!editable);
-  };
-
-  const updateBanner = (updatedInfo: any) => {
-    console.log(updatedInfo);
-    User.banner = updatedInfo;
   };
 
   return (
@@ -232,19 +228,37 @@ const UserProfile: React.FC = () => {
           connections: User.banner.connections,
           picture: User.banner.picture,
           backdrop: User.banner.backdrop,
+          summary: User.summary,
         }}
         onSubmit={(values) => {
-          console.log(values);
+          setUser({
+            banner: {
+              name: values.name,
+              title: values.title,
+              location: values.location,
+              email: values.email,
+              phone: values.phone,
+              website: values.website,
+              connections: values.connections,
+              picture: values.picture,
+              backdrop: values.backdrop,
+            },
+            summary: values.summary,
+            projects: User.projects,
+            skills: User.skills,
+            experience: User.experience,
+            education: User.education,
+            languages: User.languages,
+            awards: User.awards,
+            courses: User.courses,
+          });
+
+          editProfile();
         }}
       >
         <Form>
-          <Banner
-            edit={editable}
-            updatedBanner={updateBanner}
-            handleEdit={editProfile}
-            banner={User.banner}
-          />
-          <Summary summary={User.summary} />
+          <Banner edit={editable} banner={User.banner} />
+          <Summary edit={editable} summary={User.summary} />
           <Projects projects={User.projects} />
           <Skills skills={User.skills} />
           <Experience experience={User.experience} />
