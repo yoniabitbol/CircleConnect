@@ -1,4 +1,6 @@
 import React from "react";
+import { useState } from "react";
+import { Formik, Form } from "formik";
 
 import Banner from "./Banner";
 import Summary from "./Summary";
@@ -205,17 +207,53 @@ const UserProfile: React.FC = () => {
     ],
   };
 
+  // Profile Editable state
+  const [editable, setEditable] = useState(false);
+
+  const editProfile = () => {
+    setEditable(!editable);
+  };
+
+  const updateBanner = (updatedInfo: any) => {
+    console.log(updatedInfo);
+    User.banner = updatedInfo;
+  };
+
   return (
     <div>
-      <Banner banner={User.banner} />
-      <Summary summary={User.summary} />
-      <Projects projects={User.projects} />
-      <Skills skills={User.skills} />
-      <Experience experience={User.experience} />
-      <Education />
-      <Languages />
-      <Awards />
-      <Courses />
+      <Formik
+        initialValues={{
+          name: User.banner.name,
+          title: User.banner.title,
+          location: User.banner.location,
+          email: User.banner.email,
+          phone: User.banner.phone,
+          website: User.banner.website,
+          connections: User.banner.connections,
+          picture: User.banner.picture,
+          backdrop: User.banner.backdrop,
+        }}
+        onSubmit={(values) => {
+          console.log(values);
+        }}
+      >
+        <Form>
+          <Banner
+            edit={editable}
+            updatedBanner={updateBanner}
+            handleEdit={editProfile}
+            banner={User.banner}
+          />
+          <Summary summary={User.summary} />
+          <Projects projects={User.projects} />
+          <Skills skills={User.skills} />
+          <Experience experience={User.experience} />
+          <Education />
+          <Languages />
+          <Awards />
+          <Courses />
+        </Form>
+      </Formik>
     </div>
   );
 };
