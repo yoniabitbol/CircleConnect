@@ -1,7 +1,6 @@
 import request from 'supertest';
 import app from './app';
 import User from './models/userModel';
-import usingAuth from "./usingAuth";
 
 const mockingoose = require('mockingoose');
 
@@ -39,16 +38,6 @@ describe('Server tests', () => {
         done();
       });
   });
-
-//   test('', (done) => {
-//     request(app)
-//       .get('/api/users')
-//       .then((response) => {
-//         expect(response.statusCode).toBe(500);
-//         expect(response.text).toBe('{"status":"error","message":"Get all users not implemented yet"}');
-//         done();
-//       });
-//   });
 
   test('Request create user for already existing user', (done) => {
     mockingoose(User).toReturn(
