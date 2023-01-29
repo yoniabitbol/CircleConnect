@@ -1,6 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
+import getUserProfile from "../../utils/getUserProfile";
+import updateUserProfile from "../../utils/updateUserProfile";
 
 import Banner from "./Banner";
 import Summary from "./Summary";
@@ -13,17 +15,16 @@ import Awards from "./Awards";
 import Courses from "./Courses";
 
 interface Usertypes {
-  banner: {
-    name: string;
-    title: string;
-    location: string;
-    email: string;
-    phone: string;
-    website: string;
-    connections: number;
-    picture: string;
-    backdrop: string;
-  };
+  name: string;
+  title: string;
+  location: string;
+  email: string;
+  phone: string;
+  website: string;
+  connections: number;
+  picture: string;
+  backdrop: string;
+
   summary: string;
   projects: {
     title: string;
@@ -80,169 +81,123 @@ const UserProfile: React.FC = () => {
   // and then render the components below
 
   const [User, setUser] = useState<Usertypes>({
-    banner: {
-      name: "John Doe",
-      title: "Software Engineer",
-      location: "New York, NY",
-      email: "johndoe@gmail.com",
-      phone: "555-555-5555",
-      website: "www.johndoe.com",
-      connections: 500,
-      picture: "https://randomuser.me/api/portraits/women/76.jpg",
-      backdrop: "https://source.unsplash.com/random",
-    },
-
-    summary:
-      // eslint-disable-next-line max-len
-      "I am a software engineer with 5 years of experience in the field. I have worked on many projects and have a lot of experience in the field.",
-
+    name: " ",
+    title: " ",
+    location: " ",
+    email: " ",
+    phone: " ",
+    website: " ",
+    connections: 0,
+    picture: " ",
+    backdrop: " ",
+    summary: " ",
     projects: [
       {
-        title: "Google Maps",
-        description:
-          "I worked on the Google Maps team and worked on the front end of the application.",
-        startDate: "2018-01-01",
-        endDate: "2019-01-01",
-        technologies: ["JavaScript", "React", "Node", "MongoDB"],
-        picture: "https://source.unsplash.com/random",
-      },
-      {
-        title: "Facebook Messenger",
-        description:
-          "I worked on the Facebook Messenger team and worked on the front end of the application.",
-        startDate: "2019-01-01",
-        endDate: "2020-01-01",
-        technologies: ["JavaScript", "React", "Node", "MongoDB"],
-        picture: "https://source.unsplash.com/random",
+        title: " ",
+        description: " ",
+        startDate: " ",
+        endDate: " ",
+        technologies: [" "],
+        picture: " ",
       },
     ],
-
     skills: [
       {
-        name: "JavaScript",
-        level: "Advanced",
-      },
-      {
-        name: "React",
-        level: "Advanced",
-      },
-      {
-        name: "Node",
-        level: "Intermediate",
-      },
-      {
-        name: "MongoDB",
-        level: "Intermediate",
-      },
-      {
-        name: "HTML",
-        level: "Advanced",
-      },
-      {
-        name: "CSS",
-        level: "Advanced",
+        name: " ",
+        level: " ",
       },
     ],
     experience: [
       {
-        company: "Google",
-        logo: "https://source.unsplash.com/random",
-        title: "Software Engineer",
-        location: "New York, NY",
-        startDate: "2018-01-01",
-        endDate: "2019-01-01",
-        description:
-          "I worked on the Google Maps team and worked on the front end of the application.",
-      },
-      {
-        company: "Facebook",
-        logo: "https://source.unsplash.com/random",
-        title: "Software Engineer",
-        location: "New York, NY",
-        startDate: "2019-01-01",
-        endDate: "2020-01-01",
-        description:
-          "I worked on the Facebook Messenger team and worked on the front end of the application.",
+        company: " ",
+        logo: " ",
+        title: " ",
+        location: " ",
+        startDate: " ",
+        endDate: " ",
+        description: " ",
       },
     ],
     education: [
       {
-        school: "University of California, Berkeley",
-        logo: "https://source.unsplash.com/random",
-        degree: "B.S. Computer Science",
-        location: "Berkeley, CA",
-        startDate: "2015-01-01",
-        endDate: "2019-01-01",
-        description:
-          "I studied computer science at UC Berkeley and graduated with a B.S. in Computer Science.",
+        school: " ",
+        logo: " ",
+        degree: " ",
+        location: " ",
+        startDate: " ",
+        endDate: " ",
+        description: " ",
       },
     ],
     languages: [
       {
-        name: "English",
-        level: "Native",
-      },
-      {
-        name: "Spanish",
-        level: "Intermediate",
+        name: " ",
+        level: " ",
       },
     ],
     awards: [
       {
-        title: "Best Software Engineer",
-        date: "2019-01-01",
-        awarder: "Google",
-        summary: "I won the award for best software engineer at Google.",
+        title: " ",
+        date: " ",
+        awarder: " ",
+        summary: " ",
       },
     ],
     courses: [
       {
-        title: "Introduction to Computer Science",
-        number: "CS 61A",
-        school: "University of California, Berkeley",
-        startDate: "2015-01-01",
-        endDate: "2015-05-01",
-        description:
-          "I took an introductory computer science course at UC Berkeley.",
+        title: " ",
+        number: " ",
+        school: " ",
+        startDate: " ",
+        endDate: " ",
+        description: " ",
       },
     ],
   });
+
+  useEffect(() => {
+    getUserProfile().then((res) => {
+      setUser(res.data.user);
+      console.log(User);
+      if (!User) return;
+    });
+  }, []);
 
   // Profile Editable state
   const [editable, setEditable] = useState(false);
 
   const editProfile = () => {
     setEditable(!editable);
+    updateUserProfile(User);
   };
 
   return (
     <div>
       <Formik
         initialValues={{
-          name: User.banner.name,
-          title: User.banner.title,
-          location: User.banner.location,
-          email: User.banner.email,
-          phone: User.banner.phone,
-          website: User.banner.website,
-          connections: User.banner.connections,
-          picture: User.banner.picture,
-          backdrop: User.banner.backdrop,
+          name: User.name,
+          title: User.title,
+          location: User.location,
+          email: User.email,
+          phone: User.phone,
+          website: User.website,
+          connections: User.connections,
+          picture: User.picture,
+          backdrop: User.backdrop,
           summary: User.summary,
         }}
         onSubmit={(values) => {
           setUser({
-            banner: {
-              name: values.name,
-              title: values.title,
-              location: values.location,
-              email: values.email,
-              phone: values.phone,
-              website: values.website,
-              connections: values.connections,
-              picture: values.picture,
-              backdrop: values.backdrop,
-            },
+            name: values.name,
+            title: values.title,
+            location: values.location,
+            email: values.email,
+            phone: values.phone,
+            website: values.website,
+            connections: values.connections,
+            picture: values.picture,
+            backdrop: values.backdrop,
+
             summary: values.summary,
             projects: User.projects,
             skills: User.skills,
@@ -257,7 +212,20 @@ const UserProfile: React.FC = () => {
         }}
       >
         <Form>
-          <Banner edit={editable} banner={User.banner} />
+          <Banner
+            edit={editable}
+            banner={{
+              name: User.name,
+              title: User.title,
+              location: User.location,
+              email: User.email,
+              phone: User.phone,
+              website: User.website,
+              connections: User.connections,
+              picture: User.picture,
+              backdrop: User.backdrop,
+            }}
+          />
           <Summary edit={editable} summary={User.summary} />
           <Projects projects={User.projects} />
           <Skills skills={User.skills} />

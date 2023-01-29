@@ -1,17 +1,19 @@
+import { auth } from "../firebase/config";
+
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 const url = `http://localhost:${port}/api/users`;
+
 interface Usertypes {
-  banner: {
-    name: string;
-    title: string;
-    location: string;
-    email: string;
-    phone: string;
-    website: string;
-    connections: number;
-    picture: string;
-    backdrop: string;
-  };
+  name: string;
+  title: string;
+  location: string;
+  email: string;
+  phone: string;
+  website: string;
+  connections: number;
+  picture: string;
+  backdrop: string;
+
   summary: string;
   projects: {
     title: string;
@@ -63,15 +65,22 @@ interface Usertypes {
   }[];
 }
 //review UserTypes and import it from somewhere else, do not keep in here
-async function updateUserProfile(token: string, user_id: string, profile: Usertypes) {
+async function updateUserProfile(profile: Usertypes) {
+  const user = auth.currentUser;
+  const token = user && (await user.getIdToken());
+
+  const id = user && user.uid;
+  if (!id) {
+    return;
+  }
   const res = await fetch(url, {
-    method: 'PATCH',
+    method: "PATCH",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      user_id,
+      id,
       profile,
     }),
   });
