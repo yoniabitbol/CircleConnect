@@ -74,6 +74,7 @@ async function updateUserProfile(profile: Usertypes) {
   if (!user_id) {
     return;
   }
+  console.log(user_id, profile);
 
   const res = await fetch(url, {
     method: "PATCH",

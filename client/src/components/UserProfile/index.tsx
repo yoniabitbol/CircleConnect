@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Formik, Form } from "formik";
 import getUserProfile from "../../utils/getUserProfile";
 import updateUserProfile from "../../utils/updateUserProfile";
@@ -154,35 +154,41 @@ const UserProfile: React.FC = () => {
       },
     ],
   });
-
-  useEffect(() => {
-    getUserProfile().then((res) => {
-      console.log(res.data.user);
-      setUser({
-        name: res.data.user.name,
-        title: res.data.user.title,
-        location: res.data.user.location,
-        email: res.data.user.email,
-        phone: res.data.user.phone,
-        website: res.data.user.website,
-        connections: res.data.user.connections,
-        picture: res.data.user.picture,
-        backdrop: res.data.user.backdrop,
-        summary: res.data.user.summary,
-        projects: res.data.user.projects,
-        skills: res.data.user.skills,
-        experience: res.data.user.experience,
-        education: res.data.user.education,
-        languages: res.data.user.languages,
-        awards: res.data.user.awards,
-        courses: res.data.user.courses,
-      });
-      if (!User) return;
-    });
-  }, []);
-
   // Profile Editable state
   const [editable, setEditable] = useState(false);
+  const initialRender = useRef(true);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      getUserProfile().then((res) => {
+        setUser({
+          name: res.data.user.name,
+          title: res.data.user.title,
+          location: res.data.user.location,
+          email: res.data.user.email,
+          phone: res.data.user.phone,
+          website: res.data.user.website,
+          connections: res.data.user.connections,
+          picture: res.data.user.picture,
+          backdrop: res.data.user.backdrop,
+          summary: res.data.user.summary,
+          projects: res.data.user.projects,
+          skills: res.data.user.skills,
+          experience: res.data.user.experience,
+          education: res.data.user.education,
+          languages: res.data.user.languages,
+          awards: res.data.user.awards,
+          courses: res.data.user.courses,
+        });
+        if (!User) return;
+      });
+      console.log("fetched");
+    } else {
+      updateUserProfile(User);
+      console.log("updated");
+    }
+  }, [editable]);
 
   const editProfile = (values: any) => {
     setUser({
@@ -206,11 +212,6 @@ const UserProfile: React.FC = () => {
     });
     setEditable(!editable);
   };
-
-  useEffect(() => {
-    updateUserProfile(User);
-    console.log("updated");
-  }, [User]);
 
   return (
     <div>
