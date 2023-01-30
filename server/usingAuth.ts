@@ -1,3 +1,5 @@
-const usingAuth = true;
+const usingAuth = () => {
+  return true;
+};
 
 export default usingAuth;

@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import morgan, { StreamOptions } from 'morgan';
 import { Logger, RequestLogger } from './logger';
 

@@ -7,8 +7,8 @@ import usingAuth from './usingAuth';
 
 const app = express();
 
-if (usingAuth) {
-  app.use(express.json());
+app.use(express.json());
+if (usingAuth()) {
   app.use(cors());
   app.use(decodeToken);
   app.use(MorganMiddleware);
