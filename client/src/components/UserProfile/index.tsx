@@ -184,11 +184,33 @@ const UserProfile: React.FC = () => {
   // Profile Editable state
   const [editable, setEditable] = useState(false);
 
-  const editProfile = () => {
-    console.log(User);
+  const editProfile = (values: any) => {
+    setUser({
+      name: values.name,
+      title: values.title,
+      location: values.location,
+      email: values.email,
+      phone: values.phone,
+      website: values.website,
+      connections: values.connections,
+      picture: values.picture,
+      backdrop: values.backdrop,
+      summary: values.summary,
+      projects: values.projects,
+      skills: values.skills,
+      experience: values.experience,
+      education: values.education,
+      languages: values.languages,
+      awards: values.awards,
+      courses: values.courses,
+    });
     setEditable(!editable);
-    updateUserProfile(User);
   };
+
+  useEffect(() => {
+    updateUserProfile(User);
+    console.log("updated");
+  }, [User]);
 
   return (
     <div>
@@ -204,30 +226,18 @@ const UserProfile: React.FC = () => {
           picture: User.picture,
           backdrop: User.backdrop,
           summary: User.summary,
+          projects: User.projects,
+          skills: User.skills,
+          experience: User.experience,
+          education: User.education,
+          languages: User.languages,
+          awards: User.awards,
+          courses: User.courses,
         }}
         enableReinitialize
         onSubmit={(values) => {
-          setUser({
-            name: values.name,
-            title: values.title,
-            location: values.location,
-            email: values.email,
-            phone: values.phone,
-            website: values.website,
-            connections: values.connections,
-            picture: values.picture,
-            backdrop: values.backdrop,
-            summary: values.summary,
-            projects: User.projects,
-            skills: User.skills,
-            experience: User.experience,
-            education: User.education,
-            languages: User.languages,
-            awards: User.awards,
-            courses: User.courses,
-          });
-
-          editProfile();
+          editProfile(values);
+          console.log("submited");
         }}
       >
         <Form>

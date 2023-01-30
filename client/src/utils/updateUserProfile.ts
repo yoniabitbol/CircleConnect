@@ -69,10 +69,12 @@ async function updateUserProfile(profile: Usertypes) {
   const user = auth.currentUser;
   const token = user && (await user.getIdToken());
 
-  const id = user && user.uid;
-  if (!id) {
+  const user_id = user && user.uid;
+
+  if (!user_id) {
     return;
   }
+
   const res = await fetch(url, {
     method: "PATCH",
     headers: {
@@ -80,7 +82,7 @@ async function updateUserProfile(profile: Usertypes) {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      id,
+      user_id,
       profile,
     }),
   });
