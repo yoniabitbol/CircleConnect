@@ -157,8 +157,26 @@ const UserProfile: React.FC = () => {
 
   useEffect(() => {
     getUserProfile().then((res) => {
-      setUser(res.data.user);
-      console.log(User);
+      console.log(res.data.user);
+      setUser({
+        name: res.data.user.name,
+        title: res.data.user.title,
+        location: res.data.user.location,
+        email: res.data.user.email,
+        phone: res.data.user.phone,
+        website: res.data.user.website,
+        connections: res.data.user.connections,
+        picture: res.data.user.picture,
+        backdrop: res.data.user.backdrop,
+        summary: res.data.user.summary,
+        projects: res.data.user.projects,
+        skills: res.data.user.skills,
+        experience: res.data.user.experience,
+        education: res.data.user.education,
+        languages: res.data.user.languages,
+        awards: res.data.user.awards,
+        courses: res.data.user.courses,
+      });
       if (!User) return;
     });
   }, []);
@@ -167,6 +185,7 @@ const UserProfile: React.FC = () => {
   const [editable, setEditable] = useState(false);
 
   const editProfile = () => {
+    console.log(User);
     setEditable(!editable);
     updateUserProfile(User);
   };
@@ -186,6 +205,7 @@ const UserProfile: React.FC = () => {
           backdrop: User.backdrop,
           summary: User.summary,
         }}
+        enableReinitialize
         onSubmit={(values) => {
           setUser({
             name: values.name,
@@ -197,7 +217,6 @@ const UserProfile: React.FC = () => {
             connections: values.connections,
             picture: values.picture,
             backdrop: values.backdrop,
-
             summary: values.summary,
             projects: User.projects,
             skills: User.skills,
