@@ -24,7 +24,11 @@ function App() {
                   <Navigate to="/login" />
                 )
               }
-            />
+            /> 
+            <Route
+                path="profile"
+                element={user ? <Profile /> : <Navigate to="/" />}
+              />
             <Route path="/*" element={<AuthHeader />}>
               <Route
                 path="signup"
@@ -34,10 +38,7 @@ function App() {
                 path="login"
                 element={!user ? <Login /> : <Navigate to="/" />}
               />
-              <Route
-                path="profile"
-                element={user ? <Profile /> : <Navigate to="/" />}
-              />
+             
               <Route
                 path="forgot"
                 element={!user ? <ForgotPass /> : <Navigate to="/" />}

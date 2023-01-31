@@ -1,8 +1,15 @@
 {
   "name": "client",
   "jest": {
-    "coveragePathIgnorePatterns": ["src/contexts/AuthContext", "src/hooks", "src/index.ts", "src/reportWebVitals",
-      "src/firebase", "src/lib", "src/Models"]
+    "coveragePathIgnorePatterns": [
+      "src/contexts/AuthContext",
+      "src/hooks",
+      "src/index.ts",
+      "src/reportWebVitals",
+      "src/firebase",
+      "src/lib",
+      "src/Models"
+    ]
   },
   "version": "0.1.0",
   "private": true,
@@ -32,6 +39,10 @@
     ]
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
