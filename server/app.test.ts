@@ -128,7 +128,7 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users')
-      .send({user_id: 'test'})
+      .send({user_id: 'test', profile: {name: 'testProfile'}})
       .then((response) => {
         expect(response.statusCode).toBe(201);
         expect(response.text).toContain('{"status":"success","data":{');
@@ -147,7 +147,8 @@ describe('Server tests', () => {
       .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(400);
-        expect(response.text).toContain('{"status":"ERROR: Error","message":"error updating user"}');
+        expect(response.text).toBe('{"status":"ERROR: TypeError: Cannot convert undefined or null to ' +
+          'object","message":"error updating user"}');
         done();
       });
   });

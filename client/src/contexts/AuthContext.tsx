@@ -3,7 +3,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase/config';
 
 export const AuthContext = createContext({
-  user: null,
+  user: null ,
   authIsReady: false,
 });
 

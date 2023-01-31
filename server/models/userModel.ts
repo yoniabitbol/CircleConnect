@@ -1,19 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
   user_id: {
     type: String,
-    required: [true, 'User ID required.'],
+    required: [true, "User ID required."],
     unique: true,
     immutable: true,
   },
   name: {
     type: String,
-    required: [true, 'Name required.'],
+    required: [true, "Name required."],
   },
   email: {
     type: String,
-    required: [true, 'Email required.'],
+    required: [true, "Email required."],
     unique: true,
     lowercase: true,
     immutable: true,
@@ -175,8 +175,7 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
-
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;
