@@ -96,14 +96,41 @@ describe('App root', () => {
   });
 });
 
+jest.mock('./utils/getUserProfile', () => ({
+  __esModule: true,
+  default: async () => {
+    return {data: {user: {
+                  name: 'test',
+                  title: 'test',
+                  location: 'test',
+                  email: 'test',
+                  phone: 'test',
+                  website: 'test',
+                  connections: 'test',
+                  picture: 'test',
+                  backdrop: 'test',
+                  summary: 'test',
+                  projects: 'test',
+                  skills: 'test',
+                  experience: 'test',
+                  education: 'test',
+                  languages: 'test',
+                  awards: 'test',
+                  courses: 'test'
+    }}};
+  },
+}));
+
 describe('User profile', () => {
   test('Check and validate page navigation', async () => {
-    render(
-      <UserProfile />
-    );
+    await act(() => {
+      render(
+        <UserProfile />
+      );
+    });
 
     expect(
-      screen.getByText('About'),
+      await screen.getByText('About'),
     ).toBeInTheDocument();
   });
 });
