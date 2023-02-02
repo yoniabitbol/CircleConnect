@@ -5,11 +5,9 @@ import Profile from "./Routes/Profile";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
-import useLogout from "./hooks/useLogout";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
-  const { logout } = useLogout();
   return (
     <>
       {authIsReady && (
@@ -19,7 +17,7 @@ function App() {
               path="/"
               element={
                 user ? (
-                  <button onClick={logout}> Logout </button>
+                  <Profile />
                 ) : (
                   <Navigate to="/login" />
                 )
