@@ -6,6 +6,7 @@ import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
 import useLogout from "./hooks/useLogout";
+import Network from "./Routes/Network";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -41,6 +42,10 @@ function App() {
               <Route
                 path="forgot"
                 element={!user ? <ForgotPass /> : <Navigate to="/" />}
+              />
+              <Route
+                path="forgot"
+                element={!user ? <Network /> : <Navigate to="/" />}
               />
             </Route>
           </Routes>
