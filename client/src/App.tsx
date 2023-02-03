@@ -44,7 +44,7 @@ function App() {
                 element={!user ? <ForgotPass /> : <Navigate to="/" />}
               />
               <Route
-                path="forgot"
+                path="network"
                 element={!user ? <Network /> : <Navigate to="/" />}
               />
             </Route>
