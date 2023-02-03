@@ -4,12 +4,22 @@ import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar";
 import { Avatar, Button } from "@mui/material";
 import useLogout from "../../hooks/useLogout";
-
+import MobileNav from "./MobileNav";
+import NavLinkModels from "../../lib/NavLinkModels";
+import getUserProfile from "../../utils/getUserProfile";
+import {Outlet} from "react-router-dom";
 const NavBar: React.FC = () => {
   const {logout} = useLogout();
+  const [userProfilePic, setUserProfilePic] = React.useState<string>();
+  getUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
   return (
+    <>
     <div className="max-w-full p-2 flex items-center">
-      <div className="flex w-1/2 h-max  max-md:w-4/5 ">
+      <div className="md:hidden">
+        <MobileNav links={NavLinkModels}/>
+      </div>
+
+      <div className="flex w-1/2 h-max  max-md:w-4/5 max-md:hidden">
         <Link className="ml-5 w-2/5" to='/'>
           <img
             className="w-20"
@@ -17,21 +27,22 @@ const NavBar: React.FC = () => {
             alt="logo"
           />
         </Link>
-        <NavLinks />
+        <NavLinks links={NavLinkModels}/>
       </div>
-      <div className="flex justify-end items-center w-1/2">
+      <div className="flex justify-end items-center w-1/2 max-md:w-full">
         <div className="flex items-center p-2.5">
-          <div className="max-md:hidden">
+          <div>
             <SearchBar/>
           </div>
         </div>
-        <div className="flex space-x-7">
-          <Avatar />
-          <Button onClick={logout} variant="outlined">Logout</Button>
+        <div className="flex">
+          <Link to="/profile"><Avatar src={userProfilePic}/></Link>
+          <Button onClick={logout} sx={{color: '#4B47B7'}}>Logout</Button>
         </div>
       </div>
-      
     </div>
+<Outlet/>
+      </>
     )};
 
 export default NavBar;
