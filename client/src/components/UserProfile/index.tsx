@@ -260,7 +260,7 @@ const UserProfile: React.FC = () => {
           <Projects projects={User.projects} />
           <Skills skills={User.skills} />
           <Experience experience={User.experience} />
-          <Education />
+          <Education education={User.education}/>
           <Languages />
           <Awards />
           <Courses />
