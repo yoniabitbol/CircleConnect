@@ -18,8 +18,8 @@ jest.mock('./hooks/useAuthContext', () => ({
 
 describe('App root', () => {
   test('Check and validate page navigation', async () => {
-    await act(() => {
-      render(
+    await act(async () => {
+      await render(
         <App/>
       );
     });
@@ -28,12 +28,15 @@ describe('App root', () => {
         screen.getByText('Forgot Password?'),
     ).toBeInTheDocument();
 
-    await act(() => {
-      userEvent.click(screen.getByText('Sign up here'));
+    await act(async () => {
+      let signupButton = await act(() => {
+        return screen.getByText('Sign up here');
+      });
+      await userEvent.click(signupButton);
     });
 
     expect(
-        screen.getByText('Register'),
+        await screen.getByText('Register'),
     ).toBeInTheDocument();
 
 
@@ -42,58 +45,96 @@ describe('App root', () => {
      impossible to create a separate test that successively passes on its own and during an execution of all tests.
      Ideally the starting page should be settable between each test.
     */
-    await act(() => {
-      userEvent.click(screen.getByText('Login here'));
+    await act(async () => {
+      let forgotPassButton = await act(() => {
+        return screen.getByText('Login here');
+      });
+      await userEvent.click(forgotPassButton);
     });
 
-    await act(() => {
-      userEvent.click(screen.getByText('Forgot Password?'));
+    await act(async () => {
+      let forgotPassButton = await act(() => {
+        return screen.getByText('Forgot Password?');
+      });
+      await userEvent.click(forgotPassButton);
     });
 
     expect(
       screen.getByText('Forgot Password'),
     ).toBeInTheDocument();
 
-    await act(() => {
-      userEvent.type(screen.getByPlaceholderText('Email'), 'test@hotmail.com');
+    await act(async () => {
+      let emailField = await act(() => {
+        return screen.getByPlaceholderText('Email');
+      });
+      await userEvent.type(emailField, 'test@hotmail.com');
     });
 
-    await act(() => {
-      userEvent.click(screen.getByText('Reset'));
-    });
-
-    // expect(
-    //   screen.getByText('Email is not registered'),
-    // ).toBeInTheDocument();
-
-    // This should be in a separate test
-    await act(() => {
-      userEvent.click(screen.getByText('Sign up here'));
-    });
-
-    await act(() => {
-      userEvent.type(screen.getByPlaceholderText('First Name'), 'Test');
-      userEvent.type(screen.getByPlaceholderText('Last Name'), 'Man');
-      userEvent.type(screen.getByPlaceholderText('Email'), 'test@hotmail.com');
-      userEvent.type(screen.getByPlaceholderText('Password'), 'Test123@');
-    });
-
-    await act(() => {
-      userEvent.click(screen.getByText('Register'));
+    await act(async () => {
+      let resetButton = await act(() => {
+        return screen.getByText('Reset');
+      });
+      await userEvent.click(resetButton);
     });
 
     // This should be in a separate test
-    await act(() => {
-      userEvent.click(screen.getByText('Login here'));
+    await act(async () => {
+      let signupButton = await act(() => {
+        return screen.getByText('Sign up here');
+      });
+      await userEvent.click(signupButton);
     });
 
-    await act(() => {
-      userEvent.type(screen.getByPlaceholderText('Email'), 'Test@hotmail.com');
-      userEvent.type(screen.getByPlaceholderText('Password'), 'Test123@');
+    await act(async () => {
+      let firstNameField = await act(() => {
+        return screen.getByPlaceholderText('First Name');
+      });
+      let lastNameField = await act(() => {
+        return screen.getByPlaceholderText('Last Name');
+      });
+      let emailField = await act(() => {
+        return screen.getByPlaceholderText('Email');
+      });
+      let passwordField = await act(() => {
+        return screen.getByPlaceholderText('Password');
+      });
+      await userEvent.type(firstNameField, 'Test');
+      await userEvent.type(lastNameField, 'Man');
+      await userEvent.type(emailField, 'test@hotmail.com');
+      await userEvent.type(passwordField, 'Test123@');
     });
 
-    await act(() => {
-      userEvent.click(screen.getAllByText('Login')[1]);
+    await act(async () => {
+      let registerButton = await act(() => {
+        return screen.getByText('Register');
+      });
+      await userEvent.click(registerButton);
+    });
+
+    // This should be in a separate test
+    await act(async () => {
+      let loginButton = await act(() => {
+        return screen.getByText('Login here');
+      });
+      await userEvent.click(loginButton);
+    });
+
+    await act(async () => {
+      let emailField = await act(() => {
+        return screen.getByPlaceholderText('Email');
+      });
+      let passwordField = await act(() => {
+        return screen.getByPlaceholderText('Password');
+      });
+      await userEvent.type(emailField, 'Test@hotmail.com');
+      await userEvent.type(passwordField, 'Test123@');
+    });
+
+    await act(async () => {
+      let loginButton = await act(() => {
+        return screen.getAllByText('Login')[1];
+      });
+      await userEvent.click(loginButton);
     });
   });
 });
@@ -112,21 +153,76 @@ jest.mock('./utils/getUserProfile', () => ({
                   picture: 'test',
                   backdrop: 'test',
                   summary: 'test',
-                  projects: 'test',
-                  skills: 'test',
-                  experience: 'test',
-                  education: 'test',
-                  languages: 'test',
-                  awards: 'test',
-                  courses: 'test'
-    }}};
+                  projects: [
+                    {
+                      title: " ",
+                      description: " ",
+                      startDate: " ",
+                      endDate: " ",
+                      technologies: [" "],
+                      picture: " ",
+                    },
+                  ],
+                  skills: [
+                    {
+                      name: " ",
+                      level: " ",
+                    },
+                  ],
+                  experience: [
+                    {
+                      company: " ",
+                      logo: " ",
+                      title: " ",
+                      location: " ",
+                      startDate: " ",
+                      endDate: " ",
+                      description: " ",
+                    },
+                  ],
+                  education: [
+                    {
+                      school: " ",
+                      logo: " ",
+                      degree: " ",
+                      location: " ",
+                      startDate: " ",
+                      endDate: " ",
+                      description: " ",
+                    },
+                  ],
+                  languages: [
+                    {
+                      name: " ",
+                      level: " ",
+                    },
+                  ],
+                  awards: [
+                    {
+                      title: " ",
+                      date: " ",
+                      awarder: " ",
+                      summary: " ",
+                    },
+                  ],
+                  courses: [
+                    {
+                      title: " ",
+                      number: " ",
+                      school: " ",
+                      startDate: " ",
+                      endDate: " ",
+                      description: " ",
+                    },
+                  ],}}
+    };
   },
 }));
 
 describe('User profile', () => {
   test('Check and validate page navigation', async () => {
-    await act(() => {
-      render(
+    await act(async () => {
+      await render(
         <UserProfile />
       );
     });
