@@ -18,9 +18,11 @@ jest.mock('./hooks/useAuthContext', () => ({
 
 describe('App root', () => {
   test('Check and validate page navigation', async () => {
-    render(
-        <App />
-    );
+    await act(() => {
+      render(
+        <App/>
+      );
+    });
 
     expect(
         screen.getByText('Forgot Password?'),
