@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
 import Profile from "./Routes/Profile";
+import Notifications from "./Routes/Notifications";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
@@ -45,6 +46,10 @@ function App() {
               <Route
                 path="forgot"
                 element={!user ? <ForgotPass /> : <Navigate to="/" />}
+              />
+              <Route
+                path="notifications"
+                element={!user ? <Notifications /> : <Navigate to="/" />}
               />
             </Route>
           </Routes>
