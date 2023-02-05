@@ -1,15 +1,11 @@
 import React from "react";
-import AuthContent from "../../components/AuthContent";
 
 const Network: React.FC = () => {
   return (
-    <div className="lg:flex justify-center lg:text-left text-center">
-      <AuthContent />
-
-      <h1>Network</h1>
-
-      <div className="hidden lg:block lg:absolute lg:left-1/3 lg:bottom-40">
-        <img className="h-96" src="Mascot/img.png" alt="logo" />
+    <div className="lg:flex justify-center lg:text-left">
+      <div className="grid grid-cols-2 p-8 w-3/5">
+        <div className="w-4/5">357 CONNECTIONS</div>
+        <div>Search</div>
       </div>
     </div>
   );
