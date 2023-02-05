@@ -1,15 +1,8 @@
 import React from "react";
+import { Usertypes } from "..";
 
 const Education: React.FC<{
-  education: {
-    school: string;
-    logo: string;
-    degree: string;
-    location: string;
-    startDate: string;
-    endDate: string;
-    description: string;
-  }[];
+  education: Usertypes["education"];
 }> = ({ education }) => {
   return (
     <div className="lg:w-2/3 w-4/5 m-5 p-5 rounded-md bg-slate-200 mx-auto">

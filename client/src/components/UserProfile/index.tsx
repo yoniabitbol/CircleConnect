@@ -14,7 +14,7 @@ import Languages from "./Languages";
 import Awards from "./Awards";
 import Courses from "./Courses";
 
-interface Usertypes {
+export interface Usertypes {
   name: string;
   title: string;
   location: string;
@@ -260,10 +260,10 @@ const UserProfile: React.FC = () => {
           <Projects projects={User.projects} />
           <Skills skills={User.skills} />
           <Experience experience={User.experience} />
-          <Education education={User.education}/>
-          <Languages />
-          <Awards />
-          <Courses />
+          <Education education={User.education} />
+          <Languages languages={User.languages} />
+          <Awards awards={User.awards} />
+          <Courses courses={User.courses}/>
         </Form>
       </Formik>
     </div>
