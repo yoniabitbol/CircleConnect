@@ -7,7 +7,7 @@ const Skills: React.FC<{
   }[];
 }> = ({ skills }) => {
   return (
-    <div className="lg:w-2/3 w-4/5 m-5 p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
       <h1 className="text-2xl font-bold ">Skills</h1>
       {skills.map((skill, index) => {
         return (

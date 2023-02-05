@@ -13,6 +13,10 @@ import Education from "./Education";
 import Languages from "./Languages";
 import Awards from "./Awards";
 import Courses from "./Courses";
+import Layout from "./Layout/layout";
+import LeftSection from "./Layout/leftSecontion";
+import RightSection from "./Layout/rightSection";
+import Dashboard from "./Dashboard";
 
 export interface Usertypes {
   name: string;
@@ -242,28 +246,35 @@ const UserProfile: React.FC = () => {
         }}
       >
         <Form>
-          <Banner
-            edit={editable}
-            banner={{
-              name: User.name,
-              title: User.title,
-              location: User.location,
-              email: User.email,
-              phone: User.phone,
-              website: User.website,
-              connections: User.connections,
-              picture: User.picture,
-              backdrop: User.backdrop,
-            }}
-          />
-          <Summary edit={editable} summary={User.summary} />
-          <Projects projects={User.projects} />
-          <Skills skills={User.skills} />
-          <Experience experience={User.experience} />
-          <Education education={User.education} />
-          <Languages languages={User.languages} />
-          <Awards awards={User.awards} />
-          <Courses courses={User.courses}/>
+          <Layout>
+            <LeftSection>
+              <Banner
+                edit={editable}
+                banner={{
+                  name: User.name,
+                  title: User.title,
+                  location: User.location,
+                  email: User.email,
+                  phone: User.phone,
+                  website: User.website,
+                  connections: User.connections,
+                  picture: User.picture,
+                  backdrop: User.backdrop,
+                }}
+              />
+              <Summary edit={editable} summary={User.summary} />
+              <Projects projects={User.projects} />
+              <Skills skills={User.skills} />
+              <Experience experience={User.experience} />
+              <Education education={User.education} />
+              <Languages languages={User.languages} />
+              <Awards awards={User.awards} />
+              <Courses courses={User.courses} />
+            </LeftSection>
+            <RightSection>
+              <Dashboard />
+            </RightSection>
+          </Layout>
         </Form>
       </Formik>
     </div>
