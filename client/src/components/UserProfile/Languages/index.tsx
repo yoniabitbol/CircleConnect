@@ -1,5 +1,5 @@
 import React from "react";
-import { Usertypes } from "..";
+import Usertypes from "../../../Models/UserProfileModel";
 
 const Languages: React.FC<{
   languages: Usertypes["languages"];

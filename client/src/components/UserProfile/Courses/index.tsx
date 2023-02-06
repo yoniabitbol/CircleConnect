@@ -1,5 +1,5 @@
 import React from "react";
-import { Usertypes } from "..";
+import Usertypes from "../../../Models/UserProfileModel";
 
 const Courses: React.FC<{ courses: Usertypes["courses"] }> = ({ courses }) => {
   return (
