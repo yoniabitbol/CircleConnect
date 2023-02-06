@@ -8,7 +8,7 @@ async function getCurrentUserProfile() {
   const token = user && (await user.getIdToken());
   const id = user && user.uid;
   if (!id) {
-    return { error: "no user ID found" };
+    return;
   }
   const res = await fetch(url + new URLSearchParams({ user_id: id }), {
     method: "GET",
