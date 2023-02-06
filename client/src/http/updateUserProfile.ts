@@ -68,13 +68,10 @@ interface Usertypes {
 async function updateUserProfile(profile: Usertypes) {
   const user = auth.currentUser;
   const token = user && (await user.getIdToken());
-
-  const user_id = user && user.uid;
-
+  const user_id = user && user.uid
   if (!user_id) {
-    return;
+    return { error: "ID not found" };
   }
-
   const res = await fetch(url, {
     method: "PATCH",
     headers: {
