@@ -58,4 +58,4 @@ export default interface Usertypes {
       endDate: string;
       description: string;
     }[];
-}
+} 

@@ -1,10 +1,11 @@
 import React from "react";
 import UserProfile from "../../components/UserProfile";
-import getUserProfile from "../../utils/getUserProfile";
+import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import Usertypes from "../../Models/UserProfileModel";
+import { useState, useEffect } from "react";
 
 const Profile: React.FC = () => {
-  let myUser: Usertypes = {
+  const [myUser, setMyUser] = useState<Usertypes>({
     name: "",
     title: "",
     location: "",
@@ -22,12 +23,14 @@ const Profile: React.FC = () => {
     languages: [],
     awards: [],
     courses: [],
-  };
-
-  getUserProfile().then((user) => {
-    myUser = user;
-    console.log(myUser);
   });
+
+  useEffect(() => {
+    getCurrentUserProfile().then((res) => {
+      setMyUser(res.data.user);
+    });
+  }, []);
+
 
   return (
     <>
