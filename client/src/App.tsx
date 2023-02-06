@@ -30,6 +30,10 @@ function App() {
                 path="profile"
                 element={user ? <Profile /> : <Navigate to="/" />}
               />
+               <Route
+                path="notifications"
+                element={user ? <Notifications /> : <Navigate to="/" />}
+              />
             </Route>
             
             <Route path="/*" element={<AuthHeader />}>
@@ -45,10 +49,6 @@ function App() {
               <Route
                 path="forgot"
                 element={!user ? <ForgotPass /> : <Navigate to="/" />}
-              />
-              <Route
-                path="notifications"
-                element={!user ? <Notifications /> : <Navigate to="/" />}
               />
             </Route>
           </Routes>
