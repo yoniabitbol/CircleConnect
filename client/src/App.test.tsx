@@ -139,7 +139,7 @@ describe('App root', () => {
   });
 });
 
-jest.mock('./utils/getUserProfile', () => ({
+jest.mock('./http/getUserProfile', () => ({
   __esModule: true,
   default: async () => {
     return {data: {user: {

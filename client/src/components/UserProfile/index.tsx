@@ -1,8 +1,8 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { Formik, Form } from "formik";
-import getUserProfile from "../../utils/getUserProfile";
-import updateUserProfile from "../../utils/updateUserProfile";
+import getCurrentUserProfile from "../../http/getCurrentUserProfile";
+import updateUserProfile from "../../http/updateUserProfile";
 
 import Banner from "./Banner";
 import Summary from "./Summary";
@@ -161,7 +161,7 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false;
-      getUserProfile().then((res) => {
+      getCurrentUserProfile().then((res) => {
         setUser({
           name: res.data.user.name,
           title: res.data.user.title,
