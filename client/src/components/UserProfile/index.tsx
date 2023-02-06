@@ -22,21 +22,12 @@ import Dashboard from "./Dashboard";
 const UserProfile: React.FC<{
   profile: Usertypes;
 }> = ({ profile }) => {
-  // Make a request to the server to get the user's profile data
-  // and then render the components below
-
   const [User, setUser] = useState<Usertypes>(profile);
   const [editable, setEditable] = useState(false);
 
   useEffect(() => {
     setUser(profile);
   }, [profile]);
-
-  useEffect(() => {
-    updateUserProfile(User);
-  }, [User]);
-
-  console.log(User);
 
   const editProfile = (values: any) => {
     setUser({
@@ -59,6 +50,7 @@ const UserProfile: React.FC<{
       courses: values.courses,
     });
     setEditable(!editable);
+    updateUserProfile(values);
   };
 
   return (
@@ -86,7 +78,6 @@ const UserProfile: React.FC<{
         enableReinitialize
         onSubmit={(values) => {
           editProfile(values);
-          console.log("submited");
         }}
       >
         <Form>
