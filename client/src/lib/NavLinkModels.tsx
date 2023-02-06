@@ -29,8 +29,8 @@ const NavLinkModels = [
   {
     key: 5,
     icon: <NotificationsNoneOutlined/> ,
-    text: "Notices",
-    path: "/notices",
+    text: "Notifications",
+    path: "/notifications",
     
   },]
 
