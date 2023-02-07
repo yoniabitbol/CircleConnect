@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar";
@@ -10,7 +10,7 @@ import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import {Outlet} from "react-router-dom";
 const NavBar: React.FC = () => {
   const {logout} = useLogout();
-  const [userProfilePic, setUserProfilePic] = React.useState<string>();
+  const [userProfilePic, setUserProfilePic] = useState<string>();
   getCurrentUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
   return (
     <>
