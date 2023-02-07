@@ -5,7 +5,7 @@ import User from './models/userModel';
 const mockingoose = require('mockingoose');
 
 jest.mock('./usingAuth', () => ({
-  default: () => {return false;},
+  default: () => false,
   __esModule: true,
 }));
 
@@ -41,13 +41,13 @@ describe('Server tests', () => {
 
   test('Request create user for already existing user', (done) => {
     mockingoose(User).toReturn(
-      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
+      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
       'findOne',
     );
 
     request(app)
       .post('/api/users')
-      .send({user_id: 'test'})
+      .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"user exists","data":{"user":{"user_id":'
@@ -64,7 +64,7 @@ describe('Server tests', () => {
 
     request(app)
       .post('/api/users')
-      .send({user_id: 'test'})
+      .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(201);
         expect(response.text).toContain('{"status":"success","data":{"user":{"user_id":"test","_id":');
@@ -89,17 +89,17 @@ describe('Server tests', () => {
 
   test('Request get user', (done) => {
     mockingoose(User).toReturn(
-      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
+      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
       'findOne',
     );
 
     request(app)
       .get('/api/users')
-      .send({user_id: 'test'})
+      .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(200);
-        expect(response.text).toContain('{"status":"success","data":{"user":{"user_id":"testUser","name":' +
-          '"testUser","email":"testuser","_id":');
+        expect(response.text).toContain('{"status":"success","data":{"user":{"user_id":"testUser","name":'
+          + '"testUser","email":"testuser","_id":');
         done();
       });
   });
@@ -112,7 +112,7 @@ describe('Server tests', () => {
 
     request(app)
       .get('/api/users')
-      .send({user_id: 'test'})
+      .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toContain('{"status":"ERROR: Error","message":"error getting user"}');
@@ -122,13 +122,13 @@ describe('Server tests', () => {
 
   test('Request update user', (done) => {
     mockingoose(User).toReturn(
-      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
+      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
       'findOneAndUpdate',
     );
 
     request(app)
       .patch('/api/users')
-      .send({user_id: 'test', profile: {name: 'testProfile'}})
+      .send({ user_id: 'test', profile: { name: 'testProfile' } })
       .then((response) => {
         expect(response.statusCode).toBe(201);
         expect(response.text).toContain('{"status":"success","data":{');
@@ -144,11 +144,10 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users')
-      .send({user_id: 'test'})
+      .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(400);
-        expect(response.text).toBe('{"status":"ERROR: TypeError: Cannot convert undefined or null to ' +
-          'object","message":"error updating user"}');
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"error updating user"}');
         done();
       });
   });

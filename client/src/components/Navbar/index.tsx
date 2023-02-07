@@ -6,12 +6,12 @@ import { Avatar, Button } from "@mui/material";
 import useLogout from "../../hooks/useLogout";
 import MobileNav from "./MobileNav";
 import NavLinkModels from "../../lib/NavLinkModels";
-import getUserProfile from "../../utils/getUserProfile";
+import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import {Outlet} from "react-router-dom";
 const NavBar: React.FC = () => {
   const {logout} = useLogout();
   const [userProfilePic, setUserProfilePic] = React.useState<string>();
-  getUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
+  getCurrentUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
   return (
     <>
     <div className="max-w-full p-2 flex items-center border">
