@@ -14,7 +14,7 @@ const Dashboard: React.FC<{
               <h1>YOUR DASHBOARD</h1>
               <Link to="/profile" style={{color: '#4B47B7'}} className="underline decoration-solid">GO TO STATS</Link>
             </div>
-            <hr className="w-60 h-0.5 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300"/>
+            <hr className="w-5/6 h-0.5 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300"/>
             <h1 className="text-4xl font-semibold" style={{color: '#4B47B7'}}>{views_today}</h1>
             <h1 className="">views today</h1>
             <h2 className="text-4xl font-semibold" style={{color: '#4B47B7'}}>{posts_views}</h2>
