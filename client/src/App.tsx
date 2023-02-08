@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
 import Profile from "./Routes/Profile";
+import Chat from "./Routes/Chat";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
@@ -28,6 +29,10 @@ function App() {
               <Route
                 path="profile"
                 element={user ? <Profile /> : <Navigate to="/" />}
+              />
+              <Route
+                path="chat"
+                element={user ? <Chat /> : <Navigate to="/" />}
               />
             </Route>
             
