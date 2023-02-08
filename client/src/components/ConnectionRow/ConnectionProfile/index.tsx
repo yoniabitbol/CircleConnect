@@ -9,9 +9,12 @@ const ConnectionProfile: React.FC = () => {
           <img src={placeholder} className="w-16 rounded-full"></img>
         </div>
         <div className="col-span-1">
-          <p>First Name</p>
+          <p>
+            <b>First Last</b>
+          </p>
           <p>Position</p>
           <p>100 Connections</p>
+          {/* No. of connections passed as props */}
         </div>
       </div>
     </div>

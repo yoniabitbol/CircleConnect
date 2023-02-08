@@ -5,14 +5,15 @@ const Network: React.FC = () => {
   return (
     <body style={{ backgroundColor: "#EEF1FF" }}>
       <div className="lg:flex justify-center lg:text-left py-8">
-        <div className="grid grid-cols-3 p-8 w-3/5 gap-1 text-lg bg-white">
+        <div className="grid grid-cols-3 p-4 w-7/12 gap-2 text-base bg-white">
           <div className="col-span-2 font-bold">357 CONNECTIONS</div>
-          <div className="opacity-40">
-            <input placeholder="🔍Search"></input>
-          </div>
+          <input placeholder="Search" style={{ outline: "none" }}></input>
         </div>
       </div>
       {/* No. of connections passed as prop */}
+      <ConnectionRow />
+      <ConnectionRow />
+      <ConnectionRow />
       <ConnectionRow />
       <ConnectionRow />
       <ConnectionRow />
