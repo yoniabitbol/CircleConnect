@@ -70,7 +70,7 @@ async function updateUserProfile(profile: Usertypes) {
   const token = user && (await user.getIdToken());
   const user_id = user && user.uid
   if (!user_id) {
-    return { error: "ID not found" };
+    return;
   }
   const res = await fetch(url, {
     method: "PATCH",

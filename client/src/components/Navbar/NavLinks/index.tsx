@@ -7,7 +7,7 @@ const NavLinks: React.FC<{links: NavLinkModel[]}> = (props) => {
   const navActiveClass = " text-violet-900 border-b-2 border-violet-900";
   
   return (
-    <nav className="ml-2  pt-3">
+    <nav className="ml-14  pt-3 ">
     <ul className="flex list-none items-center">
         {links.map((link : NavLinkModel) => (
             <li key={link.key} className="mr-10 max-md:mr-5">
