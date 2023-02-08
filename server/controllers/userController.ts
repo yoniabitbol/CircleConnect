@@ -26,7 +26,6 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 const createUser = async (req: Request, res: Response) => {
-  console.log(req.query);
   try {
     const checkUser = await User.findOne({ user_id: req.body.user_id });
     if (!checkUser) {
@@ -56,7 +55,16 @@ const createUser = async (req: Request, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const filter = { user_id: req.body.user_id };
-    const update = req.body.profile;
+
+    const update = {
+      ...req.body,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      picture: req.files.picture ? req.files.picture[0].filename : req.body.picture,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      backdrop: req.files ? req.files.backdrop[0].filename : req.body.backdrop,
+    };
     const updatedUser = await User.findOneAndUpdate(filter, update, {
       new: true,
     });

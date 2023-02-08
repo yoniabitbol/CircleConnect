@@ -10,7 +10,7 @@ const stream: StreamOptions = {
   },
 };
 
-const MorganMiddleware = morgan(
+const Morgan = morgan(
   (tokens, req, res) => JSON.stringify({
     method: tokens.method(req, res),
     url: tokens.url(req, res),
@@ -21,4 +21,4 @@ const MorganMiddleware = morgan(
   { stream },
 );
 
-export default MorganMiddleware;
+export default Morgan;
