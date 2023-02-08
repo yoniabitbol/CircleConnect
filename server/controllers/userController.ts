@@ -55,15 +55,27 @@ const createUser = async (req: Request, res: Response) => {
 const updateUser = async (req: Request, res: Response) => {
   try {
     const filter = { user_id: req.body.user_id };
-
+    // if (req.files) {}
     const update = {
-      ...req.body,
+      title: req.body.title,
+      location: req.body.location,
+      phone: req.body.phone,
+      website: req.body.website,
+      connections: req.body.connections,
+      summary: req.body.summary,
+      projects: req.body.projects,
+      skills: req.body.skills,
+      experience: req.body.experience,
+      education: req.body.education,
+      languages: req.body.languages,
+      awards: req.body.awards,
+      courses: req.body.courses,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       picture: req.files.picture ? req.files.picture[0].filename : req.body.picture,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      backdrop: req.files ? req.files.backdrop[0].filename : req.body.backdrop,
+      backdrop: req.files.backdrop ? req.files.backdrop[0].filename : req.body.backdrop,
     };
     const updatedUser = await User.findOneAndUpdate(filter, update, {
       new: true,
