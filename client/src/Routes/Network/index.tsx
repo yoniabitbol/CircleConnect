@@ -12,6 +12,7 @@ const Network: React.FC = () => {
           </div>
         </div>
       </div>
+      {/* No. of connections passed as prop */}
       <ConnectionRow />
       <ConnectionRow />
       <ConnectionRow />
