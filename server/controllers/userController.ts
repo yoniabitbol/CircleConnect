@@ -72,10 +72,10 @@ const updateUser = async (req: Request, res: Response) => {
       courses: req.body.courses,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      picture: req.files.picture ? req.files.picture[0].filename : req.body.picture,
+      picture: req.files && req.files.picture ? req.files.picture[0].filename : req.body.picture,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      backdrop: req.files.backdrop ? req.files.backdrop[0].filename : req.body.backdrop,
+      backdrop: req.files && req.files.backdrop ? req.files.backdrop[0].filename : req.body.backdrop,
     };
     const updatedUser = await User.findOneAndUpdate(filter, update, {
       new: true,

@@ -130,8 +130,19 @@ describe('Server tests', () => {
       .patch('/api/users')
       .send({
         user_id: 'testUser',
-        name: 'testUser',
-        email: 'testUser',
+        title: 'testUser',
+        location: 'testUser',
+        phone: 'testUser',
+        website: 'testUser',
+        connections: 'testUser',
+        summary: 'testUser',
+        projects: 'testUser',
+        skills: 'testUser',
+        experience: 'testUser',
+        education: 'testUser',
+        languages: 'testUser',
+        awards: 'testUser',
+        courses: 'testUser',
         picture: 'testUser',
         backdrop: 'testUser',
       })
@@ -153,7 +164,7 @@ describe('Server tests', () => {
       .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(400);
-        expect(response.text).toBe('{"status":"ERROR: TypeError: Cannot read properties of undefined (reading \'picture\')","message":"error updating user"}');
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"error updating user"}');
         done();
       });
   });
