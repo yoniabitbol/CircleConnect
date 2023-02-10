@@ -8,6 +8,7 @@ import MobileNav from "./MobileNav";
 import NavLinkModels from "../../lib/NavLinkModels";
 import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import {Outlet} from "react-router-dom";
+import Footer from "../Footer";
 const NavBar: React.FC = () => {
   const {logout} = useLogout();
   const [userProfilePic, setUserProfilePic] = useState<string>();
@@ -42,6 +43,7 @@ const NavBar: React.FC = () => {
       </div>
     </div>
 <Outlet/>
+<Footer/>
       </>
     )};
 
