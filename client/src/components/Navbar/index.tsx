@@ -8,13 +8,14 @@ import MobileNav from "./MobileNav";
 import NavLinkModels from "../../lib/NavLinkModels";
 import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import {Outlet} from "react-router-dom";
+import Footer from "../Footer";
 const NavBar: React.FC = () => {
   const {logout} = useLogout();
   const [userProfilePic, setUserProfilePic] = useState<string>();
   getCurrentUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
   return (
     <>
-    <div className="max-w-full p-2 flex items-center border">
+    <div className="max-w-full p-2 flex items-center border sticky top-0 bg-white">
       <div className="md:hidden">
         <MobileNav links={NavLinkModels}/>
       </div>
@@ -42,6 +43,7 @@ const NavBar: React.FC = () => {
       </div>
     </div>
 <Outlet/>
+<Footer/>
       </>
     )};
 
