@@ -14,7 +14,7 @@ const NavBar: React.FC = () => {
   getCurrentUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
   return (
     <>
-    <div className="max-w-full p-2 flex items-center border">
+    <div className="max-w-full p-2 flex items-center border sticky top-0 bg-white">
       <div className="md:hidden">
         <MobileNav links={NavLinkModels}/>
       </div>

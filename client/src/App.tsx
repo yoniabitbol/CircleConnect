@@ -6,6 +6,7 @@ import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
 import NavBar from "./components/Navbar";
+// import Footer from "./components/Footer";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
