@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
 
-// Will require some sort of authentication to get all users
+// Will require some sort of authorization (admin permission) to get all users
 // const getAllUsers = (req: Request, res: Response) => {
 //   res.status(500).json({
 //     status: 'error',
@@ -52,10 +52,12 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-const updateUser = async (req: Request, res: Response) => {
+const updateUser = async (req: any, res: Response) => {
+  if (req.files) {
+    console.log(req.files.picture[0]);
+  }
   try {
     const filter = { user_id: req.body.user_id };
-    // if (req.files) {}
     const update = {
       title: req.body.title,
       location: req.body.location,
@@ -70,17 +72,13 @@ const updateUser = async (req: Request, res: Response) => {
       languages: req.body.languages,
       awards: req.body.awards,
       courses: req.body.courses,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       picture: req.files && req.files.picture ? req.files.picture[0].filename : req.body.picture,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       backdrop: req.files && req.files.backdrop ? req.files.backdrop[0].filename : req.body.backdrop,
     };
     const updatedUser = await User.findOneAndUpdate(filter, update, {
       new: true,
     });
-    res.status(201).json({
+    res.status(200).json({
       status: 'success',
       data: {
         user: updatedUser,
