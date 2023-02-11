@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import useAuthContext from './useAuthContext';
 import { auth } from '../firebase/config';
-import saveUserToDB from '../utils/saveUserToDB';
+import saveUserToDB from '../http/saveUserToDB';
 
 const useGoogle = () => {
   const [error, setError] = useState(null);
