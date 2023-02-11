@@ -26,7 +26,9 @@ const ConnectionRow: React.FC = () => {
           </button>
         </div>
         <div className="">
-          <button type="submit">•••</button>
+          <button type="submit">
+            <b>•••</b>
+          </button>
         </div>
       </div>
     </div>
