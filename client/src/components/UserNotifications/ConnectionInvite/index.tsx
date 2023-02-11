@@ -25,19 +25,22 @@ const ConnectionInvite: React.FC<{
                 <h3 className="text-sm text-gray-400">{connection_message}</h3>
             </div>
             <div className="flex flex-row">
-            <button
-              type="submit"
-              className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-2 rounded-md m-5"
-              
-            >
-              ACCEPT
-            </button>
-            <button
-              type="submit"
-              className="bg-slate-400 hover:bg-slate-500 text-white py-2 px-2 rounded-md m-5"
-            >
-              DECLINE
-            </button>
+                <button
+                type="submit"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-2 rounded-md m-5"
+                
+                >
+                ACCEPT
+                </button>
+                <button
+                type="submit"
+                className="bg-slate-400 hover:bg-slate-500 text-white py-2 px-2 rounded-md m-5"
+                >
+                DECLINE
+                </button>
+            </div>
+            <div className="">
+                <button className="text-4xl">...</button>
             </div>
         </div>
       </div>

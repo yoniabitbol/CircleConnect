@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 import NavSettings from "./NavSettings";
 import ConnectionInvite from "./ConnectionInvite";
 
+
 const UserNotifications: React.FC = () => {
   return (
     <div className="flex flex-row justify-center mt-6">
