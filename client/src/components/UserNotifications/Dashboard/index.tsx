@@ -8,7 +8,7 @@ const Dashboard: React.FC<{
 }> = (props) => {
   const { views_today, posts_views, search_appearances } = props;
   return (
-    <div className="lg:w-11/12 w-4/5 m-5 p-5 rounded-md bg-slate-100 mx-auto">
+    <div className="lg:w-full w-4/5 m-5 p-5 rounded-md bg-slate-100">
         <div className="flex flex-col justify-center mb-2">
             <div className="flex justify-around text-sm">
               <h1>YOUR DASHBOARD</h1>
