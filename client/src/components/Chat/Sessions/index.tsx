@@ -4,7 +4,7 @@ import SessionItem from "../SessionItem";
 const Sessions: React.FC = () => {
   return (
     <div>
-      <div className="lg:w-1/5 w-4/5 m-5 pb-5 rounded-md bg-slate-200 inline-block justify-start">
+      <div className="ml-15 mt-5 pb-5 rounded-md bg-slate-200 overflow-auto">
         <div className="justify-start ml-10 my-6">
           <span className="text-sm">CHATS</span>
         </div>
