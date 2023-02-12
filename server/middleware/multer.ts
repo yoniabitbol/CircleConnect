@@ -53,7 +53,7 @@ const resizePhoto = (req: any, res: Response, next: NextFunction) => {
       .resize(500, 500)
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`public/img/users/profilePic/${req.body.picture}`);
+      .toFile(`public/img/users/profilePic/${req.files.picture[0].filename}`);
   }
 
   if (req.files.backdrop) {
@@ -63,7 +63,7 @@ const resizePhoto = (req: any, res: Response, next: NextFunction) => {
       .resize(1900, 1000)
       .toFormat('jpeg')
       .jpeg({ quality: 90 })
-      .toFile(`public/img/users/backdropPic/${req.body.backdrop}`);
+      .toFile(`public/img/users/backdropPic/${req.files.picture[0].filename}`);
   }
 
   return next();
