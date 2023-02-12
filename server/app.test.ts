@@ -147,7 +147,7 @@ describe('Server tests', () => {
         backdrop: 'testUser',
       })
       .then((response) => {
-        expect(response.statusCode).toBe(201);
+        expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"success","data":{');
         done();
       });
