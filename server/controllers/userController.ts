@@ -53,9 +53,6 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const updateUser = async (req: any, res: Response) => {
-  if (req.files) {
-    console.log(req.files.picture[0]);
-  }
   try {
     const filter = { user_id: req.body.user_id };
     const update = {
