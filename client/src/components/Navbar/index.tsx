@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar";
@@ -8,13 +8,14 @@ import MobileNav from "./MobileNav";
 import NavLinkModels from "../../lib/NavLinkModels";
 import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import {Outlet} from "react-router-dom";
+import Footer from "../Footer";
 const NavBar: React.FC = () => {
   const {logout} = useLogout();
-  const [userProfilePic, setUserProfilePic] = React.useState<string>();
+  const [userProfilePic, setUserProfilePic] = useState<string>();
   getCurrentUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
   return (
     <>
-    <div className="max-w-full p-2 flex items-center border">
+    <div className="max-w-full p-2 flex items-center border sticky top-0 bg-white">
       <div className="md:hidden">
         <MobileNav links={NavLinkModels}/>
       </div>
@@ -41,7 +42,10 @@ const NavBar: React.FC = () => {
         </div>
       </div>
     </div>
-<Outlet/>
+    <div className="flex flex-col min-h-screen justify-between ">
+    <Outlet/>
+    <Footer/>
+  </div>  
       </>
     )};
 
