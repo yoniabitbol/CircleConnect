@@ -5,7 +5,7 @@ import ChatDisplay from "./ChatDisplay";
 const Chat: React.FC = () => {
   return (
     <div className="">
-      <div className="ml-5 grid gap-0 grid-cols-[30%_70%]">
+      <div className="lg:ml-5 ml-2 grid gap-0 lg:grid-cols-[30%_70%] sm:grid-cols-1 mr-5">
         <Sessions />
         <ChatDisplay
           session={{
