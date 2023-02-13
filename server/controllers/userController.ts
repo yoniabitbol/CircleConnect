@@ -1,17 +1,29 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
+import admin from '../firebase/config';
 
 // Will require some sort of authentication to get all users
-// const getAllUsers = (req: Request, res: Response) => {
-//   res.status(500).json({
-//     status: 'error',
-//     message: 'Get all users not implemented yet',
-//   });
-// };
+
+const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({
+      status: 'success',
+      data: {
+        users,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `ERROR: ${err}`,
+      message: 'error getting users',
+    });
+  }
+};
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    const user = await User.findOne({ user_id: req.query.user_id });
+    const user = await User.findOne({ user_id: req.params.user_id });
     res.status(200).json({
       status: 'success',
       data: {
@@ -74,13 +86,23 @@ const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-// Add firebase admin to delete user once the request is made
-// const deleteUser = (req: Request, res: Response) => {
-//   res.status(500).json({
-//     status: 'error',
-//     message: 'Delete user not implemented yet',
-//   });
-// };
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    await admin.auth().deleteUser(req.params.user_id);
+    const user = await User.findOneAndDelete({ user_id: req.params.user_id });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `ERROR: ${err}`,
+      message: 'Error deleting user',
+    });
+  }
+};
 
 // Connections API
 
@@ -160,7 +182,7 @@ const acceptConnectionRequest = async (req: Request, res: Response) => {
     }
     return res.status(403).json({
       status: 'failure',
-      message: 'Connection already exists',
+      message: 'Error accepting connection request',
     });
   } catch (err) {
     res.status(400).json({
@@ -271,11 +293,11 @@ const getOutgoingRequests = async (req: Request, res: Response) => {
 };
 
 export default {
-  // getAllUsers,
+  getAllUsers,
   getUser,
   createUser,
   updateUser,
-  // , deleteUser,
+  deleteUser,
   getUserConnections,
   sendConnectionRequest,
   acceptConnectionRequest,

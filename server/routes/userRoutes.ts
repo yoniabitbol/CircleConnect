@@ -5,13 +5,13 @@ const router = express.Router();
 
 // User Profile Routes
 router.route('/')
-  .get(UserController.getUser)
+  .get(UserController.getAllUsers)
   .post(UserController.createUser)
   .patch(UserController.updateUser);
 
-// router.route(':id');
-// .delete(UserController.deleteUser);
-// .get(UserController.getAllUsers)
+router.route('/:user_id')
+  .get(UserController.getUser)
+  .delete(UserController.deleteUser);
 
 // User Connections Routes
 router.route('/:user_id/connections').get(UserController.getUserConnections);
