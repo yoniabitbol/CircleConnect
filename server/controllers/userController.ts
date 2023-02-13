@@ -147,7 +147,8 @@ const acceptConnectionRequest = async (req: Request, res: Response) => {
     const sender: any = await User.findOne({ user_id: req.body.user_id });
     const target: any = await User.findOne({ user_id: req.params.user_id });
 
-    if (!sender.connections.includes(target.user_id) && !target.connections.includes(sender.user_id)) {
+    if (!sender.connections.includes(target.user_id) && !target.connections.includes(sender.user_id)
+        && sender.incomingRequests.includes(target.user_id) && target.outgoingRequests.includes(sender.user_id)) {
       await sender.updateOne({ $pull: { incomingRequests: target.user_id } });
       await target.updateOne({ $pull: { outgoingRequests: sender.user_id } });
       await sender.updateOne({ $push: { connections: target.user_id } });
@@ -228,14 +229,14 @@ const getIncomingRequests = async (req: Request, res: Response) => {
         },
       });
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       data: {
         connections: connectionProfiles,
       },
     });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       status: `ERROR: ${err}`,
       message: 'Error getting user connections',
     });
