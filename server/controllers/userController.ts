@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
 
-// Will require some sort of authentication to get all users
+// Will require some sort of authorization (admin permission) to get all users
 // const getAllUsers = (req: Request, res: Response) => {
 //   res.status(500).json({
 //     status: 'error',
@@ -26,7 +26,6 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 const createUser = async (req: Request, res: Response) => {
-  console.log(req.query);
   try {
     const checkUser = await User.findOne({ user_id: req.body.user_id });
     if (!checkUser) {
@@ -53,14 +52,30 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-const updateUser = async (req: Request, res: Response) => {
+const updateUser = async (req: any, res: Response) => {
   try {
     const filter = { user_id: req.body.user_id };
-    const update = req.body.profile;
+    const update = {
+      title: req.body.title,
+      location: req.body.location,
+      phone: req.body.phone,
+      website: req.body.website,
+      connections: req.body.connections,
+      summary: req.body.summary,
+      projects: req.body.projects,
+      skills: req.body.skills,
+      experience: req.body.experience,
+      education: req.body.education,
+      languages: req.body.languages,
+      awards: req.body.awards,
+      courses: req.body.courses,
+      picture: req.files && req.files.picture ? req.files.picture[0].filename : req.body.picture,
+      backdrop: req.files && req.files.backdrop ? req.files.backdrop[0].filename : req.body.backdrop,
+    };
     const updatedUser = await User.findOneAndUpdate(filter, update, {
       new: true,
     });
-    res.status(201).json({
+    res.status(200).json({
       status: 'success',
       data: {
         user: updatedUser,

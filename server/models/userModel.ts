@@ -32,12 +32,14 @@ const userSchema = new mongoose.Schema({
   },
   picture: {
     type: String,
+    default: 'default-user.png',
   },
   website: {
     type: String,
   },
   backdrop: {
     type: String,
+    default: 'default-backdrop.png',
   },
   summary: {
     type: String,
