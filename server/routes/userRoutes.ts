@@ -12,12 +12,17 @@ router.route(':id');
 // .delete(UserController.deleteUser);
 // .get(UserController.getAllUsers)
 
-router.route('/connections/:user_id')
-//   .get(UserController.getUserConnections)
-  .put(UserController.sendConnectionRequest);
+// TODO: Implement these routes
 
-// router.route('/connections/:user_id/accept').put(UserController.acceptConnectionRequest);
-// router.route('/connections/:user_id/decline').put(UserController.declineConnectionRequest);
+// router.route('/connections')
+//   .get(UserController.getUserConnections);
+// getIncomingRequests
+// getOutgoingRequests
 
+router.route('/:user_id/connections').get(UserController.getUserConnections);
+router.route('/connections/:user_id/connect').put(UserController.sendConnectionRequest);
+router.route('/connections/:user_id/accept').put(UserController.acceptConnectionRequest);
+router.route('/connections/:user_id/decline').put(UserController.declineConnectionRequest);
+router.route('/connections/:user_id/remove').put(UserController.removeConnection);
 
 export default router;
