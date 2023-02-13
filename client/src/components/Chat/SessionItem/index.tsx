@@ -15,7 +15,7 @@ const SessionItem: React.FC<{
     <div>
       <div className="rounded-md bg-slate-200">
         {selected ? (
-          <span className="absolute w-4 h-14 justify-start bg-sky-700" />
+          <span className="absolute left-5 w-4 h-14 justify-start bg-sky-700" />
         ) : (<span />)}
 
         <div className="ml-7 my-6 flex">
