@@ -92,9 +92,7 @@ const deleteUser = async (req: Request, res: Response) => {
     const user = await User.findOneAndDelete({ user_id: req.params.user_id });
     res.status(200).json({
       status: 'success',
-      data: {
-        user,
-      },
+      message: `User ${user?.name} deleted`,
     });
   } catch (err) {
     res.status(400).json({
@@ -158,7 +156,7 @@ const sendConnectionRequest = async (req: Request, res: Response) => {
     });
   } catch (err) {
     return res.status(400).json({
-      status: 'error',
+      status: `ERROR: ${err}`,
       message: 'Error sending connection request',
     });
   }
