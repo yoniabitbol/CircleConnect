@@ -215,6 +215,60 @@ const removeConnection = async (req: Request, res: Response) => {
   }
 };
 
+const getIncomingRequests = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ user_id: req.params.user_id });
+    const incomingRequests = user?.incomingRequests;
+    const connectionProfiles = await User.find({ user_id: { $in: incomingRequests } });
+    if (connectionProfiles.length === 0) {
+      return res.status(200).json({
+        status: 'success',
+        data: {
+          message: 'No incoming requests',
+        },
+      });
+    }
+    res.status(200).json({
+      status: 'success',
+      data: {
+        connections: connectionProfiles,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `ERROR: ${err}`,
+      message: 'Error getting user connections',
+    });
+  }
+};
+
+const getOutgoingRequests = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ user_id: req.params.user_id });
+    const outgoingRequests = user?.outgoingRequests;
+    const connectionProfiles = await User.find({ user_id: { $in: outgoingRequests } });
+    if (connectionProfiles.length === 0) {
+      return res.status(200).json({
+        status: 'success',
+        data: {
+          message: 'No outgoing requests',
+        },
+      });
+    }
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        connections: connectionProfiles,
+      },
+    });
+  } catch (err) {
+    return res.status(400).json({
+      status: `ERROR: ${err}`,
+      message: 'Error getting user connections',
+    });
+  }
+};
+
 export default {
   // getAllUsers,
   getUser,
@@ -226,4 +280,6 @@ export default {
   acceptConnectionRequest,
   declineConnectionRequest,
   removeConnection,
+  getIncomingRequests,
+  getOutgoingRequests,
 };
