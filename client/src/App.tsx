@@ -6,6 +6,7 @@ import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
 import NavBar from "./components/Navbar";
+import Network from "./Routes/Network";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -24,6 +25,10 @@ function App() {
               <Route
                 path="profile"
                 element={user ? <Profile /> : <Navigate to="/" />}
+              />
+              <Route
+                path="network"
+                element={user ? <Network /> : <Navigate to="/" />}
               />
             </Route>
 
