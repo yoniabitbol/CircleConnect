@@ -26,7 +26,6 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 const createUser = async (req: Request, res: Response) => {
-  console.log(req.query);
   try {
     const checkUser = await User.findOne({ user_id: req.body.user_id });
     if (!checkUser) {
@@ -81,6 +80,32 @@ const updateUser = async (req: Request, res: Response) => {
 //     message: 'Delete user not implemented yet',
 //   });
 // };
+
+const requestConnection = async (req: Request, res: Response) => {
+  if (req.body.sender_id === req.body.receiver_id) {
+    res.status(400).json({
+      status: 'error',
+      message: 'Cannot send connection request to self',
+    });
+  }
+  try {
+    const sender = await User.findOne({ user_id: req.body.user_id });
+    const target = await User.findOne({ user_id: req.params.user_id });
+
+    if (!sender || !target) {
+      res.status(400).json({
+        status: 'error',
+        message: 'Missing fields: connection sender or target',
+      });
+    }
+    // Check if connection already exists
+  } catch (err) {
+    res.status(400).json({
+      status: 'error',
+      message: 'Error sending connection request',
+    });
+  }
+};
 
 export default {
   // getAllUsers,

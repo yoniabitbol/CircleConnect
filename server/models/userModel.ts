@@ -42,9 +42,24 @@ const userSchema = new mongoose.Schema({
   summary: {
     type: String,
   },
-  connections: {
-    type: Number,
-  },
+  outgoingRequests: [
+    {
+      type: String,
+      ref: 'User',
+    },
+  ],
+  incomingRequests: [
+    {
+      type: String,
+      ref: 'User',
+    },
+  ],
+  connections: [
+    {
+      type: String,
+      ref: 'User',
+    },
+  ],
   projects: [
     {
       title: {
