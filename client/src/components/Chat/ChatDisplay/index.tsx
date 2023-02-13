@@ -1,5 +1,6 @@
 import React from "react";
 import Message from "../Message";
+import {Field, Form, Formik} from "formik";
 
 const ChatDisplay: React.FC<{
   session: {
@@ -10,7 +11,7 @@ const ChatDisplay: React.FC<{
   };
 }> = ({ session }) => {
   return (
-    <div className="mx-5 mt-5 h-4/5 rounded-md bg-slate-200">
+    <div className="mx-5 mt-5 h-9/12 rounded-md bg-slate-200">
       <div className="justify-start ml-10 my-3">
         <span className="text-sm">CHAT WITH {session.user.name}</span>
       </div>
@@ -368,6 +369,21 @@ const ChatDisplay: React.FC<{
               "⠀⠀"}
           />
         </div>
+      </div>
+      <hr className="border-gray-400 border" />
+      <div className="ml-8 my-2">
+        <Formik
+          initialValues={{message: ""}}
+          enableReinitialize
+          onSubmit={(values) => {
+            console.log(values);
+          }}
+        >
+          <Form>
+            <Field className="w-11/12 h-16 rounded-sm" type="message" name="message" placeholder="Write your message" />
+            <button className="ml-5 bg-indigo-900" type="submit">Submit</button>
+          </Form>
+        </Formik>
       </div>
     </div>);
 };
