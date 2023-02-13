@@ -11,7 +11,7 @@ const Sessions: React.FC = () => {
         </div>
         <hr className="border-gray-400 border" />
         <SessionItem
-          selected={false}
+          selected={true}
           session={{
             user: {
               name: "Chad Thundercock",
@@ -21,7 +21,7 @@ const Sessions: React.FC = () => {
           }}
         />
         <SessionItem
-          selected={true}
+          selected={false}
           session={{
             user: {
               name: "Hungry Boi",
