@@ -1,6 +1,7 @@
 import React from "react";
 import Message from "../Message";
 import {Field, Form, Formik} from "formik";
+import {PaperAirplaneIcon} from "@heroicons/react/24/outline";
 
 const ChatDisplay: React.FC<{
   session: {
@@ -380,8 +381,8 @@ const ChatDisplay: React.FC<{
           }}
         >
           <Form>
-            <Field className="w-11/12 h-16 rounded-sm" type="message" name="message" placeholder="Write your message" />
-            <button className="ml-5 bg-indigo-900" type="submit">Submit</button>
+            <Field className="w-11/12 h-16 bg-transparent" type="message" name="message" placeholder="Write your message" />
+            <button className="ml-5 bg-indigo-900 h-10 w-10 rounded-lg" type="submit"><PaperAirplaneIcon className="stroke-white" /></button>
           </Form>
         </Formik>
       </div>
