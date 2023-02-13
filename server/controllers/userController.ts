@@ -102,7 +102,7 @@ const sendConnectionRequest = async (req: Request, res: Response) => {
       });
     }
 
-    if (!sender.connections.includes(target.user_id)) {
+    if (!sender.outgoingRequests.includes(target.user_id) && !target.incomingRequests.includes(sender.user_id)) {
       await sender.updateOne({ $push: { outgoingRequests: target.user_id } });
       await target.updateOne({ $push: { incomingRequests: sender.user_id } });
       return res.status(200).json({
@@ -111,7 +111,7 @@ const sendConnectionRequest = async (req: Request, res: Response) => {
       });
     }
     return res.status(403).json({
-      status: 'success',
+      status: 'failure',
       message: 'Connection already exists',
     });
   } catch (err) {
@@ -122,9 +122,13 @@ const sendConnectionRequest = async (req: Request, res: Response) => {
   }
 };
 
-const manageConnectionRequest = async (req: Request, res: Response) => {
-  // TODO: Add logic to accept or reject connection request
-};
+const acceptConnectionRequest = async (req: Request, res: Response) => {
+  // TODO: Add logic to accept connection request
+}
+
+const declineConnectionRequest = async (req: Request, res: Response) => {
+  // TODO: Add logic to decline connection request
+}
 
 export default {
   // getAllUsers,

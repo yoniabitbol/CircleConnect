@@ -16,4 +16,8 @@ router.route('/connections/:user_id')
 //   .get(UserController.getUserConnections)
   .put(UserController.sendConnectionRequest);
 
+// router.route('/connections/:user_id/accept').put(UserController.acceptConnectionRequest);
+// router.route('/connections/:user_id/decline').put(UserController.declineConnectionRequest);
+
+
 export default router;
