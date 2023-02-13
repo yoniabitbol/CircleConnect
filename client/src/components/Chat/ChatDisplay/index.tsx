@@ -23,7 +23,6 @@ const ChatDisplay: React.FC<{
   );
 
   const sendMessage = (values: any) => {
-    console.log(values);
     setMessages(([...messages, { id: messages.length, outbound: values.outbound, text: values.message}]));
   };
 

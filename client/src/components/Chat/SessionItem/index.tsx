@@ -26,7 +26,7 @@ const SessionItem: React.FC<{
           />
           <div className="ml-2 mt-2 truncate">
             <p className="text-base font-semibold">{session.user.name}</p>
-            <p className="text-xs">{session.latestMsg}</p>
+            <p className="text-xs flex justify-start">{session.latestMsg}</p>
           </div>
         </div>
       </div>
