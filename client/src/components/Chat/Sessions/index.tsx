@@ -1,5 +1,6 @@
 import React from "react";
 import SessionItem from "../SessionItem";
+import {Form, Formik} from "formik";
 
 const Sessions: React.FC = () => {
   return (
@@ -29,6 +30,26 @@ const Sessions: React.FC = () => {
             latestMsg: "Are you food",
           }}
         />
+      </div>
+
+      <div className="mt-10 pb-5 rounded-md bg-slate-200">
+        <div className="flex justify-center">
+          <Formik
+            initialValues={{message: ""}}
+            enableReinitialize
+            onSubmit={(values) => {
+              console.log(values);
+            }}
+          >
+            <Form className="flex justify-center w-full">
+              <button className="bg-indigo-900 w-4/5 pb-2 mt-5 text-sky-50 rounded-lg" type="submit">
+                <div className="flex justify-center">
+                  START NEW CHAT
+                </div>
+              </button>
+            </Form>
+          </Formik>
+        </div>
       </div>
     </div>);
 };

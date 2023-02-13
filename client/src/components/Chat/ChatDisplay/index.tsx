@@ -18,7 +18,7 @@ const ChatDisplay: React.FC<{
       </div>
       <hr className="border-gray-400 border" />
 
-      <div className="w-11/12 h-2/5 ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
+      <div className="w-11/12 h-[35rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
         <div className="mx-5 mt-2 flex justify-start">
           <Message
             outbound={false}
