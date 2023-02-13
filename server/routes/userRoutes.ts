@@ -12,9 +12,8 @@ router.route(':id');
 // .delete(UserController.deleteUser);
 // .get(UserController.getAllUsers)
 
-// router.route('/connections/:user_id')
+router.route('/connections/:user_id')
 //   .get(UserController.getUserConnections)
-//   .put(UserController.updateUserConnections)
-//   .post(UserController.createUserConnections);
+  .put(UserController.sendConnectionRequest);
 
 export default router;

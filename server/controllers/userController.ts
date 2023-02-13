@@ -25,6 +25,7 @@ const getUser = async (req: Request, res: Response) => {
     });
   }
 };
+
 const createUser = async (req: Request, res: Response) => {
   try {
     const checkUser = await User.findOne({ user_id: req.body.user_id });
@@ -81,30 +82,48 @@ const updateUser = async (req: Request, res: Response) => {
 //   });
 // };
 
-const requestConnection = async (req: Request, res: Response) => {
-  if (req.body.sender_id === req.body.receiver_id) {
-    res.status(400).json({
+// Connections API
+
+const sendConnectionRequest = async (req: Request, res: Response) => {
+  if (req.params.user_id === req.body.user_id) {
+    return res.status(400).json({
       status: 'error',
       message: 'Cannot send connection request to self',
     });
   }
   try {
-    const sender = await User.findOne({ user_id: req.body.user_id });
-    const target = await User.findOne({ user_id: req.params.user_id });
+    const sender: any = await User.findOne({ user_id: req.body.user_id });
+    const target: any = await User.findOne({ user_id: req.params.user_id });
 
     if (!sender || !target) {
-      res.status(400).json({
+      return res.status(400).json({
         status: 'error',
         message: 'Missing fields: connection sender or target',
       });
     }
-    // Check if connection already exists
+
+    if (!sender.connections.includes(target.user_id)) {
+      await sender.updateOne({ $push: { outgoingRequests: target.user_id } });
+      await target.updateOne({ $push: { incomingRequests: sender.user_id } });
+      return res.status(200).json({
+        status: 'success',
+        message: 'Connection request sent',
+      });
+    }
+    return res.status(403).json({
+      status: 'success',
+      message: 'Connection already exists',
+    });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       status: 'error',
       message: 'Error sending connection request',
     });
   }
+};
+
+const manageConnectionRequest = async (req: Request, res: Response) => {
+  // TODO: Add logic to accept or reject connection request
 };
 
 export default {
@@ -113,4 +132,5 @@ export default {
   createUser,
   updateUser,
   // , deleteUser,
+  sendConnectionRequest,
 };
