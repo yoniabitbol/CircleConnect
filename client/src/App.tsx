@@ -41,10 +41,6 @@ function App() {
                 path="forgot"
                 element={!user ? <ForgotPass /> : <Navigate to="/" />}
               />
-              <Route
-                path="network"
-                element={!user ? <Network /> : <Navigate to="/" />}
-              />
             </Route>
           </Routes>
         </BrowserRouter>
