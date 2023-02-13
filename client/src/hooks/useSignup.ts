@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase/config';
 import useAuthContext from './useAuthContext';
-import saveUserToDB from '../utils/saveUserToDB';
+import saveUserToDB from '../http/saveUserToDB';
 
 const useSignup = () => {
   const [error, setError] = useState(null);
