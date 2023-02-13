@@ -1,7 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 import Message from "../Message";
 import {Field, Form, Formik} from "formik";
 import {PaperAirplaneIcon} from "@heroicons/react/24/outline";
+
+interface MessageType {
+  id: number;
+  outbound: boolean;
+  text: string;
+}
 
 const ChatDisplay: React.FC<{
   session: {
@@ -11,6 +17,16 @@ const ChatDisplay: React.FC<{
     };
   };
 }> = ({ session }) => {
+
+  const [messages, setMessages] = useState<MessageType[]>(
+    [{id: 0, outbound: false, text: "Memes"}, {id: 1, outbound: true, text: "Test"}]
+  );
+
+  const sendMessage = (values: any) => {
+    console.log(values);
+    setMessages(([...messages, { id: messages.length, outbound: values.outbound, text: values.message}]));
+  };
+
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-slate-200">
       <div className="justify-start ml-10 my-3">
@@ -19,27 +35,34 @@ const ChatDisplay: React.FC<{
       <hr className="border-gray-400 border" />
 
       <div className="w-11/12 h-[35rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
-        <div className="mx-5 mt-2 flex justify-start">
-          <Message
-            outbound={false}
-            text={"Memes"}
-          />
-        </div>
-        <div className="ml-20 mt-2 flex justify-end">
-          <Message
-            outbound={true}
-            text={"Test"}
-          />
-        </div>
+        {messages.map(message => (
+          <div key={message.id} className={message.outbound ? "ml-20 mt-2 justify-end flex" : "mx-5 mt-2 justify-start flex" + " flex"}>
+            <Message
+              outbound={message.outbound}
+              text={message.text}
+            />
+          </div>
+        ))}
+
+        {/*<div className="mx-5 mt-2 justify-start flex">*/}
+        {/*  <Message*/}
+        {/*    outbound={false}*/}
+        {/*    text={"Memes"}*/}
+        {/*  />*/}
+        {/*</div>*/}
+        {/*<div className="ml-20 mt-2 justify-end flex">*/}
+        {/*  <Message*/}
+        {/*    outbound={true}*/}
+        {/*    text={"Test"}*/}
+        {/*  />*/}
+        {/*</div>*/}
       </div>
       <hr className="border-gray-400 border" />
       <div className="ml-8 my-2">
         <Formik
-          initialValues={{message: ""}}
+          initialValues={{outbound: true, message: ""}}
           enableReinitialize
-          onSubmit={(values) => {
-            console.log(values);
-          }}
+          onSubmit={sendMessage}
         >
           <Form>
             <Field className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent" type="message" name="message" placeholder="Write your message" />
