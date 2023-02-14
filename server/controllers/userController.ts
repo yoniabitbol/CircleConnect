@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import User from '../models/userModel';
 import admin from '../firebase/config';
 
-// Will require some sort of authentication to get all users
+// User Profile API
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {

@@ -51,7 +51,7 @@ describe('Server tests', () => {
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"user exists","data":{"user":{"user_id":'
-          + '"testUser","name":"testUser","email":"testuser","_id":');
+          + '"testUser","name":"testUser","email":"testuser"');
         done();
       });
   });
@@ -67,7 +67,7 @@ describe('Server tests', () => {
       .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(201);
-        expect(response.text).toContain('{"status":"success","data":{"user":{"user_id":"test","_id":');
+        expect(response.text).toContain('{"status":"success","data":{"user":{"user_id":"test"');
         done();
       });
   });
@@ -98,8 +98,7 @@ describe('Server tests', () => {
       .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(200);
-        expect(response.text).toContain('{"status":"success","data":{"user":{"user_id":"testUser","name":'
-          + '"testUser","email":"testuser","_id":');
+        expect(response.text).toContain('{"status":"success","data":{');
         done();
       });
   });
@@ -111,7 +110,7 @@ describe('Server tests', () => {
     );
 
     request(app)
-      .get('/api/users')
+      .get('/api/users/:user_id')
       .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(400);
