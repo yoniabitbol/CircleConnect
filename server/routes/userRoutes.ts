@@ -17,9 +17,9 @@ router.route('/:user_id')
 router.route('/:user_id/connections').get(UserController.getUserConnections);
 router.route('/:user_id/incoming').get(UserController.getIncomingRequests);
 router.route('/:user_id/outgoing').get(UserController.getOutgoingRequests);
-router.route('/:user_id/connect').put(UserController.sendConnectionRequest);
-router.route('/:user_id/accept').put(UserController.acceptConnectionRequest);
-router.route('/:user_id/decline').put(UserController.declineConnectionRequest);
-router.route('/:user_id/remove').put(UserController.removeConnection);
+router.route('/:user_id/connect').patch(UserController.sendConnectionRequest);
+router.route('/:user_id/accept').patch(UserController.acceptConnectionRequest);
+router.route('/:user_id/decline').patch(UserController.declineConnectionRequest);
+router.route('/:user_id/remove').patch(UserController.removeConnection);
 
 export default router;
