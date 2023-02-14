@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
+import MyProfile from "./Routes/MyProfile";
 import Profile from "./Routes/Profile";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
@@ -17,7 +18,7 @@ function App() {
             <Route
               path="/"
               element={
-                user ? <Navigate to="/profile" /> : <Navigate to="/login" />
+                user ? <Navigate to="/myprofile" /> : <Navigate to="/login" />
               }
             />
             <Route path="/*" element={<NavBar />}>
@@ -27,7 +28,7 @@ function App() {
               />
               <Route
                 path="myprofile"
-                element={user ? <Profile /> : <Navigate to="/" />}
+                element={user ? <MyProfile /> : <Navigate to="/" />}
               />
             </Route>
 

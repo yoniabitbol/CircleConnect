@@ -17,7 +17,7 @@ const Login: React.FC = () => {
     // Sketchy way to redirect to profile page after login TODO: Fix this
     setTimeout(() => {
       console.log("Redirecting to profile");
-      navigate("/profile");
+      navigate("/myprofile");
     }, 1000);
 
     if (error) {
