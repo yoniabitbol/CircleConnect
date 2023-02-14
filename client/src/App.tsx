@@ -26,7 +26,7 @@ function App() {
                 element={user ? <Profile /> : <Navigate to="/" />}
               />
               <Route
-                path="profile"
+                path="myprofile"
                 element={user ? <Profile /> : <Navigate to="/" />}
               />
             </Route>
