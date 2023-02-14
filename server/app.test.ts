@@ -151,21 +151,21 @@ describe('Server tests', () => {
       });
   });
 
-  // test('Request get user connections', (done) => {
-  //   mockingoose(User).toReturn(
-  //     { user_id: 'testUser', name: 'testUser', email: 'testUser' },
-  //     'findOne',
-  //   );
-  //
-  //   request(app)
-  //     .get('/api/users/:user_id/connections')
-  //     .send({ user_id: 'test' })
-  //     .then((response) => {
-  //       expect(response.statusCode).toBe(200);
-  //       expect(response.text).toContain('{"status":"success","data":{');
-  //       done();
-  //     });
-  // });
+  test('Request get user connections', (done) => {
+    mockingoose(User).toReturn(
+      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      'findOne',
+    );
+
+    request(app)
+      .get('/api/users/:user_id/connections')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toContain('{"status":"success","data":{');
+        done();
+      });
+  });
 
   test('Request get user connections error', (done) => {
     mockingoose(User).toReturn(
@@ -219,6 +219,7 @@ describe('Server tests', () => {
   //   mockingoose(User).toReturn(
   //     { user_id: 'testUser', name: 'testUser', email: 'testUser' },
   //     'findOne',
+  //
   //   );
   //
   //   request(app)
