@@ -32,7 +32,7 @@ const Profile: React.FC<Props> = ({ id }) => {
     awards: [],
     courses: [],
   });
-
+  console.log(myUser);
   useEffect(() => {
     if (userId) {
       getUserProfile(userId).then((res) => {
