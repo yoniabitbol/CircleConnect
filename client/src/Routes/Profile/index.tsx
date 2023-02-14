@@ -12,6 +12,7 @@ interface Props {
 
 const Profile: React.FC<Props> = ({ id }) => {
   const params = useParams<{ id?: string }>();
+
   const userId = id || params.id;
   const [myUser, setMyUser] = useState<Usertypes>({
     name: "",
@@ -32,7 +33,7 @@ const Profile: React.FC<Props> = ({ id }) => {
     awards: [],
     courses: [],
   });
-  console.log(myUser);
+
   useEffect(() => {
     if (userId) {
       getUserProfile(userId).then((res) => {
@@ -40,7 +41,8 @@ const Profile: React.FC<Props> = ({ id }) => {
       });
     } else {
       getCurrentUserProfile().then((res) => {
-        setMyUser(res.data.user);
+        console.log(res.data.user);
+        // setMyUser(res.data.user);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

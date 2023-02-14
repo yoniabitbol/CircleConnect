@@ -7,6 +7,7 @@ async function getCurrentUserProfile() {
   const user = auth.currentUser;
   const token = user && (await user.getIdToken());
   const id = user && user.uid;
+  
   if (!id) {
     return;
   }

@@ -25,6 +25,10 @@ function App() {
                 path="profile/:id"
                 element={user ? <Profile /> : <Navigate to="/" />}
               />
+              <Route
+                path="profile"
+                element={user ? <Profile /> : <Navigate to="/" />}
+              />
             </Route>
 
             <Route path="/*" element={<AuthHeader />}>
