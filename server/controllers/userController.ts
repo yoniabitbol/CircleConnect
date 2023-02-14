@@ -239,6 +239,12 @@ const removeConnection = async (req: Request, res: Response) => {
 const getIncomingRequests = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
+    if (!user) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'User does not exist',
+      });
+    }
     const incomingRequests = user?.incomingRequests;
     const connectionProfiles = await User.find({ user_id: { $in: incomingRequests } });
     if (connectionProfiles.length === 0) {
@@ -258,7 +264,7 @@ const getIncomingRequests = async (req: Request, res: Response) => {
   } catch (err) {
     return res.status(400).json({
       status: `ERROR: ${err}`,
-      message: 'Error getting user connections',
+      message: 'Error getting incoming requests',
     });
   }
 };
@@ -266,6 +272,12 @@ const getIncomingRequests = async (req: Request, res: Response) => {
 const getOutgoingRequests = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
+    if (!user) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'User does not exist',
+      });
+    }
     const outgoingRequests = user?.outgoingRequests;
     const connectionProfiles = await User.find({ user_id: { $in: outgoingRequests } });
     if (connectionProfiles.length === 0) {
@@ -285,7 +297,7 @@ const getOutgoingRequests = async (req: Request, res: Response) => {
   } catch (err) {
     return res.status(400).json({
       status: `ERROR: ${err}`,
-      message: 'Error getting user connections',
+      message: 'Error getting outgoing requests',
     });
   }
 };

@@ -150,4 +150,228 @@ describe('Server tests', () => {
         done();
       });
   });
+
+  // test('Request get user connections', (done) => {
+  //   mockingoose(User).toReturn(
+  //     { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+  //     'findOne',
+  //   );
+  //
+  //   request(app)
+  //     .get('/api/users/:user_id/connections')
+  //     .send({ user_id: 'test' })
+  //     .then((response) => {
+  //       expect(response.statusCode).toBe(200);
+  //       expect(response.text).toContain('{"status":"success","data":{');
+  //       done();
+  //     });
+  // });
+
+  test('Request get user connections error', (done) => {
+    mockingoose(User).toReturn(
+      new Error(),
+      'findOne',
+    );
+
+    request(app)
+      .get('/api/users/:user_id/connections')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"Error getting user connections"}');
+        done();
+      });
+  });
+
+  // test('Request get user incoming requests', (done) => {
+  //   mockingoose(User).toReturn(
+  //     { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+  //     'findOne',
+  //   );
+  //
+  //   request(app)
+  //     .get('/api/users/:user_id/incoming')
+  //     .send({ user_id: 'test' })
+  //     .then((response) => {
+  //       expect(response.statusCode).toBe(200);
+  //       expect(response.text).toContain('{"status":"success","data":{');
+  //       done();
+  //     });
+  // });
+
+  test('Request get user incoming requests error', (done) => {
+    mockingoose(User).toReturn(
+      new Error(),
+      'findOne',
+    );
+
+    request(app)
+      .get('/api/users/:user_id/incoming')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"Error getting incoming requests"}');
+        done();
+      });
+  });
+
+  // test('Request get user outgoing requests', (done) => {
+  //   mockingoose(User).toReturn(
+  //     { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+  //     'findOne',
+  //   );
+  //
+  //   request(app)
+  //     .get('/api/users/:user_id/outgoing')
+  //     .send({ user_id: 'test' })
+  //     .then((response) => {
+  //       expect(response.statusCode).toBe(200);
+  //       expect(response.text).toContain('{"status":"success","data":{');
+  //       done();
+  //     });
+  // });
+
+  test('Request get user outgoing requests error', (done) => {
+    mockingoose(User).toReturn(
+      new Error(),
+      'findOne',
+    );
+
+    request(app)
+      .get('/api/users/:user_id/outgoing')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"Error getting outgoing requests"}');
+        done();
+      });
+  });
+
+  test('Request to connect to user', (done) => {
+    mockingoose(User).toReturn(
+      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      'findOne',
+    );
+
+    request(app)
+      .patch('/api/users/:user_id/connect')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toContain('{"status":"success","message"');
+        done();
+      });
+  });
+
+  test('Request to connect to user error', (done) => {
+    mockingoose(User).toReturn(
+      new Error(),
+      'findOne',
+    );
+
+    request(app)
+      .patch('/api/users/:user_id/connect')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"Error sending connection request"}');
+        done();
+      });
+  });
+
+  // test('Request to accept connection', (done) => {
+  //   mockingoose(User).toReturn(
+  //     { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+  //     'findOne',
+  //   );
+  //
+  //   request(app)
+  //     .patch('/api/users/:user_id/accept')
+  //     .send({ user_id: 'test' })
+  //     .then((response) => {
+  //       expect(response.statusCode).toBe(200);
+  //       expect(response.text).toContain('{"status":"success","message"');
+  //       done();
+  //     });
+  // });
+
+  test('Request to accept connection error', (done) => {
+    mockingoose(User).toReturn(
+      new Error(),
+      'findOne',
+    );
+
+    request(app)
+      .patch('/api/users/:user_id/accept')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"Error accepting connection request"}');
+        done();
+      });
+  });
+
+  test('Request to decline connection', (done) => {
+    mockingoose(User).toReturn(
+      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      'findOne',
+    );
+
+    request(app)
+      .patch('/api/users/:user_id/decline')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toContain('{"status":"success","message"');
+        done();
+      });
+  });
+
+  test('Request to decline connection error', (done) => {
+    mockingoose(User).toReturn(
+      new Error(),
+      'findOne',
+    );
+
+    request(app)
+      .patch('/api/users/:user_id/decline')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"Error declining connection request"}');
+        done();
+      });
+  });
+
+  // test('Request to remove connection', (done) => {
+  //   mockingoose(User).toReturn(
+  //     { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+  //     'findOne',
+  //   );
+  //
+  //   request(app)
+  //     .patch('/api/users/:user_id/remove')
+  //     .send({ user_id: 'test' })
+  //     .then((response) => {
+  //       expect(response.statusCode).toBe(200);
+  //       expect(response.text).toContain('{"status":"success","message"');
+  //       done();
+  //     });
+  // });
+
+  test('Request to remove connection error', (done) => {
+    mockingoose(User).toReturn(
+      new Error(),
+      'findOne',
+    );
+
+    request(app)
+      .patch('/api/users/:user_id/remove')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(400);
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"Error removing connection"}');
+        done();
+      });
+  });
 });
