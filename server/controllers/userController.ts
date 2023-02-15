@@ -251,18 +251,11 @@ const getIncomingRequests = async (req: Request, res: Response) => {
     }
     const incomingRequests = user?.incomingRequests;
     const connectionProfiles = await User.find({ user_id: { $in: incomingRequests } });
-    if (connectionProfiles.length === 0) {
-      return res.status(200).json({
-        status: 'success',
-        data: {
-          message: 'No incoming requests',
-        },
-      });
-    }
     return res.status(200).json({
       status: 'success',
       data: {
-        connections: connectionProfiles,
+        requests: connectionProfiles.length > 0
+          ? connectionProfiles : 'No incoming requests',
       },
     });
   } catch (err) {
@@ -284,18 +277,12 @@ const getOutgoingRequests = async (req: Request, res: Response) => {
     }
     const outgoingRequests = user?.outgoingRequests;
     const connectionProfiles = await User.find({ user_id: { $in: outgoingRequests } });
-    if (connectionProfiles.length === 0) {
-      return res.status(200).json({
-        status: 'success',
-        data: {
-          message: 'No outgoing requests',
-        },
-      });
-    }
+
     return res.status(200).json({
       status: 'success',
       data: {
-        connections: connectionProfiles,
+        requests: connectionProfiles.length > 0
+          ? connectionProfiles : 'No outgoing requests',
       },
     });
   } catch (err) {

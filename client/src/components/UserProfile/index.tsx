@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Formik, Form } from "formik";
 import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import updateUserProfile from "../../http/updateUserProfile";
+import getUserProfile from "../../http/getUserProfile";
 
 import Banner from "./Banner";
 import Summary from "./Summary";
@@ -79,6 +80,8 @@ interface Usertypes {
 const UserProfile: React.FC = () => {
   // Make a request to the server to get the user's profile data
   // and then render the components below
+
+
 
   const [User, setUser] = useState<Usertypes>({
     name: " ",
@@ -161,6 +164,9 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false;
+      getUserProfile('Zr3BdvgL8laAMJZ2EBR3NEoCyiZ2').then((res) => {
+        console.log(res.data.user);
+      })
       getCurrentUserProfile().then((res) => {
         setUser({
           name: res?.data.user.name,
