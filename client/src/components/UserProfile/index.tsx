@@ -164,9 +164,6 @@ const UserProfile: React.FC = () => {
   useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false;
-      getUserProfile('Zr3BdvgL8laAMJZ2EBR3NEoCyiZ2').then((res) => {
-        console.log(res.data.user);
-      })
       getCurrentUserProfile().then((res) => {
         setUser({
           name: res?.data.user.name,
