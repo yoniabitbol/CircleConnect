@@ -13,4 +13,4 @@ const NavSettings: React.FC = () => {
   );
 };
 
-export default NavSettings;
+export default NavSettings;         

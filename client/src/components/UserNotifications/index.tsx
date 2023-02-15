@@ -7,7 +7,7 @@ import ConnectionInvite from "./ConnectionInvite";
 
 const UserNotifications: React.FC = () => {
   return (
-    <div className="flex flex-row justify-center mt-6">
+    <div className="lg:flex flex-row justify-center mt-6">
       <div className="flex flex-col">
         <NavSettings />
         <Dashboard
