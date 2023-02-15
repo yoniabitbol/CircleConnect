@@ -80,37 +80,40 @@ const MyUserProfile: React.FC<{
           editProfile(values);
         }}
       >
-        <Form>
-          <Layout>
-            <LeftSection>
-              <Banner
-                edit={editable}
-                banner={{
-                  name: User.name,
-                  title: User.title,
-                  location: User.location,
-                  email: User.email,
-                  phone: User.phone,
-                  website: User.website,
-                  connections: User.connections,
-                  picture: User.picture,
-                  backdrop: User.backdrop,
-                }}
-              />
-              <Summary edit={editable} summary={User.summary} />
-              <Projects projects={User.projects} />
-              <Skills skills={User.skills} />
-              <Experience experience={User.experience} />
-              <Education education={User.education} />
-              <Languages languages={User.languages} />
-              <Awards awards={User.awards} />
-              <Courses courses={User.courses} />
-            </LeftSection>
-            <RightSection>
-              <Dashboard />
-            </RightSection>
-          </Layout>
-        </Form>
+        {(props) => (
+          <Form>
+            <Layout>
+              <LeftSection>
+                <Banner
+                  formik={props}
+                  edit={editable}
+                  banner={{
+                    name: User.name,
+                    title: User.title,
+                    location: User.location,
+                    email: User.email,
+                    phone: User.phone,
+                    website: User.website,
+                    connections: User.connections,
+                    picture: User.picture,
+                    backdrop: User.backdrop,
+                  }}
+                />
+                <Summary edit={editable} summary={User.summary} />
+                <Projects projects={User.projects} />
+                <Skills skills={User.skills} />
+                <Experience experience={User.experience} />
+                <Education education={User.education} />
+                <Languages languages={User.languages} />
+                <Awards awards={User.awards} />
+                <Courses courses={User.courses} />
+              </LeftSection>
+              <RightSection>
+                <Dashboard />
+              </RightSection>
+            </Layout>
+          </Form>
+        )}
       </Formik>
     </div>
   );

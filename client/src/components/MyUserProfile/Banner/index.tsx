@@ -15,7 +15,8 @@ const Banner: React.FC<{
   };
 
   edit: boolean;
-}> = ({ banner, edit }) => {
+  formik: any;
+}> = ({ banner, edit, formik }) => {
   return (
     <div>
       {edit ? (
@@ -24,7 +25,23 @@ const Banner: React.FC<{
             <label className="text-sm font-semibold text-gray-600 py-2">
               Backdrop URL
             </label>
-            <Field name="backdrop" className="w-full rounded-sm" type="text" />
+            {/* <Field name="backdrop" className="w-full rounded-sm" type="text" /> */}
+            <input
+              id="file"
+              name="backdrop"
+              type="file"
+              className="w-full rounded-sm"
+              onChange={(event) => {
+                const file: FileList | null = event.currentTarget.files;
+                if (!file) return;
+                else {
+                  formik.setFieldValue(
+                    "backdrop",
+                    URL.createObjectURL(file[0])
+                  );
+                }
+              }}
+            />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
               Profile Picture URL
