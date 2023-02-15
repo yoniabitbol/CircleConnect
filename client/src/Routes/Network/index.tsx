@@ -7,7 +7,7 @@ const Network: React.FC = () => {
       <div className="flex justify-center sm:text-left py-2">
         <div className="grid grid-cols-4 flex items-center gap-4 p-4 sm:text-sm text-xs w-full sm:w-7/12 bg-white">
           <div className="col-span-3 font-bold">357 CONNECTIONS</div>
-          <input placeholder="Search" style={{ outline: "none" }}></input>
+          <input placeholder="Search" className="border p-2"></input>
         </div>
       </div>
       <ConnectionRow />
