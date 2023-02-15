@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
 import admin from '../firebase/config';
-import usingAuth from "../usingAuth";
+import usingAuth from '../usingAuth';
 
 // User Profile API
 

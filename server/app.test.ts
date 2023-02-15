@@ -261,7 +261,9 @@ describe('Server tests', () => {
 
   test('Request get user incoming requests', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser', incomingRequests: 'testRequest'},
+      {
+        user_id: 'testUser', name: 'testUser', email: 'testUser', incomingRequests: 'testRequest',
+      },
       'findOne',
     );
 
@@ -296,7 +298,9 @@ describe('Server tests', () => {
 
   test('Request get user outgoing requests', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser', incomingRequests: 'testRequest'},
+      {
+        user_id: 'testUser', name: 'testUser', email: 'testUser', incomingRequests: 'testRequest',
+      },
       'findOne',
     );
 
@@ -349,7 +353,7 @@ describe('Server tests', () => {
     mockingoose(User).toReturn(
       new Error(),
       'findOne',
-    )
+    );
 
     mockingoose(User).toReturn(
       {},
@@ -368,10 +372,14 @@ describe('Server tests', () => {
 
   test('Request to accept connection', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser',
+      {
+        user_id: 'testUser',
+        name: 'testUser',
+        email: 'testUser',
         connections: [],
-        incomingRequests: ["testUser"],
-        outgoingRequests: ["testUser"]},
+        incomingRequests: ['testUser'],
+        outgoingRequests: ['testUser'],
+      },
 
       'findOne',
     );
@@ -442,8 +450,11 @@ describe('Server tests', () => {
 
   test('Request to remove connection', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser',
-        connections: ["testUser"],
+      {
+        user_id: 'testUser',
+        name: 'testUser',
+        email: 'testUser',
+        connections: ['testUser'],
       },
       'findOne',
     );
