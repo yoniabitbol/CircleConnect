@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import { Formik, Form } from "formik";
 import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import updateUserProfile from "../../http/updateUserProfile";
-import getUserProfile from "../../http/getUserProfile";
 
 import Banner from "./Banner";
 import Summary from "./Summary";
