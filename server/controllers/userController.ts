@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/userModel';
 import admin from '../firebase/config';
+import usingAuth from '../usingAuth';
 
 // User Profile API
 
@@ -88,7 +89,9 @@ const updateUser = async (req: Request, res: Response) => {
 
 const deleteUser = async (req: Request, res: Response) => {
   try {
-    await admin.auth().deleteUser(req.params.user_id);
+    if (usingAuth()) {
+      await admin.auth().deleteUser(req.params.user_id);
+    }
     const user = await User.findOneAndDelete({ user_id: req.params.user_id });
     res.status(200).json({
       status: 'success',
@@ -184,7 +187,7 @@ const acceptConnectionRequest = async (req: Request, res: Response) => {
     }
     return res.status(403).json({
       status: 'failure',
-      message: 'Error accepting connection request',
+      message: 'No incoming request to accept',
     });
   } catch (err) {
     res.status(400).json({
@@ -251,18 +254,11 @@ const getIncomingRequests = async (req: Request, res: Response) => {
     }
     const incomingRequests = user?.incomingRequests;
     const connectionProfiles = await User.find({ user_id: { $in: incomingRequests } });
-    if (connectionProfiles.length === 0) {
-      return res.status(200).json({
-        status: 'success',
-        data: {
-          message: 'No incoming requests',
-        },
-      });
-    }
     return res.status(200).json({
       status: 'success',
       data: {
-        connections: connectionProfiles,
+        requests: connectionProfiles.length > 0
+          ? connectionProfiles : 'No incoming requests',
       },
     });
   } catch (err) {
@@ -284,18 +280,12 @@ const getOutgoingRequests = async (req: Request, res: Response) => {
     }
     const outgoingRequests = user?.outgoingRequests;
     const connectionProfiles = await User.find({ user_id: { $in: outgoingRequests } });
-    if (connectionProfiles.length === 0) {
-      return res.status(200).json({
-        status: 'success',
-        data: {
-          message: 'No outgoing requests',
-        },
-      });
-    }
+
     return res.status(200).json({
       status: 'success',
       data: {
-        connections: connectionProfiles,
+        requests: connectionProfiles.length > 0
+          ? connectionProfiles : 'No outgoing requests',
       },
     });
   } catch (err) {

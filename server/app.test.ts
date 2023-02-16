@@ -9,6 +9,18 @@ jest.mock('./usingAuth', () => ({
   __esModule: true,
 }));
 
+// jest.mock('./firebase/config', () => {
+//   return {
+//     initializeApp: () => {},
+//     auth: async () => {
+//       return {
+//         deleteUser: async () => {return null;}
+//       };
+//     },
+//     __esModule: true,
+//   };
+// });
+
 describe('Server tests', () => {
   // test('Request auth error', (done) => {
   //   request(app)
@@ -188,11 +200,10 @@ describe('Server tests', () => {
     );
 
     request(app)
-      .delete('/api/users/:user_id')
-      .send({ user_id: 'test' })
+      .delete('/api/users/test')
       .then((response) => {
         expect(response.statusCode).toBe(200);
-        expect(response.text).toContain('{"status":"success","data":{');
+        expect(response.text).toContain('{"status":"success","message":"User testUser deleted"}');
         done();
       });
   });
@@ -208,7 +219,7 @@ describe('Server tests', () => {
       .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(400);
-        expect(response.text).toBe('{"status":"ERROR: Error: The default Firebase app does not exist. Make sure you call initializeApp() before using any of the Firebase services.","message":"Error deleting user"}');
+        expect(response.text).toBe('{"status":"ERROR: Error","message":"Error deleting user"}');
         done();
       });
   });
@@ -219,11 +230,16 @@ describe('Server tests', () => {
       'findOne',
     );
 
+    mockingoose(User).toReturn(
+      [],
+      'find',
+    );
+
     request(app)
-      .get('/api/users/:user_id/connections')
+      .get('/api/users/test/connections')
       .then((response) => {
         expect(response.statusCode).toBe(200);
-        expect(response.text).toContain('{"status":"success","data":{');
+        expect(response.text).toBe('{"status":"success","data":{"connections":[]}}');
         done();
       });
   });
@@ -245,15 +261,22 @@ describe('Server tests', () => {
 
   test('Request get user incoming requests', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {
+        user_id: 'testUser', name: 'testUser', email: 'testUser', incomingRequests: 'testRequest',
+      },
       'findOne',
     );
 
+    mockingoose(User).toReturn(
+      [],
+      'find',
+    );
+
     request(app)
-      .get('/api/users/:user_id/incoming')
+      .get('/api/users/test/incoming')
       .then((response) => {
         expect(response.statusCode).toBe(200);
-        expect(response.text).toContain('{"status":"success","data":{');
+        expect(response.text).toBe('{"status":"success","data":{"requests":"No incoming requests"}}');
         done();
       });
   });
@@ -265,7 +288,7 @@ describe('Server tests', () => {
     );
 
     request(app)
-      .get('/api/users/:user_id/incoming')
+      .get('/api/users/test/incoming')
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toBe('{"status":"ERROR: Error","message":"Error getting incoming requests"}');
@@ -275,16 +298,22 @@ describe('Server tests', () => {
 
   test('Request get user outgoing requests', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {
+        user_id: 'testUser', name: 'testUser', email: 'testUser', incomingRequests: 'testRequest',
+      },
       'findOne',
+    );
 
+    mockingoose(User).toReturn(
+      [],
+      'find',
     );
 
     request(app)
       .get('/api/users/:user_id/outgoing')
       .then((response) => {
         expect(response.statusCode).toBe(200);
-        expect(response.text).toContain('{"status":"success","data":{');
+        expect(response.text).toBe('{"status":"success","data":{"requests":"No outgoing requests"}}');
         done();
       });
   });
@@ -326,9 +355,14 @@ describe('Server tests', () => {
       'findOne',
     );
 
+    mockingoose(User).toReturn(
+      {},
+      'updateOne',
+    );
+
     request(app)
-      .patch('/api/users/:user_id/connect')
-      .send({ user_id: 'test' })
+      .patch('/api/users/test/connect')
+      .send({ user_id: 'testTargetId' })
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toBe('{"status":"ERROR: Error","message":"Error sending connection request"}');
@@ -338,16 +372,30 @@ describe('Server tests', () => {
 
   test('Request to accept connection', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {
+        user_id: 'testUser',
+        name: 'testUser',
+        email: 'testUser',
+        connections: [],
+        incomingRequests: ['testUser'],
+        outgoingRequests: ['testUser'],
+      },
+
       'findOne',
     );
 
+    mockingoose(User).toReturn(
+      {},
+
+      'updateOne',
+    );
+
     request(app)
-      .patch('/api/users/:user_id/accept')
-      .send({ user_id: 'testUser' })
+      .patch('/api/users/test/accept')
+      .send({ user_id: 'senderTestId' })
       .then((response) => {
         expect(response.statusCode).toBe(200);
-        expect(response.text).toContain('{"status":"success","message"');
+        expect(response.text).toBe('{"status":"success","message":"Connection request accepted"}');
         done();
       });
   });
@@ -402,16 +450,26 @@ describe('Server tests', () => {
 
   test('Request to remove connection', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {
+        user_id: 'testUser',
+        name: 'testUser',
+        email: 'testUser',
+        connections: ['testUser'],
+      },
       'findOne',
     );
 
+    mockingoose(User).toReturn(
+      {},
+      'updateOne',
+    );
+
     request(app)
-      .patch('/api/users/:user_id/remove')
+      .patch('/api/users/test/remove')
       .send({ user_id: 'testUser' })
       .then((response) => {
         expect(response.statusCode).toBe(200);
-        expect(response.text).toContain('{"status":"success","message"');
+        expect(response.text).toBe('{"status":"success","message":"Connection removed"}');
         done();
       });
   });
@@ -423,7 +481,7 @@ describe('Server tests', () => {
     );
 
     request(app)
-      .patch('/api/users/:user_id/remove')
+      .patch('/api/users/test/remove')
       .send({ user_id: 'test' })
       .then((response) => {
         expect(response.statusCode).toBe(400);
