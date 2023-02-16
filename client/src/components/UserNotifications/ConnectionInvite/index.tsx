@@ -11,24 +11,24 @@ const ConnectionInvite: React.FC<{
   const { name, job_title, connections, connection_message } = props;
   const [userProfilePic] = React.useState<string>();
   return (
-    <div className="lg:w-9/12 w-full m-5 p-5 rounded-md bg-slate-100 mx-auto">
+    <div className="w-full lg:w-10/12 m-4 p-3 rounded-md bg-white mx-auto h-auto">
       <div className="flex flex-row justify-between">
         <div className="flex flex-row space-x-8">
-          <div className="lg:w-1/12">
+          <div className="w-1/12 pt-2 pl-1">
             <Link to="/profile">
               <Avatar src={userProfilePic} />
             </Link>
           </div>
-          <div className="flex flex-col">
-            <h1 className="text-sm lg:text-xl font-semibold pt-2">{name}</h1>
-            <h2 className="text-xs lg:text-sm">{job_title}</h2>
-            <h3 className="text-xs lg:text-sm" style={{ color: "#4B47B7" }}>
+          <div className="flex flex-col lg:pl-5 pl-3">
+            <h1 className="text-md font-bold pt-2">{name}</h1>
+            <h2 className="text-xs font-semibold">{job_title}</h2>
+            <h3 className="text-xs" style={{ color: "#4B47B7" }}>
               {connections} connections
             </h3>
           </div>
         </div>
         <div className="hidden md:flex flex-row w-1/3">
-          <h1 className="text-6xl" style={{ color: "#4B47B7" }}>
+          <h1 className="text-4xl pr-2" style={{ color: "#4B47B7" }}>
             |
           </h1>
           <h3 className="text-sm text-gray-400">{connection_message}</h3>

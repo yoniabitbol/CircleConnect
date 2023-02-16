@@ -9,7 +9,7 @@ const UserNotifications: React.FC = () => {
     <body className="justify-center" style={{ backgroundColor: "#F7F9FB" }}>
       <div className="lg:flex lg:flex-row justify-center mt-6">
         <div className="flex flex-col">
-          <div className="lg:pl-28">
+          <div className="lg:pl-24">
             <NavSettings />
             <Dashboard
               views_today="367"
