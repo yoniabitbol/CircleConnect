@@ -30,6 +30,7 @@ const Banner: React.FC<{
               id="file"
               name="backdrop"
               type="file"
+              
               className="w-full rounded-sm"
               onChange={(event) => {
                 const file: FileList | null = event.currentTarget.files;

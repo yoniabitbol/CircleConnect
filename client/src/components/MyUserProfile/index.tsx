@@ -77,11 +77,12 @@ const MyUserProfile: React.FC<{
         }}
         enableReinitialize
         onSubmit={(values) => {
+          console.log(values.backdrop);
           editProfile(values);
         }}
       >
         {(props) => (
-          <Form>
+          <Form encType="multipart/form-data">
             <Layout>
               <LeftSection>
                 <Banner
