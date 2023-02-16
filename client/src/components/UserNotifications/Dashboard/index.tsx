@@ -8,10 +8,10 @@ const Dashboard: React.FC<{
 }> = (props) => {
   const { views_today, posts_views, search_appearances } = props;
   return (
-    <div className="mt-3 p-5 rounded-md bg-white">
+    <div className="my-4 py-5 rounded-md bg-white">
       <div className="flex flex-col justify-center mb-2">
         <div className="flex justify-around text-sm">
-          <h1>YOUR DASHBOARD</h1>
+          <h1 className="">YOUR DASHBOARD</h1>
           <Link
             to="/profile"
             style={{ color: "#4B47B7" }}
@@ -20,7 +20,7 @@ const Dashboard: React.FC<{
             GO TO STATS
           </Link>
         </div>
-        <hr className="w-full h-0.5 mx-auto my-2 bg-gray-200 border-0 rounded md:my-5 dark:bg-gray-300" />
+        <hr className="w-full h-px mx-auto my-2 bg-gray-200 border-0 rounded md:my-5 dark:bg-gray-300" />
         <h1 className="text-4xl font-semibold" style={{ color: "#4B47B7" }}>
           {views_today}
         </h1>

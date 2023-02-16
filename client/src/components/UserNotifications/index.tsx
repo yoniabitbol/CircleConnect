@@ -6,8 +6,8 @@ import ConnectionInvite from "./ConnectionInvite";
 
 const UserNotifications: React.FC = () => {
   return (
-    <body style={{ backgroundColor: "#F7F9FB" }}>
-      <div className="flex flex-row justify-center mt-6">
+    <body className="justify-center" style={{ backgroundColor: "#F7F9FB" }}>
+      <div className="lg:flex lg:flex-row justify-center mt-6">
         <div className="flex flex-col">
           <NavSettings />
           <Dashboard
