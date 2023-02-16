@@ -21,7 +21,7 @@ interface Usertypes {
   email: string;
   phone: string;
   website: string;
-  connections: number;
+  connections: any;
   picture: string;
   backdrop: string;
 
