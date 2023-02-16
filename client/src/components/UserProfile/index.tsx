@@ -171,7 +171,7 @@ const UserProfile: React.FC = () => {
           email: res?.data.user.email,
           phone: res?.data.user.phone,
           website: res?.data.user.website,
-          connections: res?.data.user.connections,
+          connections: res?.data.user.connections.length,
           picture: res?.data.user.picture,
           backdrop: res?.data.user.backdrop,
           summary: res?.data.user.summary,
