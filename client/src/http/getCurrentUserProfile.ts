@@ -1,7 +1,7 @@
 import { auth } from "../firebase/config";
 
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
-const url = `http://localhost:${port}/api/users?`;
+const url = `http://localhost:${port}/api/users/`;
 
 async function getCurrentUserProfile() {
   const user = auth.currentUser;
@@ -10,7 +10,7 @@ async function getCurrentUserProfile() {
   if (!id) {
     return;
   }
-  const res = await fetch(url + new URLSearchParams({ user_id: id }), {
+  const res = await fetch(url + id, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
