@@ -6,8 +6,8 @@ import ConnectionInvite from "./ConnectionInvite";
 
 const UserNotifications: React.FC = () => {
   return (
-    <body className="justify-center" style={{ backgroundColor: "#F7F9FB" }}>
-      <div className="lg:flex lg:flex-row justify-center mt-6">
+    <body className="justify-center py-6" style={{ backgroundColor: "#F7F9FB" }}>
+      <div className="lg:flex lg:flex-row justify-center">
         <div className="flex flex-col">
           <div className="lg:pl-24">
             <NavSettings />
@@ -20,9 +20,9 @@ const UserNotifications: React.FC = () => {
         </div>
         <div className="flex flex-col">
           <div className="flex flex-row">
-            <hr className="w-1/3 h-px mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300" />
+            <hr className="w-1/3 h-px mx-auto my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
             <div className="">RECENT</div>
-            <hr className="w-1/3 h-px mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300" />
+            <hr className="w-1/3 h-px mx-auto my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
           </div>
           <div className="row-span-2 col-span-2">
             <Alert

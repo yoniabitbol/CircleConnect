@@ -20,7 +20,7 @@ const Alert: React.FC<{
           </div>
           <div className="w-full flex flex-col justify-between pl-4">
             <h1 className="text-md font-semibold pt-2">{description}</h1>
-            <h2 className="text-xs opacity-90">{time} hours</h2>
+            <h2 className="text-xs">{time} hours</h2>
           </div>
         </div>
         <div className="">
