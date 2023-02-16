@@ -10,13 +10,14 @@ const Network: React.FC = () => {
           <input placeholder="Search" className="border p-2"></input>
         </div>
       </div>
-      <ConnectionRow />
-      <ConnectionRow />
-      <ConnectionRow />
-      <ConnectionRow />
-      <ConnectionRow />
-      <ConnectionRow />
+      <ConnectionRow/>
+      <ConnectionRow/>
+      <ConnectionRow/>
+      <ConnectionRow/>
+        <ConnectionRow/>
+        <ConnectionRow/>
     </body>
+
   );
 };
 
