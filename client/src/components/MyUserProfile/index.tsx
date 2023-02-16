@@ -50,7 +50,17 @@ const MyUserProfile: React.FC<{
       courses: values.courses,
     });
     setEditable(!editable);
-    updateUserProfile(values);
+
+    const formData = new FormData();
+    for (const value in values) {
+      formData.append(value, values[value]);
+    }
+
+    for (const pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    updateUserProfile(formData);
   };
 
   return (

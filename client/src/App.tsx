@@ -19,13 +19,17 @@ function App() {
             <Route
               path="/"
               element={
-                user ? <Navigate to="/profile" /> : <Navigate to="/login" />
+                user ? <Navigate to="/myprofile" /> : <Navigate to="/login" />
               }
             />
-            <Route path='/*' element={<ScreenContent/>}>
+            <Route path="/*" element={<ScreenContent />}>
               <Route
                 path="profile/:id"
                 element={user ? <Profile /> : <Navigate to="/" />}
+              />
+              <Route
+                path="myprofile"
+                element={user ? <MyProfile /> : <Navigate to="/" />}
               />
               <Route
                 path="network"

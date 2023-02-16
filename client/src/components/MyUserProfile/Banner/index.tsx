@@ -30,16 +30,12 @@ const Banner: React.FC<{
               id="file"
               name="backdrop"
               type="file"
-              
               className="w-full rounded-sm"
               onChange={(event) => {
                 const file: FileList | null = event.currentTarget.files;
                 if (!file) return;
                 else {
-                  formik.setFieldValue(
-                    "backdrop",
-                    URL.createObjectURL(file[0])
-                  );
+                  formik.setFieldValue("backdrop", file[0]);
                 }
               }}
             />
