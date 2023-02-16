@@ -40,8 +40,4 @@ const NavBar: React.FC = () => {
       </div>
     </div>
     )};
-{/*   <div className="flex flex-col min-h-screen justify-between "> */}
-{/*   <Outlet/> */}
-{/*   <Footer/> */}
-{/* </div>   */}
 export default NavBar;
