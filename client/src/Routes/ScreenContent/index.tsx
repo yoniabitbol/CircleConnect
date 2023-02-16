@@ -5,10 +5,11 @@ const ScreenContent = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col min-h-screen justify-between">
+      <div className="min-h-screen" style={{ backgroundColor: "#F7F9FB" }}>
         <Outlet/>
-        <Footer/>
       </div>
+      
+      <Footer/>
     </>
   );
 };
