@@ -44,9 +44,15 @@ const userSchema = new mongoose.Schema({
   summary: {
     type: String,
   },
-  connections: {
-    type: Number,
-  },
+  outgoingRequests: [{ type: String, ref: 'User', unique: true }],
+  incomingRequests: [{ type: String, ref: 'User', unique: true }],
+  connections: [
+    {
+      type: String,
+      ref: 'User',
+      unique: true,
+    },
+  ],
   projects: [
     {
       title: {

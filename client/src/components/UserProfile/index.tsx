@@ -80,6 +80,8 @@ const UserProfile: React.FC = () => {
   // Make a request to the server to get the user's profile data
   // and then render the components below
 
+
+
   const [User, setUser] = useState<Usertypes>({
     name: " ",
     title: " ",

@@ -11,4 +11,3 @@ if (usingAuth()) {
   });
 }
 export default admin;
-
