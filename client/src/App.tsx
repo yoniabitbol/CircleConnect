@@ -5,7 +5,7 @@ import Profile from "./Routes/Profile";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
-import NavBar from "./components/Navbar";
+import ScreenContent from "./Routes/ScreenContent";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -24,7 +24,7 @@ function App() {
                 )
               }
             />
-            <Route path='/*' element={<NavBar/>}>
+            <Route path='/*' element={<ScreenContent/>}>
               <Route
                 path="profile"
                 element={user ? <Profile /> : <Navigate to="/" />}
