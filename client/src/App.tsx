@@ -5,7 +5,7 @@ import Profile from "./Routes/Profile";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
-import NavBar from "./components/Navbar";
+import ScreenContent from "./Routes/ScreenContent";
 import Network from "./Routes/Network";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
                 user ? <Navigate to="/profile" /> : <Navigate to="/login" />
               }
             />
-            <Route path="/*" element={<NavBar />}>
+            <Route path='/*' element={<ScreenContent/>}>
               <Route
                 path="profile"
                 element={user ? <Profile /> : <Navigate to="/" />}

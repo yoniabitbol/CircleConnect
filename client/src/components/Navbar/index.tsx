@@ -1,13 +1,12 @@
 import React, {useState} from "react";
 import NavLinks from "./NavLinks";
-import { Link ,Outlet} from "react-router-dom";
+import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar";
 import { Avatar, Button } from "@mui/material";
 import useLogout from "../../hooks/useLogout";
 import MobileNav from "./MobileNav";
 import NavLinkModels from "../../lib/NavLinkModels";
 import getCurrentUserProfile from "../../http/getCurrentUserProfile";
-import Footer from "../Footer";
 import UserInSearch from "../../Models/UsersInSearchModel";
 import getAllUsers from "../../http/getAllUsers";
 import { Usertypes } from "../UserProfile";
@@ -51,6 +50,7 @@ import { Usertypes } from "../UserProfile";
 //   ]
 
 
+
 const NavBar: React.FC = () => {
   const {logout} = useLogout();
   const [userProfilePic, setUserProfilePic] = useState<string>();
@@ -73,7 +73,6 @@ const NavBar: React.FC = () => {
     setUsersInSearch(filteredArray)
   }
   return (
-    <>
     <div className="w-screen p-2 flex items-center border sticky top-0 bg-white">
       <div className="min-[941px]:hidden">
         <MobileNav links={NavLinkModels}/>
@@ -98,11 +97,5 @@ const NavBar: React.FC = () => {
         </div>
       </div>
     </div>
-    <div className="flex flex-col min-h-screen justify-between ">
-    <Outlet/>
-    <Footer/>
-  </div>  
-      </>
     )};
-
 export default NavBar;
