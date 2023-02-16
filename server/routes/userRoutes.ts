@@ -1,5 +1,6 @@
 import express from 'express';
 import UserController from '../controllers/userController';
+import { uploadImages, resizePhoto } from '../middleware/multer';
 
 const router = express.Router();
 

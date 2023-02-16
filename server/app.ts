@@ -2,7 +2,7 @@ import cors from 'cors';
 import express, { Request, Response } from 'express';
 import userRoutes from './routes/userRoutes';
 import decodeToken from './middleware/decodeToken';
-import MorganMiddleware from './middleware/MorganMiddleware';
+import Morgan from './middleware/morgan';
 import usingAuth from './usingAuth';
 
 const app = express();
@@ -11,7 +11,7 @@ app.use(express.json());
 if (usingAuth()) {
   app.use(cors());
   app.use(decodeToken);
-  app.use(MorganMiddleware);
+  app.use(Morgan);
 }
 
 app.use('/api/users', userRoutes);
