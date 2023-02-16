@@ -1,5 +1,6 @@
 import express from 'express';
 import UserController from '../controllers/userController';
+import { uploadImages, resizePhoto } from '../middleware/multer';
 
 const router = express.Router();
 
@@ -7,7 +8,11 @@ const router = express.Router();
 router.route('/')
   .get(UserController.getAllUsers)
   .post(UserController.createUser)
-  .patch(UserController.updateUser);
+  .patch(
+    uploadImages,
+    resizePhoto,
+    UserController.updateUser
+    );
 
 router.route('/:user_id')
   .get(UserController.getUser)
