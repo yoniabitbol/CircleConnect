@@ -25,9 +25,7 @@ async function updateUserProfile(formData: FormData) {
 
   const res = await fetch(url, {
     method: "PATCH",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    headers: {Authorization: `Bearer ${token}`,},
     body: formData,
   });
 
