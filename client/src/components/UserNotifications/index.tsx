@@ -9,15 +9,17 @@ const UserNotifications: React.FC = () => {
     <body className="justify-center" style={{ backgroundColor: "#F7F9FB" }}>
       <div className="lg:flex lg:flex-row justify-center mt-6">
         <div className="flex flex-col">
-          <NavSettings />
-          <Dashboard
-            views_today="367"
-            posts_views="15"
-            search_appearances="9"
-          />
+          <div className="lg:pl-28">
+            <NavSettings />
+            <Dashboard
+              views_today="367"
+              posts_views="15"
+              search_appearances="9"
+            />
+          </div>
         </div>
         <div className="flex flex-col">
-          <div className="flex flex-row justify-center">
+          <div className="flex flex-row">
             <hr className="w-1/4 h-0.5 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300" />
             <div className="">RECENT</div>
             <hr className="w-1/4 h-0.5 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300" />

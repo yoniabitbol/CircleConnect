@@ -13,12 +13,18 @@ const Alert: React.FC<{
     <div className="w-full lg:w-9/12 m-5 p-5 rounded-md bg-slate-100 mx-auto">
       <div className="flex flex-row justify-between">
         <div className="w-full flex flex-row justify-center">
-          <div className="lg:w-1/12"><Link to="/profile"><Avatar src={userProfilePic}/></Link></div>
+          <div className="lg:w-1/12">
+            <Link to="/profile">
+              <Avatar src={userProfilePic} />
+            </Link>
+          </div>
           <div className="w-full flex flex-col justify-between">
-              <h1 className="text-sm lg:text-lg lg:font-semibold pt-2">{description}</h1>
-              <h2 className="text-xs lg:text-sm">{time} hours</h2>
-        </div>                                     
-        </div>                               
+            <h1 className="text-sm lg:text-lg lg:font-semibold pt-2">
+              {description}
+            </h1>
+            <h2 className="text-xs lg:text-sm">{time} hours</h2>
+          </div>
+        </div>
         <div className="">
           <button className="text-4xl">...</button>
         </div>
@@ -26,5 +32,5 @@ const Alert: React.FC<{
     </div>
   );
 };
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+
 export default Alert;
