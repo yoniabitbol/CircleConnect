@@ -21,19 +21,14 @@ async function updateUserProfile(formData: FormData) {
     console.log(pair[0] + ", " + pair[1]);
   }
 
-  const formData2 = new FormData();
 
-  formData2.append("name", "test");
-  formData2.append("email", "testEmail");
-  formData2.append("picture", "testPicture");
-  formData2.append("backdrop", "testBackdrop");
 
   const res = await fetch(url, {
     method: "PATCH",
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    body: formData2,
+    body: formData,
   });
 
   return res.json();
