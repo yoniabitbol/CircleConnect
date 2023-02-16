@@ -20,9 +20,9 @@ const UserNotifications: React.FC = () => {
         </div>
         <div className="flex flex-col">
           <div className="flex flex-row">
-            <hr className="w-1/4 h-0.5 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300" />
+            <hr className="w-1/3 h-px mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300" />
             <div className="">RECENT</div>
-            <hr className="w-1/4 h-0.5 mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300" />
+            <hr className="w-1/3 h-px mx-auto my-2 bg-gray-100 border-0 rounded md:my-5 dark:bg-gray-300" />
           </div>
           <div className="row-span-2 col-span-2">
             <Alert
