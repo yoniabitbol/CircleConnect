@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { MouseEventHandler, useEffect, useState } from "react";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar";
@@ -51,11 +51,16 @@ import { Usertypes } from "../UserProfile";
 
 
 
-const NavBar: React.FC = () => {
+const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<HTMLDivElement>}> = (props) => {
+  const {openSearch, searchClicked} = props;
   const {logout} = useLogout();
   const [userProfilePic, setUserProfilePic] = useState<string>();
   const [usersInSearch, setUsersInSearch] = useState<UserInSearch[]>([]);
+  const [searchBarExpanded, setSearchBarExpanded] = useState<boolean>();
   getCurrentUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
+  useEffect(() => {
+    setSearchBarExpanded(openSearch);
+  }, [openSearch]);
   
   const onChangeHandler = async () => {
     const res = await getAllUsers();
@@ -74,11 +79,11 @@ const NavBar: React.FC = () => {
   }
   return (
     <div className="w-screen p-2 flex items-center border sticky top-0 bg-white">
-      <div className="min-[941px]:hidden">
+      <div className="min-[941px]:hidden left-0 relative w-min">
         <MobileNav links={NavLinkModels}/>
       </div>
-      <div className="flex w-1/2 h-max  max-[940px] w-4/5 max-[940px]:hidden">
-        <Link className="ml-10 w-1/5" to='/'>
+      <div className="flex w-1/2 h-max max-[940px]:hidden bg-red-500">
+        <Link className="ml-5 w-1/5" to='/'>
           <img
             style={{maxWidth: '5rem'}}
             src="Brand Logo/officccccc.png"
@@ -87,15 +92,19 @@ const NavBar: React.FC = () => {
         </Link>
         <NavLinks links={NavLinkModels}/>
       </div>
-      <div className="flex items-center ml-15 w-1/2 max-[940px]:w-full pl-7">
-        <div className="flex items-center p-2.5 w-4/5">
-          <SearchBar searchResults={usersInSearch} inputChangeHandler={onChangeHandler}/>
+     
+        <div className={`flex bg-blue-500 relative justify-center  ${searchBarExpanded ? 'w-[75%]' : 'w-2/5'}`} onClick={searchClicked}>
+          <div className="p-2.5 w-[20rem]">
+            <SearchBar searchResults={usersInSearch} inputChangeHandler={onChangeHandler}/>
+          </div>
         </div>
-        <div className="flex">
-          <Link to="/profile"><Avatar src={userProfilePic}/></Link>
-          <Button onClick={logout} sx={{color: '#4B47B7'}}>Logout</Button>
+        <div className={`flex items-center justify-end right-0 absolute max-[940px]:${searchBarExpanded && 'hidden'}`}>
+          <div className="flex">
+            <Link to="/profile"><Avatar src={userProfilePic}/></Link>
+            <Button onClick={logout} sx={{color: '#4B47B7'}}>Logout</Button>
+          </div>
         </div>
       </div>
-    </div>
+     
     )};
 export default NavBar;

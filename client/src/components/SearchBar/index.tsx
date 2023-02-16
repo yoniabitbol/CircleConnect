@@ -31,16 +31,22 @@ const searchBoxes = (props: any, option :any) => (
   </Link>
   
   )
-const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (event :React.SyntheticEvent) => void}> = (props) => {
+const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (value: string) => void}> = (props) => {
   const {searchResults, inputChangeHandler} = props;
   const loading = searchResults.length === 0;
+  const [value, setValue] = React.useState<string>('');
+  const OnChangeHandler = (_:any, value : string) => {
+    setValue(value);
+    inputChangeHandler(value);
+  }
   return (
-   
       <Autocomplete
-        onInputChange={inputChangeHandler}
+        open={value.length > 0}
+        inputValue={value}
+        onInputChange={OnChangeHandler}
         clearIcon={<Search/>}
         noOptionsText={"No results found"}
-        sx={{ width: "275px", height: '100%' }}
+        sx={{  height: '100%'}}
         options={searchResults}
         groupBy={(option) => option.type}
         renderGroup={(params) => (
@@ -56,7 +62,8 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (e
         renderInput={(params) => (
           <TextField
             {...params}
-            sx={{width: 275, height: '100%'}}
+            sx={{ height: '100%'}}
+            fullWidth={true}
             InputProps={{
               ...params.InputProps,
               startAdornment: (
@@ -64,7 +71,7 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (e
                   <Search sx={{color:'#4B47B7'}}/>
                 </div>
               ),
-              endAdornment: loading ? <CircularProgress color="inherit" size={20} /> : null,
+              endAdornment: loading ? <CircularProgress color="inherit" size={20} sx={{position:'absolute', right:6}} /> : null,
           
             }}
           />
