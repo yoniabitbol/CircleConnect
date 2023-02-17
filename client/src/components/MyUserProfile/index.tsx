@@ -56,10 +56,6 @@ const MyUserProfile: React.FC<{
       formData.append(value, values[value]);
     }
 
-    // for (const pair of formData.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
-
     updateUserProfile(formData);
   };
 
@@ -87,7 +83,6 @@ const MyUserProfile: React.FC<{
         }}
         enableReinitialize
         onSubmit={(values) => {
-          console.log(values.backdrop);
           editProfile(values);
         }}
       >

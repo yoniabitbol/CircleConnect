@@ -7,7 +7,6 @@ const url = `http://localhost:${port}/api/users`;
 async function updateUserProfile(formData: FormData) {
   const user = auth.currentUser;
   const token = user && (await user.getIdToken());
-  console.log("token", token);
   const user_id = user && user.uid;
   if (!user_id) {
     return;
@@ -16,16 +15,9 @@ async function updateUserProfile(formData: FormData) {
   // Append the user_id to the formData object
   formData.append("user_id", user_id);
 
-  // Log the formData object
-  for (const pair of formData.entries()) {
-    console.log(pair[0] + ", " + pair[1]);
-  }
-
-
-
   const res = await fetch(url, {
     method: "PATCH",
-    headers: {Authorization: `Bearer ${token}`,},
+    headers: { Authorization: `Bearer ${token}` },
     body: formData,
   });
 
