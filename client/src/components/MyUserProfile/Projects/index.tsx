@@ -10,10 +10,11 @@ const Projects: React.FC<{
     picture: string;
   }[];
 }> = ({ projects }) => {
+  console.log(projects);
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
       <h1 className="text-2xl font-bold ">Projects</h1>
-      {projects?.map((project, index) => {
+      {/* {projects?.map((project, index) => {
         return (
           <div key={index} className="flex flex-col justify-center mb-5">
             <h1 className="text-lg font-semibold pt-2">{project.title}</h1>
@@ -35,7 +36,7 @@ const Projects: React.FC<{
             />
           </div>
         );
-      })}
+      })} */}
     </div>
   );
 };
