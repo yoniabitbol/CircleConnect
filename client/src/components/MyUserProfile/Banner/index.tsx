@@ -2,6 +2,7 @@ import React from "react";
 import { Field } from "formik";
 import { useState, useEffect } from "react";
 import getUserBackdrop from "../../../http/getUserBackdrop";
+import getUserProfilePic from "../../../http/getUserPicturePic";
 
 const Banner: React.FC<{
   banner: {
@@ -20,11 +21,17 @@ const Banner: React.FC<{
   formik: any;
 }> = ({ banner, edit, formik }) => {
   const [backdropUrl, setBackdropUrl] = useState("");
+  const [profilePicUrl, setProfilePicUrl] = useState("");
+
   useEffect(() => {
     async function fetchUserProfile() {
       try {
-        const url = await getUserBackdrop(banner.backdrop);
-        setBackdropUrl(url);
+        if (banner.backdrop === "" || banner.picture === "") return;
+        const backdropUrl = await getUserBackdrop(banner.backdrop);
+        const profilePicUrl = await getUserProfilePic(banner.picture);
+
+        setBackdropUrl(backdropUrl);
+        setProfilePicUrl(profilePicUrl);
       } catch (error) {
         console.log(error);
       }
@@ -58,7 +65,20 @@ const Banner: React.FC<{
             <label className="text-sm font-semibold text-gray-600 py-2">
               Profile Picture URL
             </label>
-            <Field name="picture" className="w-full rounded-sm" type="text" />
+            {/* <Field name="picture" className="w-full rounded-sm" type="text" /> */}
+            <input
+              id="file"
+              name="picture"
+              type="file"
+              className="w-full rounded-sm"
+              onChange={(event) => {
+                const file: FileList | null = event.currentTarget.files;
+                if (!file) return;
+                else {
+                  formik.setFieldValue("picture", file[0]);
+                }
+              }}
+            />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
               Name
@@ -119,7 +139,7 @@ const Banner: React.FC<{
           <div className="flex justify-center -mt-16">
             <img
               className="w-32 h-32 rounded-full border-2 border-white"
-              src={banner.picture}
+              src={profilePicUrl}
               alt="profile"
             />
           </div>
