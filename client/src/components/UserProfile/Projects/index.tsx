@@ -6,7 +6,7 @@ const Projects: React.FC<{
     description: string;
     startDate: string;
     endDate: string;
-    technologies: string[];
+    technologies: string;
     picture: string;
   }[];
 }> = ({ projects }) => {
@@ -23,7 +23,7 @@ const Projects: React.FC<{
             </h3>
 
             <div className="flex space-x-5 pt-2">
-              {project.technologies.map((technology, index) => {
+              {project.technologies.split(' ').map((technology, index) => {
                 return <div key={index}>{technology}</div>;
               })}
             </div>

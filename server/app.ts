@@ -1,9 +1,9 @@
-import cors from "cors";
 import express, { Request, Response } from "express";
 import userRoutes from "./routes/userRoutes";
 import decodeToken from "./middleware/decodeToken";
 import Morgan from "./middleware/morgan";
 import usingAuth from "./usingAuth";
+import cors from "cors";
 import path from "path";
 
 const app = express();

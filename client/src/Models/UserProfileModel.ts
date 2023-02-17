@@ -15,7 +15,7 @@ export default interface Usertypes {
       description: string;
       startDate: string;
       endDate: string;
-      technologies: string[];
+      technologies: string;
       picture: string;
     }[];
     skills: {

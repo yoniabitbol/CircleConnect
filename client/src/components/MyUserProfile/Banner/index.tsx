@@ -20,8 +20,6 @@ const Banner: React.FC<{
   formik: any;
 }> = ({ banner, edit, formik }) => {
   const [backdropUrl, setBackdropUrl] = useState("");
-  console.log(banner.backdrop);
-
   useEffect(() => {
     async function fetchUserProfile() {
       try {
