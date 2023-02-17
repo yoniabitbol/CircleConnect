@@ -15,7 +15,7 @@ const Alert: React.FC<{
         <div className="w-full flex flex-row justify-center">
           <div className="lg:w-1/12 pt-2 pl-1">
             <Link to="/profile">
-              <Avatar src={userProfilePic} />
+              <Avatar sx={{position : 'static'}} src={userProfilePic} />
             </Link>
           </div>
           <div className="w-full flex flex-col justify-between pl-4">
