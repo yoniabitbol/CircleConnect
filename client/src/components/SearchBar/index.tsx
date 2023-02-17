@@ -42,7 +42,6 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
   
   
   
-  console.log(open)
   const SearchResultsBox = (props: any, option: any ) => {
     return (
       <Link  to={`user/${option.id}`} onClick={textBoxClickHandler}>
