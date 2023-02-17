@@ -19,6 +19,10 @@ const Banner: React.FC<{
   const [backdropUrl, setBackdropUrl] = useState("");
   const [profilePicUrl, setProfilePicUrl] = useState("");
 
+  const [connectionState, setConnectionState] = useState("");
+
+
+  // Fetch user profile picture and backdrop
   useEffect(() => {
     async function fetchUserProfile() {
       try {
@@ -34,6 +38,10 @@ const Banner: React.FC<{
     }
     fetchUserProfile();
   }, [banner.backdrop, banner.picture]);
+
+
+  // Fetch connection state
+  
 
   return (
     <div>
@@ -66,12 +74,28 @@ const Banner: React.FC<{
         </div>
 
         <div>
-          <button
-            type="submit"
-            className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
-          >
-            Connect
-          </button>
+          {connectionState === "notConnected" ? (
+            <button
+              type="submit"
+              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+            >
+              Connect
+            </button>
+          ) : connectionState === "pending" ? (
+            <button
+              type="submit"
+              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+            >
+              Pending
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+            >
+              Connected
+            </button>
+          )}
         </div>
 
         {/* click contact info to display a modal */}
