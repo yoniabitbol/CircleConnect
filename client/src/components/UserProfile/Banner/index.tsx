@@ -21,7 +21,6 @@ const Banner: React.FC<{
 
   const [connectionState, setConnectionState] = useState("");
 
-
   // Fetch user profile picture and backdrop
   useEffect(() => {
     async function fetchUserProfile() {
@@ -39,9 +38,18 @@ const Banner: React.FC<{
     fetchUserProfile();
   }, [banner.backdrop, banner.picture]);
 
-
   // Fetch connection state
-  
+  useEffect(() => {
+    async function fetchConnectionState() {
+      try {
+        // const connectionState = await getConnectionState();
+        setConnectionState("connected");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchConnectionState();
+  }, []);
 
   return (
     <div>
