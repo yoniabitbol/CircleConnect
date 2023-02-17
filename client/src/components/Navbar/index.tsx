@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useState } from "react";
+import React, { MouseEventHandler,  useState } from "react";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar";
@@ -51,16 +51,14 @@ import { Usertypes } from "../UserProfile";
 
 
 
-const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<HTMLDivElement>}> = (props) => {
-  const {openSearch, searchClicked} = props;
+const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<HTMLDivElement>, outsideClicked: MouseEventHandler<HTMLDivElement>}> = (props) => {
+  const {openSearch, searchClicked, outsideClicked} = props;
   const {logout} = useLogout();
   const [userProfilePic, setUserProfilePic] = useState<string>();
   const [usersInSearch, setUsersInSearch] = useState<UserInSearch[]>([]);
-  const [searchBarExpanded, setSearchBarExpanded] = useState<boolean>();
+  console.log(openSearch)
   getCurrentUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
-  useEffect(() => {
-    setSearchBarExpanded(openSearch);
-  }, [openSearch]);
+  
   
   const onChangeHandler = async () => {
     const res = await getAllUsers();
@@ -74,15 +72,14 @@ const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<H
             label: user.name
         })
     })
-    
     setUsersInSearch(filteredArray)
   }
   return (
     <div className="w-screen p-2 flex items-center border sticky top-0 bg-white">
-      <div className="min-[941px]:hidden left-0 relative w-min">
+      <div className="lg:hidden left-0 relative w-min" onClick={outsideClicked} >
         <MobileNav links={NavLinkModels}/>
       </div>
-      <div className="flex w-1/2 h-max max-[940px]:hidden bg-red-500">
+      <div className="flex w-1/2 h-max max-lg:hidden" onClick={outsideClicked}>
         <Link className="ml-5 w-1/5" to='/'>
           <img
             style={{maxWidth: '5rem'}}
@@ -93,12 +90,12 @@ const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<H
         <NavLinks links={NavLinkModels}/>
       </div>
      
-        <div className={`flex bg-blue-500 relative justify-center  ${searchBarExpanded ? 'w-[75%]' : 'w-2/5'}`} onClick={searchClicked}>
-          <div className="p-2.5 w-[20rem]">
-            <SearchBar searchResults={usersInSearch} inputChangeHandler={onChangeHandler}/>
+        <div className={` flex relative justify-center  w-min`}>
+          <div className={`p-2.5 ${openSearch ? 'w-[17rem]' : 'max-lg:min-w-max'} lg:w-[20rem]`} onClick={searchClicked}>
+            <SearchBar searchResults={usersInSearch} inputChangeHandler={onChangeHandler} loading={openSearch} searchOpen={openSearch} outsideClicked={outsideClicked}/>
           </div>
         </div>
-        <div className={`flex items-center justify-end right-0 absolute max-[940px]:${searchBarExpanded && 'hidden'}`}>
+        <div className={`flex items-center justify-end right-0 absolute ${openSearch && 'max-sm:hidden'}`} onClick={outsideClicked}>
           <div className="flex">
             <Link to="/profile"><Avatar src={userProfilePic}/></Link>
             <Button onClick={logout} sx={{color: '#4B47B7'}}>Logout</Button>
