@@ -11,7 +11,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (value: string) => void, loading:boolean, searchOpen: boolean, outsideClicked: MouseEventHandler}> = (props) => {
   const {searchResults, inputChangeHandler, loading, searchOpen} = props;
   const [value, setValue] = React.useState<string>('');
-  const [open, setOpen] = React.useState(false);
   const [results, setResults] = React.useState<UserInSearch[]>([]);
   const emptySearch = () => {
     setValue('');
@@ -19,7 +18,6 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
   }
   useEffect(() => {
     if(!searchOpen) {
-      setOpen(false)
         setResults([])
         setValue('')
     }
@@ -35,7 +33,6 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
   }
   
   const textBoxClickHandler = () => {
-    setOpen(false);
     setResults([])
     setValue('')
   }
