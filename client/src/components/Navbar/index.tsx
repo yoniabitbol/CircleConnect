@@ -27,7 +27,7 @@ const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<H
     res.data.users.map((user: Usertypes ) => {
         filteredArray.push({
           id: user.user_id,
-          position: "Ceo",
+          position: user.title,
           name: user.name,
           type: "USERS",
           avatar: user.picture,
@@ -37,7 +37,7 @@ const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<H
     setUsersInSearch(filteredArray)
   }
   return (
-    <div className="w-screen p-2 flex items-center border sticky top-0 bg-white">
+    <div className="p-2 flex items-center border sticky top-0 bg-white">
       <div className="lg:hidden left-0 relative w-min" onClick={outsideClicked} >
         <MobileNav links={NavLinkModels}/>
       </div>
