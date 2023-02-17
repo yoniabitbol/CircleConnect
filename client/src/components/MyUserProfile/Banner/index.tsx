@@ -37,7 +37,7 @@ const Banner: React.FC<{
       }
     }
     fetchUserProfile();
-  }, [banner.backdrop]);
+  }, [banner.backdrop, banner.picture]);
 
   return (
     <div>
