@@ -1,5 +1,5 @@
 interface UserInSearch {
-  id: string,
+  id: string | undefined,
   name: string,
   type: string,
   position: string,

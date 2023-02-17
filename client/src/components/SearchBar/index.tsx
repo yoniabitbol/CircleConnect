@@ -6,7 +6,7 @@ import UserInSearch from "../../Models/UsersInSearchModel";
 import React, { MouseEventHandler, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
+import usersInSearchModel from "../../Models/UsersInSearchModel";
 
 const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (value: string) => void, loading:boolean, searchOpen: boolean, outsideClicked: MouseEventHandler}> = (props) => {
   const {searchResults, inputChangeHandler, loading, searchOpen} = props;
@@ -32,16 +32,21 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
     }
   }
   
+  
+  
   const textBoxClickHandler = () => {
     setResults([])
     setValue('')
   }
   
+  const searchBoxClickHandler = () => {
+    window.location.reload();
+  }
   
   
-  const SearchResultsBox = (props: any, option: any ) => {
+  const SearchResultsBox = (props: object , option: usersInSearchModel) => {
     return (
-      <Link  to={`user/${option.id}`} onClick={textBoxClickHandler}>
+      <Link  to={`user/${option.id}`} onClick={searchBoxClickHandler}>
         <div className="highlighted:bg-red-600">
           <Box component='li' sx={{border: 1, borderColor: '#D4D4D4', marginBottom: 1, width: 1, borderRadius:2, '&:hover':{boxShadow: "inset 0px 4px 4px rgba(0, 0, 0, 0.25)" }}}  {...props}>
             <div className=" items-center flex" >

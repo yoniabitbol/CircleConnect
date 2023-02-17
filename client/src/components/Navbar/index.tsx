@@ -10,46 +10,7 @@ import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import UserInSearch from "../../Models/UsersInSearchModel";
 import getAllUsers from "../../http/getAllUsers";
 import { Usertypes } from "../UserProfile";
-// import UsersInSearchModel from "../../Models/UsersInSearchModel";
-// const Dummy_user_data : UserInSearch[]= [
-//   {
-//     id: 1,
-//     name: "Leanne Graham",
-//     type: "USERS",
-//     position: "CEO",
-//     avatar: 'https://material-ui.com/static/images/avatar/1.jpg',
-//     label: "Leanne Graham"
-//
-//
-//   },
-//   {
-//     id: 2,
-//     name: "Ervin Howell",
-//     type: "USERS",
-//     position: "Senior Developer",
-//     avatar: 'https://material-ui.com/static/images/avatar/2.jpg',
-//     label: "Ervin Howell"
-//
-//   },
-//   {
-//     id: 3,
-//     name: "Clementine Bauch",
-//     type: "USERS",
-//     position: "Junior Developer",
-//     avatar: 'https://material-ui.com/static/images/avatar/3.jpg',
-//     label: "Clementine Bauch"
-//   },
-//   {
-//     id: 4,
-//     name: "Google",
-//     type: "JOBS",
-//     position: "Senior Developer",
-//       avatar: 'https://img.icons8.com/color/48/000000/google-logo.png',
-//     label: "Google"
-//   }
-//   ]
-
-
+import usersInSearchModel from "../../Models/UsersInSearchModel";
 
 const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<HTMLDivElement>, outsideClicked: MouseEventHandler<HTMLDivElement>}> = (props) => {
   const {openSearch, searchClicked, outsideClicked} = props;
@@ -62,14 +23,15 @@ const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<H
   
   const onChangeHandler = async () => {
     const res = await getAllUsers();
-   const filteredArray : any  = []
+   const filteredArray : usersInSearchModel[]  = []
     res.data.users.map((user: Usertypes ) => {
         filteredArray.push({
-            id: user.user_id,
-            name: user.name,
-            type: "USERS",
-            avatar: user.picture,
-            label: user.name
+          id: user.user_id,
+          position: "Ceo",
+          name: user.name,
+          type: "USERS",
+          avatar: user.picture,
+          label: user.name
         })
     })
     setUsersInSearch(filteredArray)
