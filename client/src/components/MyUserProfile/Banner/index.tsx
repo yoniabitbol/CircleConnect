@@ -1,5 +1,7 @@
 import React from "react";
 import { Field } from "formik";
+import { useState, useEffect } from "react";
+import getUserBackdrop from "../../../http/getUserBackdrop";
 
 const Banner: React.FC<{
   banner: {
@@ -17,6 +19,21 @@ const Banner: React.FC<{
   edit: boolean;
   formik: any;
 }> = ({ banner, edit, formik }) => {
+  const [backdropUrl, setBackdropUrl] = useState("");
+  console.log(banner.backdrop);
+
+  useEffect(() => {
+    async function fetchUserProfile() {
+      try {
+        const url = await getUserBackdrop(banner.backdrop);
+        setBackdropUrl(url);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchUserProfile();
+  }, [banner.backdrop]);
+
   return (
     <div>
       {edit ? (
@@ -97,7 +114,7 @@ const Banner: React.FC<{
           <div>
             <img
               className="w-full lg:h-64 h-32 object-cover rounded-t-md"
-              src={banner.backdrop}
+              src={backdropUrl}
               alt="backdrop"
             />
           </div>
