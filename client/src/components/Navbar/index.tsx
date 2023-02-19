@@ -80,7 +80,7 @@ const NavBar: React.FC<{
         onClick={outsideClicked}
       >
         <div className="flex">
-          <Link to="/profile">
+          <Link to="/myprofile">
             <Avatar src={userProfilePic} />
           </Link>
           <Button onClick={logout} sx={{ color: "#4B47B7" }}>
