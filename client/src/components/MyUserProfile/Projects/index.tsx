@@ -79,14 +79,12 @@ const Projects: React.FC<{
     );
   }
 
-  const existingProjects = projects.map((proj, index) => {
+  const existingProjects = projects.map((_, index) => {
     return (
-      <>
-        <div key={proj.title} className="my-5">
-          {projectFields(index)}
-        </div>
+      <React.Fragment key={index}>
+        <div className="my-5">{projectFields(index)}</div>
         <Divider />
-      </>
+      </React.Fragment>
     );
   });
 
