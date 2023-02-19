@@ -305,7 +305,6 @@ describe('httpRequests', () => {
   });
 
   test('Request userProfile', async () => {
-    jest.unmock('./http/getUserProfile');
     const res = await getUserProfile("Meme");
 
     expect(res.data).toBe(undefined);
