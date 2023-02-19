@@ -40,7 +40,9 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
   }
   
   const searchBoxClickHandler = () => {
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1)
   }
   
   
