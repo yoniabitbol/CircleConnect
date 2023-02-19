@@ -53,6 +53,9 @@ const MyUserProfile: React.FC<{
 
     const formData = new FormData();
     for (const value in values) {
+      if (values[value].isArray()){
+        formData.append(value, JSON.stringify(values[value]))
+      }
       formData.append(value, values[value]);
     }
 
@@ -106,7 +109,11 @@ const MyUserProfile: React.FC<{
                   }}
                 />
                 <Summary edit={editable} summary={User.summary} />
-                <Projects formik={props} edit={editable} projects={User.projects}  />
+                <Projects
+                  formik={props}
+                  edit={editable}
+                  projects={User.projects}
+                />
                 <Skills skills={User.skills} />
                 <Experience experience={User.experience} />
                 <Education education={User.education} />

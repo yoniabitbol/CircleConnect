@@ -9,7 +9,6 @@ export default interface Usertypes {
   connections: number;
   picture: string;
   backdrop: string;
-
   summary: string;
   projects: {
     title: string;
