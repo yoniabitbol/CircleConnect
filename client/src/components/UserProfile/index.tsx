@@ -15,6 +15,7 @@ import Awards from "./Awards";
 import Courses from "./Courses";
 
 interface Usertypes {
+  user_id?: string,
   name: string;
   title: string;
   location: string;
@@ -272,5 +273,6 @@ const UserProfile: React.FC = () => {
   );
 };
 
+export type { Usertypes}
 export default UserProfile;
-export type { Usertypes };
+
