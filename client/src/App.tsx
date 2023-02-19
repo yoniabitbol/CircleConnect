@@ -3,6 +3,7 @@ import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
 import MyProfile from "./Routes/MyProfile";
 import Profile from "./Routes/Profile";
+import Notifications from "./Routes/Notifications";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
@@ -34,6 +35,10 @@ function App() {
               <Route
                 path="network"
                 element={user ? <Network /> : <Navigate to="/" />}
+              />
+              <Route
+                path="notifications"
+                element={user ? <Notifications /> : <Navigate to="/" />}
               />
             </Route>
 

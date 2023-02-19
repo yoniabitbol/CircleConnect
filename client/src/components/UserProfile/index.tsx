@@ -49,4 +49,7 @@ const UserProfile: React.FC<{
   );
 };
 
+export type { Usertypes}
 export default UserProfile;
+
+
