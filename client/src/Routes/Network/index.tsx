@@ -14,7 +14,9 @@ const [filteredConnections, setFilteredConnections] = useState<any>([]);
   useEffect(() => {
     getUserConnections().then((res) => {
       setConnections(res.data.connections);
-      setFilteredConnections(connections)
+    });
+    getUserConnections().then((res) => {
+      setFilteredConnections(res.data.connections);
     });
   }, []);
   
