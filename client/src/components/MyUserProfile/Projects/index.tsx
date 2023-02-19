@@ -14,7 +14,7 @@ const Projects: React.FC<{
   edit: boolean;
   formik: any;
 }> = ({ projects, edit }) => {
-  console.log(projects);
+  // console.log(projects);
 
   const [addNew, setAddNew] = useState(false);
 
