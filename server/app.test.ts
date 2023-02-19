@@ -171,7 +171,7 @@ describe('Server tests', () => {
       .patch('/api/users')
       .send({ user_id: 'test', profile: { name: 'testProfile' } })
       .then((response) => {
-        expect(response.statusCode).toBe(201);
+        expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"success","data":{');
         done();
       });
