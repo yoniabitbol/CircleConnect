@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import React, {useState, useEffect} from "react";
 import ConnectionRow from "../../components/ConnectionRow";
 import getUserConnections from "../../http/getUserConnections";
@@ -40,9 +39,10 @@ const [filteredConnections, setFilteredConnections] = useState<any>([]);
           <input placeholder="Search" onChange={onInputChangeHandler} value={search} className="border p-2"></input>
         </div>
       </div>
-      {filteredConnections.map((connection: ConnectionType) => {
+      {filteredConnections.map((connection: ConnectionType, index: number) => {
         return (
           <ConnectionRow
+            key={index}
             name={connection.name}
             title={connection.title}
             connections={connection.connections}
