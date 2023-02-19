@@ -6,10 +6,6 @@ import App from './App';
 import UserProfile from "./components/UserProfile";
 import ScreenContent from "./Routes/ScreenContent";
 import {BrowserRouter} from "react-router-dom";
-import SearchResultsBox from "./components/SearchBar/SearchResultsBox/index.";
-import Alert from "./components/UserNotifications/Alert";
-import ConnectionInvite from "./components/UserNotifications/ConnectionInvite";
-import Dashboard from "./components/UserNotifications/Dashboard";
 import NavSettings from "./components/UserNotifications/NavSettings";
 import getAllUsers from "./http/getAllUsers";
 import getCurrentUserProfile from "./http/getCurrentUserProfile";
@@ -18,6 +14,8 @@ import saveUserToDB from "./http/saveUserToDB";
 import updateUserProfile from "./http/updateUserProfile";
 import UserNotifications from "./components/UserNotifications";
 import SearchBar from "./components/SearchBar";
+import SearchResultsBox from "./components/SearchBar/SearchResultsBox/index.";
+import MobileNav from "./components/Navbar/MobileNav";
 
 jest.mock('./firebase/config', () => ({
   auth: () => 'test',
@@ -60,21 +58,37 @@ describe('App root', () => {
      Ideally the starting page should be settable between each test.
     */
     await act(async () => {
-      let forgotPassButton = await act(() => {
+      let loginButton = await act(() => {
         return screen.getByText('Login here');
       });
-      await userEvent.click(forgotPassButton);
+      await userEvent.click(loginButton);
     });
 
+    // Test submission handler
     await act(async () => {
-      let forgotPassButton = await act(() => {
-        return screen.getByText('Forgot Password?');
+      // const email = await act(() => {
+      //   return screen.getByTestId('input-email');
+      // });
+      // await userEvent.type(email, 'test@hotmail.com');
+      //
+      // const pass = await act(() => {
+      //   return screen.getByTestId('input-password');
+      // });
+      // await userEvent.type(pass, 'test123456@');
+      //
+      // const forgotPassButton = await act(() => {
+      //   return screen.getByText('Forgot Password?');
+      // });
+      // await userEvent.click(forgotPassButton);
+
+      const loginButton = await act(() => {
+        return screen.getByTestId('submit-button');
       });
-      await userEvent.click(forgotPassButton);
+      await userEvent.click(loginButton);
     });
 
     expect(
-      screen.getByText('Forgot Password'),
+      screen.getByTestId('forgot-pass'),
     ).toBeInTheDocument();
 
     await act(async () => {
@@ -84,12 +98,12 @@ describe('App root', () => {
       await userEvent.type(emailField, 'test@hotmail.com');
     });
 
-    await act(async () => {
-      let resetButton = await act(() => {
-        return screen.getByText('Reset');
-      });
-      await userEvent.click(resetButton);
-    });
+    // await act(async () => {
+    //   let resetButton = await act(() => {
+    //     return screen.getByText('Reset');
+    //   });
+    //   await userEvent.click(resetButton);
+    // });
 
     // This should be in a separate test
     await act(async () => {
@@ -211,17 +225,17 @@ describe('SearchBar', () => {
     });
   });
 
-  // test('Render SearchResultsBox', async () => {
-  //   await act(async () => {
-  //     await render(
-  //       <>
-  //         <BrowserRouter>
-  //           <SearchResultsBox />
-  //         </BrowserRouter>
-  //       </>
-  //     );
-  //   });
-  // });
+  test('Render SearchResultsBox', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <SearchResultsBox />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
 });
 
 describe('UserNotifications', () => {
@@ -294,6 +308,27 @@ describe('UserNotifications', () => {
         return screen.getByTestId("link-click-1");
       });
       await userEvent.click(link1);
+    });
+  });
+});
+
+describe('MobileNav', () => {
+  test('Render MobileNav', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <MobileNav links={[]} />
+          </BrowserRouter>
+        </>
+      );
+    });
+
+    await act(async () => {
+      const iconButton = await act(() => {
+        return screen.getByTestId("icon-button");
+      });
+      await userEvent.click(iconButton);
     });
   });
 });

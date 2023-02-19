@@ -38,12 +38,11 @@ const SubmissionForm: React.FC<{
                 validation={field.validation}
               />
             ))}
-            {location.pathname === '/login' && <Link to="/forgot" className="text-blue-500">Forgot Password?</Link>}
+            {location.pathname === '/login' && <Link data-testid="forgot-pass" to="/forgot" className="text-blue-500">Forgot Password?</Link>}
             <button
               type="submit"
               className="block mt-4 w-full px-2 py-3 rounded-lg bg-signup-button
                text-white hover:bg-signup-button-hover shadow-xl shadow-placeholder-purple"
-              
             >
               {buttonField}
             </button>
