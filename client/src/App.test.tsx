@@ -16,6 +16,10 @@ import UserNotifications from "./components/UserNotifications";
 import SearchBar from "./components/SearchBar";
 import SearchResultsBox from "./components/SearchBar/SearchResultsBox/index.";
 import MobileNav from "./components/Navbar/MobileNav";
+import ForgotPass from "./Routes/ForgotPass";
+import Network from "./Routes/Network";
+import Profile from "./Routes/Profile";
+import SignUp from "./Routes/SignUp";
 
 jest.mock('./firebase/config', () => ({
   auth: () => 'test',
@@ -64,23 +68,8 @@ describe('App root', () => {
       await userEvent.click(loginButton);
     });
 
-    // Test submission handler
+    // Test login submission handler
     await act(async () => {
-      // const email = await act(() => {
-      //   return screen.getByTestId('input-email');
-      // });
-      // await userEvent.type(email, 'test@hotmail.com');
-      //
-      // const pass = await act(() => {
-      //   return screen.getByTestId('input-password');
-      // });
-      // await userEvent.type(pass, 'test123456@');
-      //
-      // const forgotPassButton = await act(() => {
-      //   return screen.getByText('Forgot Password?');
-      // });
-      // await userEvent.click(forgotPassButton);
-
       const loginButton = await act(() => {
         return screen.getByTestId('submit-button');
       });
@@ -190,7 +179,55 @@ describe('User profile', () => {
   });
 });
 
-describe('ScreenContent', () => {
+describe('Routes', () => {
+  test('Render Network', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <Network />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
+
+  test('Render Notifications', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <UserNotifications />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
+
+  test('Render Profile', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <Profile />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
+
+  test('Render Profile', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <Profile />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
+
   test('Render ScreenContent', async () => {
     await act(async () => {
       await render(
@@ -331,6 +368,47 @@ describe('MobileNav', () => {
       await userEvent.click(iconButton);
     });
   });
+});
+
+describe('Route Handlers', () => {
+  test('ForgotPass Handler', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <ForgotPass />
+          </BrowserRouter>
+        </>
+      );
+    });
+
+    // Test forgot pass submission handler
+    await act(async () => {
+      const forgotPass = await act(() => {
+        return screen.getByTestId('forgot-pass-button');
+      });
+      await userEvent.click(forgotPass);
+    });
+  });
+
+  // test('Signup Handler', async () => {
+  //   await act(async () => {
+  //     await render(
+  //       <>
+  //         <BrowserRouter>
+  //           <SignUp />
+  //         </BrowserRouter>
+  //       </>
+  //     );
+  //   });
+  //
+  //   await act(async () => {
+  //     const signUp = await act(() => {
+  //       return screen.getByTestId('signup-button');
+  //     });
+  //     await userEvent.click(signUp);
+  //   });
+  // });
 });
 
 describe('httpRequests', () => {
