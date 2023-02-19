@@ -18,7 +18,7 @@ const NavBar: React.FC<{openSearch : boolean, searchClicked: MouseEventHandler<H
   const [userProfilePic, setUserProfilePic] = useState<string>();
   const [usersInSearch, setUsersInSearch] = useState<UserInSearch[]>([]);
   console.log(openSearch)
-  getCurrentUserProfile().then((res) => setUserProfilePic(res.data.user.picture));
+  getCurrentUserProfile().then((res) => setUserProfilePic(res ? res.data.user.picture : ''));
   
   
   const onChangeHandler = async () => {
