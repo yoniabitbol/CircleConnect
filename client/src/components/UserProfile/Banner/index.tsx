@@ -1,7 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { auth } from "../../../firebase/config";
 import getUserBackdrop from "../../../http/getUserBackdrop";
 import getUserProfilePic from "../../../http/getUserPicturePic";
+
+import getIncomingConnectionRequests from "../../../http/getIncomingConnectionRequests";
+import getOutgoingConnectionRequests from "../../../http/getOutgoingConnectionRequests";
+import getUserConnections from "../../../http/getUserConnections";
+
+// import sendConnectionRequest from "../../../http/sendConnectionRequest";
 
 const Banner: React.FC<{
   banner: {
@@ -16,6 +23,10 @@ const Banner: React.FC<{
     backdrop: string;
   };
 }> = ({ banner }) => {
+  // Get user id
+  const user = auth.currentUser;
+  const user_id = user && user.uid;
+
   const [backdropUrl, setBackdropUrl] = useState("");
   const [profilePicUrl, setProfilePicUrl] = useState("");
 
@@ -42,13 +53,33 @@ const Banner: React.FC<{
   useEffect(() => {
     async function fetchConnectionState() {
       try {
-        // const connectionState = await getConnectionState();
-        setConnectionState("connected");
+        const incomingConnectionRequests =
+          await getIncomingConnectionRequests();
+        if (incomingConnectionRequests.data.includes(user_id)) {
+          setConnectionState("received");
+          return;
+        }
+
+        const outgoingConnectionRequests =
+          await getOutgoingConnectionRequests();
+        if (outgoingConnectionRequests.data.includes(user_id)) {
+          setConnectionState("pending");
+          return;
+        }
+
+        const connections = await getUserConnections();
+        if (connections.data.includes(user_id)) {
+          setConnectionState("connected");
+          return;
+        } else {
+          setConnectionState("notConnected");
+        }
       } catch (error) {
         console.log(error);
       }
     }
     fetchConnectionState();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -83,10 +114,7 @@ const Banner: React.FC<{
 
         <div>
           {connectionState === "notConnected" ? (
-            <button
-              type="submit"
-              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
-            >
+            <button className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5">
               Connect
             </button>
           ) : connectionState === "pending" ? (
@@ -96,23 +124,32 @@ const Banner: React.FC<{
             >
               Pending
             </button>
-          ) : (
+          ) : connectionState === "received" ? (
             <button
               type="submit"
               className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
             >
+              Respond
+            </button>
+          ) : connectionState === "connected" ? (
+            <button
+              type="submit"
+              className="bg-slate-500 text-white font-bold py-2 px-4 rounded-full m-5"
+            >
               Connected
             </button>
+          ) : (
+            <div></div>
           )}
         </div>
+      </div>
 
-        {/* click contact info to display a modal */}
-        {/* <div className="flex flex-col justify-center ml-5">
+      {/* click contact info to display a modal */}
+      {/* <div className="flex flex-col justify-center ml-5">
         <h1 className="text-lg font-semibold ">{banner.email}</h1>
         <h1 className="text-lg font-semibold ">{banner.phone}</h1>
         <h1 className="text-lg font-semibold ">{banner.website}</h1>
       </div> */}
-      </div>
     </div>
   );
 };
