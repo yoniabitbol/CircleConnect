@@ -46,7 +46,7 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
   
   const SearchResultsBox = (props: object , option: usersInSearchModel) => {
     return (
-      <Link  to={`user/${option.id}`} onClick={searchBoxClickHandler}>
+      <Link to={`user/${option.id}`} onClick={searchBoxClickHandler}>
         <div className="highlighted:bg-red-600">
           <Box component='li' sx={{border: 1, borderColor: '#D4D4D4', marginBottom: 1, width: 1, borderRadius:2, '&:hover':{boxShadow: "inset 0px 4px 4px rgba(0, 0, 0, 0.25)" }}}  {...props}>
             <div className=" items-center flex" >
@@ -91,7 +91,7 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
         )}
         renderOption={SearchResultsBox}
         renderInput={(params) => (
-          <TextField
+          <TextField data-testid="link-click-0"
             {...params}
             onClick={textBoxClickHandler}
             sx={{ height: '100%'}}

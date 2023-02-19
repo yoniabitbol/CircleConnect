@@ -16,6 +16,8 @@ import getCurrentUserProfile from "./http/getCurrentUserProfile";
 import getUserProfile from "./http/getUserProfile";
 import saveUserToDB from "./http/saveUserToDB";
 import updateUserProfile from "./http/updateUserProfile";
+import UserNotifications from "./components/UserNotifications";
+import SearchBar from "./components/SearchBar";
 
 jest.mock('./firebase/config', () => ({
   auth: () => 'test',
@@ -188,57 +190,89 @@ describe('ScreenContent', () => {
   });
 });
 
-describe('SearchResultsBox', () => {
-  test('Render SearchResultsBox', async () => {
+describe('SearchBar', () => {
+  test('Render SearchBar', async () => {
     await act(async () => {
       await render(
         <>
           <BrowserRouter>
-            <SearchResultsBox />
+            <SearchBar  inputChangeHandler={() => {}} loading={false} outsideClicked={() => {}} searchOpen={true}
+                        searchResults={[]} />
           </BrowserRouter>
         </>
       );
     });
+
+    await act(async () => {
+      const link0 = await act(() => {
+        return screen.getByTestId("link-click-0");
+      });
+      await userEvent.click(link0);
+    });
   });
+
+  // test('Render SearchResultsBox', async () => {
+  //   await act(async () => {
+  //     await render(
+  //       <>
+  //         <BrowserRouter>
+  //           <SearchResultsBox />
+  //         </BrowserRouter>
+  //       </>
+  //     );
+  //   });
+  // });
 });
 
 describe('UserNotifications', () => {
-  test('Render UserNotificationsAlert', async () => {
+  test('Render UserNotifications', async () => {
     await act(async () => {
       await render(
         <>
           <BrowserRouter>
-            <Alert  description="test" time={100}  type="some type" />
+            <UserNotifications />
           </BrowserRouter>
         </>
       );
     });
   });
 
-  test('Render UserNotificationsConnectionInvite', async () => {
-    await act(async () => {
-      await render(
-        <>
-          <BrowserRouter>
-            <ConnectionInvite connection_message="hello" connections={2} job_title="professor" name="Bob"/>
-          </BrowserRouter>
-        </>
-      );
-    });
-  });
-
-  test('Render UserNotificationsDashboard', async () => {
-    await act(async () => {
-      await render(
-        <>
-          <BrowserRouter>
-            <Dashboard posts_views="2" search_appearances="professor" views_today="2"/>
-          </BrowserRouter>
-        </>
-      );
-    });
-  });
-
+  // test('Render UserNotificationsAlert', async () => {
+  //   await act(async () => {
+  //     await render(
+  //       <>
+  //         <BrowserRouter>
+  //           <Alert  description="test" time={100}  type="some type" />
+  //         </BrowserRouter>
+  //       </>
+  //     );
+  //   });
+  // });
+  //
+  // test('Render UserNotificationsConnectionInvite', async () => {
+  //   await act(async () => {
+  //     await render(
+  //       <>
+  //         <BrowserRouter>
+  //           <ConnectionInvite connection_message="hello" connections={2} job_title="professor" name="Bob"/>
+  //         </BrowserRouter>
+  //       </>
+  //     );
+  //   });
+  // });
+  //
+  // test('Render UserNotificationsDashboard', async () => {
+  //   await act(async () => {
+  //     await render(
+  //       <>
+  //         <BrowserRouter>
+  //           <Dashboard posts_views="2" search_appearances="professor" views_today="2"/>
+  //         </BrowserRouter>
+  //       </>
+  //     );
+  //   });
+  // });
+  //
   test('Render UserNotificationsNavSettings', async () => {
     await act(async () => {
       await render(
@@ -248,6 +282,18 @@ describe('UserNotifications', () => {
           </BrowserRouter>
         </>
       );
+    });
+
+    await act(async () => {
+      const link0 = await act(() => {
+        return screen.getByTestId("link-click-0");
+      });
+      await userEvent.click(link0);
+
+      const link1 = await act(() => {
+        return screen.getByTestId("link-click-1");
+      });
+      await userEvent.click(link1);
     });
   });
 });
