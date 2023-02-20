@@ -63,7 +63,9 @@ const MyProfile: React.FC = () => {
     ],
   });
 
+  const [fetchedUser, setFetchedUser] = useState(false);
   useEffect(() => {
+    if (fetchedUser) return;
     getCurrentUserProfile().then((res) => {
       // This bug should eventually be fixed
       if (res.data.user.projects[0] === "") {
@@ -133,8 +135,11 @@ const MyProfile: React.FC = () => {
         ];
       }
 
+      console.log("fetched user");
       setMyUser(res.data.user);
     });
+    setFetchedUser(true);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
