@@ -49,7 +49,6 @@ const MyUserProfile: React.FC<{
       awards: values.awards,
       courses: values.courses,
     });
-    setEditable(!editable);
 
     values.projects = JSON.stringify(values.projects);
 
@@ -58,7 +57,11 @@ const MyUserProfile: React.FC<{
       formData.append(value, values[value]);
     }
 
-    updateUserProfile(formData);
+    if (editable) {
+      updateUserProfile(formData);
+    }
+
+    setEditable(!editable);
   };
 
   return (
@@ -85,7 +88,6 @@ const MyUserProfile: React.FC<{
         }}
         enableReinitialize
         onSubmit={(values) => {
-
           editProfile(values);
         }}
       >
@@ -109,11 +111,7 @@ const MyUserProfile: React.FC<{
                   }}
                 />
                 <Summary edit={editable} summary={User.summary} />
-                <Projects
-
-                  edit={editable}
-                  projects={User.projects}
-                />
+                <Projects edit={editable} projects={User.projects} />
                 <Skills skills={User.skills} />
                 <Experience experience={User.experience} />
                 <Education education={User.education} />
