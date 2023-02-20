@@ -27,15 +27,45 @@ const MyProfile: React.FC = () => {
       },
     ],
     skills: [{ name: "", level: "" }],
-    experience: [],
-    education: [],
-    languages: [],
-    awards: [],
-    courses: [],
+    experience: [
+      {
+        title: "",
+        startDate: "",
+        endDate: "",
+        company: "",
+        logo: "",
+        location: "",
+        description: "",
+      },
+    ],
+    education: [
+      {
+        school: "",
+        logo: "",
+        degree: "",
+        location: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+      },
+    ],
+    languages: [{ name: "", level: "" }],
+    awards: [{ title: "", date: "", awarder: "", summary: "" }],
+    courses: [
+      {
+        title: "",
+        number: "",
+        school: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+      },
+    ],
   });
 
   useEffect(() => {
     getCurrentUserProfile().then((res) => {
+      // This bug should eventually be fixed
       if (res.data.user.projects[0] === "") {
         res.data.user.projects = [
           {
@@ -53,6 +83,52 @@ const MyProfile: React.FC = () => {
           {
             name: "",
             level: "",
+          },
+        ];
+      }
+      if (res.data.user.experience[0] === "") {
+        res.data.user.experience = [
+          {
+            title: "",
+            startDate: "",
+            endDate: "",
+            company: "",
+            logo: "",
+            location: "",
+            description: "",
+          },
+        ];
+      }
+      if (res.data.user.education[0] === "") {
+        res.data.user.education = [
+          {
+            school: "",
+            logo: "",
+            degree: "",
+            location: "",
+            startDate: "",
+            endDate: "",
+            description: "",
+          },
+        ];
+      }
+      if (res.data.user.languages[0] === "") {
+        res.data.user.languages = [{ name: "", level: "" }];
+      }
+      if (res.data.user.awards[0] === "") {
+        res.data.user.awards = [
+          { title: "", date: "", awarder: "", summary: "" },
+        ];
+      }
+      if (res.data.user.courses[0] === "") {
+        res.data.user.courses = [
+          {
+            title: "",
+            number: "",
+            school: "",
+            startDate: "",
+            endDate: "",
+            description: "",
           },
         ];
       }

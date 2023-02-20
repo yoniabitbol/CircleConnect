@@ -122,7 +122,7 @@ const Projects: React.FC<{
           >
             <h1 className="text-lg font-semibold pt-2">{project.title}</h1>
             <h2 className="">{project.description}</h2>
-            <h4 className="">
+            <h4 className="text-sm">
               {project.startDate} → {project.endDate}
             </h4>
 
@@ -131,7 +131,7 @@ const Projects: React.FC<{
                 return (
                   <div
                     key={technology}
-                    className="rounded-md bg-slate-500 hover:bg-slate-700 px-2"
+                    className="rounded-md bg-slate-500 px-2"
                   >
                     {technology}
                   </div>
