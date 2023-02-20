@@ -96,7 +96,7 @@ const Education: React.FC<{
     );
   }
 
-  const existingeducations = education.map((_, index) => {
+  const existingEducation = education.map((_, index) => {
     return (
       <React.Fragment key={index}>
         <div className="my-5">{educationFields(index)}</div>
@@ -107,12 +107,12 @@ const Education: React.FC<{
 
   const form = addNew ? (
     <div className="pt-5">
-      {existingeducations}
+      {existingEducation}
       {educationFields(education.length)}
     </div>
   ) : (
     <div>
-      {existingeducations}
+      {existingEducation}
       {addNewBtn}
     </div>
   );
