@@ -34,31 +34,36 @@ const MyProfile: React.FC = () => {
     courses: [],
   });
 
-  useEffect(() => {
-    getCurrentUserProfile().then((res) => {
-      if (res.data.user.projects[0] === "") {
-        res.data.user.projects = [
-          {
-            title: "",
-            description: "",
-            startDate: "",
-            endDate: "",
-            technologies: "",
-            picture: "",
-          },
-        ];
-      }
-      if (res.data.user.skills[0] === "") {
-        res.data.user.skills = [
-          {
-            name: "",
-            level: "",
-          },
-        ];
-      }
+  const [fetchedUser, setFetchedUser] = useState(false);
 
-      setMyUser(res.data.user);
-    });
+  useEffect(() => {
+    if (!fetchedUser) {
+      getCurrentUserProfile().then((res) => {
+        if (res.data.user.projects[0] === "") {
+          res.data.user.projects = [
+            {
+              title: "",
+              description: "",
+              startDate: "",
+              endDate: "",
+              technologies: "",
+              picture: "",
+            },
+          ];
+        }
+        if (res.data.user.skills[0] === "") {
+          res.data.user.skills = [
+            {
+              name: "",
+              level: "",
+            },
+          ];
+        }
+        console.log("fetched user");
+        setMyUser(res.data.user);
+      });
+      setFetchedUser(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -1,4 +1,3 @@
-import { Field } from "formik";
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 
@@ -26,66 +25,87 @@ const Projects: React.FC<{
     </button>
   );
 
-  function projectFields(index: number) {
+  const projectFields = (index: number) => {
     return (
       <>
         <label className="text-sm font-semibold text-gray-600 py-2">
           Title
         </label>
-        <Field
+        <input
           name={`projects[${index}].title`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={projects[index].title || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            projects[index].title = e.target.value;
+          }}
         />
+
         <label className="text-sm font-semibold text-gray-600 py-2">
           Description
         </label>
-        <Field
+        <input
           name={`projects[${index}].description`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={projects[index].description || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            projects[index].description = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           Start Date
         </label>
-        <Field
+        <input
           name={`projects[${index}].startDate`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={projects[index].startDate || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            projects[index].startDate = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           End Date
         </label>
-        <Field
+        <input
           name={`projects[${index}].endDate`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={projects[index].endDate || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            projects[index].endDate = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           Technologies (seperate with a comma)
         </label>
-        <Field
-          as="input"
+        <input
           name={`projects[${index}].technologies`}
           className="w-full rounded-sm"
           type="text"
+          defaultValue={projects[index].technologies || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            projects[index].technologies = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           Picture
         </label>
-        <Field
+        <input
           name={`projects[${index}].picture`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          disabled={true}
+          // defaultValue={projects[index].picture || ""}
+          defaultValue={"Coming soon!"}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            projects[index].picture = e.target.value;
+          }}
         />
       </>
     );
-  }
+  };
 
   const existingProjects = projects.map((_, index) => {
     return (
