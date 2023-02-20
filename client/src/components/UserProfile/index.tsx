@@ -1,8 +1,7 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
-import { Formik, Form } from "formik";
-import getCurrentUserProfile from "../../http/getCurrentUserProfile";
-import updateUserProfile from "../../http/updateUserProfile";
+import { useState, useEffect } from "react";
+
+import Usertypes from "../../Models/UserProfileModel";
 
 import Banner from "./Banner";
 import Summary from "./Summary";
@@ -14,212 +13,19 @@ import Languages from "./Languages";
 import Awards from "./Awards";
 import Courses from "./Courses";
 
-interface Usertypes {
-  user_id?: string,
-  name: string;
-  title: string;
-  location: string;
-  email: string;
-  phone: string;
-  website: string;
-  connections: any;
-  picture: string;
-  backdrop: string;
-
-  summary: string;
-  projects: {
-    title: string;
-    description: string;
-    startDate: string;
-    endDate: string;
-    technologies: string[];
-    picture: string;
-  }[];
-  skills: {
-    name: string;
-    level: string;
-  }[];
-  experience: {
-    company: string;
-    logo: string;
-    title: string;
-    location: string;
-    startDate: string;
-    endDate: string;
-    description: string;
-  }[];
-  education: {
-    school: string;
-    logo: string;
-    degree: string;
-    location: string;
-    startDate: string;
-    endDate: string;
-    description: string;
-  }[];
-  languages: {
-    name: string;
-    level: string;
-  }[];
-  awards: {
-    title: string;
-    date: string;
-    awarder: string;
-    summary: string;
-  }[];
-  courses: {
-    title: string;
-    number: string;
-    school: string;
-    startDate: string;
-    endDate: string;
-    description: string;
-  }[];
-}
-
-const UserProfile: React.FC = () => {
-  // Make a request to the server to get the user's profile data
-  // and then render the components below
-
-
-
-  const [User, setUser] = useState<Usertypes>({
-    name: " ",
-    title: " ",
-    location: " ",
-    email: " ",
-    phone: " ",
-    website: " ",
-    connections: 0,
-    picture: " ",
-    backdrop: " ",
-    summary: " ",
-    projects: [
-      {
-        title: " ",
-        description: " ",
-        startDate: " ",
-        endDate: " ",
-        technologies: [" "],
-        picture: " ",
-      },
-    ],
-    skills: [
-      {
-        name: " ",
-        level: " ",
-      },
-    ],
-    experience: [
-      {
-        company: " ",
-        logo: " ",
-        title: " ",
-        location: " ",
-        startDate: " ",
-        endDate: " ",
-        description: " ",
-      },
-    ],
-    education: [
-      {
-        school: " ",
-        logo: " ",
-        degree: " ",
-        location: " ",
-        startDate: " ",
-        endDate: " ",
-        description: " ",
-      },
-    ],
-    languages: [
-      {
-        name: " ",
-        level: " ",
-      },
-    ],
-    awards: [
-      {
-        title: " ",
-        date: " ",
-        awarder: " ",
-        summary: " ",
-      },
-    ],
-    courses: [
-      {
-        title: " ",
-        number: " ",
-        school: " ",
-        startDate: " ",
-        endDate: " ",
-        description: " ",
-      },
-    ],
-  });
-  // Profile Editable state
-  const [editable, setEditable] = useState(false);
-  const initialRender = useRef(true);
+const UserProfile: React.FC<{
+  profile: Usertypes;
+}> = ({ profile }) => {
+  const [User, setUser] = useState<Usertypes>(profile);
 
   useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
-      getCurrentUserProfile().then((res) => {
-        setUser({
-          name: res?.data.user.name,
-          title: res?.data.user.title,
-          location: res?.data.user.location,
-          email: res?.data.user.email,
-          phone: res?.data.user.phone,
-          website: res?.data.user.website,
-          connections: res?.data.user.connections.length,
-          picture: res?.data.user.picture,
-          backdrop: res?.data.user.backdrop,
-          summary: res?.data.user.summary,
-          projects: res?.data.user.projects,
-          skills: res?.data.user.skills,
-          experience: res?.data.user.experience,
-          education: res?.data.user.education,
-          languages: res?.data.user.languages,
-          awards: res?.data.user.awards,
-          courses: res?.data.user.courses,
-        });
-        if (!User) return;
-      });
-      console.log("fetched");
-    } else {
-      updateUserProfile(User);
-      console.log("updated");
-    }
-  }, [editable]);
-
-  const editProfile = (values: any) => {
-    setUser({
-      name: values.name,
-      title: values.title,
-      location: values.location,
-      email: values.email,
-      phone: values.phone,
-      website: values.website,
-      connections: values.connections,
-      picture: values.picture,
-      backdrop: values.backdrop,
-      summary: values.summary,
-      projects: values.projects,
-      skills: values.skills,
-      experience: values.experience,
-      education: values.education,
-      languages: values.languages,
-      awards: values.awards,
-      courses: values.courses,
-    });
-    setEditable(!editable);
-  };
+    setUser(profile);
+  }, [profile]);
 
   return (
-    <div>
-      <Formik
-        initialValues={{
+    <div className="flex flex-col gap-5 lg:w-2/3 w-full px-5 lg:px-0 mx-auto my-5">
+      <Banner
+        banner={{
           name: User.name,
           title: User.title,
           location: User.location,
@@ -229,50 +35,21 @@ const UserProfile: React.FC = () => {
           connections: User.connections,
           picture: User.picture,
           backdrop: User.backdrop,
-          summary: User.summary,
-          projects: User.projects,
-          skills: User.skills,
-          experience: User.experience,
-          education: User.education,
-          languages: User.languages,
-          awards: User.awards,
-          courses: User.courses,
         }}
-        enableReinitialize
-        onSubmit={(values) => {
-          editProfile(values);
-          console.log("submited");
-        }}
-      >
-        <Form>
-          <Banner
-            edit={editable}
-            banner={{
-              name: User.name,
-              title: User.title,
-              location: User.location,
-              email: User.email,
-              phone: User.phone,
-              website: User.website,
-              connections: User.connections,
-              picture: User.picture,
-              backdrop: User.backdrop,
-            }}
-          />
-          <Summary edit={editable} summary={User.summary} />
-          <Projects projects={User.projects} />
-          <Skills skills={User.skills} />
-          <Experience experience={User.experience} />
-          <Education />
-          <Languages />
-          <Awards />
-          <Courses />
-        </Form>
-      </Formik>
+      />
+      <Summary summary={User.summary} />
+      <Projects projects={User.projects} />
+      <Skills skills={User.skills} />
+      <Experience experience={User.experience} />
+      <Education education={User.education} />
+      <Languages languages={User.languages} />
+      <Awards awards={User.awards} />
+      <Courses courses={User.courses} />
     </div>
   );
 };
 
 export type { Usertypes}
 export default UserProfile;
+
 
