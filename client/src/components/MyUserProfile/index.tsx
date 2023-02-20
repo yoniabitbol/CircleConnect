@@ -120,11 +120,11 @@ const MyUserProfile: React.FC<{
                 <Summary edit={editable} summary={User.summary} />
                 <Projects edit={editable} projects={User.projects} />
                 <Skills edit={editable} skills={User.skills} />
-                <Experience experience={User.experience} />
-                <Education education={User.education} />
-                <Languages languages={User.languages} />
-                <Awards awards={User.awards} />
-                <Courses courses={User.courses} />
+                <Experience edit={editable} experience={User.experience} />
+                <Education edit={editable} education={User.education} />
+                <Languages edit={editable} languages={User.languages} />
+                <Awards edit={editable} awards={User.awards} />
+                <Courses edit={editable} courses={User.courses} />
               </LeftSection>
               <RightSection>
                 <Dashboard />

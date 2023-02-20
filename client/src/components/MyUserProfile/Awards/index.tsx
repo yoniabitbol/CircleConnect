@@ -1,7 +1,11 @@
 import React from "react";
 import Usertypes from "../../../Models/UserProfileModel";
 
-const Awards: React.FC<{ awards: Usertypes["awards"] }> = ({ awards }) => {
+const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
+  awards,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  edit,
+}) => {
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
       <h1 className="text-2xl font-bold ">Awards</h1>

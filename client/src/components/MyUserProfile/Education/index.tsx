@@ -3,7 +3,12 @@ import Usertypes from "../../../Models/UserProfileModel";
 
 const Education: React.FC<{
   education: Usertypes["education"];
-}> = ({ education }) => {
+  edit: boolean;
+}> = ({
+  education,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  edit,
+}) => {
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
       <h1 className="text-2xl font-bold ">Education</h1>
