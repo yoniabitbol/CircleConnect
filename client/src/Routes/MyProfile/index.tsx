@@ -12,7 +12,7 @@ const MyProfile: React.FC = () => {
     email: "",
     phone: "",
     website: "",
-    connections: 0,
+    connections: [""],
     picture: "",
     backdrop: "",
     summary: "",

@@ -12,7 +12,7 @@ const Banner: React.FC<{
     email: string;
     phone: string;
     website: string;
-    connections: number;
+    connections: string[];
     picture: string;
     backdrop: string;
   };
@@ -152,7 +152,7 @@ const Banner: React.FC<{
 
           <div className="flex flex-col justify-center mt-5 ml-5">
             <h1 className="text-lg font-semibold ">
-              {banner.connections} Connections
+              {banner.connections.length} Connections
             </h1>
           </div>
 

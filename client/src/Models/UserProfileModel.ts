@@ -6,7 +6,7 @@ export default interface Usertypes {
   email: string;
   phone: string;
   website: string;
-  connections: number;
+  connections: string[];
   picture: string;
   backdrop: string;
   summary: string;
