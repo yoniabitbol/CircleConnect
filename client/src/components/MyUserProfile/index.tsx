@@ -51,11 +51,10 @@ const MyUserProfile: React.FC<{
     });
     setEditable(!editable);
 
+    values.projects = JSON.stringify(values.projects);
+
     const formData = new FormData();
     for (const value in values) {
-      if (values[value].isArray()){
-        formData.append(value, JSON.stringify(values[value]))
-      }
       formData.append(value, values[value]);
     }
 
@@ -86,6 +85,7 @@ const MyUserProfile: React.FC<{
         }}
         enableReinitialize
         onSubmit={(values) => {
+
           editProfile(values);
         }}
       >

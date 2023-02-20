@@ -13,11 +13,8 @@ async function updateUserProfile(formData: FormData) {
     return;
   }
 
-
   // Append the user_id to the formData object
   formData.append("user_id", user_id);
-
-
 
   const res = await fetch(url, {
     method: "PATCH",
@@ -25,10 +22,6 @@ async function updateUserProfile(formData: FormData) {
     body: formData,
   });
 
-  for (const value of formData.values()) {
-    console.log(value);
-  }
-  
   return res.json();
 }
 

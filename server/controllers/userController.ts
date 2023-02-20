@@ -76,7 +76,7 @@ const updateUser = async (req: any, res: Response) => {
       website: req.body.website,
       connections: req.body.connections,
       summary: req.body.summary,
-      projects: req.body.projects,
+      projects: JSON.parse(req.body.projects),
       skills: req.body.skills,
       experience: req.body.experience,
       education: req.body.education,
