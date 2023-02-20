@@ -65,6 +65,7 @@ const MyProfile: React.FC = () => {
 
   const [fetchedUser, setFetchedUser] = useState(false);
   useEffect(() => {
+    if (fetchedUser) return;
     getCurrentUserProfile().then((res) => {
       // This bug should eventually be fixed
       if (res.data.user.projects[0] === "") {
@@ -134,34 +135,11 @@ const MyProfile: React.FC = () => {
         ];
       }
 
-  useEffect(() => {
-    if (!fetchedUser) {
-      getCurrentUserProfile().then((res) => {
-        if (res.data.user.projects[0] === "") {
-          res.data.user.projects = [
-            {
-              title: "",
-              description: "",
-              startDate: "",
-              endDate: "",
-              technologies: "",
-              picture: "",
-            },
-          ];
-        }
-        if (res.data.user.skills[0] === "") {
-          res.data.user.skills = [
-            {
-              name: "",
-              level: "",
-            },
-          ];
-        }
-        console.log("fetched user");
-        setMyUser(res.data.user);
-      });
-      setFetchedUser(true);
-    }
+      console.log("fetched user");
+      setMyUser(res.data.user);
+    });
+    setFetchedUser(true);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
