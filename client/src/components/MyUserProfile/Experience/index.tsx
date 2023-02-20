@@ -13,16 +13,45 @@ const Experience: React.FC<{
   }[];
   edit: boolean;
 }> = ({ experience, edit }) => {
-  const [addNew, setAddNew] = useState(false);
+  const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
     <button
-      onClick={() => setAddNew(true)}
+      type="button"
       className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full my-5"
+      onClick={() => {
+        experience.push({
+          title: "",
+          startDate: "",
+          endDate: "",
+          company: "",
+          logo: "",
+          location: "",
+          description: "",
+        });
+        // Force form to re-render
+        setAddOrDelete(!addOrDelete);
+      }}
     >
       Add new
     </button>
   );
+
+  const deleteBtn = (index: number) => {
+    return (
+      <button
+        type="button"
+        className="bg-red-500 text-white rounded-full px-2 my-2"
+        onClick={() => {
+          experience.splice(index, 1);
+          // Force form to re-render
+          setAddOrDelete(!addOrDelete);
+        }}
+      >
+        Delete
+      </button>
+    );
+  };
 
   function experienceFields(index: number) {
     return (
@@ -99,6 +128,7 @@ const Experience: React.FC<{
             experience[index].description = e.target.value;
           }}
         />
+        {deleteBtn(index)}
       </>
     );
   }
@@ -112,13 +142,8 @@ const Experience: React.FC<{
     );
   });
 
-  const form = addNew ? (
+  const form = (
     <div className="pt-5">
-      {existingExperience}
-      {experienceFields(experience.length)}
-    </div>
-  ) : (
-    <div>
       {existingExperience}
       {addNewBtn}
     </div>

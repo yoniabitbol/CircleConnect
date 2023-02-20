@@ -6,16 +6,45 @@ const Education: React.FC<{
   education: Usertypes["education"];
   edit: boolean;
 }> = ({ education, edit }) => {
-  const [addNew, setAddNew] = useState(false);
+  const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
     <button
-      onClick={() => setAddNew(true)}
+      type="button"
       className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full my-5"
+      onClick={() => {
+        education.push({
+          school: "",
+          logo: "",
+          degree: "",
+          location: "",
+          startDate: "",
+          endDate: "",
+          description: "",
+        });
+        // Force form to re-render
+        setAddOrDelete(!addOrDelete);
+      }}
     >
       Add new
     </button>
   );
+
+  const deleteBtn = (index: number) => {
+    return (
+      <button
+        type="button"
+        className="bg-red-500 text-white rounded-full px-2 my-2"
+        onClick={() => {
+          education.splice(index, 1);
+          // Force form to re-render
+          setAddOrDelete(!addOrDelete);
+        }}
+      >
+        Delete
+      </button>
+    );
+  };
 
   function educationFields(index: number) {
     return (
@@ -92,6 +121,7 @@ const Education: React.FC<{
             education[index].description = e.target.value;
           }}
         />
+        {deleteBtn(index)}
       </>
     );
   }
@@ -105,12 +135,7 @@ const Education: React.FC<{
     );
   });
 
-  const form = addNew ? (
-    <div className="pt-5">
-      {existingEducation}
-      {educationFields(education.length)}
-    </div>
-  ) : (
+  const form = (
     <div>
       {existingEducation}
       {addNewBtn}

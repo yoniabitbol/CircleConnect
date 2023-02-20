@@ -8,16 +8,37 @@ const Skills: React.FC<{
   }[];
   edit: boolean;
 }> = ({ skills, edit }) => {
-  const [addNew, setAddNew] = useState(false);
+  const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
     <button
-      onClick={() => setAddNew(true)}
+      type="button"
       className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full my-5"
+      onClick={() => {
+        skills.push({ name: "", level: "" });
+        // Force form to re-render
+        setAddOrDelete(!addOrDelete);
+      }}
     >
       Add new
     </button>
   );
+
+  const deleteBtn = (index: number) => {
+    return (
+      <button
+        type="button"
+        className="bg-red-500 text-white rounded-full px-2 my-2"
+        onClick={() => {
+          skills.splice(index, 1);
+          // Force form to re-render
+          setAddOrDelete(!addOrDelete);
+        }}
+      >
+        Delete
+      </button>
+    );
+  };
 
   function skillFields(index: number) {
     return (
@@ -46,6 +67,7 @@ const Skills: React.FC<{
             skills[index].level = e.target.value;
           }}
         />
+        {deleteBtn(index)}
       </>
     );
   }
@@ -59,13 +81,8 @@ const Skills: React.FC<{
     );
   });
 
-  const form = addNew ? (
+  const form = (
     <div className="pt-5">
-      {existingskills}
-      {skillFields(skills.length)}
-    </div>
-  ) : (
-    <div>
       {existingskills}
       {addNewBtn}
     </div>
