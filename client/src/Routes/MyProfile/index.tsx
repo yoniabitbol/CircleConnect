@@ -16,7 +16,16 @@ const MyProfile: React.FC = () => {
     picture: "",
     backdrop: "",
     summary: "",
-    projects: [],
+    projects: [
+      {
+        title: "",
+        description: "",
+        startDate: "",
+        endDate: "",
+        technologies: "",
+        picture: "",
+      },
+    ],
     skills: [],
     experience: [],
     education: [],

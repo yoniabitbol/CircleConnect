@@ -110,7 +110,7 @@ const MyUserProfile: React.FC<{
                 />
                 <Summary edit={editable} summary={User.summary} />
                 <Projects
-                  formik={props}
+
                   edit={editable}
                   projects={User.projects}
                 />

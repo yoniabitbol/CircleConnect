@@ -12,7 +12,6 @@ const Projects: React.FC<{
     picture: string;
   }[];
   edit: boolean;
-  formik: any;
 }> = ({ projects, edit }) => {
   // console.log(projects);
 
@@ -74,6 +73,15 @@ const Projects: React.FC<{
           name={`projects[${index}].technologies`}
           className="w-full rounded-sm"
           type="text"
+        />
+        <label className="text-sm font-semibold text-gray-600 py-2">
+          Picture
+        </label>
+        <Field
+          name={`projects[${index}].picture`}
+          className="w-full rounded-sm"
+          type="text"
+          as="input"
         />
       </>
     );
