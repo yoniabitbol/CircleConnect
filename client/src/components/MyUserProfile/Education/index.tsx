@@ -1,4 +1,3 @@
-import { Field } from "formik";
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 import Usertypes from "../../../Models/UserProfileModel";
@@ -22,64 +21,82 @@ const Education: React.FC<{
     return (
       <>
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Title
+          School
         </label>
-        <Field
-          name={`educations[${index}].title`}
+        <input
+          name={`education[${index}].school`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={education[index].school || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            education[index].school = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Description
+          Degree
         </label>
-        <Field
-          name={`educations[${index}].description`}
+        <input
+          name={`education[${index}].degree`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={education[index].degree || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            education[index].degree = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           Start Date
         </label>
-        <Field
-          name={`educations[${index}].startDate`}
+        <input
+          name={`education[${index}].startDate`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={education[index].startDate || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            education[index].startDate = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           End Date
         </label>
-        <Field
-          name={`educations[${index}].endDate`}
+        <input
+          name={`education[${index}].endDate`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={education[index].endDate || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            education[index].endDate = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Technologies (seperate with a comma)
+          Location
         </label>
-        <Field
-          as="input"
-          name={`educations[${index}].technologies`}
+        <input
+          name={`education[${index}].location`}
           className="w-full rounded-sm"
           type="text"
+          defaultValue={education[index].location || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            education[index].location = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Picture
+          Description
         </label>
-        <Field
-          name={`educations[${index}].picture`}
+        <input
+          name={`education[${index}].description`}
           className="w-full rounded-sm"
-          type="text"
-          as="input"
+          type="textarea"
+          defaultValue={education[index].description || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            education[index].description = e.target.value;
+          }}
         />
       </>
     );
   }
 
-  const existingeducations = educations.map((_, index) => {
+  const existingeducations = education.map((_, index) => {
     return (
       <React.Fragment key={index}>
         <div className="my-5">{educationFields(index)}</div>
@@ -91,7 +108,7 @@ const Education: React.FC<{
   const form = addNew ? (
     <div className="pt-5">
       {existingeducations}
-      {educationFields(educations.length)}
+      {educationFields(education.length)}
     </div>
   ) : (
     <div>
@@ -102,34 +119,23 @@ const Education: React.FC<{
 
   const component = edit ? (
     form
-  ) : educations.length < 2 ? (
+  ) : education.length < 2 ? (
     <p>Create at least 2 educations</p>
   ) : (
     <div className="grid grid-cols-2 gap-4 my-4">
-      {educations?.map((education) => {
+      {education.map((edu) => {
         return (
           <div
-            key={education.title}
+            key={edu.school}
             className="flex flex-col justify-center bg-white rounded-md p-5"
           >
-            <h1 className="text-lg font-semibold pt-2">{education.title}</h1>
-            <h2 className="">{education.description}</h2>
-            <h4 className="text-sm">
-              {education.startDate} → {education.endDate}
-            </h4>
-
-            <div className="flex flex-wrap gap-2 pt-2">
-              {education.technologies?.split(",").map((technology) => {
-                return (
-                  <div
-                    key={technology}
-                    className="rounded-md bg-slate-500 px-2"
-                  >
-                    {technology}
-                  </div>
-                );
-              })}
-            </div>
+            <h1 className="text-lg font-semibold pt-2">{edu.school}</h1>
+            <h2 className="">{edu.degree}</h2>
+            <h3 className="">{edu.location}</h3>
+            <h3 className="">{edu.description}</h3>
+            <h3 className="text-sm">
+              {edu.startDate} → {edu.endDate}
+            </h3>
           </div>
         );
       })}
@@ -139,24 +145,7 @@ const Education: React.FC<{
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
       <h1 className="text-2xl font-bold ">Education</h1>
-      {education.map((ed, index) => {
-        return (
-          <div key={index} className="flex flex-col justify-center mb-5">
-            <h1 className="text-lg font-semibold pt-2">{ed.school}</h1>
-            <h2 className="">{ed.degree}</h2>
-            <h3 className="pt-2">
-              {ed.startDate} -&gt; {ed.endDate}
-            </h3>
-            <h3 className="pt-2">{ed.location}</h3>
-            <h3 className="pt-2">{ed.description}</h3>
-            <img
-              className="w-32 h-32 rounded-full border-2 border-white"
-              src={ed.logo}
-              alt="experience"
-            />
-          </div>
-        );
-      })}
+      {component}
     </div>
   );
 };

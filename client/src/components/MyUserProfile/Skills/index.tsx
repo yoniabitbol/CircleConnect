@@ -1,4 +1,3 @@
-import { Field } from "formik";
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 
@@ -26,20 +25,26 @@ const Skills: React.FC<{
         <label className="text-sm font-semibold text-gray-600 py-2">
           Skill
         </label>
-        <Field
+        <input
           name={`skills[${index}].name`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={skills[index].name || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            skills[index].name = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           Level
         </label>
-        <Field
+        <input
           name={`skills[${index}].level`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={skills[index].level || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            skills[index].level = e.target.value;
+          }}
         />
       </>
     );

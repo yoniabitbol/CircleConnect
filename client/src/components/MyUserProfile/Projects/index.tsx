@@ -47,7 +47,7 @@ const Projects: React.FC<{
         <input
           name={`projects[${index}].description`}
           className="w-full rounded-sm"
-          type="text"
+          type="textarea"
           defaultValue={projects[index].description || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             projects[index].description = e.target.value;

@@ -1,4 +1,3 @@
-import { Field } from "formik";
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 
@@ -31,56 +30,74 @@ const Experience: React.FC<{
         <label className="text-sm font-semibold text-gray-600 py-2">
           Company
         </label>
-        <Field
+        <input
           name={`experience[${index}].company`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={experience[index].company || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            experience[index].company = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           Title
         </label>
-        <Field
+        <input
           name={`experience[${index}].title`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={experience[index].title || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            experience[index].title = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           Description
         </label>
-        <Field
+        <input
           name={`experience[${index}].description`}
           className="w-full rounded-sm"
-          type="text"
-          as="input"
+          type="textarea"
+          defaultValue={experience[index].description || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            experience[index].description = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           Start Date
         </label>
-        <Field
+        <input
           name={`experience[${index}].startDate`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={experience[index].startDate || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            experience[index].startDate = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           End Date
         </label>
-        <Field
+        <input
           name={`experience[${index}].endDate`}
           className="w-full rounded-sm"
           type="text"
-          as="input"
+          defaultValue={experience[index].endDate || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            experience[index].endDate = e.target.value;
+          }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
           Location
         </label>
-        <Field
-          as="input"
+        <input
           name={`experience[${index}].location`}
           className="w-full rounded-sm"
           type="text"
+          defaultValue={experience[index].description || ""}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            experience[index].description = e.target.value;
+          }}
         />
       </>
     );

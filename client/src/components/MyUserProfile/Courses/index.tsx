@@ -4,7 +4,6 @@ import Usertypes from "../../../Models/UserProfileModel";
 const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
   courses,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  edit,
 }) => {
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
