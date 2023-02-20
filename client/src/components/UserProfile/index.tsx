@@ -23,7 +23,7 @@ const UserProfile: React.FC<{
   }, [profile]);
 
   return (
-    <div className="flex flex-col gap-5 w-2/3 mx-auto my-5">
+    <div className="flex flex-col gap-5 lg:w-2/3 w-full px-5 lg:px-0 mx-auto my-5">
       <Banner
         banner={{
           name: User.name,
