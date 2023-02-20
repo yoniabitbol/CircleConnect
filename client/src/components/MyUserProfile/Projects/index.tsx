@@ -113,7 +113,7 @@ const Projects: React.FC<{
   ) : projects.length < 2 ? (
     <p>Create at least 2 projects</p>
   ) : (
-    <div className="grid grid-cols-3 gap-4 my-4">
+    <div className="grid grid-cols-2 gap-4 my-4">
       {projects?.map((project) => {
         return (
           <div

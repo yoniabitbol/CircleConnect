@@ -51,6 +51,13 @@ const MyUserProfile: React.FC<{
     });
 
     values.projects = JSON.stringify(values.projects);
+    values.skills = JSON.stringify(values.skills);
+    values.experience = JSON.stringify(values.experience);
+    values.education = JSON.stringify(values.education);
+    values.languages = JSON.stringify(values.languages);
+    values.awards = JSON.stringify(values.awards);
+    values.courses = JSON.stringify(values.courses);
+
 
     const formData = new FormData();
     for (const value in values) {
@@ -112,7 +119,7 @@ const MyUserProfile: React.FC<{
                 />
                 <Summary edit={editable} summary={User.summary} />
                 <Projects edit={editable} projects={User.projects} />
-                <Skills skills={User.skills} />
+                <Skills edit={editable} skills={User.skills} />
                 <Experience experience={User.experience} />
                 <Education education={User.education} />
                 <Languages languages={User.languages} />

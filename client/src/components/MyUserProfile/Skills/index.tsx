@@ -1,22 +1,97 @@
-import React from "react";
+import { Field } from "formik";
+import React, { useState } from "react";
+import Divider from "@mui/material/Divider";
 
 const Skills: React.FC<{
   skills: {
     name: string;
     level: string;
   }[];
-}> = ({ skills }) => {
-  return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold ">Skills</h1>
-      {skills?.map((skill, index) => {
+  edit: boolean;
+}> = ({ skills, edit }) => {
+  const [addNew, setAddNew] = useState(false);
+
+  const addNewBtn = (
+    <button
+      onClick={() => setAddNew(true)}
+      className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full my-5"
+    >
+      Add new
+    </button>
+  );
+
+  function skillFields(index: number) {
+    return (
+      <>
+        <label className="text-sm font-semibold text-gray-600 py-2">
+          Skill
+        </label>
+        <Field
+          name={`skills[${index}].name`}
+          className="w-full rounded-sm"
+          type="text"
+          as="input"
+        />
+        <label className="text-sm font-semibold text-gray-600 py-2">
+          Level
+        </label>
+        <Field
+          name={`skills[${index}].level`}
+          className="w-full rounded-sm"
+          type="text"
+          as="input"
+        />
+      </>
+    );
+  }
+
+  const existingskills = skills.map((_, index) => {
+    return (
+      <React.Fragment key={index}>
+        <div className="my-5">{skillFields(index)}</div>
+        <Divider />
+      </React.Fragment>
+    );
+  });
+
+  const form = addNew ? (
+    <div className="pt-5">
+      {existingskills}
+      {skillFields(skills.length)}
+    </div>
+  ) : (
+    <div>
+      {existingskills}
+      {addNewBtn}
+    </div>
+  );
+
+  const component = edit ? (
+    form
+  ) : skills.length < 2 ? (
+    <p>Add at least 2 skills</p>
+  ) : (
+    <div className="grid grid-cols-3 gap-4 my-4">
+      {skills?.map((skill) => {
         return (
-          <div key={index} className="flex flex-col justify-center mb-5">
+          <div
+            key={skill.name}
+            className="flex flex-col justify-center bg-white rounded-md p-5"
+          >
             <h1 className="text-lg font-semibold pt-2">{skill.name}</h1>
-            <h2 className="">{skill.level}</h2>
+            <h2 className="">
+              Level <span className="font-bold">{skill.level}</span>
+            </h2>
           </div>
         );
       })}
+    </div>
+  );
+
+  return (
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+      <h1 className="text-2xl font-bold ">Skills</h1>
+      {component}
     </div>
   );
 };

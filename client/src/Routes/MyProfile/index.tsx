@@ -26,7 +26,7 @@ const MyProfile: React.FC = () => {
         picture: "",
       },
     ],
-    skills: [],
+    skills: [{ name: "", level: "" }],
     experience: [],
     education: [],
     languages: [],
@@ -45,6 +45,14 @@ const MyProfile: React.FC = () => {
             endDate: "",
             technologies: "",
             picture: "",
+          },
+        ];
+      }
+      if (res.data.user.skills[0] === "") {
+        res.data.user.skills = [
+          {
+            name: "",
+            level: "",
           },
         ];
       }
