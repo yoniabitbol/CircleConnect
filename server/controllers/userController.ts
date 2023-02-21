@@ -251,30 +251,38 @@ const declineConnectionRequest = async (req: Request, res: Response) => {
 
 const cancelConnectionRequest = async (req: Request, res: Response) => {
   try {
-    const sender: any = await User.findOne({ user_id: req.body.user_id });
-    const target: any = await User.findOne({ user_id: req.params.user_id });
+    const sender = await User.findOne({ user_id: req.body.user_id });
+    const target = await User.findOne({ user_id: req.params.user_id });
 
-    if (
-      !sender.connections.includes(target.user_id) &&
-      !target.connections.includes(sender.user_id) &&
-      sender.outgoingRequests.includes(target.user_id) &&
-      target.incomingRequests.includes(sender.user_id)
-    ) {
-      await sender.updateOne({ $pull: { outgoingRequests: target.user_id } });
-      await target.updateOne({ $pull: { incomingRequests: sender.user_id } });
-      return res.status(200).json({
-        status: "success",
-        message: "Outgoing request cancelled",
+    if (!sender || !target) {
+      return res.status(404).json({
+        status: "failure",
+        message: "User not found",
       });
     }
-    return res.status(403).json({
-      status: "failure",
-      message: "No outgoing request to cancel",
+    console.log(target.incomingRequests.includes(sender.user_id));
+    if (
+      !sender.outgoingRequests.includes(target.user_id) &&
+      !target.incomingRequests.includes(sender.user_id)
+    ) {
+      return res.status(403).json({
+        status: "failure",
+        message: "No outgoing request to cancel",
+      });
+    }
+
+    await sender.updateOne({ $pull: { outgoingRequests: target.user_id } });
+    await target.updateOne({ $pull: { incomingRequests: sender.user_id } });
+
+    return res.status(200).json({
+      status: "success",
+      message: "Outgoing request cancelled",
     });
   } catch (err) {
-    return res.status(400).json({
-      status: `ERROR: ${err}`,
+    return res.status(500).json({
+      status: "failure",
       message: "Error cancelling outgoing request",
+      error: err,
     });
   }
 };
