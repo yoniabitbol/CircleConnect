@@ -43,6 +43,7 @@ const Banner: React.FC<{
         const backdropUrl = await getUserBackdrop("default-backdrop.jpg");
         const profilePicUrl = await getUserProfilePic("default-user.jpg");
 
+        console.log(backdropUrl);
         setBackdropUrl(backdropUrl);
         setProfilePicUrl(profilePicUrl);
       } catch (error) {
