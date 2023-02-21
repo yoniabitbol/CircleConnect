@@ -153,8 +153,8 @@ const Projects: React.FC<{
 
   const component = edit ? (
     form
-  ) : projects.length < 2 ? (
-    <p>Create at least 2 projects</p>
+  ) : projects.length < 1 ? (
+    <p>Create at least 1 project</p>
   ) : (
     <div className="grid grid-cols-2 gap-4 my-4">
       {projects?.map((project) => {

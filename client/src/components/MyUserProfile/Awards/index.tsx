@@ -110,8 +110,8 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
 
   const component = edit ? (
     form
-  ) : awards.length < 2 ? (
-    <p>Add at least 2 awards</p>
+  ) : awards.length < 1 ? (
+    <p>Add at least 1 award</p>
   ) : (
     <div className="grid grid-cols-3 gap-4 my-4">
       {awards.map((award) => {

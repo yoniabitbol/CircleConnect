@@ -141,10 +141,10 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
 
   const component = edit ? (
     form
-  ) : courses.length < 2 ? (
-    <p>Add at least 2 courses</p>
+  ) : courses.length < 1 ? (
+    <p>Add at least 1 course</p>
   ) : (
-    <div className="grid grid-cols-3 gap-4 my-4">
+    <div className="grid grid-cols-2 gap-4 my-4">
       {courses.map((course) => {
         return (
           <div

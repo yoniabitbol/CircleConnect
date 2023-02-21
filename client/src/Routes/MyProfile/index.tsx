@@ -69,70 +69,25 @@ const MyProfile: React.FC = () => {
     getCurrentUserProfile().then((res) => {
       // This bug should eventually be fixed
       if (res.data.user.projects[0] === "") {
-        res.data.user.projects = [
-          {
-            title: "",
-            description: "",
-            startDate: "",
-            endDate: "",
-            technologies: "",
-            picture: "",
-          },
-        ];
+        res.data.user.projects = [];
       }
       if (res.data.user.skills[0] === "") {
-        res.data.user.skills = [
-          {
-            name: "",
-            level: "",
-          },
-        ];
+        res.data.user.skills = [];
       }
       if (res.data.user.experience[0] === "") {
-        res.data.user.experience = [
-          {
-            title: "",
-            startDate: "",
-            endDate: "",
-            company: "",
-            logo: "",
-            location: "",
-            description: "",
-          },
-        ];
+        res.data.user.experience = [];
       }
       if (res.data.user.education[0] === "") {
-        res.data.user.education = [
-          {
-            school: "",
-            logo: "",
-            degree: "",
-            location: "",
-            startDate: "",
-            endDate: "",
-            description: "",
-          },
-        ];
+        res.data.user.education = [];
       }
       if (res.data.user.languages[0] === "") {
-        res.data.user.languages = [{ name: "", level: "" }];
+        res.data.user.languages = [];
       }
       if (res.data.user.awards[0] === "") {
-        res.data.user.awards = [
-          { title: "", date: "", awarder: "", summary: "" },
-        ];
+        res.data.user.awards = [];
       }
       if (res.data.user.courses[0] === "") {
-        res.data.user.courses = [
-          {
-            title: "",
-            number: "",
-            school: "",
-            startDate: "",
-            endDate: "",
-            description: "",
-          },
-        ];
+        res.data.user.courses = [];
       }
 
       console.log("fetched user");
