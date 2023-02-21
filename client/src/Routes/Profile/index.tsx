@@ -30,16 +30,45 @@ const Profile: React.FC<Props> = ({ id }) => {
         description: "",
         startDate: "",
         endDate: "",
-        picture: "",
         technologies: "",
+        picture: "",
       },
     ],
-    skills: [],
-    experience: [],
-    education: [],
-    languages: [],
-    awards: [],
-    courses: [],
+    skills: [{ name: "", level: "" }],
+    experience: [
+      {
+        title: "",
+        startDate: "",
+        endDate: "",
+        company: "",
+        logo: "",
+        location: "",
+        description: "",
+      },
+    ],
+    education: [
+      {
+        school: "",
+        logo: "",
+        degree: "",
+        location: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+      },
+    ],
+    languages: [{ name: "", level: "" }],
+    awards: [{ title: "", date: "", awarder: "", summary: "" }],
+    courses: [
+      {
+        title: "",
+        number: "",
+        school: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+      },
+    ],
   });
 
   useEffect(() => {

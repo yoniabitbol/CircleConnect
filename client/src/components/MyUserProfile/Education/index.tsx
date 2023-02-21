@@ -144,8 +144,8 @@ const Education: React.FC<{
 
   const component = edit ? (
     form
-  ) : education.length < 2 ? (
-    <p>Create at least 2 educations</p>
+  ) : education.length < 1 ? (
+    <p>Add at least 1 school</p>
   ) : (
     <div className="grid grid-cols-2 gap-4 my-4">
       {education.map((edu) => {

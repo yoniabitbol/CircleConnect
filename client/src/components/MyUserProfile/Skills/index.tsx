@@ -8,7 +8,7 @@ const Skills: React.FC<{
   }[];
   edit: boolean;
 }> = ({ skills, edit }) => {
-  console.log(`Skills: \n${JSON.stringify(skills)}`);
+  // console.log(`Skills: \n${JSON.stringify(skills)}`);
   const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
@@ -91,8 +91,8 @@ const Skills: React.FC<{
 
   const component = edit ? (
     form
-  ) : skills.length < 2 ? (
-    <p>Add at least 2 skills</p>
+  ) : skills.length < 1 ? (
+    <p>Add at least 1 skill</p>
   ) : (
     <div className="grid grid-cols-3 gap-4 my-4">
       {skills?.map((skill) => {

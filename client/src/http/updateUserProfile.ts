@@ -15,13 +15,17 @@ async function updateUserProfile(formData: FormData) {
   console.log(user_id);
   // Append the user_id to the formData object
   formData.append("user_id", user_id);
-  console.log(`Form data obj\n${JSON.stringify(formData)}`)
 
   const res = await fetch(url, {
     method: "PATCH",
     headers: { Authorization: `Bearer ${token}` },
     body: formData,
   });
+
+  const values = formData.values()
+  for (const val of values){
+    console.log(val);
+  }
 
   return res.json();
 }

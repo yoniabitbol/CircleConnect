@@ -143,28 +143,28 @@ const Banner: React.FC<{
               alt="profile"
             />
           </div>
-
           <div className="flex flex-col justify-center ml-5">
             <h1 className="text-2xl font-bold ">{banner.name}</h1>
             <h2 className="text-lg font-semibold">{banner.title}</h2>
             <h3 className="text-lg font-semibold">{banner.location}</h3>
           </div>
-
           <div className="flex flex-col justify-center mt-5 ml-5">
             <h1 className="text-lg font-semibold ">
               {banner.connections.length} Connections
             </h1>
           </div>
-
-          <div>
-            <button
-              type="submit"
-              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
-            >
-              Edit Profile
-            </button>
-          </div>
-
+          {formik != null ? (
+            <div>
+              <button
+                type="submit"
+                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+              >
+                Edit Profile
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
           {/* click contact info to display a modal */}
           {/* <div className="flex flex-col justify-center ml-5">
         <h1 className="text-lg font-semibold ">{banner.email}</h1>
