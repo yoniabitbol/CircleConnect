@@ -1,14 +1,18 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { auth } from "../../../firebase/config";
 import getUserBackdrop from "../../../http/getUserBackdrop";
 import getUserProfilePic from "../../../http/getUserPicturePic";
 
-import getIncomingConnectionRequests from "../../../http/getIncomingConnectionRequests";
 import getOutgoingConnectionRequests from "../../../http/getOutgoingConnectionRequests";
+import getIncomingConnectionRequests from "../../../http/getIncomingConnectionRequests";
 import getUserConnections from "../../../http/getUserConnections";
+import acceptConnectionRequest from "../../../http/acceptConnectionRequest";
+import declineConnectionRequest from "../../../http/declineConnectionRequest";
+import removeConnection from "../../../http/removeConnection";
 
-// import sendConnectionRequest from "../../../http/sendConnectionRequest";
+import { useParams } from "react-router-dom";
+
+import sendConnectionRequest from "../../../http/sendConnectionRequest";
 
 const Banner: React.FC<{
   banner: {
@@ -23,22 +27,21 @@ const Banner: React.FC<{
     backdrop: string;
   };
 }> = ({ banner }) => {
-  // Get user id
-  const user = auth.currentUser;
-  const user_id = user && user.uid;
-
   const [backdropUrl, setBackdropUrl] = useState("");
   const [profilePicUrl, setProfilePicUrl] = useState("");
 
   const [connectionState, setConnectionState] = useState("");
 
+  const params = useParams<{ id?: string }>();
+  const profileId = params.id;
+
   // Fetch user profile picture and backdrop
   useEffect(() => {
     async function fetchUserProfile() {
       try {
-        if (banner.backdrop === "" || banner.picture === "") return;
-        const backdropUrl = await getUserBackdrop(banner.backdrop);
-        const profilePicUrl = await getUserProfilePic(banner.picture);
+        // if (banner.backdrop === "" || banner.picture === "") return;
+        const backdropUrl = await getUserBackdrop("default-backdrop.jpg");
+        const profilePicUrl = await getUserProfilePic("default-user.jpg");
 
         setBackdropUrl(backdropUrl);
         setProfilePicUrl(profilePicUrl);
@@ -55,24 +58,44 @@ const Banner: React.FC<{
       try {
         const incomingConnectionRequests =
           await getIncomingConnectionRequests();
-        if (incomingConnectionRequests.data.includes(user_id)) {
-          setConnectionState("received");
-          return;
+        if (
+          incomingConnectionRequests.data.requests !== "No incoming requests"
+        ) {
+          if (
+            incomingConnectionRequests.data.requests.find(
+              (user: { user_id: string | null }) => user.user_id === profileId
+            )
+          ) {
+            setConnectionState("received");
+          }
         }
 
         const outgoingConnectionRequests =
           await getOutgoingConnectionRequests();
-        if (outgoingConnectionRequests.data.includes(user_id)) {
-          setConnectionState("pending");
-          return;
+        if (
+          outgoingConnectionRequests.data.requests !== "No outgoing requests"
+        ) {
+          if (
+            outgoingConnectionRequests.data.requests.find(
+              (user: { user_id: string | null }) => user.user_id === profileId
+            )
+          ) {
+            setConnectionState("sent");
+          }
         }
 
         const connections = await getUserConnections();
-        if (connections.data.includes(user_id)) {
-          setConnectionState("connected");
-          return;
-        } else {
-          setConnectionState("notConnected");
+
+        if (connections.data.connections.length !== 0) {
+          if (
+            connections.data.connections.find(
+              (user: { user_id: string | null }) => user.user_id === profileId
+            )
+          ) {
+            setConnectionState("connected");
+          } else {
+            setConnectionState("notConnected");
+          }
         }
       } catch (error) {
         console.log(error);
@@ -114,32 +137,77 @@ const Banner: React.FC<{
 
         <div>
           {connectionState === "notConnected" ? (
-            <button className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5">
+            <button
+              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+              onClick={() => {
+                if (profileId === undefined) {
+                  alert("Error: profileId is undefined");
+                  return;
+                }
+                sendConnectionRequest(profileId);
+                setConnectionState("sent");
+              }}
+            >
               Connect
             </button>
-          ) : connectionState === "pending" ? (
+          ) : connectionState === "sent" ? (
             <button
               type="submit"
-              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+              disabled
+              className="bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
             >
-              Pending
+              Sent Request
             </button>
           ) : connectionState === "received" ? (
-            <button
-              type="submit"
-              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
-            >
-              Respond
-            </button>
+            <div>
+              <button
+                type="button"
+                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+                onClick={() => {
+                  if (profileId === undefined) {
+                    alert("Error: profileId is undefined");
+                    return;
+                  }
+                  acceptConnectionRequest(profileId);
+                  setConnectionState("connected");
+                }}
+              >
+                Accept Connection
+              </button>
+              <button
+                type="button"
+                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+                onClick={() => {
+                  if (profileId === undefined) {
+                    alert("Error: profileId is undefined");
+                    return;
+                  }
+                  declineConnectionRequest(profileId);
+                  setConnectionState("notConnected");
+                }}
+              >
+                Decline Connection
+              </button>
+            </div>
           ) : connectionState === "connected" ? (
             <button
-              type="submit"
+              type="button"
               className="bg-slate-500 text-white font-bold py-2 px-4 rounded-full m-5"
+              onClick={() => {
+                if (profileId === undefined) {
+                  alert("Error: profileId is undefined");
+                  return;
+                }
+                removeConnection(profileId);
+                setConnectionState("notConnected");
+              }}
             >
               Connected
             </button>
           ) : (
-            <div></div>
+            <div className="text-red-500 font-semibold text-center">
+              Error retrieving connection state!
+            </div>
           )}
         </div>
       </div>

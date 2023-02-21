@@ -15,6 +15,7 @@ import Courses from "../MyUserProfile/Courses";
 
 const UserProfile: React.FC<{
   profile: Usertypes;
+
 }> = ({ profile }) => {
   const [User, setUser] = useState<Usertypes>(profile);
 
@@ -37,6 +38,7 @@ const UserProfile: React.FC<{
           connections: User.connections,
           picture: User.picture,
           backdrop: User.backdrop,
+          
         }}
       />
       <Summary edit={false} summary={User.summary} />

@@ -5,7 +5,7 @@ async function getUserConnections() {
   const currentUser = auth.currentUser;
   const token = currentUser && (await currentUser.getIdToken());
   const user_id = currentUser && currentUser.uid;
-  const url = `http://localhost:${port}/${user_id}/connections`;
+  const url = `http://localhost:${port}/api/users/${user_id}/connections`;
 
   const res = await fetch(url, {
     method: "GET",

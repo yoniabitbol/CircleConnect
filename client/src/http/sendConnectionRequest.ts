@@ -5,7 +5,7 @@ async function sendConnectionRequest(target_user_id: string) {
   const currentUser = auth.currentUser;
   const token = currentUser && (await currentUser.getIdToken());
   const user_id = currentUser && currentUser.uid;
-  const url = `http://localhost:${port}/${target_user_id}/connect`;
+  const url = `http://localhost:${port}/api/users/${target_user_id}/connect`;
 
   const res = await fetch(url, {
     method: "PATCH",

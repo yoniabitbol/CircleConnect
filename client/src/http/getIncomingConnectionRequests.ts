@@ -5,7 +5,7 @@ async function getIncomingConnectionRequests() {
   const currentUser = auth.currentUser;
   const token = currentUser && (await currentUser.getIdToken());
   const user_id = currentUser && currentUser.uid;
-  const url = `http://localhost:${port}/${user_id}/incoming`;
+  const url = `http://localhost:${port}/api/users/${user_id}/incoming`;
 
   const res = await fetch(url, {
     method: "GET",
