@@ -9,14 +9,21 @@ const Skills: React.FC<{
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
       <h1 className="text-2xl font-bold ">Skills</h1>
-      {skills?.map((skill, index) => {
-        return (
-          <div key={index} className="flex flex-col justify-center mb-5">
-            <h1 className="text-lg font-semibold pt-2">{skill.name}</h1>
-            <h2 className="">{skill.level}</h2>
-          </div>
-        );
-      })}
+      <div className="grid grid-cols-3 gap-4 my-4">
+        {skills?.map((skill) => {
+          return (
+            <div
+              key={skill.name}
+              className="flex flex-col bg-white rounded-md p-5"
+            >
+              <h1 className="text-lg font-semibold pt-2">{skill.name}</h1>
+              <h2 className="">
+                Level <span className="font-bold">{skill.level}</span>
+              </h2>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

@@ -7,24 +7,24 @@ const Education: React.FC<{
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
       <h1 className="text-2xl font-bold ">Education</h1>
-      {education.map((ed, index) => {
-        return (
-          <div key={index} className="flex flex-col justify-center mb-5">
-            <h1 className="text-lg font-semibold pt-2">{ed.school}</h1>
-            <h2 className="">{ed.degree}</h2>
-            <h3 className="pt-2">
-              {ed.startDate} -&gt; {ed.endDate}
-            </h3>
-            <h3 className="pt-2">{ed.location}</h3>
-            <h3 className="pt-2">{ed.description}</h3>
-            <img
-              className="w-32 h-32 rounded-full border-2 border-white"
-              src={ed.logo}
-              alt="experience"
-            />
-          </div>
-        );
-      })}
+      <div className="grid grid-cols-2 gap-4 my-4">
+        {education.map((edu) => {
+          return (
+            <div
+              key={edu.school}
+              className="flex flex-col bg-white rounded-md p-5"
+            >
+              <h1 className="text-lg font-semibold pt-2">{edu.school}</h1>
+              <h2 className="">{edu.degree}</h2>
+              <h3 className="">{edu.location}</h3>
+              <h3 className="">{edu.description}</h3>
+              <h3 className="text-sm">
+                {edu.startDate} → {edu.endDate}
+              </h3>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
