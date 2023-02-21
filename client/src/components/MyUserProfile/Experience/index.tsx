@@ -159,7 +159,7 @@ const Experience: React.FC<{
         return (
           <div
             key={experience.company}
-            className="flex flex-col justify-center bg-white rounded-md p-5"
+            className="flex flex-col bg-white rounded-md p-5"
           >
             <h1 className="text-lg font-semibold ">{experience.company}</h1>
             <h2 className="">Position: {experience.title}</h2>

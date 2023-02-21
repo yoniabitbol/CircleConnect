@@ -161,7 +161,7 @@ const Projects: React.FC<{
         return (
           <div
             key={project.title}
-            className="flex flex-col justify-center bg-white rounded-md p-5"
+            className="flex flex-col bg-white rounded-md p-5"
           >
             <h1 className="text-lg font-semibold pt-2">{project.title}</h1>
             <h2 className="">{project.description}</h2>
