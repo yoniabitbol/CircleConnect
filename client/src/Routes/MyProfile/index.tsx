@@ -70,68 +70,70 @@ const MyProfile: React.FC = () => {
       // This bug should eventually be fixed
       if (res.data.user.projects[0] === "") {
         res.data.user.projects = [
-          {
-            title: "",
-            description: "",
-            startDate: "",
-            endDate: "",
-            technologies: "",
-            picture: "",
-          },
+          // {
+          //   title: "",
+          //   description: "",
+          //   startDate: "",
+          //   endDate: "",
+          //   technologies: "",
+          //   picture: "",
+          // },
         ];
       }
       if (res.data.user.skills[0] === "") {
         res.data.user.skills = [
-          {
-            name: "",
-            level: "",
-          },
+          // {
+          //   name: "",
+          //   level: "",
+          // },
         ];
       }
       if (res.data.user.experience[0] === "") {
         res.data.user.experience = [
-          {
-            title: "",
-            startDate: "",
-            endDate: "",
-            company: "",
-            logo: "",
-            location: "",
-            description: "",
-          },
+          // {
+          //   title: "",
+          //   startDate: "",
+          //   endDate: "",
+          //   company: "",
+          //   logo: "",
+          //   location: "",
+          //   description: "",
+          // },
         ];
       }
       if (res.data.user.education[0] === "") {
         res.data.user.education = [
-          {
-            school: "",
-            logo: "",
-            degree: "",
-            location: "",
-            startDate: "",
-            endDate: "",
-            description: "",
-          },
+          // {
+          //   school: "",
+          //   logo: "",
+          //   degree: "",
+          //   location: "",
+          //   startDate: "",
+          //   endDate: "",
+          //   description: "",
+          // },
         ];
       }
       if (res.data.user.languages[0] === "") {
-        res.data.user.languages = [{ name: "", level: "" }];
+        res.data.user.languages = [
+          // { name: "", level: "" }
+        ];
       }
       if (res.data.user.awards[0] === "") {
         res.data.user.awards = [
-          { title: "", date: "", awarder: "", summary: "" },
+          // { title: "", date: "", awarder: "", summary: "" },
         ];
       }
       if (res.data.user.courses[0] === "") {
         res.data.user.courses = [
-          {
-            title: "",
-            number: "",
-            school: "",
-            startDate: "",
-            endDate: "",
-            description: "",
-          },
+          // {
+          //   title: "",
+          //   number: "",
+          //   school: "",
+          //   startDate: "",
+          //   endDate: "",
+          //   description: "",
+          // },
         ];
       }
 

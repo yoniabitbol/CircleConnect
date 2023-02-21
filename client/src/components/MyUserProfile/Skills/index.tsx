@@ -8,6 +8,7 @@ const Skills: React.FC<{
   }[];
   edit: boolean;
 }> = ({ skills, edit }) => {
+  console.log(`Skills: \n${JSON.stringify(skills)}`);
   const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
