@@ -56,6 +56,7 @@ const Banner: React.FC<{
   useEffect(() => {
     async function fetchConnectionState() {
       try {
+        // Check if the logged in user has an incoming connection request from the profile user
         const incomingConnectionRequests =
           await getIncomingConnectionRequests();
         if (
@@ -70,6 +71,7 @@ const Banner: React.FC<{
           }
         }
 
+        // Check if the logged in user has an outgoing connection request to the profile user
         const outgoingConnectionRequests =
           await getOutgoingConnectionRequests();
         if (
@@ -84,8 +86,13 @@ const Banner: React.FC<{
           }
         }
 
-        const connections = await getUserConnections();
-
+        // Check if the logged in user is already connected to the profile user
+        if (profileId === undefined) {
+          alert("Error: profileId is undefined");
+          return;
+        }
+        const connections = await getUserConnections(profileId);
+        console.log(connections);
         if (connections.data.connections.length !== 0) {
           if (
             connections.data.connections.find(
@@ -93,10 +100,9 @@ const Banner: React.FC<{
             )
           ) {
             setConnectionState("connected");
-          } else {
-            setConnectionState("notConnected");
           }
         }
+        setConnectionState("notConnected");
       } catch (error) {
         console.log(error);
       }
@@ -192,7 +198,7 @@ const Banner: React.FC<{
           ) : connectionState === "connected" ? (
             <button
               type="button"
-              className="bg-slate-500 text-white font-bold py-2 px-4 rounded-full m-5"
+              className="bg-slate-500 text-white font-bold py-2 px-4 rounded-full m-5 relative hover:opacity-0"
               onClick={() => {
                 if (profileId === undefined) {
                   alert("Error: profileId is undefined");
@@ -203,6 +209,9 @@ const Banner: React.FC<{
               }}
             >
               Connected
+              <span className="absolute top-0 left-0 ml-2 opacity-0 transition-opacity duration-300 hover:opacity-100">
+                Remove connection
+              </span>
             </button>
           ) : (
             <div className="text-red-500 font-semibold text-center">

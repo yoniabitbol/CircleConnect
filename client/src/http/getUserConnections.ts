@@ -1,11 +1,10 @@
 import { auth } from "../firebase/config";
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 
-async function getUserConnections() {
+async function getUserConnections(target_user_id: string) {
   const currentUser = auth.currentUser;
   const token = currentUser && (await currentUser.getIdToken());
-  const user_id = currentUser && currentUser.uid;
-  const url = `http://localhost:${port}/api/users/${user_id}/connections`;
+  const url = `http://localhost:${port}/api/users/${target_user_id}/connections`;
 
   const res = await fetch(url, {
     method: "GET",
