@@ -151,8 +151,8 @@ const Experience: React.FC<{
 
   const component = edit ? (
     form
-  ) : experience.length < 2 ? (
-    <p>Add at least 2 work/volunteer/... experiences</p>
+  ) : experience.length < 1 ? (
+    <p>Add at least 1 work/volunteer/... experience</p>
   ) : (
     <div className="grid grid-cols-2 gap-4 my-4">
       {experience?.map((experience) => {

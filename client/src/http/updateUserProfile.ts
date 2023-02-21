@@ -22,6 +22,11 @@ async function updateUserProfile(formData: FormData) {
     body: formData,
   });
 
+  const values = formData.values()
+  for (const val of values){
+    console.log(val);
+  }
+
   return res.json();
 }
 

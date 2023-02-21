@@ -89,8 +89,8 @@ const Languages: React.FC<{
 
   const component = edit ? (
     form
-  ) : languages.length < 2 ? (
-    <p>Add at least 2 languages</p>
+  ) : languages.length < 1 ? (
+    <p>Add at least 1 language</p>
   ) : (
     <div className="grid grid-cols-3 gap-4 my-4">
       {languages?.map((language) => {
