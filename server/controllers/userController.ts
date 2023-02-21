@@ -76,13 +76,13 @@ const updateUser = async (req: any, res: Response) => {
       website: req.body.website,
       connections: req.body.connections,
       summary: req.body.summary,
-      projects: JSON.parse(req.body.projects),
-      skills: JSON.parse(req.body.skills),
-      experience: JSON.parse(req.body.experience),
-      education: JSON.parse(req.body.education),
-      languages: JSON.parse(req.body.languages),
-      awards: JSON.parse(req.body.awards),
-      courses: JSON.parse(req.body.courses),
+      projects: req.body.projects ? JSON.parse(req.body.projects) : '',
+      skills: req.body.skills ? JSON.parse(req.body.skills) : '',
+      experience: req.body.experience ? JSON.parse(req.body.experience) : '',
+      education: req.body.education ? JSON.parse(req.body.education) : '',
+      languages: req.body.languages ? JSON.parse(req.body.languages) : '',
+      awards: req.body.awards ? JSON.parse(req.body.awards) : '',
+      courses: req.body.courses ? JSON.parse(req.body.courses) : '',
       picture:
         req.files && req.files.picture
           ? req.files.picture[0].filename
