@@ -5,7 +5,7 @@ async function getOutgoingConnectionRequests() {
   const currentUser = auth.currentUser;
   const token = currentUser && (await currentUser.getIdToken());
   const user_id = currentUser && currentUser.uid;
-  const url = `http://localhost:${port}/${user_id}/outgoing`;
+  const url = `http://localhost:${port}/api/users/${user_id}/outgoing`;
 
   const res = await fetch(url, {
     method: "GET",
