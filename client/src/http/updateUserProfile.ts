@@ -12,7 +12,7 @@ async function updateUserProfile(formData: FormData) {
   if (!user_id) {
     return;
   }
-  console.log(user_id);
+
   // Append the user_id to the formData object
   formData.append("user_id", user_id);
 
@@ -22,10 +22,11 @@ async function updateUserProfile(formData: FormData) {
     body: formData,
   });
 
-  const values = formData.values()
-  for (const val of values){
-    console.log(val);
-  }
+  // Debugging Log
+  // const values = formData.values()
+  // for (const val of values){
+  //   console.log(val);
+  // }
 
   return res.json();
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import getUserBackdrop from "../../../http/getUserBackdrop";
 import getUserProfilePic from "../../../http/getUserPicturePic";
+import { auth } from "../../../firebase/config";
 
 import getOutgoingConnectionRequests from "../../../http/getOutgoingConnectionRequests";
 import getIncomingConnectionRequests from "../../../http/getIncomingConnectionRequests";
@@ -27,6 +28,9 @@ const Banner: React.FC<{
     backdrop: string;
   };
 }> = ({ banner }) => {
+  const user = auth.currentUser;
+  const user_id = user && user.uid;
+
   const [backdropUrl, setBackdropUrl] = useState("");
   const [profilePicUrl, setProfilePicUrl] = useState("");
 
@@ -43,7 +47,6 @@ const Banner: React.FC<{
         const backdropUrl = await getUserBackdrop("default-backdrop.jpg");
         const profilePicUrl = await getUserProfilePic("default-user.jpg");
 
-        console.log(backdropUrl);
         setBackdropUrl(backdropUrl);
         setProfilePicUrl(profilePicUrl);
       } catch (error) {
@@ -57,6 +60,24 @@ const Banner: React.FC<{
   useEffect(() => {
     async function fetchConnectionState() {
       try {
+        // Check if the logged in user is already connected to the profile user
+        if (user_id === null) {
+          alert("Error: user_id is undefined");
+          return;
+        }
+        const connections = await getUserConnections(user_id);
+        if (connections.data.connections.length !== 0) {
+          if (
+            connections.data.connections.find(
+              (user: { user_id: string | null }) => user.user_id === profileId
+            )
+          ) {
+            setConnectionState("connected");
+            return;
+          }
+        }
+        setConnectionState("notConnected");
+
         // Check if the logged in user has an incoming connection request from the profile user
         const incomingConnectionRequests =
           await getIncomingConnectionRequests();
@@ -69,12 +90,14 @@ const Banner: React.FC<{
             )
           ) {
             setConnectionState("received");
+            return;
           }
         }
 
         // Check if the logged in user has an outgoing connection request to the profile user
         const outgoingConnectionRequests =
           await getOutgoingConnectionRequests();
+
         if (
           outgoingConnectionRequests.data.requests !== "No outgoing requests"
         ) {
@@ -84,26 +107,9 @@ const Banner: React.FC<{
             )
           ) {
             setConnectionState("sent");
+            return;
           }
         }
-
-        // Check if the logged in user is already connected to the profile user
-        if (profileId === undefined) {
-          alert("Error: profileId is undefined");
-          return;
-        }
-        const connections = await getUserConnections(profileId);
-        console.log(connections);
-        if (connections.data.connections.length !== 0) {
-          if (
-            connections.data.connections.find(
-              (user: { user_id: string | null }) => user.user_id === profileId
-            )
-          ) {
-            setConnectionState("connected");
-          }
-        }
-        setConnectionState("notConnected");
       } catch (error) {
         console.log(error);
       }
