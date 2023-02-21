@@ -7,10 +7,8 @@ const url = `http://localhost:${port}/api/users`;
 async function updateUserProfile(formData: FormData) {
   const user = auth.currentUser;
   const token = user && (await user.getIdToken());
-  console.log(token);
 
   const user_id = user && user.uid;
-  console.log(user_id);
   if (!user_id) {
     return;
   }
