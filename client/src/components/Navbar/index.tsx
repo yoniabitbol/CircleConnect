@@ -50,7 +50,7 @@ const NavBar: React.FC<{
         <Link className="ml-5 w-1/5" to="/">
           <img
             style={{ maxWidth: "5rem" }}
-            src="Brand Logo/officccccc.png"
+            src={process.env.PUBLIC_URL + "/Brand Logo/officccccc.png"}
             alt="logo"
           />
         </Link>

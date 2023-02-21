@@ -101,7 +101,6 @@ const Banner: React.FC<{
         // Check if the logged in user has an outgoing connection request to the profile user
         const outgoingConnectionRequests =
           await getOutgoingConnectionRequests();
-        console.log(outgoingConnectionRequests);
         if (
           outgoingConnectionRequests.data.requests !== "No outgoing requests"
         ) {
