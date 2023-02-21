@@ -161,8 +161,6 @@ const sendConnectionRequest = async (req: Request, res: Response) => {
     const sender: any = await User.findOne({ user_id: req.body.user_id });
     const target: any = await User.findOne({ user_id: req.params.user_id });
 
-    
-
     if (!sender || !target) {
       return res.status(400).json({
         status: "error",

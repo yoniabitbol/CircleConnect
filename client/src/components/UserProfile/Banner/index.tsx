@@ -10,6 +10,7 @@ import getUserConnections from "../../../http/getUserConnections";
 import acceptConnectionRequest from "../../../http/acceptConnectionRequest";
 import declineConnectionRequest from "../../../http/declineConnectionRequest";
 import removeConnection from "../../../http/removeConnection";
+import cancelConnectionRequest from "../../../http/cancelConnectionRequest";
 
 import { useParams } from "react-router-dom";
 
@@ -35,6 +36,9 @@ const Banner: React.FC<{
   const [profilePicUrl, setProfilePicUrl] = useState("");
 
   const [connectionState, setConnectionState] = useState("");
+  const [connectedButtonMessage, setConnectedButtonMessage] =
+    useState("Connected");
+  const [cancelConnection, setCancelConnection] = useState("Sent Request");
 
   const params = useParams<{ id?: string }>();
   const profileId = params.id;
@@ -166,10 +170,19 @@ const Banner: React.FC<{
           ) : connectionState === "sent" ? (
             <button
               type="submit"
-              disabled
-              className="bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+              className="bg-slate-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full m-5 relative"
+              onClick={() => {
+                if (profileId === undefined) {
+                  alert("Error: profileId is undefined");
+                  return;
+                }
+                cancelConnectionRequest(profileId);
+                setConnectionState("notConnected");
+              }}
+              onMouseOver={() => setCancelConnection("Cancel Request")}
+              onMouseOut={() => setCancelConnection("Sent Request")}
             >
-              Sent Request
+              {cancelConnection}
             </button>
           ) : connectionState === "received" ? (
             <div>
@@ -205,7 +218,7 @@ const Banner: React.FC<{
           ) : connectionState === "connected" ? (
             <button
               type="button"
-              className="bg-slate-500 text-white font-bold py-2 px-4 rounded-full m-5 relative hover:opacity-0"
+              className="bg-slate-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full m-5 relative"
               onClick={() => {
                 if (profileId === undefined) {
                   alert("Error: profileId is undefined");
@@ -214,11 +227,14 @@ const Banner: React.FC<{
                 removeConnection(profileId);
                 setConnectionState("notConnected");
               }}
+              onMouseOver={() => {
+                setConnectedButtonMessage("Remove Connection");
+              }}
+              onMouseLeave={() => {
+                setConnectedButtonMessage("Connected");
+              }}
             >
-              Connected
-              <span className="absolute top-0 left-0 ml-2 opacity-0 transition-opacity duration-300 hover:opacity-100">
-                Remove connection
-              </span>
+              {connectedButtonMessage}
             </button>
           ) : (
             <div className="text-red-500 font-semibold text-center">
