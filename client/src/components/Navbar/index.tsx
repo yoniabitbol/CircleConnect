@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { MouseEventHandler, useState, useEffect } from "react";
 import NavLinks from "./NavLinks";
 import { Link } from "react-router-dom";
 import SearchBar from "../SearchBar";
@@ -11,6 +11,7 @@ import UserInSearch from "../../Models/UsersInSearchModel";
 import getAllUsers from "../../http/getAllUsers";
 import Usertypes from "../../Models/UserProfileModel";
 import usersInSearchModel from "../../Models/UsersInSearchModel";
+import getUserProfilePic from "../../http/getUserPicturePic";
 
 const NavBar: React.FC<{
   openSearch: boolean;
@@ -22,9 +23,15 @@ const NavBar: React.FC<{
   const [userProfilePic, setUserProfilePic] = useState<string>();
   const [usersInSearch, setUsersInSearch] = useState<UserInSearch[]>([]);
   // console.log(openSearch);
-  getCurrentUserProfile().then((res) =>
-    setUserProfilePic(res.data.user.picture)
-  );
+
+  useEffect(() => {
+    async function fetchUserProfile() {
+      const res = await getCurrentUserProfile();
+      const profilePicUrl = await getUserProfilePic(res.data.user.picture);
+      setUserProfilePic(profilePicUrl);
+    }
+    fetchUserProfile();
+  }, []);
 
   const onChangeHandler = async () => {
     const res = await getAllUsers();
