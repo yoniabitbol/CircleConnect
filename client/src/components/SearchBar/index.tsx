@@ -40,13 +40,15 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
   }
   
   const searchBoxClickHandler = () => {
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1)
   }
   
   
   const SearchResultsBox = (props: object , option: usersInSearchModel) => {
     return (
-      <Link  to={`user/${option.id}`} onClick={searchBoxClickHandler}>
+      <Link key={option.id}  to={`profile/${option.id}`} onClick={searchBoxClickHandler}>
         <div className="highlighted:bg-red-600">
           <Box component='li' sx={{border: 1, borderColor: '#D4D4D4', marginBottom: 1, width: 1, borderRadius:2, '&:hover':{boxShadow: "inset 0px 4px 4px rgba(0, 0, 0, 0.25)" }}}  {...props}>
             <div className=" items-center flex" >
