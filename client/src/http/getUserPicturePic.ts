@@ -17,7 +17,7 @@ async function getUserProfilePic(profilePic: string) {
     const blob = await res.blob();
     return URL.createObjectURL(blob);
   } else {
-    throw new Error("Failed to fetch user backdrop image.");
+    throw new Error("Failed to fetch user profile image.");
   }
 }
 
