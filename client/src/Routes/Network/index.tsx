@@ -34,14 +34,12 @@ const [userProfilePic, setUserProfilePic] = useState<string[]>();
 
         return profilePicUrl;
       }));      
-      console.log(profilePicUrls);
       setUserProfilePic(profilePicUrls);
     }
     fetchUserProfile();
   }, [connections]);
 
 
-  
   const onInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     if(e.target.value === ""){
