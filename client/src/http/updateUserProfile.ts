@@ -23,10 +23,10 @@ async function updateUserProfile(formData: FormData) {
   });
 
   // Debugging Log
-  // const values = formData.values()
-  // for (const val of values){
-  //   console.log(val);
-  // }
+  const values = formData.values()
+  for (const val of values){
+    console.log(val);
+  }
 
   return res.json();
 }

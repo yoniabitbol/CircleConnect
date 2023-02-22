@@ -20,7 +20,7 @@ const Profile: React.FC<Props> = ({ id }) => {
     email: "",
     phone: "",
     website: "",
-    connections: [""],
+    connections: [],
     picture: "",
     backdrop: "",
     summary: "",

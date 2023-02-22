@@ -12,55 +12,17 @@ const MyProfile: React.FC = () => {
     email: "",
     phone: "",
     website: "",
-    connections: [""],
+    connections: [],
     picture: "",
     backdrop: "",
     summary: "",
-    projects: [
-      {
-        title: "",
-        description: "",
-        startDate: "",
-        endDate: "",
-        technologies: "",
-        picture: "",
-      },
-    ],
-    skills: [{ name: "", level: "" }],
-    experience: [
-      {
-        title: "",
-        startDate: "",
-        endDate: "",
-        company: "",
-        logo: "",
-        location: "",
-        description: "",
-      },
-    ],
-    education: [
-      {
-        school: "",
-        logo: "",
-        degree: "",
-        location: "",
-        startDate: "",
-        endDate: "",
-        description: "",
-      },
-    ],
-    languages: [{ name: "", level: "" }],
-    awards: [{ title: "", date: "", awarder: "", summary: "" }],
-    courses: [
-      {
-        title: "",
-        number: "",
-        school: "",
-        startDate: "",
-        endDate: "",
-        description: "",
-      },
-    ],
+    projects: [],
+    skills: [],
+    experience: [],
+    education: [],
+    languages: [],
+    awards: [],
+    courses: [],
   });
 
   const [fetchedUser, setFetchedUser] = useState(false);
