@@ -1,23 +1,25 @@
-import {auth} from "../firebase/config";
-
+import { auth } from "../firebase/config";
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
-const url = `http://localhost:${port}/api/users/`;
 
-async function getUserConnections() {
-    const user = auth.currentUser;
-    const token = user && (await user.getIdToken());
-    const id = user && user.uid;
-    if (!id) {
-        return;
-    }
-    const res = await fetch(url + id + '/connections', {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    return res.json();
+async function getUserConnections(user_id: string) {
+  const currentUser = auth.currentUser;
+  const token = currentUser && (await currentUser.getIdToken());
+  const url = `http://localhost:${port}/api/users/${user_id}/connections`;
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (res.ok) {
+    const connections = await res.json();
+    return connections;
+  } else {
+    throw new Error("Failed to fetch user connections.");
+  }
 }
 
 export default getUserConnections;

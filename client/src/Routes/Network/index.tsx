@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import ConnectionRow from "../../components/ConnectionRow";
-import getUserConnections from "../../http/getUserConnections";
-import { Usertypes } from "../../components/UserProfile";
+import Usertypes from "../../Models/UserProfileModel";
+import getCurrentUserConnections from "../../http/getCurrentUserConnections";
 
 type ConnectionType = Omit<Usertypes, "location" | "email" | "phone" | "website" | "backdrop" | "summary" |
   "projects" | "skills" | "experience" | "education" | "languages" | "awards" | "courses">;
@@ -12,10 +12,10 @@ const [search, setSearch] = useState<string>("");
 const [filteredConnections, setFilteredConnections] = useState<any>([]);
 
   useEffect(() => {
-    getUserConnections().then((res) => {
+    getCurrentUserConnections().then((res) => {
       setConnections(res.data.connections);
     });
-    getUserConnections().then((res) => {
+    getCurrentUserConnections().then((res) => {
       setFilteredConnections(res.data.connections);
     });
   }, []);

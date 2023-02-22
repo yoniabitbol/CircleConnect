@@ -169,24 +169,7 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users')
-      .send({
-        user_id: 'testUser',
-        title: 'testUser',
-        location: 'testUser',
-        phone: 'testUser',
-        website: 'testUser',
-        connections: 'testUser',
-        summary: 'testUser',
-        projects: 'testUser',
-        skills: 'testUser',
-        experience: 'testUser',
-        education: 'testUser',
-        languages: 'testUser',
-        awards: 'testUser',
-        courses: 'testUser',
-        picture: 'testUser',
-        backdrop: 'testUser',
-      })
+      .send({ user_id: 'test', profile: { name: 'testProfile' } })
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"success","data":{');
