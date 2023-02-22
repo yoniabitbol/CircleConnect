@@ -27,9 +27,7 @@ const [userProfilePic, setUserProfilePic] = useState<string[]>();
   useEffect(() => {
     async function fetchUserProfile() {
       const profilePicUrls = await Promise.all(connections.map(async (user: ConnectionType) => {
-        const profilePicUrl = await getUserProfilePic(user.picture).catch(() => {
-          return getUserProfilePic("default-user.jpg");
-        });
+        const profilePicUrl = await getUserProfilePic(user.picture)
 
 
         return profilePicUrl;
