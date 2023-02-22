@@ -5,12 +5,18 @@ import { uploadImages, resizePhoto } from '../middleware/multer';
 const router = express.Router();
 
 // User Profile Routes
-router.route('/')
+router
+  .route('/')
   .get(UserController.getAllUsers)
   .post(UserController.createUser)
-  .patch(UserController.updateUser);
+  .patch(
+    uploadImages,
+    resizePhoto,
+    UserController.updateUser,
+  );
 
-router.route('/:user_id')
+router
+  .route('/:user_id')
   .get(UserController.getUser)
   .delete(UserController.deleteUser);
 
@@ -22,5 +28,6 @@ router.route('/:user_id/connect').patch(UserController.sendConnectionRequest);
 router.route('/:user_id/accept').patch(UserController.acceptConnectionRequest);
 router.route('/:user_id/decline').patch(UserController.declineConnectionRequest);
 router.route('/:user_id/remove').patch(UserController.removeConnection);
+router.route('/:user_id/cancel').patch(UserController.cancelConnectionRequest);
 
 export default router;
