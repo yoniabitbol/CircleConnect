@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import ConnectionRow from "../../components/ConnectionRow";
 import Usertypes from "../../Models/UserProfileModel";
 import getCurrentUserConnections from "../../http/getCurrentUserConnections";
+import getUserProfilePic from "../../http/getUserPicturePic";
 
 type ConnectionType = Omit<Usertypes, "location" | "email" | "phone" | "website" | "backdrop" | "summary" |
   "projects" | "skills" | "experience" | "education" | "languages" | "awards" | "courses">;
@@ -10,6 +11,8 @@ type ConnectionType = Omit<Usertypes, "location" | "email" | "phone" | "website"
 const [connections, setConnections] = useState<any>([]);
 const [search, setSearch] = useState<string>("");
 const [filteredConnections, setFilteredConnections] = useState<any>([]);
+const [userProfilePic, setUserProfilePic] = useState<string>();
+
 
   useEffect(() => {
     getCurrentUserConnections().then((res) => {
@@ -19,6 +22,17 @@ const [filteredConnections, setFilteredConnections] = useState<any>([]);
       setFilteredConnections(res.data.connections);
     });
   }, []);
+
+
+  useEffect(() => {
+    async function fetchUserProfile() {
+      const profilePicUrl = await getUserProfilePic(connections[0].picture);
+      setUserProfilePic(profilePicUrl);
+    }
+    fetchUserProfile();
+  }, [connections]);
+
+
   
   const onInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -33,6 +47,7 @@ const [filteredConnections, setFilteredConnections] = useState<any>([]);
     
     }
     
+
   return (
     <body style={{ backgroundColor: "#F7F9FB" }}>
       <div className="flex justify-center sm:text-left py-2">
@@ -45,10 +60,11 @@ const [filteredConnections, setFilteredConnections] = useState<any>([]);
         return (
           <ConnectionRow
             key={index}
+            user_id={connection.user_id}
             name={connection.name}
             title={connection.title}
             connections={connection.connections}
-            picture={connection.picture}
+            picture={userProfilePic || connection.picture}
           />
         );
       })
