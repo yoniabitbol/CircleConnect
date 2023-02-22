@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import ConnectionRow from "../../components/ConnectionRow";
-import { Usertypes } from "../../components/UserProfile";
+import Usertypes from "../../Models/UserProfileModel";
 import getCurrentUserConnections from "../../http/getCurrentUserConnections";
 
 type ConnectionType = Omit<Usertypes, "location" | "email" | "phone" | "website" | "backdrop" | "summary" |
