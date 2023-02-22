@@ -16,6 +16,7 @@ const [filteredConnections, setFilteredConnections] = useState<any>([]);
       setConnections(res.data.connections);
     });
     getCurrentUserConnections().then((res) => {
+
       setFilteredConnections(res.data.connections);
     });
   }, []);

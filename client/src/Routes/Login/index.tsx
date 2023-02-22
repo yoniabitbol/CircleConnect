@@ -2,32 +2,24 @@ import React from "react";
 import AuthContent from "../../components/AuthContent";
 import SubmissionForm from "../../components/SubmissionForm";
 import { LoginFields } from "../../lib/InputFieldModels";
-import useLogin from "../../hooks/useLogin";
+import useLogin from '../../hooks/useLogin';
 import { initialValuesLogin } from "../../lib/InputFieldModels";
-import { initialValuesModel } from "../../Models/InputFieldModel";
-import { useNavigate } from "react-router-dom";
+import {initialValuesModel} from "../../Models/InputFieldModel";
+
 
 const Login: React.FC = () => {
   const { error, login } = useLogin();
-  const navigate = useNavigate();
 
-  const onSubmitHandler = (values: initialValuesModel) => {
-    login(values.email, values.password);
-
-    // Sketchy way to redirect to profile page after login TODO: Fix this
-    setTimeout(() => {
-      console.log("Redirecting to profile");
-      navigate("/myprofile");
-    }, 1000);
-
-    if (error) {
-      throw new Error(error);
+    const onSubmitHandler = (values: initialValuesModel) => {
+      login(values.email, values.password);
+      if(error) {
+        throw new Error(error)
+      }
     }
-  };
   return (
     <div className="lg:flex justify-center lg:text-left text-center">
       <AuthContent />
-
+     
       <SubmissionForm
         onSubmit={onSubmitHandler}
         header="Login"

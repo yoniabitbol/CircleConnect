@@ -1,22 +1,19 @@
-import { createContext, useReducer, useEffect, ReactNode } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/config";
+import { createContext, useReducer, useEffect, ReactNode } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase/config';
 
 export const AuthContext = createContext({
-  user: null,
+  user: null ,
   authIsReady: false,
 });
 
-export const authReducer = (
-  state: any,
-  action: { type: any; payload: any }
-) => {
+export const authReducer = (state: any, action: { type: any; payload: any; }) => {
   switch (action.type) {
-    case "LOGIN":
+    case 'LOGIN':
       return { ...state, user: action.payload };
-    case "LOGOUT":
+    case 'LOGOUT':
       return { ...state, user: null };
-    case "AUTH_IS_READY":
+    case 'AUTH_IS_READY':
       return { user: action.payload, authIsReady: true };
     default:
       return state;
@@ -24,10 +21,10 @@ export const authReducer = (
 };
 
 type AuthContextProviderProps = {
-  children: ReactNode;
+  children: ReactNode
 };
 
-export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
+export const AuthContextProvider = ({ children } : AuthContextProviderProps) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
     authIsReady: false,
@@ -35,15 +32,17 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
-      dispatch({ type: "AUTH_IS_READY", payload: user });
+      dispatch({ type: 'AUTH_IS_READY', payload: user });
       unsub();
     });
   }, []);
 
+  console.log('AuthContext state: ', state);
+
   return (
     // eslint-disable-next-line react/jsx-no-constructed-context-values
     <AuthContext.Provider value={{ ...state, dispatch }}>
-      {children}
+      { children }
     </AuthContext.Provider>
   );
 };
