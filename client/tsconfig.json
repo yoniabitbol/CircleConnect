@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "lib": ["dom", "dom.iterable", "esnext", "es6"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "es6"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -21,6 +26,8 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
-  "include": ["src"],
-  "exclude": []
+  "include": [
+    "src",
+  ],
+  "exclude": [ ]
 }
