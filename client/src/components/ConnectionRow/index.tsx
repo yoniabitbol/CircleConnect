@@ -1,20 +1,20 @@
 import React from "react";
-import placeholder from "./placeholder_profile.png";
+import { ConnectionType } from "../../Routes/Network";
 
-const ConnectionRow: React.FC = () => {
+const ConnectionRow: React.FC<ConnectionType> = (props:ConnectionType) => {
   return (
     <div className="flex justify-center sm:text-left text-center py-2">
       <div className="flex items-center gap-4 p-4 sm:text-sm text-xs w-full sm:w-7/12 bg-white">
         <div className="">
           <img
-            src={placeholder}
+            src={props.picture}
             className="w-16 rounded-full md:align-center"
           ></img>
         </div>
         <div className="grow py-2">
-          <p>First Name</p>
-          <p>Position</p>
-          <p>100 Connections</p>
+          <p>{props.name}</p>
+          <p>{props.title}</p>
+          <p>{props.connections.length} Connections</p>
         </div>
         <div className="">
           <button
