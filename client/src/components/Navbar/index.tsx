@@ -32,7 +32,6 @@ const NavBar: React.FC<{
     }
     fetchUserProfile();
   }, []);
-
   const onChangeHandler = async () => {
     const res = await getAllUsers();
     const filteredArray: usersInSearchModel[] = [];

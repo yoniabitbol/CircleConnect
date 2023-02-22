@@ -1,7 +1,36 @@
 import React from "react";
 import ConnectionRow from "../../components/ConnectionRow";
 
-const Network: React.FC = () => {
+type ConnectionType = Omit<Usertypes, "location" | "email" | "phone" | "website" | "backdrop" | "summary" |
+  "projects" | "skills" | "experience" | "education" | "languages" | "awards" | "courses">;
+
+  const Network: React.FC = () => {
+const [connections, setConnections] = useState<any>([]);
+const [search, setSearch] = useState<string>("");
+const [filteredConnections, setFilteredConnections] = useState<any>([]);
+
+  useEffect(() => {
+    getUserConnections().then((res) => {
+      setConnections(res.data.connections);
+    });
+    getUserConnections().then((res) => {
+      setFilteredConnections(res.data.connections);
+    });
+  }, []);
+  
+  const onInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+    if(e.target.value === ""){
+        setFilteredConnections(connections);
+    }else{
+      const filteredConnections = connections.filter((connection: ConnectionType) => {
+        return connection.name.toLowerCase().includes(e.target.value.toLowerCase());
+      });
+      setFilteredConnections(filteredConnections);
+    }
+    
+    }
+    
   return (
     <body style={{ backgroundColor: "#F7F9FB" }}>
       <div className="flex justify-center sm:text-left py-2">
