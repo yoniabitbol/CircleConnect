@@ -17,8 +17,20 @@ async function getUserProfilePic(profilePic: string) {
     const blob = await res.blob();
     return URL.createObjectURL(blob);
   } else {
-    throw new Error("Failed to fetch user profile image.");
+    const backupRes = await fetch(url + "default-user.jpg", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (backupRes.ok) {
+      const blob = await backupRes.blob();
+      return URL.createObjectURL(blob);
+    }
   }
+  throw new Error("Failed to fetch user profile picture.");
 }
 
 export default getUserProfilePic;
