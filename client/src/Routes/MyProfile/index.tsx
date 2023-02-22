@@ -90,7 +90,6 @@ const MyProfile: React.FC = () => {
         res.data.user.courses = [];
       }
 
-      console.log("fetched user");
       setMyUser(res.data.user);
     });
     setFetchedUser(true);

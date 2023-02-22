@@ -27,8 +27,8 @@ const Banner: React.FC<{
     async function fetchUserProfile() {
       try {
         if (banner.backdrop === "" || banner.picture === "") return;
-        const backdropUrl = await getUserBackdrop(banner.backdrop);
-        const profilePicUrl = await getUserProfilePic(banner.picture);
+        const backdropUrl = await getUserBackdrop("default-backdrop.jpg");
+        const profilePicUrl = await getUserProfilePic("default-user.jpg");
 
         setBackdropUrl(backdropUrl);
         setProfilePicUrl(profilePicUrl);
