@@ -9,8 +9,7 @@ async function updateUserProfile(formData: FormData) {
   const token = user && (await user.getIdToken());
 
   const user_id = user && user.uid;
-  console.log(token);
-  console.log(user_id);
+
   if (!user_id) {
     return;
   }
