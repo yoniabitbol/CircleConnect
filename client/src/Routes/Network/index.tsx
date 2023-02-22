@@ -11,7 +11,7 @@ type ConnectionType = Omit<Usertypes, "location" | "email" | "phone" | "website"
 const [connections, setConnections] = useState<any>([]);
 const [search, setSearch] = useState<string>("");
 const [filteredConnections, setFilteredConnections] = useState<any>([]);
-const [userProfilePic, setUserProfilePic] = useState<string>();
+const [userProfilePic, setUserProfilePic] = useState<string[]>();
 
 
   useEffect(() => {
@@ -26,8 +26,10 @@ const [userProfilePic, setUserProfilePic] = useState<string>();
 
   useEffect(() => {
     async function fetchUserProfile() {
-      const profilePicUrl = await getUserProfilePic(connections[0].picture);
-      setUserProfilePic(profilePicUrl);
+      const profilePicUrls = await Promise.all(connections.map(async (user: ConnectionType) => {
+        const profilePicUrl = await getUserProfilePic(user.picture);
+        return profilePicUrl;
+      }));      setUserProfilePic(profilePicUrls);
     }
     fetchUserProfile();
   }, [connections]);
@@ -64,7 +66,7 @@ const [userProfilePic, setUserProfilePic] = useState<string>();
             name={connection.name}
             title={connection.title}
             connections={connection.connections}
-            picture={userProfilePic || connection.picture}
+            picture={userProfilePic ? userProfilePic[index] : ""}
           />
         );
       })
