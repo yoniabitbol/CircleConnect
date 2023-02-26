@@ -9,6 +9,7 @@ import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
 import ScreenContent from "./Routes/ScreenContent";
 import Network from "./Routes/Network";
+import Feed from "./Routes/Feed";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -40,6 +41,7 @@ function App() {
                 path="notifications"
                 element={user ? <Notifications /> : <Navigate to="/" />}
               />
+              <Route path="feed" element = {user ? <Feed /> : <Navigate to = "/" />}/>
             </Route>
 
             <Route path="/*" element={<AuthHeader />}>
