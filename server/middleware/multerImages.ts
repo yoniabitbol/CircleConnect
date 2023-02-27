@@ -4,26 +4,6 @@ import multer from "multer";
 import sharp from "sharp";
 import { NextFunction, Request, Response } from "express";
 
-// //
-// const pictureStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     if (file.fieldname === 'picture') {
-//       cb(null, 'public/img/users/profilePic');
-//     } else if (file.fieldname === 'backdrop') {
-//       cb(null, 'public/img/users/backdropPic');
-//     }
-//   },
-//   filename(req: Request, file: Express.Multer.File, callback: (error: (Error | null), filename: string) => void) {
-//     const ext = file.mimetype.split('/')[1];
-//     callback(null, `user-${req.body.user_id}-${Date.now()}.${ext}`);
-//   },
-// });
-
-// maybe move this to a separate file
-// interface RequestWithFiles extends Request {
-//   files: any;
-// }
-
 const pictureStorage = multer.memoryStorage();
 
 const multerFilter = (

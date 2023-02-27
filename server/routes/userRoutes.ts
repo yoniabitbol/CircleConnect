@@ -1,6 +1,6 @@
 import express from 'express';
 import UserController from '../controllers/userController';
-import { uploadImages, resizePhoto } from '../middleware/multer';
+import { uploadImages, resizePhoto } from '../middleware/multerImages';
 
 const router = express.Router();
 
@@ -29,5 +29,10 @@ router.route('/:user_id/accept').patch(UserController.acceptConnectionRequest);
 router.route('/:user_id/decline').patch(UserController.declineConnectionRequest);
 router.route('/:user_id/remove').patch(UserController.removeConnection);
 router.route('/:user_id/cancel').patch(UserController.cancelConnectionRequest);
+
+// User Application Files Routes
+router.route('/:user_id/files')
+  .get(UserController.getUserFiles)
+  .patch(UserController.updateUserFiles);
 
 export default router;
