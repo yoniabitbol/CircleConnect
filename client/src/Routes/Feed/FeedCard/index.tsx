@@ -15,7 +15,16 @@ function getWordStr(str: string, num: number) {
 const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:any }> = (props) => {
     const {userInfo, postInfo, numLikes, numComments} = props;
     const [readMore, setReadMore] = useState(false);
+    const [numberLikes, setNumberLikes] = useState(numLikes);
     const [like, setLike] = useState(false);
+    const likeClickHandler = () => {
+        setLike(!like);
+        if (like) {
+            setNumberLikes(numberLikes - 1);
+        } else {
+            setNumberLikes(numberLikes + 1);
+        }
+    }
     return (
         <Card sx={{marginTop: 2, borderRadius:5}}>
             <CardContent sx={{padding: 0}}>
@@ -45,15 +54,15 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                             fontWeight: '600'
                         }}>{readMore ? 'SHOW LESS' : 'READ MORE'}</Button>
                         }
-                        <img style={{aspectRatio:2/1, marginTop: 5, fontFamily:'Poppins'}} className="w-full" src="https://media.istockphoto.com/id/1364176524/vector/now-hiring-random-shapes-blue-business-symbols-background.jpg?s=612x612&w=0&k=20&c=Gna-i8qknM9oDuzNx-7WSyaqPbNz5yc7ne4j3F05ILQ="/>
+                        <img style={{aspectRatio:2/1, marginTop: 5, fontFamily:'Poppins'}} className="w-full" src={postInfo.img}/>
                     </div>
                 </div>
             </CardContent>
             <CardActions >
                 <div className="w-full flex ">
                     <div className="w-1/6 min-w-fit">
-                        <IconButton onClick={()=>setLike(!like)} size="small" style={{borderWidth:'2px', borderColor:'#4D47C3', color:'#4D47C3'}} >{like ? <ThumbUpAlt/> :<ThumbUpOffAlt/>}</IconButton>
-                        <span>{numLikes}</span>
+                        <IconButton onClick={likeClickHandler} size="small" style={{borderWidth:'2px', borderColor:'#4D47C3', color:'#4D47C3'}} >{like ? <ThumbUpAlt/> :<ThumbUpOffAlt/>}</IconButton>
+                        <span>{numberLikes}</span>
                     </div>
                     <div>
                         <IconButton size="small" style={{borderWidth:'2px', borderColor:'#4D47C3', color:'#4D47C3'}} ><ChatBubbleOutline/></IconButton>
