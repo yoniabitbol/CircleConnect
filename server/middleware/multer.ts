@@ -79,6 +79,8 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
         console.log(err);
       }
     });
+
+    
   }
 
   return next();

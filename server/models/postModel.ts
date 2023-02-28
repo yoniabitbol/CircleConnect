@@ -12,14 +12,16 @@ const postSchema = new mongoose.Schema({
   },
   isJobListing: {
     type: Boolean,
+    required: [true, 'Specify if this is a Job Listing.'],
   },
   createdAt: {
     type: Date,
   },
   text: {
     type: String,
+    required: true,
   },
-  picture: {
+  image: {
     type: String,
   },
   likes: {
@@ -46,6 +48,7 @@ const postSchema = new mongoose.Schema({
   }],
   applications: [{
     type: String,
+    ref: 'Application',
   }],
 });
 
