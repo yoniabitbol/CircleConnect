@@ -49,6 +49,12 @@ const userSchema = new mongoose.Schema({
   connections: [{ type: String, ref: 'User', unique: true }],
   preferenceTags: [{ type: String }],
   posts: [{ type: String, ref: 'Post' }],
+  resume: {
+    type: String,
+  },
+  coverLetter: {
+    type: String,
+  },
   projects: [
     {
       title: {

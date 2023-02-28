@@ -68,6 +68,7 @@ const createUser = async (req: Request, res: Response) => {
 
 const updateUser = async (req: any, res: Response) => {
   try {
+    console.log(req.body);
     const filter = { user_id: req.body.user_id };
     const update = {
       title: req.body.title,
@@ -91,6 +92,14 @@ const updateUser = async (req: any, res: Response) => {
         req.files && req.files.backdrop
           ? req.files.backdrop[0].filename
           : req.body.backdrop,
+      resume:
+          req.files && req.files.resume
+            ? req.files.resume[0].filename
+            : req.body.resume,
+      coverLetter:
+          req.files && req.files.coverLetter
+            ? req.files.coverLetter[0].filename
+            : req.body.coverLetter,
     };
     const updatedUser = await User.findOneAndUpdate(filter, update, {
       new: true,

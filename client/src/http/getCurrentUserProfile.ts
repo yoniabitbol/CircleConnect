@@ -8,7 +8,7 @@ async function getCurrentUserProfile() {
   const token = user && (await user.getIdToken());
   const id = user && user.uid;
 
-
+console.log(id, token);
 
   if (!id) {
     return;
