@@ -12,4 +12,13 @@ router.route('/:post_id')
   .patch(postController.updatePost)
   .delete(postController.deletePost);
 
+router.route('/:post_id/like')
+  .patch(postController.likePost);
+
+router.route('/:post_id/comment')
+  .patch(postController.commentPost);
+
+router.route('/:user_id/feed')
+  .get(postController.getFeed);
+
 export default router;

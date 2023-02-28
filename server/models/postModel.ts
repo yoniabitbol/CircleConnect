@@ -23,10 +23,14 @@ const postSchema = new mongoose.Schema({
     type: String,
   },
   likes: {
-    type: Number,
+    type: String,
+    ref: 'User',
+    unique: true,
+    default: [],
   },
   comments: [{
     type: String,
+    default: [],
   }],
   preferenceTags: [{
     type: String,
