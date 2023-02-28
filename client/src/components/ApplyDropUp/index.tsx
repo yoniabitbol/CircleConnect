@@ -17,7 +17,7 @@ export default function CustomizedMenus() {
     return (
         <div>
             <Button
-                sx={{backgroundColor:'#4D47C3', ':hover':{backgroundColor:'#4D47C3'}}}
+                sx={{backgroundColor:'#4D47C3', ':hover':{backgroundColor:'#4D47C3'},  '&:hover':{transitionProperty:'transform', transitionDuration:'0.3s', transform:'scale(1.02)',  filter: 'drop-shadow(0px 0px 2px #6947C3)'}}}
                 variant="contained"
                 component='label'
                 disableElevation
