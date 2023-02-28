@@ -16,7 +16,7 @@ const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
                        <Box   sx={{border: 1, borderColor: '#D4D4D4', marginBottom: 1, width: 1, borderRadius:2, padding: 2, display:'flex', alignItems:'center'}}>
                        <div className=" items-center flex w-4/5" >
                            <Avatar sx={{width:50, height:50}}  src={connection.picture}/>
-                           <div className="flex-col min-w-fit">
+                           <div className="flex-col w-fit">
                                <div className="ml-2 font-bold text-lg">
                                    {connection.name}
                                </div>
