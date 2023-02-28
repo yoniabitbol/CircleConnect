@@ -1,11 +1,16 @@
 import express from 'express';
 import postController from '../controllers/postController';
+import { uploadFiles, resizeFile } from '../middleware/multer';
 
 const router = express.Router();
 
 router.route('/')
   .get(postController.getAllPosts)
-  .post(postController.createPost);
+  .post(
+    uploadFiles,
+    resizeFile,
+    postController.createPost,
+  );
 
 router.route('/:post_id')
   .get(postController.getPost)

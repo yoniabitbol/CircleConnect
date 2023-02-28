@@ -18,6 +18,7 @@ const multerFilter = (
     callback(null, true);
   } else {
     callback(new Error('Invalid File Type! Please upload only images.'), false);
+
   }
 };
 
