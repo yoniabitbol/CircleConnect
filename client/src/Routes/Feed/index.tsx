@@ -14,6 +14,9 @@ const Feed = () => {
     const [userBackdrop, setUserBackdrop] = useState<string>();
     const [userBannerLoading, setUserBannerLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const handleModalClose = () => {
+        setShowModal(false);
+    }
     useEffect(() => {
         getCurrentUserProfile().then((res) => {
             setUser(res.data.user);
@@ -58,7 +61,7 @@ const Feed = () => {
                     </div>
                 </div>
             </div>
-            <NewPostModal showModal={showModal}/>
+            <NewPostModal showModal={showModal} handleModalClose={handleModalClose}/>
         </div>
 
     );

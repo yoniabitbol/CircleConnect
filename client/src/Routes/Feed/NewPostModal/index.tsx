@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Card, Modal, CardActions, TextareaAutosize, Button, IconButton, FormControlLabel, Checkbox, Tooltip} from '@mui/material';
 import styles from './style.module.css';
 import {Send, Videocam, InsertPhoto, AttachFile, Help} from '@mui/icons-material';
-import {useEffect, useState} from 'react';
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -13,18 +13,13 @@ const style = {
     bgColor: 'white',
 };
 
-const NewPostModal:React.FC<{showModal: boolean}> = (props) => {
-    const {showModal} = props;
-    const [open, setOpen] = useState<boolean>(false);
-    useEffect(() => {
-        setOpen(!open);
-    },[showModal])
-    const handleClose = () => setOpen(false);
+const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (props) => {
+    const {showModal, handleModalClose} = props;
     return (
         <div>
             <Modal
-                open={open}
-                onClose={handleClose}>
+                open={showModal}
+                onClose={handleModalClose}>
                 <Card className={styles.modal} sx={style}>
                     <div className="w-full sticky top-0 bg-white p-2 z-20">
                         <h6 className="font-bold p-3">NEW POST</h6>
