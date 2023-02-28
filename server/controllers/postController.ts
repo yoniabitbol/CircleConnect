@@ -48,6 +48,8 @@ const createPost = async (req: any, res: Response) => {
       isThirdParty: req.body.isThirdParty,
       requiredDocuments: req.body.requiredDocuments,
     });
+    const user = await User.findOne({ user_id: req.body.creatorID });
+    await user?.updateOne({ $push: { posts: post._id } });
     res.status(201).json({
       status: 'success',
       data: {
@@ -96,6 +98,7 @@ const deletePost = async (req: Request, res: Response) => {
         message: 'Post deleted successfully',
       });
     }
+    // remove from user's posts array
     return res.status(403).json({
       status: 'failure',
       message: 'You can only delete your own posts',
