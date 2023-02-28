@@ -26,7 +26,7 @@ const postSchema = new mongoose.Schema({
   comments: [{
     type: String,
   }],
-  tags: [{
+  preferenceTags: [{
     type: String,
   }],
   uploadDeadline: {

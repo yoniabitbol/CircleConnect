@@ -1,19 +1,19 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
   user_id: {
     type: String,
-    required: [true, "User ID required."],
+    required: [true, 'User ID required.'],
     unique: true,
     immutable: true,
   },
   name: {
     type: String,
-    required: [true, "Name required."],
+    required: [true, 'Name required.'],
   },
   email: {
     type: String,
-    required: [true, "Email required."],
+    required: [true, 'Email required.'],
     unique: true,
     lowercase: true,
     immutable: true,
@@ -32,27 +32,30 @@ const userSchema = new mongoose.Schema({
   },
   picture: {
     type: String,
-    default: "default-user.jpg",
+    default: 'default-user.jpg',
   },
   website: {
     type: String,
   },
   backdrop: {
     type: String,
-    default: "default-backdrop.jpg",
+    default: 'default-backdrop.jpg',
   },
   summary: {
     type: String,
   },
-  outgoingRequests: [{ type: String, ref: "User", unique: true }],
-  incomingRequests: [{ type: String, ref: "User", unique: true }],
+  outgoingRequests: [{ type: String, ref: 'User', unique: true }],
+  incomingRequests: [{ type: String, ref: 'User', unique: true }],
   connections: [
     {
       type: String,
-      ref: "User",
+      ref: 'User',
       unique: true,
     },
   ],
+  preferenceTags: [{
+    type: String,
+  }],
   projects: [
     {
       title: {
@@ -185,5 +188,5 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model('User', userSchema);
 export default User;
