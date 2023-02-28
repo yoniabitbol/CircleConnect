@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema({
   },
   creatorID: {
     type: String,
+    ref: 'User',
   },
   isJobListing: {
     type: Boolean,
