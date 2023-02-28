@@ -46,16 +46,9 @@ const userSchema = new mongoose.Schema({
   },
   outgoingRequests: [{ type: String, ref: 'User', unique: true }],
   incomingRequests: [{ type: String, ref: 'User', unique: true }],
-  connections: [
-    {
-      type: String,
-      ref: 'User',
-      unique: true,
-    },
-  ],
-  preferenceTags: [{
-    type: String,
-  }],
+  connections: [{ type: String, ref: 'User', unique: true }],
+  preferenceTags: [{ type: String }],
+  posts: [{ type: String, ref: 'Post' }],
   projects: [
     {
       title: {
