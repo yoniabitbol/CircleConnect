@@ -1,5 +1,6 @@
 import FeedContent from './FeedContent';
 import UserProfileBanner from '../../components/UserProfileBanner';
+import UserBannerSkeleton from '../../components/UserBannerSkeleton';
 import { Link } from 'react-router-dom';
 import {Button} from '@mui/material';
 import getCurrentUserProfile from '../../http/getCurrentUserProfile';
@@ -10,9 +11,13 @@ const Feed = () => {
     const [user, setUser] = useState<any>(null);
     const [userProfilePic, setUserProfilePic] = useState<string>();
     const [userBackdrop, setUserBackdrop] = useState<string>();
+    const [userBannerLoading, setUserBannerLoading] = useState<boolean>(true);
     useEffect(() => {
         getCurrentUserProfile().then((res) => {
             setUser(res.data.user);
+            setTimeout(() => {
+                setUserBannerLoading(false);
+            }, 1000)
         });
     },[])
     useEffect(() => {
@@ -26,8 +31,8 @@ const Feed = () => {
         }
     },[user])
     return (
-        <div className="flex max-lg:flex-col-reverse xl:px-[300px] py-10 lg:px-[8rem]">
-            <div className="w-full flex-col justify-center">
+        <div className="flex relative max-lg:flex-col-reverse xl:px-[200px] py-10 lg:px-[8rem] md:px-[5rem]">
+            <div className="lg:w-[70rem] flex-col justify-center">
                 <div className="w-full flex items-center">
                     <hr className="w-1/5 bg-[#4D47C3] h-0.5"/>
                     <div className="p-2 w-full">
@@ -40,11 +45,13 @@ const Feed = () => {
                     </div>
                     <hr className="w-1/5 bg-[#4D47C3] h-0.5"/>
                 </div>
-
                 <FeedContent/>
             </div>
-            <div className="lg:w-[40rem] p-5">
-                {user && <Link to="/myprofile"><UserProfileBanner name={user.name} title={user.title} location={user.location} profilePic={userProfilePic} userBackdrop={userBackdrop}/></Link>}            </div>
+            <div className="lg:w-[50rem] top-10 p-5">
+                <div className="sticky w-full top-[6rem]">
+                    {!userBannerLoading ? <Link to="/myprofile"><UserProfileBanner name={user.name} title={user.title} location={user.location} profilePic={userProfilePic} userBackdrop={userBackdrop}/></Link> : <UserBannerSkeleton/>}
+                </div>
+            </div>
         </div>
     );
 };
