@@ -62,7 +62,7 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
       req.body.user_id
     }-${Date.now()}.pdf`;
     const resume = req.files.resume[0];
-    fs.writeFile(`public/img/users/resume/${req.files.resume[0].filename}`, resume.buffer, (err) => {
+    fs.writeFile(`public/files/users/resume/${req.files.resume[0].filename}`, resume.buffer, (err) => {
       if (err) {
         console.log(err);
       }
@@ -74,7 +74,7 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
       req.body.user_id
     }-${Date.now()}.pdf`;
     const coverLetter = req.files.coverLetter[0];
-    fs.writeFile(`public/img/users/coverLetter/${req.files.coverLetter[0].filename}`, coverLetter.buffer, (err) => {
+    fs.writeFile(`public/files/users/coverLetter/${req.files.coverLetter[0].filename}`, coverLetter.buffer, (err) => {
       if (err) {
         console.log(err);
       }

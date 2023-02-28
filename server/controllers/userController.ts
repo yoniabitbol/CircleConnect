@@ -385,36 +385,6 @@ const getOutgoingRequests = async (req: Request, res: Response) => {
   }
 };
 
-// const updateUserFiles = async (req: any, res: Response) => {
-//   try {
-//     const filter = { user_id: req.params.user_id };
-//     const update = {
-//       resume:
-//           req.files && req.files.resume
-//             ? req.files.resume[0].filename
-//             : req.body.resume,
-//       coverLetter:
-//           req.files && req.files.coverLetter
-//             ? req.files.coverLetter[0].filename
-//             : req.body.coverLetter,
-//     };
-//     const updatedUser = await User.findOneAndUpdate(filter, update, {
-//       new: true,
-//     });
-//     return res.status(200).json({
-//       status: 'success',
-//       data: {
-//         user: updatedUser,
-//       },
-//     });
-//   } catch (err) {
-//     return res.status(400).json({
-//       status: `ERROR: ${err}`,
-//       message: 'Error updating user files',
-//     });
-//   }
-// };
-
 export default {
   getAllUsers,
   getUser,
@@ -429,5 +399,4 @@ export default {
   cancelConnectionRequest,
   getIncomingRequests,
   getOutgoingRequests,
-  // updateUserFiles,
 };

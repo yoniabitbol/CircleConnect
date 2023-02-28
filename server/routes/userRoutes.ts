@@ -30,8 +30,4 @@ router.route('/:user_id/decline').patch(UserController.declineConnectionRequest)
 router.route('/:user_id/remove').patch(UserController.removeConnection);
 router.route('/:user_id/cancel').patch(UserController.cancelConnectionRequest);
 
-// User Application Files Routes
-// router.route('/:user_id/files')
-//   .patch(UserController.updateUserFiles);
-
 export default router;
