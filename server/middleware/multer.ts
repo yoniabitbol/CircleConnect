@@ -80,7 +80,17 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
       }
     });
 
-    
+    if (req.files.image) {
+      req.files.image[0].filename = `post-user-${
+        req.body.user_id
+      }-${Date.now()}.jpeg`;
+      const image = req.files.image[0];
+      sharp(image.buffer)
+        .resize(2000, 1000)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/users/profilePic/${req.files.image[0].filename}`);
+    }
   }
 
   return next();
