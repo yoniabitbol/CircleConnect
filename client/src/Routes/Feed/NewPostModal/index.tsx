@@ -44,7 +44,7 @@ const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (
                                     <Videocam/>
                                 </IconButton>
                                 <Button
-                                    sx={{width: 'fit', backgroundColor: '#4D47C3'}}
+                                    sx={{width: 'fit', backgroundColor: '#4D47C3', '&:hover': {backgroundColor: 'white'}}}
                                     variant="contained"
                                     disableElevation
                                     className={styles.sendButton}
