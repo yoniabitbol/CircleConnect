@@ -3,10 +3,12 @@ import mongoose from 'mongoose';
 const postSchema = new mongoose.Schema({
   postID: {
     type: String,
+    required: [true, 'Post ID required.'],
   },
   creatorID: {
     type: String,
     ref: 'User',
+    required: [true, 'Creator ID required.'],
   },
   isJobListing: {
     type: Boolean,
