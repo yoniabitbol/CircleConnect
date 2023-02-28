@@ -1,6 +1,6 @@
 import FeedContent from './FeedContent';
 import UserProfileBanner from '../../components/UserProfileBanner';
-import UserBannerSkeleton from '../../components/UserBannerSkeleton';
+import UserBannerSkeleton from '../../components/Skeleton/UserBannerSkeleton';
 import NewPostModal from './NewPostModal';
 import { Link } from 'react-router-dom';
 import {Button} from '@mui/material';
@@ -10,6 +10,7 @@ import getCurrentUserConnections from '../../http/getCurrentUserConnections';
 import getUserBackdrop from '../../http/getUserBackdrop';
 import { useEffect, useState } from 'react';
 import ConnectionsBanner from '../../components/ConnectionsBanner';
+import ConnectionsBannerSkeleton from '../../components/Skeleton/ConnectionsBannerSkeleton';
 const Feed = () => {
     const [user, setUser] = useState<any>(null);
     const [userProfilePic, setUserProfilePic] = useState<string>();
@@ -69,7 +70,7 @@ const Feed = () => {
                     <div className="sticky top-[7rem] flex-col space-y-5">
                         {!userBannerLoading ? <Link to="/myprofile"><UserProfileBanner name={user.name} title={user.title} location={user.location} profilePic={userProfilePic} userBackdrop={userBackdrop}/></Link> : <UserBannerSkeleton/>}
                         <div className="max-lg:hidden">
-                            {userConnections && <ConnectionsBanner  connections={userConnections}/>}
+                            {!userBannerLoading ? <ConnectionsBanner  connections={userConnections}/> : <ConnectionsBannerSkeleton/> }
                         </div>
                     </div>
                 </div>
