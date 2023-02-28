@@ -18,7 +18,6 @@ const multerFilter = (
     callback(null, true);
   } else {
     callback(new Error('Invalid File Type! Please upload only images.'), false);
-
   }
 };
 
@@ -80,20 +79,19 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
         console.log(err);
       }
     });
-
-    if (req.files.image) {
-      req.files.image[0].filename = `post-user-${
-        req.body.user_id
-      }-${Date.now()}.jpeg`;
-      const image = req.files.image[0];
-      sharp(image.buffer)
-        .resize(2000, 1000)
-        .toFormat('jpeg')
-        .jpeg({ quality: 90 })
-        .toFile(`public/img/users/profilePic/${req.files.image[0].filename}`);
-    }
   }
 
+  if (req.files.image) {
+    req.files.image[0].filename = `post-user-${
+      req.body.creatorID
+    }-${Date.now()}.jpeg`;
+    const image = req.files.image[0];
+    sharp(image.buffer)
+      .resize(2000, 1000)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`public/img/users/posts/${req.files.image[0].filename}`);
+  }
   return next();
 };
 
@@ -102,6 +100,7 @@ const uploadFiles = upload.fields([
   { name: 'backdrop', maxCount: 1 },
   { name: 'resume', maxCount: 1 },
   { name: 'coverLetter', maxCount: 1 },
+  { name: 'image', maxCount: 1 },
 ]);
 
 export { uploadFiles, resizeFile };

@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
 const postSchema = new mongoose.Schema({
-  postID: {
-    type: String,
-    required: [true, 'Post ID required.'],
-  },
   creatorID: {
     type: String,
     ref: 'User',
@@ -14,9 +10,6 @@ const postSchema = new mongoose.Schema({
     type: Boolean,
     required: [true, 'Specify if this is a Job Listing.'],
   },
-  createdAt: {
-    type: Date,
-  },
   text: {
     type: String,
     required: true,
@@ -24,15 +17,13 @@ const postSchema = new mongoose.Schema({
   image: {
     type: String,
   },
-  likes: {
+  likes: [{
     type: String,
     ref: 'User',
-    unique: true,
     default: [],
-  },
+  }],
   comments: [{
     type: String,
-    default: [],
   }],
   preferenceTags: [{
     type: String,
@@ -50,6 +41,9 @@ const postSchema = new mongoose.Schema({
     type: String,
     ref: 'Application',
   }],
+}, {
+  timestamps: true,
+  versionKey: false,
 });
 
 const Post = mongoose.model('Post', postSchema);

@@ -36,9 +36,18 @@ const getPost = async (req: Request, res: Response) => {
   }
 };
 
-const createPost = async (req: Request, res: Response) => {
+const createPost = async (req: any, res: Response) => {
   try {
-    const post = await Post.create(req.body);
+    const post = await Post.create({
+      creatorID: req.body.creatorID,
+      isJobListing: req.body.isJobListing,
+      text: req.body.text,
+      image: req.files && req.files.image ? req.files.image[0].filename : req.body.image,
+      preferenceTags: req.body.preferenceTags,
+      uploadDeadline: req.body.uploadDeadline,
+      isThirdParty: req.body.isThirdParty,
+      requiredDocuments: req.body.requiredDocuments,
+    });
     res.status(201).json({
       status: 'success',
       data: {
@@ -102,7 +111,7 @@ const deletePost = async (req: Request, res: Response) => {
 const likePost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ postID: req.params.post_id });
-    if (post?.likes.includes(req.body.user_id)) {
+    if (post?.likes?.includes(req.body.user_id)) {
       await post?.updateOne({ $pull: { likes: req.body.user_id } });
       return res.status(403).json({
         status: 'success',
