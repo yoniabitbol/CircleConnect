@@ -50,7 +50,7 @@ const NavBar: React.FC<{
     setUsersInSearch(filteredArray);
   };
   return (
-    <div className="p-2 flex items-center border sticky top-0 bg-white">
+    <div className="p-2 flex items-center border sticky z-20 top-0 bg-white">
       <div className="lg:hidden left-0 relative w-min" onClick={outsideClicked}>
         <MobileNav links={NavLinkModels} />
       </div>

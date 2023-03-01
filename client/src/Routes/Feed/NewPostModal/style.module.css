@@ -1,0 +1,21 @@
+.modal {
+    filter: drop-shadow(2px 2px 50px rgba(75, 71, 182, 0.5));
+    width: 766px;
+    height: 429px;
+}
+@media (max-width: 768px) {
+    .modal {
+        width: 100%;
+
+    }
+}
+.sendButton:hover {
+    background-color: white;
+    color: white;
+}
+
+.sendButton:hover .sendIcon{
+    color: #4B47B6;
+}
+
+
