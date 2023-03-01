@@ -142,7 +142,8 @@ const deletePost = async (req: Request, res: Response) => {
 
 const likePost = async (req: Request, res: Response) => {
   try {
-    const post = await Post.findOne({ postID: req.params.post_id });
+    const post = await Post.findOne({ _id: req.params.post_id });
+
     if (post?.likes?.includes(req.body.user_id)) {
       await post?.updateOne({ $pull: { likes: req.body.user_id } });
       return res.status(403).json({
@@ -165,7 +166,7 @@ const likePost = async (req: Request, res: Response) => {
 
 const commentPost = async (req: Request, res: Response) => {
   try {
-    const post = await Post.findOne({ postID: req.params.post_id });
+    const post = await Post.findOne({ _id: req.params.post_id });
     await post?.updateOne({ $push: { comments: req.body } });
     return res.status(200).json({
       status: 'success',
