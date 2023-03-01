@@ -90,15 +90,17 @@ const updatePost = async (req: Request, res: Response) => {
 
 const deletePost = async (req: Request, res: Response) => {
   try {
-    const post = await Post.findOne({ postID: req.params.post_id });
-    if (post?.creatorID === req.body.user_id) {
+    const post = await Post.findOne({ _id: req.params.post_id });
+    const user = await User.findOne({ user_id: req.body.creatorID });
+
+    if (post?.creatorID === req.body.creatorID) {
       await post?.deleteOne();
+      await user?.updateOne({ $pull: { posts: req.params.post_id } });
       return res.status(200).json({
         status: 'success',
         message: 'Post deleted successfully',
       });
     }
-    // remove from user's posts array
     return res.status(403).json({
       status: 'failure',
       message: 'You can only delete your own posts',
