@@ -64,15 +64,42 @@ const createPost = async (req: any, res: Response) => {
   }
 };
 
-const updatePost = async (req: Request, res: Response) => {
+const updatePost = async (req: any, res: Response) => {
   try {
-    const post = await Post.findOne({ postID: req.params.post_id });
-    if (post?.creatorID === req.body.user_id) {
-      await post?.updateOne({ $set: req.body });
+    const filter = ({ _id: req.params.post_id });
+    const update = {
+      creatorID: req.body.creatorID,
+      isJobListing: req.body.isJobListing,
+      text: req.body.text,
+      image: req.files && req.files.image ? req.files.image[0].filename : req.body.image,
+      preferenceTags: req.body.preferenceTags,
+      uploadDeadline: req.body.uploadDeadline,
+      isThirdParty: req.body.isThirdParty,
+      requiredDocuments: req.body.requiredDocuments,
+    };
+    const post = await Post.findOne({ _id: req.params.post_id });
+    const user = await User.findOne({ user_id: req.body.creatorID });
+
+    if (!post) {
+      return res.status(404).json({
+        status: 'failure',
+        message: 'Post not found',
+      });
+    }
+    if (!user) {
+      return res.status(404).json({
+        status: 'failure',
+        message: 'User not found',
+      });
+    }
+    if (post?.creatorID === user?.user_id) {
+      const updatedPost = await Post.findOneAndUpdate(filter, update, {
+        new: true,
+      });
       return res.status(200).json({
         status: 'success',
         data: {
-          post,
+          updatedPost,
         },
       });
     }

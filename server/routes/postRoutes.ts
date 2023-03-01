@@ -14,7 +14,11 @@ router.route('/')
 
 router.route('/:post_id')
   .get(postController.getPost)
-  .patch(postController.updatePost)
+  .patch(
+    uploadFiles,
+    resizeFile,
+    postController.updatePost,
+  )
   .delete(postController.deletePost);
 
 router.route('/:post_id/like')
