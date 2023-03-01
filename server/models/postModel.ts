@@ -22,9 +22,17 @@ const postSchema = new mongoose.Schema({
     ref: 'User',
     default: [],
   }],
-  comments: [{
-    type: String,
-  }],
+  comments: [
+    {
+      commenter: {
+        type: String,
+        ref: 'User',
+      },
+      comment: {
+        type: String,
+      },
+    },
+  ],
   preferenceTags: [{
     type: String,
   }],
