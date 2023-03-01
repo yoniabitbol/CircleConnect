@@ -81,6 +81,40 @@ const Banner: React.FC<{
             />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
+              Resume upload
+            </label>
+            <input
+              id="file"
+              name="resume"
+              type="file"
+              className="w-full rounded-sm"
+              onChange={(event) => {
+                const file: FileList | null = event.currentTarget.files;
+                if (!file) return;
+                else {
+                  formik.setFieldValue("resume", file[0]);
+                }
+              }}
+            />
+
+            <label className="text-sm font-semibold text-gray-600 py-2">
+              Cover Letter upload
+            </label>
+            <input
+              id="file"
+              name="coverLetter"
+              type="file"
+              className="w-full rounded-sm"
+              onChange={(event) => {
+                const file: FileList | null = event.currentTarget.files;
+                if (!file) return;
+                else {
+                  formik.setFieldValue("coverLetter", file[0]);
+                }
+              }}
+            />
+
+            <label className="text-sm font-semibold text-gray-600 py-2">
               Name
             </label>
             <Field name="name" className="w-full rounded-sm" type="text" />

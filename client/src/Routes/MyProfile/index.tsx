@@ -15,6 +15,8 @@ const MyProfile: React.FC = () => {
     connections: [""],
     picture: "",
     backdrop: "",
+    resume: "",
+    coverLetter: "",
     summary: "",
     projects: [
       {

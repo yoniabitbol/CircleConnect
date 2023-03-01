@@ -40,6 +40,8 @@ const MyUserProfile: React.FC<{
       connections: values.connections,
       picture: values.picture,
       backdrop: values.backdrop,
+      resume: values.resume,
+      coverLetter: values.coverLetter,
       summary: values.summary,
       projects: values.projects,
       skills: values.skills,
