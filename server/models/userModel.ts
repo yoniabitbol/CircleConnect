@@ -55,6 +55,10 @@ const userSchema = new mongoose.Schema({
   coverLetter: {
     type: String,
   },
+  applications: [{
+    type: String,
+    ref: 'Application',
+  }],
   projects: [
     {
       title: {

@@ -24,6 +24,10 @@ const applicationSchema = new mongoose.Schema({
   coverLetter: {
     type: String,
   },
+  existingInfo: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Application = mongoose.model('Application', applicationSchema);

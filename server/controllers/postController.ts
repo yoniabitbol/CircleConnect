@@ -185,10 +185,10 @@ const getFeed = async (req: Request, res: Response) => {
     const currentUser: any = await User.findById(req.params.user_id);
     const userPosts = await Post.find({ creatorID: currentUser?.user_id });
     const recruiterPosts = await Promise.all(
-      currentUser.preferenceTags.map((tag: any) => Post.find({ preferenceTags: tag })),
+      currentUser.preferenceTags.map((tag: string) => Post.find({ preferenceTags: tag })),
     );
     const friendPosts = await Promise.all(
-      currentUser.connections.map((connectionID: any) => Post.find({ creatorID: connectionID })),
+      currentUser.connections.map((connectionID: string) => Post.find({ creatorID: connectionID })),
     );
     res.status(200).json({
       status: 'success',
