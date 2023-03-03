@@ -89,6 +89,7 @@ const deleteApplication = async (req: Request, res: Response) => {
 };
 
 const sendApplication = async (req: Request, res: Response) => {
+  // handle the choice for an existing application
   try {
     const application = Application.create(req.body);
     const post = Post.findById(req.params.post_id);
@@ -115,7 +116,6 @@ const sendApplication = async (req: Request, res: Response) => {
 };
 
 const withdrawApplication = async (req: Request, res: Response) => {
-  // check post ID and pull it from that post's applications array.
   try {
     const application = Application.findById(req.params.application_id);
     const post = Post.findById(req.params.post_id);
