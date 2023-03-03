@@ -100,7 +100,6 @@ const sendApplication = async (req: Request, res: Response) => {
         message: 'Post not found',
       });
     }
-    // handle already applied to this post
     await post.updateOne({ $push: { applications: application } });
     await user?.updateOne({ $push: { applications: application } });
     return res.status(200).json({
@@ -122,18 +121,17 @@ const withdrawApplication = async (req: Request, res: Response) => {
     const post = Post.findById(req.params.post_id);
     const user = User.findOne({ user_id: req.body.user_id });
 
-    if (!post) {
+    if (!application) {
       return res.status(403).json({
         status: 'failure',
-        message: 'Post not found',
+        message: 'Application not found',
       });
     }
-    // handle no application to withdraw (app not found)
     await post.updateOne({ $pull: { applications: application } });
     await user?.updateOne({ $pull: { applications: application } });
     return res.status(200).json({
       status: 'success',
-      message: 'Applicatin withdrawn successfully',
+      message: 'Application withdrawn successfully',
     });
   } catch (err) {
     return res.status(400).json({
@@ -141,23 +139,6 @@ const withdrawApplication = async (req: Request, res: Response) => {
       message: 'Error withdrawing application',
     });
   }
-};
-
-const getPostApplications = async (req: Request, res: Response) => {
-  // get the applications based on a post's applications array
-  try {
-    const post = await Post.findById(req.params.post_id);
-    // return all applications on the given post above
-  } catch (err) {
-    return res.status(400).json({
-      status: `ERROR ${err}`,
-      message: 'Error withdrawing application',
-    });
-  }
-};
-
-const getUserApplications = async (req: Request, res: Response) => {
-  // get the applications of a user based on the applications array in the user
 };
 
 export default {
@@ -168,8 +149,6 @@ export default {
   deleteApplication,
   sendApplication,
   withdrawApplication,
-  getPostApplications,
-  getUserApplications,
 };
 
 // send existing app?

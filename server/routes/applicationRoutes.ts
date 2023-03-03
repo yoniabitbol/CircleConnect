@@ -20,12 +20,4 @@ router.route('/:post_id/apply')
 router.route('/:application_id/withdraw')
   .patch(applicationController.withdrawApplication);
 
-// applications based on post
-router.route('/:post_id/applications')
-  .get(applicationController.getPostApplications);
-
-// applications based on user
-router.route('/:user_id/applications')
-  .get(applicationController.getUserApplications);
-
 export default router;
