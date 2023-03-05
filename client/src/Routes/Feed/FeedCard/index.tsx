@@ -1,7 +1,8 @@
 import {Card, CardContent, Typography, CardActions, Button, Avatar, IconButton} from '@mui/material';
-import {MoreHoriz, ThumbUpOffAlt, ChatBubbleOutline, ThumbUpAlt} from '@mui/icons-material';
+import {MoreHoriz, ThumbUpOffAlt, ChatBubbleOutline, ThumbUpAlt, ChatBubble} from '@mui/icons-material';
 import ApplyDropUp from '../../../components/ApplyDropUp';
 import React, {useState} from 'react';
+import Comments from './Comments';
 import classes from './style.module.css';
 function getCount(str: string) {
     return str.split(' ').filter(function(num: string) {
@@ -12,11 +13,12 @@ function getWordStr(str: string, num: number) {
     return str.split(/\s+/).slice(0, num).join(" ");
 }
 
-const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:any }> = (props) => {
-    const {userInfo, postInfo, numLikes, numComments} = props;
+const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:any, userPic:string }> = (props) => {
+    const {userInfo, postInfo, numLikes, numComments, userPic} = props;
     const [readMore, setReadMore] = useState(false);
     const [numberLikes, setNumberLikes] = useState(numLikes);
     const [like, setLike] = useState(false);
+    const [showComments, setShowComments] = useState(false);
     const likeClickHandler = () => {
         setLike(!like);
         if (like) {
@@ -24,6 +26,9 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
         } else {
             setNumberLikes(numberLikes + 1);
         }
+    }
+    const commentClickHandler = () => {
+        setShowComments(!showComments);
     }
     return (
         <Card sx={{marginTop: 2, borderRadius:5}}>
@@ -65,7 +70,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                         <span>{numberLikes}</span>
                     </div>
                     <div>
-                        <IconButton size="small" style={{borderWidth:'2px', borderColor:'#4D47C3', color:'#4D47C3'}} ><ChatBubbleOutline/></IconButton>
+                        <IconButton onClick={commentClickHandler} size="small" style={{borderWidth:'2px', borderColor:'#4D47C3', color:'#4D47C3'}} >{showComments ? <ChatBubble/> : <ChatBubbleOutline/>}</IconButton>
                         <span>{numComments}</span>
                     </div>
                 </div>
@@ -73,6 +78,9 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                    <ApplyDropUp/>
                 </div>
             </CardActions>
+            <div className={`${!showComments && 'hidden'}`}>
+                <Comments userPic={userPic}/>
+            </div>
         </Card>
     );
 };

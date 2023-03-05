@@ -1,0 +1,31 @@
+.line {
+    width: 50%;
+    border:1px solid #4D47C3;
+}
+
+.buttonWrapper {
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.newPostButton {
+    width: 25rem;
+    background-color: #4D47C3;
+
+}
+
+.newPostButton:hover {
+    background-color: #3B359C;
+    transition-property: width;
+    width: 35rem;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+}
+
+
+
+
+
