@@ -2,7 +2,7 @@
     transition: transform 0s;
     transition-property:width ;
     transition-duration:0.2s;
-    width: 8rem;
+    width: 17rem;
     padding:2.5px ;
     padding-right: 10px;
 
@@ -18,15 +18,16 @@
 
 }
 
-@media screen and (max-width: 1024px) {
-    .searchBarOpen {
-           min-width: max-content;
+@media screen and (max-width: 500px) {
+    .searchBar {
+           width: 8rem;
 
     }
+
 }
 
-@media screen and (min-width: 1024px) {
-    .searchBar {
+@media screen and (min-width: 500px) {
+    .searchBarOpen {
          width:20rem;
 
     }
