@@ -44,7 +44,7 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
       window.location.reload();
     }, 1)
   }
-  
+
   
   const SearchResultsBox = (props: object , option: usersInSearchModel) => {
     return (
@@ -75,9 +75,10 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
         open={searchOpen}
         onFocus={emptySearch}
         inputValue={value}
+        fullWidth={true}
+        openOnFocus
+        clearOnBlur
         onInputChange={OnChangeHandler}
-        clearIcon={<Search/>}
-        openOnFocus={false}
         noOptionsText={"No results found"}
         sx={{  height: '100%'}}
         options={results}

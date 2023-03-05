@@ -12,6 +12,7 @@ import getAllUsers from "../../http/getAllUsers";
 import Usertypes from "../../Models/UserProfileModel";
 import usersInSearchModel from "../../Models/UsersInSearchModel";
 import getUserProfilePic from "../../http/getUserPicturePic";
+import style from "./style.module.css";
 
 const NavBar: React.FC<{
   openSearch: boolean;
@@ -67,9 +68,7 @@ const NavBar: React.FC<{
 
       <div className={` flex relative justify-center  w-min`}>
         <div
-          className={`p-2.5 ${
-            openSearch ? "w-[17rem]" : "max-lg:min-w-max"
-          } lg:w-[20rem]`}
+          className={openSearch ? style.searchBarOpen : style.searchBar}
           onClick={searchClicked}
         >
           <SearchBar
