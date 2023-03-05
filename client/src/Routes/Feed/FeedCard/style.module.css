@@ -1,0 +1,19 @@
+.postText {
+    background: linear-gradient(180deg, #181818 0%, rgba(24, 24, 24, 0) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    margin-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+.postTextMore {
+    background-clip: text;
+    text-fill-color: transparent;
+    margin-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
