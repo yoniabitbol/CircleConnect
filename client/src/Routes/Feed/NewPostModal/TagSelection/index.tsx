@@ -23,8 +23,11 @@ const TagSelection:React.FC<{showModal: boolean, handleModalClose:() => void, on
         backgroundColor: 'white',
         padding:2,
         height: '25rem',
-        width: '25rem',
-        borderRadius: '1rem'
+        maxHeight: '25rem',
+        width:'100%',
+        maxWidth: '35rem',
+        borderRadius: '1rem',
+        overflowY: 'scroll',
     };
     const handleTagSelection = (value : string) => {
         onSelectTag(value);

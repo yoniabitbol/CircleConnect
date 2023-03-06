@@ -6,6 +6,7 @@
 .tooltip {
     color: #4D47C3;
     background-color: white;
+    display:none;
 }
 @media (max-width: 768px) {
     .modal {

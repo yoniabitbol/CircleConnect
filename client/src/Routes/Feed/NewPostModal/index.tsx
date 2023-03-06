@@ -73,7 +73,7 @@ const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (
                                     <Tooltip title="Checking this will allow users to submit Resumés/CV to apply" className={styles.tooltip} placement="top">
                                         <Help/>
                                     </Tooltip>
-                                    <FormControlLabel name="isJobPosting" onChange={formik.handleChange} value={formik.values.isJobPosting}  control={<Checkbox defaultChecked sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="This is a job posting"/>
+                                    <FormControlLabel name="isJobPosting" onChange={formik.handleChange} value={formik.values.isJobPosting}  control={<Checkbox defaultChecked sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="Job posting"/>
                                 </div>
                                 <div className="absolute right-0 flex w-1/2 space-x-1 px-2 justify-end">
                                     <IconButton onClick={() => setShowTagSelection(true)}>
