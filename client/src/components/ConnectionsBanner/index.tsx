@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 import React from 'react';
 const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
     const {connections} = props;
-    console.log('connections: ', connections)
     return (
        <div className="pb-5 bg-white w-full drop-shadow-md shadow-purple-500">
            <div className="p-3">

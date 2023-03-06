@@ -32,11 +32,12 @@ const FeedDummyData = [{
         numComments: 3,
     }
 ]
-const FeedContent:React.FC = () => {
+const FeedContent:React.FC<{userPic: string}> = (props) => {
+    const {userPic} = props;
     return (
         <div className="flex-row w-full justify-center">
             {FeedDummyData.map((data, index) => {
-                return <FeedCard key={index} userInfo={data.userInfo} postInfo={data.postInfo} numLikes={data.numLikes} numComments={data.numComments}/>
+                return <FeedCard key={index} userInfo={data.userInfo} postInfo={data.postInfo} numLikes={data.numLikes} numComments={data.numComments} userPic={userPic}/>
             })
             }
         </div>
