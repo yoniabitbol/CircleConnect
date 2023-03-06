@@ -383,6 +383,29 @@ const getOutgoingRequests = async (req: Request, res: Response) => {
   }
 };
 
+const updateUserPreferenceTags = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ user_id: req.params.user_id });
+    if (!user) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'User does not exist',
+      });
+    }
+    const { tags } = req.body;
+    await user.updateOne({ preferenceTags: tags });
+    return res.status(200).json({
+      status: 'success',
+      message: 'Job preference tags updated',
+    });
+  } catch (err) {
+    return res.status(400).json({
+      status: `ERROR: ${err}`,
+      message: 'Error updating preference tags',
+    });
+  }
+};
+
 export default {
   getAllUsers,
   getUser,
@@ -397,4 +420,5 @@ export default {
   cancelConnectionRequest,
   getIncomingRequests,
   getOutgoingRequests,
+  updateUserPreferenceTags,
 };
