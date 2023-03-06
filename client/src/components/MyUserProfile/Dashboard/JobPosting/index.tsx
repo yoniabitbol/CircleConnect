@@ -3,7 +3,7 @@ import ApplicantRow from "./ApplicantRow";
 import placeholder from "./placeholder.png";
 
 const JobPosting: React.FC = () => {
-  const recruiter = true;
+  const recruiter = false;
   const [showApplicants, setShowApplicants] = useState(false);
 
   return (
@@ -35,7 +35,26 @@ const JobPosting: React.FC = () => {
             See all applicants
           </button>
         ) : (
-          <p></p>
+          <div className="flex">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+              className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
+          text-white hover:bg-signup-button-hover"
+            >
+              View application
+            </button>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+              className="text-sm block mt-2 ml-2 w-auto px-3 py-1 rounded-md bg-red-700
+          text-white hover:bg-red-700"
+            >
+              Delete
+            </button>
+          </div>
         )}
         {showApplicants ? (
           <div className="text-sm mt-2">
