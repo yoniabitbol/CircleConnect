@@ -49,7 +49,7 @@ const JobPosting: React.FC = () => {
               onClick={(e) => {
                 e.preventDefault();
               }}
-              className="text-sm block mt-2 ml-2 w-auto px-3 py-1 rounded-md bg-red-700
+              className="text-sm block mt-2 ml-2 w-auto px-3 py-1 rounded-md bg-red-500
           text-white hover:bg-red-700"
             >
               Delete
