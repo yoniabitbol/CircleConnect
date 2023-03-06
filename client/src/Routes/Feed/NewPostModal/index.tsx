@@ -40,10 +40,15 @@ const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (
         setSelectedTags(newTags);
         formik.setFieldValue('tags', newTags);
     }
+    const resetTags = () => {
+        setSelectedTags([]);
+        formik.setFieldValue('tags', []);
+        handleModalClose();
+    }
     return (
             <Modal
                 open={showModal}
-                onClose={handleModalClose}
+                onClose={resetTags}
             >
                 <>
                     <Card className={styles.modal} sx={style}>
