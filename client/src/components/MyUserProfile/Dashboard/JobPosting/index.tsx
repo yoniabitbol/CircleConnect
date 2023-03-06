@@ -1,8 +1,9 @@
 import { useState } from "react";
+import ApplicantRow from "./ApplicantRow";
 import placeholder from "./placeholder.png";
 
 const JobPosting: React.FC = () => {
-  const recruiter = false;
+  const recruiter = true;
   const [showApplicants, setShowApplicants] = useState(false);
 
   return (
@@ -34,20 +35,15 @@ const JobPosting: React.FC = () => {
             See all applicants
           </button>
         ) : (
-          <button
-            className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
-          text-white hover:bg-signup-button-hover"
-          >
-            <a href="/">View application</a>
-          </button>
+          <p></p>
         )}
         {showApplicants ? (
           <div className="text-sm mt-2">
             <h3>Applicants:</h3>
             <ul>
-              <li>Applicant 1</li>
-              <li>Applicant 2</li>
-              <li>Applicant 3</li>
+              <ApplicantRow />
+              <ApplicantRow />
+              <ApplicantRow />
             </ul>
             <button
               onClick={(e) => {
