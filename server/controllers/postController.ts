@@ -180,28 +180,44 @@ const commentPost = async (req: Request, res: Response) => {
   }
 };
 
-const getFeed = async (req: Request, res: Response) => {
+const getSocialFeed = async (req: Request, res: Response) => {
   try {
     const currentUser: any = await User.findById(req.params.user_id);
     const userPosts = await Post.find({ creatorID: currentUser?.user_id });
-    const recruiterPosts = await Promise.all(
-      currentUser.preferenceTags.map((tag: string) => Post.find({ preferenceTags: tag })),
+    const connectionsPosts = await Promise.all(
+      currentUser?.connections.map((connectionID: string) => Post.find({ creatorID: connectionID })),
     );
-    const friendPosts = await Promise.all(
-      currentUser.connections.map((connectionID: string) => Post.find({ creatorID: connectionID })),
-    );
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       data: {
         userPosts,
+        connectionsPosts,
+      },
+    });
+  } catch (err) {
+    return res.status(400).json({
+      status: `ERROR ${err}`,
+      message: 'Error social getting feed',
+    });
+  }
+};
+
+const getJobFeed = async (req: Request, res: Response) => {
+  try {
+    const currentUser: any = await User.findById(req.params.user_id);
+    const recruiterPosts = await Promise.all(
+      currentUser?.preferenceTags.map((tag: string) => Post.find({ preferenceTags: tag })),
+    );
+    return res.status(200).json({
+      status: 'success',
+      data: {
         recruiterPosts,
-        friendPosts,
       },
     });
   } catch (err) {
     res.status(400).json({
       status: `ERROR ${err}`,
-      message: 'Error getting feed',
+      message: 'Error job getting feed',
     });
   }
 };
@@ -214,5 +230,6 @@ export default {
   deletePost,
   likePost,
   commentPost,
-  getFeed,
+  getSocialFeed,
+  getJobFeed,
 };

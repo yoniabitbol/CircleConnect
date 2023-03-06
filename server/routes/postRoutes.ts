@@ -27,7 +27,8 @@ router.route('/:post_id/like')
 router.route('/:post_id/comment')
   .patch(postController.commentPost);
 
-router.route('/:user_id/feed')
-  .get(postController.getFeed);
+// Feed Routes
+router.route('/:user_id/feed').get(postController.getSocialFeed);
+router.route('/:user_id/jobFeed').get(postController.getJobFeed);
 
 export default router;
