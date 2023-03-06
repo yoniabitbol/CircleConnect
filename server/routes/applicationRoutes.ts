@@ -12,7 +12,6 @@ router.route('/:application_id')
   .patch(applicationController.updateApplication)
   .delete(applicationController.deleteApplication);
 
-// applications based on post
 // Send files here?
 router.route('/:post_id/apply')
   .patch(applicationController.sendApplication);
