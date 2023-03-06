@@ -34,7 +34,12 @@ const JobPosting: React.FC = () => {
             See all applicants
           </button>
         ) : (
-          <p></p>
+          <button
+            className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
+          text-white hover:bg-signup-button-hover"
+          >
+            <a href="/">View application</a>
+          </button>
         )}
         {showApplicants ? (
           <div className="text-sm mt-2">
