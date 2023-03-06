@@ -1,6 +1,10 @@
+import { useState } from "react";
 import placeholder from "./placeholder.png";
 
 const JobPosting: React.FC = () => {
+  const recruiter = false;
+  const [showApplicants, setShowApplicants] = useState(false);
+
   return (
     <div className="flex bg-white mt-2">
       <div className="ml-2 mr-4 my-3">
@@ -18,6 +22,42 @@ const JobPosting: React.FC = () => {
         <p className="text-sm" style={{ color: "#4c47bc" }}>
           0 applicants
         </p>
+        {recruiter && !showApplicants ? (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setShowApplicants(true);
+            }}
+            className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
+          text-white hover:bg-signup-button-hover"
+          >
+            See all applicants
+          </button>
+        ) : (
+          <p></p>
+        )}
+        {showApplicants ? (
+          <div className="text-sm mt-2">
+            <h3>Applicants:</h3>
+            <ul>
+              <li>Applicant 1</li>
+              <li>Applicant 2</li>
+              <li>Applicant 3</li>
+            </ul>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setShowApplicants(false);
+              }}
+              className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
+            text-white hover:bg-signup-button-hover"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <p></p>
+        )}
       </div>
     </div>
   );
