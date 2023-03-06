@@ -1,5 +1,5 @@
-import {Card, CardContent, Typography, CardActions, Button, Avatar, IconButton} from '@mui/material';
-import {MoreHoriz, ThumbUpOffAlt, ChatBubbleOutline, ThumbUpAlt, ChatBubble} from '@mui/icons-material';
+import {Card, CardContent, CardActions, Button, Avatar, IconButton} from '@mui/material';
+import { ThumbUpOffAlt, ChatBubbleOutline, ThumbUpAlt, ChatBubble} from '@mui/icons-material';
 import ApplyDropUp from '../../../components/ApplyDropUp';
 import React, {useState} from 'react';
 import Comments from './Comments';
@@ -33,14 +33,14 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
     return (
         <Card sx={{marginTop: 2, borderRadius:5}}>
             <CardContent sx={{padding: 0}}>
-                <div className="flex p-3 items-center border-gray-100 border-b-2">
-                    <Typography sx={{ fontSize: 14, width: '100%'}} color="text.secondary" gutterBottom>
-                        <span style={{color:'#4D47C3'}}>Reuven Ostrofsky</span> and <span style={{color:'#4D47C3'}}>Jonathan Abitbol</span> liked this
-                    </Typography>
-                    <div className='relative right-0'>
-                        <MoreHoriz/>
-                    </div>
-                </div>
+                {/*<div className="flex p-3 items-center border-gray-100 border-b-2">*/}
+                {/*    <Typography sx={{ fontSize: 14, width: '100%'}} color="text.secondary" gutterBottom>*/}
+                {/*        <span style={{color:'#4D47C3'}}>Reuven Ostrofsky</span> and <span style={{color:'#4D47C3'}}>Jonathan Abitbol</span> liked this*/}
+                {/*    </Typography>*/}
+                {/*    <div className='relative right-0'>*/}
+                {/*        <MoreHoriz/>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <div>
                     <div className="flex items-center p-3">
                         <Avatar/>
