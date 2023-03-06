@@ -226,7 +226,7 @@ const acceptConnectionRequest = async (req: Request, res: Response) => {
       message: 'No incoming request to accept',
     });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       status: `ERROR: ${err}`,
       message: 'Error accepting connection request',
     });

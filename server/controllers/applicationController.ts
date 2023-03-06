@@ -92,8 +92,15 @@ const sendApplication = async (req: Request, res: Response) => {
   // handle the choice for an existing application
   try {
     const application = Application.create(req.body);
-    const post = Post.findById(req.params.post_id);
+    const post: any = Post.findById(req.params.post_id);
     const user = User.findOne({ user_id: req.body.user_id });
+
+    if (post.applications.includes(application)) {
+      return res.status(403).json({
+        status: 'failure',
+        message: 'Application already sent',
+      });
+    }
 
     if (!post) {
       return res.status(403).json({
@@ -118,8 +125,15 @@ const sendApplication = async (req: Request, res: Response) => {
 const withdrawApplication = async (req: Request, res: Response) => {
   try {
     const application = Application.findById(req.params.application_id);
-    const post = Post.findById(req.params.post_id);
+    const post: any = Post.findById(req.params.post_id);
     const user = User.findOne({ user_id: req.body.user_id });
+
+    if (!post.applications.includes(application)) {
+      return res.status(403).json({
+        status: 'failure',
+        message: 'Cannot withdraw application that has not been sent',
+      });
+    }
 
     if (!application) {
       return res.status(403).json({
@@ -150,5 +164,3 @@ export default {
   sendApplication,
   withdrawApplication,
 };
-
-// send existing app?
