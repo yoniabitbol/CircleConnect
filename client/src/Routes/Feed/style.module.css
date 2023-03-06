@@ -12,13 +12,14 @@
 
 
 .newPostButton {
-    width: 25rem;
     background-color: #4D47C3;
-
+    transition-property: width;
+    width: 25rem;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
 }
 
 .newPostButton:hover {
-    background-color: #3B359C;
     transition-property: width;
     width: 35rem;
     transition-duration: 0.3s;

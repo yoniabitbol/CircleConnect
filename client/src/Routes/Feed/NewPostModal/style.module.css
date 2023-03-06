@@ -3,10 +3,17 @@
     width: 766px;
     height: 429px;
 }
+.tooltip {
+    color: #4D47C3;
+    background-color: white;
+}
 @media (max-width: 768px) {
     .modal {
         width: 100%;
 
+    }
+    .tooltip {
+        display: none;
     }
 }
 /*.sendButton:hover {*/
@@ -61,5 +68,7 @@
         transform: translateX(0px);
     }
 }
+
+
 
 

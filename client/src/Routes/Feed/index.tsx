@@ -12,11 +12,12 @@ import getUserBackdrop from '../../http/getUserBackdrop';
 import { useEffect, useState } from 'react';
 import ConnectionsBanner from '../../components/ConnectionsBanner';
 import ConnectionsBannerSkeleton from '../../components/Skeleton/ConnectionsBannerSkeleton';
+import Usertypes from '../../Models/UserProfileModel';
 const Feed = () => {
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<Usertypes | null>(null);
     const [userProfilePic, setUserProfilePic] = useState<string>('');
     const [userBackdrop, setUserBackdrop] = useState<string>();
-    const [userConnections, setUserConnections] = useState<any>(null);
+    const [userConnections, setUserConnections] = useState<string[] | null>(null);
     const [userBannerLoading, setUserBannerLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
     const handleModalClose = () => {
@@ -48,7 +49,8 @@ const Feed = () => {
     },[user])
     return (
         <div>
-            <div className="flex relative max-lg:flex-col-reverse xl:px-[200px] py-10 lg:px-[5rem] md:px-[3rem]" onClick={() =>  {showModal && setShowModal(false)}}>
+            <div className="flex relative max-lg:flex-col-reverse xl:px-[200px] py-10 lg:px-[5rem] md:px-[3rem]"
+                 onClick={() =>  {showModal && setShowModal(false)}}>
                 <div className="lg:w-[65rem] flex-col justify-center">
                     <div className="w-full flex items-center justify-center">
                         <hr className={style.line}/>
@@ -69,9 +71,14 @@ const Feed = () => {
                 </div>
                 <div className="lg:w-[40rem] top-10 p-5">
                     <div className="sticky top-[7rem] flex-col space-y-5">
-                        {!userBannerLoading ? <Link to="/myprofile"><UserProfileBanner name={user.name} title={user.title} location={user.location} profilePic={userProfilePic} userBackdrop={userBackdrop}/></Link> : <UserBannerSkeleton/>}
+                        {!userBannerLoading && user ? <Link to="/myprofile">
+                            <UserProfileBanner name={user.name} title={user.title} location={user.location}
+                              profilePic={userProfilePic} userBackdrop={userBackdrop}/>
+                        </Link>
+                            : <UserBannerSkeleton/>}
                         <div className="max-lg:hidden">
-                            {!userBannerLoading ? <ConnectionsBanner  connections={userConnections}/> : <ConnectionsBannerSkeleton/> }
+                            {!userBannerLoading ? <ConnectionsBanner  connections={userConnections}/> :
+                                <ConnectionsBannerSkeleton/> }
                         </div>
                     </div>
                 </div>
