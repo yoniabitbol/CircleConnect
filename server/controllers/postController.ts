@@ -50,14 +50,14 @@ const createPost = async (req: any, res: Response) => {
     });
     const user = await User.findOne({ user_id: req.body.creatorID });
     await user?.updateOne({ $push: { posts: post._id } });
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       data: {
         post,
       },
     });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       status: `ERROR ${err}`,
       message: 'Error creating post',
     });
@@ -215,7 +215,7 @@ const getJobFeed = async (req: Request, res: Response) => {
       },
     });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       status: `ERROR ${err}`,
       message: 'Error job getting feed',
     });
