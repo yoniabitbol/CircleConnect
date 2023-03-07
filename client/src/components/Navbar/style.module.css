@@ -1,0 +1,34 @@
+.searchBar {
+    transition: transform 0s;
+    transition-property:width ;
+    transition-duration:0.2s;
+    width: 17rem;
+    padding:2.5px ;
+    padding-right: 10px;
+
+}
+
+.searchBarOpen{
+    transition-property: width;
+    transition-duration:0.2s;
+    padding:2.5px;
+    z-index:20;
+    /*background-color: red;*/
+    width:17rem;
+
+}
+
+@media screen and (max-width: 500px) {
+    .searchBar {
+           width: 8rem;
+
+    }
+
+}
+
+@media screen and (min-width: 500px) {
+    .searchBarOpen {
+         width:20rem;
+
+    }
+}
