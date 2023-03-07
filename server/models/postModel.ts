@@ -42,6 +42,9 @@ const postSchema = new mongoose.Schema({
   isThirdParty: {
     type: Boolean,
   },
+  thirdPartyLink: {
+    type: String,
+  },
   requiredDocuments: [{
     type: String,
   }],
