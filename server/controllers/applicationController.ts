@@ -88,10 +88,25 @@ const deleteApplication = async (req: Request, res: Response) => {
   }
 };
 
-const sendApplication = async (req: Request, res: Response) => {
+const sendApplication = async (req: any, res: Response) => {
   // handle the choice for an existing application
+  console.log(req.files);
   try {
-    const application: any = await Application.create(req.body);
+    const application: any = await Application.create({
+      applicantID: req.body.applicantID,
+      text: req.body.text,
+      resume:
+          req.files && req.files.applicationResume
+            ? req.files.applicationResume[0].filename
+            : req.body.applicationResume,
+      coverLetter:
+          req.files && req.files.applicationCoverLetter
+            ? req.files.applicationCoverLetter[0].filename
+            : req.body.applicationCoverLetter,
+      existingInfo: req.body.existingInfo,
+    });
+    console.log(req.files.applicationResume[0].filename);
+    console.log(req.files.applicationCoverLetter[0].filename);
     const post: any = await Post.findOne({ _id: req.params.post_id });
     const user = await User.findOne({ user_id: req.body.applicantID });
 
@@ -125,11 +140,11 @@ const sendApplication = async (req: Request, res: Response) => {
 
 const withdrawApplication = async (req: Request, res: Response) => {
   try {
-    const application = Application.findById(req.params.application_id);
-    const post: any = Post.findById(req.params.post_id);
-    const user = User.findOne({ user_id: req.body.user_id });
+    const application = await Application.findById(req.params.application_id);
+    const post: any = await Post.findById(req.body.postID);
+    const user = await User.findOne({ user_id: req.body.user_id });
 
-    if (!post.applications.includes(application)) {
+    if (!post.applications.includes(application._id)) {
       return res.status(403).json({
         status: 'failure',
         message: 'Cannot withdraw application that has not been sent',
@@ -142,8 +157,8 @@ const withdrawApplication = async (req: Request, res: Response) => {
         message: 'Application not found',
       });
     }
-    await post.updateOne({ $pull: { applications: application } });
-    await user?.updateOne({ $pull: { applications: application } });
+    await post.updateOne({ $pull: { applications: application._id } });
+    await user?.updateOne({ $pull: { applications: application._id } });
     return res.status(200).json({
       status: 'success',
       message: 'Application withdrawn successfully',
@@ -156,23 +171,6 @@ const withdrawApplication = async (req: Request, res: Response) => {
   }
 };
 
-// const getPostApplications = async (req: Request, res: Response) => {
-//   try {
-//     const post = await Post.findById(req.params.post_id);
-//     const applications = await Application.find({ _id: { $in: post?.applications } });
-//     res.status(200).json({
-//       status: 'success',
-//       data: {
-//         applications,
-//       },
-//     });
-//   } catch (err) {
-//     res.status(400).json({
-//       status: `ERROR ${err}`,
-//       message: 'Error getting applications',
-//     });
-//   }
-// };
 export default {
   getAllApplications,
   getApplication,
@@ -181,5 +179,4 @@ export default {
   deleteApplication,
   sendApplication,
   withdrawApplication,
-  // getPostApplications,
 };

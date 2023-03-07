@@ -98,7 +98,7 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
 
   // Application Files
   if (req.files.applicationResume) {
-    req.files.applicationResume[0].filename = `applicationResume-user-${
+    req.files.applicationResume[0].filename = `appResume-user-${
       req.body.applicantID
     }-${Date.now()}.pdf`;
     const applicationResume = req.files.applicationResume[0];
@@ -110,7 +110,7 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
   }
 
   if (req.files.applicationCoverLetter) {
-    req.files.applicationCoverLetter[0].filename = `applicationCoverLetter-user-${
+    req.files.applicationCoverLetter[0].filename = `appCoverLetter-user-${
       req.body.applicantID
     }-${Date.now()}.pdf`;
     const applicationCoverLetter = req.files.applicationCoverLetter[0];
@@ -130,6 +130,8 @@ const uploadFiles = upload.fields([
   { name: 'resume', maxCount: 1 },
   { name: 'coverLetter', maxCount: 1 },
   { name: 'image', maxCount: 1 },
+  { name: 'applicationResume', maxCount: 1 },
+  { name: 'applicationCoverLetter', maxCount: 1 },
 ]);
 
 export { uploadFiles, resizeFile };
