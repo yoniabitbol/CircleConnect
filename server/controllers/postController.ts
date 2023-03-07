@@ -202,15 +202,15 @@ const getSocialFeed = async (req: Request, res: Response) => {
 
 const getJobFeed = async (req: Request, res: Response) => {
   try {
-    const currentUser: any = await User.findById(req.params.user_id);
+    const currentUser: any = await User.findOne({ user_id: req.params.user_id });
+    const currentUserPosts = await Post.find({ creatorID: currentUser?.user_id });
+    console.log(currentUser.preferenceTags);
     const recruiterPosts = await Promise.all(
-      currentUser?.preferenceTags.map((tag: string) => Post.find({ preferenceTags: tag })).sort({ createdAt: -1 }),
+      currentUser?.preferenceTags.map((preferenceTag: string) => Post.find({ preferenceTags: { $in: [preferenceTag] } })),
     );
     return res.status(200).json({
       status: 'success',
-      data: {
-        recruiterPosts,
-      },
+      data: currentUserPosts.concat(...recruiterPosts).sort((a: any, b: any) => b.createdAt - a.createdAt),
     });
   } catch (err) {
     return res.status(400).json({
