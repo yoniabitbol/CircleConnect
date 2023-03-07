@@ -91,16 +91,9 @@ const deleteApplication = async (req: Request, res: Response) => {
 const sendApplication = async (req: Request, res: Response) => {
   // handle the choice for an existing application
   try {
-    const application = Application.create(req.body);
-    const post: any = Post.findById(req.params.post_id);
-    const user = User.findOne({ user_id: req.body.user_id });
-
-    if (post.applications.includes(application)) {
-      return res.status(403).json({
-        status: 'failure',
-        message: 'Application already sent',
-      });
-    }
+    const application: any = await Application.create(req.body);
+    const post: any = await Post.findOne({ _id: req.params.post_id });
+    const user = await User.findOne({ user_id: req.body.applicantID });
 
     if (!post) {
       return res.status(403).json({
@@ -108,8 +101,16 @@ const sendApplication = async (req: Request, res: Response) => {
         message: 'Post not found',
       });
     }
-    await post.updateOne({ $push: { applications: application } });
-    await user?.updateOne({ $push: { applications: application } });
+
+    if (!post.isJobListing) {
+      return res.status(403).json({
+        status: 'failure',
+        message: 'Post is not a job listing',
+      });
+    }
+
+    await post.updateOne({ $push: { applications: application._id } });
+    await user?.updateOne({ $push: { applications: application._id } });
     return res.status(200).json({
       status: 'success',
       message: 'Application sent successfully',
@@ -155,6 +156,23 @@ const withdrawApplication = async (req: Request, res: Response) => {
   }
 };
 
+// const getPostApplications = async (req: Request, res: Response) => {
+//   try {
+//     const post = await Post.findById(req.params.post_id);
+//     const applications = await Application.find({ _id: { $in: post?.applications } });
+//     res.status(200).json({
+//       status: 'success',
+//       data: {
+//         applications,
+//       },
+//     });
+//   } catch (err) {
+//     res.status(400).json({
+//       status: `ERROR ${err}`,
+//       message: 'Error getting applications',
+//     });
+//   }
+// };
 export default {
   getAllApplications,
   getApplication,
@@ -163,4 +181,5 @@ export default {
   deleteApplication,
   sendApplication,
   withdrawApplication,
+  // getPostApplications,
 };

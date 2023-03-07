@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema(
     incomingRequests: [{ type: String, ref: 'User', unique: true }],
     connections: [{ type: String, ref: 'User', unique: true }],
     preferenceTags: [{ type: String }],
-    posts: [{ type: String, ref: 'Post' }],
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     resume: {
       type: String,
     },
@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema(
       type: String,
     },
     applications: [{
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'Application',
     }],
     projects: [

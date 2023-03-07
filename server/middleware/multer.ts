@@ -113,13 +113,13 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
     req.files.applicationCoverLetter[0].filename = `applicationCoverLetter-user-${
       req.body.applicantID
     }-${Date.now()}.pdf`;
+    const applicationCoverLetter = req.files.applicationCoverLetter[0];
+    fs.writeFile(`public/files/applications/coverLetter/${req.files.applicationCoverLetter[0].filename}`, applicationCoverLetter.buffer, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
   }
-  const applicationCoverLetter = req.files.applicationCoverLetter[0];
-  fs.writeFile(`public/files/applications/coverLetter/${req.files.applicationCoverLetter[0].filename}`, applicationCoverLetter.buffer, (err) => {
-    if (err) {
-      console.log(err);
-    }
-  });
 
   return next();
 };

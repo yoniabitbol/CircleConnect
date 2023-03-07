@@ -21,7 +21,8 @@ const getAllPosts = async (req: Request, res: Response) => {
 
 const getPost = async (req: Request, res: Response) => {
   try {
-    const post = await Post.findById(req.params.post_id);
+    const post: any = await Post.findById(req.params.post_id);
+    await post?.populate({ path: 'applications', model: 'Application' });
     res.status(200).json({
       status: 'success',
       data: {

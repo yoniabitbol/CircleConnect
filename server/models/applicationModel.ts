@@ -2,16 +2,9 @@ import mongoose from 'mongoose';
 
 const applicationSchema = new mongoose.Schema(
   {
-    applicationID: {
-      type: String,
-    },
     applicantID: {
       type: String,
       ref: 'User',
-    },
-    postID: {
-      type: String,
-      ref: 'Post',
     },
     text: {
       type: String,

@@ -25,6 +25,8 @@ const getAllUsers = async (req: Request, res: Response) => {
 const getUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
+    await user?.populate({ path: 'posts', model: 'Post' });
+    await user?.populate({ path: 'applications', model: 'Application' });
     res.status(200).json({
       status: 'success',
       data: {

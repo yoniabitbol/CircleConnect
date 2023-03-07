@@ -46,7 +46,7 @@ const postSchema = new mongoose.Schema({
     type: String,
   }],
   applications: [{
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Application',
   }],
 }, {
