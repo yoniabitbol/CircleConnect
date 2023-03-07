@@ -146,7 +146,7 @@ const withdrawApplication = async (req: Request, res: Response) => {
     const post: any = await Post.findById(req.body.postID);
     const user = await User.findOne({ user_id: req.body.user_id });
 
-    if (!post.applications.includes(application._id)) {
+    if (!post.applications.includes(application?._id)) {
       return res.status(403).json({
         status: 'failure',
         message: 'Cannot withdraw application that has not been sent',
