@@ -47,7 +47,9 @@ const createPost = async (req: any, res: Response) => {
       preferenceTags: req.body.preferenceTags,
       uploadDeadline: req.body.uploadDeadline,
       isThirdParty: req.body.isThirdParty,
-      requiredDocuments: req.body.requiredDocuments,
+      thirdPartyLink: req.body.thirdPartyLink,
+      isResumeRequired: req.body.isResumeRequired,
+      isCoverLetterRequired: req.body.isCoverLetterRequired,
     });
     const user = await User.findOne({ user_id: req.body.creatorID });
     await user?.updateOne({ $push: { posts: post._id } });
@@ -56,6 +58,13 @@ const createPost = async (req: any, res: Response) => {
       return res.status(403).json({
         status: 'failure',
         message: 'Cannot add tags if not a job listing',
+      });
+    }
+
+    if (post.isThirdParty && !post.thirdPartyLink) {
+      return res.status(403).json({
+        status: 'failure',
+        message: 'Third party link is required if post is third party',
       });
     }
 
