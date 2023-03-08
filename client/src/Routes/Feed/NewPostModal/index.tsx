@@ -1,8 +1,9 @@
-import * as React from 'react';
-import {Card, Modal, CardActions, TextareaAutosize, Button, IconButton, FormControlLabel, Checkbox, Tooltip,Chip} from '@mui/material';
+import {useState,FC} from 'react';
+import {Card, Modal, CardActions, TextareaAutosize, Button, IconButton, FormControlLabel, Checkbox,Chip} from '@mui/material';
 import styles from './style.module.css';
-import {Send, Videocam, InsertPhoto, AttachFile, Help, Tag} from '@mui/icons-material';
+import {Send, InsertPhoto, AttachFile, Tag, Settings, Close} from '@mui/icons-material';
 import TagSelection from './TagSelection';
+import JobSettingsModal from './JobSettingsModal';
 import {useFormik} from 'formik';
 const style = {
     position: 'absolute',
@@ -14,10 +15,14 @@ const style = {
 
 
 
-const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (props) => {
+
+
+
+
+const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void}> = (props) => {
     const {showModal, handleModalClose} = props;
     const formik = useFormik({
-            initialValues: {postMessage: '', isJobPosting: false,tags:[], attachment: [], photo: [], video: []},
+            initialValues: {postMessage: '', isJobPosting: false, jobSettings: { isResumeRequired:false, isCoverLetterRequired:false, applicationDeadline: null}, tags:[], attachment: [], photo: []},
             onSubmit: (values,{resetForm}) => {
                 console.log(values);
                 handleModalClose();
@@ -25,8 +30,10 @@ const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (
 
             }
         })
-    const [showTagSelection, setShowTagSelection] = React.useState<boolean>(false);
-    const [selectedTags, setSelectedTags] = React.useState<string[] | undefined>([]);
+    const [showTagSelection, setShowTagSelection] =useState<boolean>(false);
+    const [selectedTags, setSelectedTags] = useState<string[] | undefined>([]);
+    const [showJobSettings, setShowJobSettings] = useState<boolean>(false);
+    const [settings, setSettings] = useState<{isResumeRequired: boolean, isCoverLetterRequired: boolean, applicationDeadline: Date | null}>({isResumeRequired: false, isCoverLetterRequired: false, applicationDeadline: null});
     const handleTagSelectionClose = () => {
         setShowTagSelection(false);
     }
@@ -45,6 +52,12 @@ const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (
         formik.setFieldValue('tags', []);
         handleModalClose();
     }
+    const jobSettingsChangeHandler = (type: string, value: any) => {
+        const newSettings = {...settings, [type]: value};
+        setSettings(newSettings);
+        formik.setFieldValue('jobSettings', newSettings);
+    }
+
     return (
             <Modal
                 open={showModal}
@@ -53,7 +66,11 @@ const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (
                 <>
                     <Card className={styles.modal} sx={style}>
                         <div className="w-full sticky top-0 bg-white p-2 z-20">
-                            <h6 className="font-bold p-3">NEW POST</h6>
+                            <div className="flex">
+                                <h6 className="font-bold p-3">NEW POST</h6>
+                                <IconButton onClick={handleModalClose} sx={{position:'absolute', right:0}}><Close/></IconButton>
+                            </div>
+
                             <hr className="ml-4 w-9/10 bg-gray-300"/>
                         </div>
                         <form onSubmit={formik.handleSubmit}>
@@ -68,29 +85,25 @@ const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (
                                 </div>
                                     }
                             </div>
-                            <CardActions className="fixed bottom-0 flex w-full p-2 z-20">
-                                <div className="flex w-1/3 items-center space-x-0">
-                                    <Tooltip title="Checking this will allow users to submit Resumés/CV to apply" className={styles.tooltip} placement="top">
-                                        <Help/>
-                                    </Tooltip>
+                            <CardActions className="fixed bottom-0 w-full p-2 z-20 flex">
+                                <div className="w-fit flex">
                                     <FormControlLabel name="isJobPosting"  control={<Checkbox onChange={formik.handleChange} checked={formik.values.isJobPosting}  sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="Job posting"/>
+                                    <IconButton disabled={!formik.values.isJobPosting} onClick={()=> setShowJobSettings(true)}>
+                                        <Settings/>
+                                    </IconButton>
                                 </div>
-                                <div className="absolute right-0 flex w-1/2 space-x-1 px-2 justify-end">
-                                    <IconButton onClick={() => setShowTagSelection(true)}>
+                                <div className="fixed right-0 bottom-1 flex space-x-1 px-2 justify-end max-[450px]:flex-col">
+                                    <IconButton sx={{display:'flex', justifyContent: 'end'}} onClick={() => setShowTagSelection(true)}>
                                         <Tag/>
                                     </IconButton>
-                                    <IconButton component="label">
+                                    <IconButton component="label" sx={{display:'flex', justifyContent: 'end'}}>
                                         <input hidden name="attachment" onChange={formik.handleChange} value={formik.values.attachment} accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
                                         text/plain, application/pdf, image/*" id="icon-button-file" type="file"/>
                                         <AttachFile/>
                                     </IconButton>
-                                    <IconButton component="label">
+                                    <IconButton component="label" sx={{display:'flex', justifyContent: 'end'}}>
                                         <input hidden accept="image/*"  type="file" name="photo" value={formik.values.photo} onChange={formik.handleChange}/>
                                         <InsertPhoto/>
-                                    </IconButton>
-                                    <IconButton component="label">
-                                        <input hidden accept="video/*"  type="file" name="video" value={formik.values.video} onChange={formik.handleChange}/>
-                                        <Videocam/>
                                     </IconButton>
                                     <Button
                                         sx={{width: '100px', backgroundColor: '#4D47C3', '&:hover': {backgroundColor: '#4D47C3'}}}
@@ -108,6 +121,7 @@ const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (
                     </Card>
                     <div>
                         <TagSelection showModal={showTagSelection} handleModalClose={handleTagSelectionClose} onSelectTag={handleTagsSelection} onDeleteTag={handleTagDeletion} selectedTags={selectedTags}/>
+                        <JobSettingsModal showModal={showJobSettings} handleModalClose={()=>setShowJobSettings(false)} values={formik.values.jobSettings} onChange={jobSettingsChangeHandler}/>
                     </div>
 
                 </>
