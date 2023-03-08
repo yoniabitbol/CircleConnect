@@ -90,7 +90,6 @@ const deleteApplication = async (req: Request, res: Response) => {
 
 const sendApplication = async (req: any, res: Response) => {
   // handle the choice for an existing application
-  console.log(req.files);
   try {
     const application: any = await Application.create(
       {
@@ -107,8 +106,6 @@ const sendApplication = async (req: any, res: Response) => {
         existingInfo: req.body.existingInfo,
       },
     );
-    console.log(req.files.applicationResume[0].filename);
-    console.log(req.files.applicationCoverLetter[0].filename);
     const post: any = await Post.findOne({ _id: req.params.post_id });
     const user = await User.findOne({ user_id: req.body.applicantID });
 

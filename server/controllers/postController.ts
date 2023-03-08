@@ -204,7 +204,6 @@ const getJobFeed = async (req: Request, res: Response) => {
   try {
     const currentUser: any = await User.findOne({ user_id: req.params.user_id });
     const currentUserPosts = await Post.find({ creatorID: currentUser?.user_id });
-    console.log(currentUser.preferenceTags);
     const recruiterPosts = await Promise.all(
       currentUser?.preferenceTags.map((preferenceTag: string) => Post.find({ preferenceTags: { $in: [preferenceTag] } })),
     );
