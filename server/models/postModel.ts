@@ -12,7 +12,6 @@ const postSchema = new mongoose.Schema({
   },
   text: {
     type: String,
-    required: true,
   },
   image: {
     type: String,
@@ -41,13 +40,18 @@ const postSchema = new mongoose.Schema({
   },
   isThirdParty: {
     type: Boolean,
+    required: true,
   },
   thirdPartyLink: {
     type: String,
   },
-  requiredDocuments: [{
-    type: String,
-  }],
+  isResumeRequired: {
+    type: Boolean,
+  },
+  isCoverLetterRequired: {
+    type: Boolean,
+  },
+
   applications: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Application',

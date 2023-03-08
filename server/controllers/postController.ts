@@ -51,6 +51,14 @@ const createPost = async (req: any, res: Response) => {
     });
     const user = await User.findOne({ user_id: req.body.creatorID });
     await user?.updateOne({ $push: { posts: post._id } });
+
+    if (!post.isJobListing && req.body.tags) {
+      return res.status(403).json({
+        status: 'failure',
+        message: 'Cannot add tags if not a job listing',
+      });
+    }
+
     return res.status(201).json({
       status: 'success',
       data: {
