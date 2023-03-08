@@ -40,7 +40,6 @@ const postSchema = new mongoose.Schema({
   },
   isThirdParty: {
     type: Boolean,
-    required: true,
   },
   thirdPartyLink: {
     type: String,
@@ -59,6 +58,13 @@ const postSchema = new mongoose.Schema({
 }, {
   timestamps: true,
   versionKey: false,
+});
+
+postSchema.virtual('commenters', {
+  ref: 'User',
+  localField: 'comments.commenter',
+  foreignField: 'user_id',
+  justOne: true,
 });
 
 const Post = mongoose.model('Post', postSchema);

@@ -23,6 +23,7 @@ const getPost = async (req: Request, res: Response) => {
   try {
     const post: any = await Post.findById(req.params.post_id);
     await post?.populate({ path: 'applications', model: 'Application' });
+    await post?.populate('commenters');
     res.status(200).json({
       status: 'success',
       data: {
@@ -185,7 +186,14 @@ const likePost = async (req: Request, res: Response) => {
 const commentPost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id });
-    await post?.updateOne({ $push: { comments: req.body } });
+    await post?.updateOne({
+      $push: {
+        comments: {
+          commenter: req.body.commenter,
+          comment: req.body.comment,
+        },
+      },
+    });
     return res.status(200).json({
       status: 'success',
       message: 'Post commented successfully',
