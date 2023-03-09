@@ -44,6 +44,12 @@ const userSchema = new mongoose.Schema({
   summary: {
     type: String,
   },
+  resume: {
+    type: String,
+  },
+  coverLetter: {
+    type: String,
+  },
   outgoingRequests: [{ type: String, ref: "User", unique: true }],
   incomingRequests: [{ type: String, ref: "User", unique: true }],
   connections: [
