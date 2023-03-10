@@ -25,6 +25,8 @@ const getAllUsers = async (req: Request, res: Response) => {
 const getUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
+    await user?.populate({ path: 'posts', model: 'Post' });
+    await user?.populate({ path: 'applications', model: 'Application' });
     res.status(200).json({
       status: 'success',
       data: {
@@ -68,7 +70,6 @@ const createUser = async (req: Request, res: Response) => {
 
 const updateUser = async (req: any, res: Response) => {
   try {
-    console.log(req.body);
     const filter = { user_id: req.body.user_id };
     const update = {
       title: req.body.title,
@@ -132,6 +133,29 @@ const deleteUser = async (req: Request, res: Response) => {
     res.status(400).json({
       status: `ERROR: ${err}`,
       message: 'Error deleting user',
+    });
+  }
+};
+
+const updateUserPreferenceTags = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ user_id: req.params.user_id });
+    if (!user) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'User does not exist',
+      });
+    }
+    const { tags } = req.body;
+    await user.updateOne({ preferenceTags: tags });
+    return res.status(200).json({
+      status: 'success',
+      message: 'Job preference tags updated',
+    });
+  } catch (err) {
+    return res.status(400).json({
+      status: `ERROR: ${err}`,
+      message: 'Error updating preference tags',
     });
   }
 };
@@ -227,7 +251,7 @@ const acceptConnectionRequest = async (req: Request, res: Response) => {
       message: 'No incoming request to accept',
     });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       status: `ERROR: ${err}`,
       message: 'Error accepting connection request',
     });
@@ -269,7 +293,6 @@ const cancelConnectionRequest = async (req: Request, res: Response) => {
         message: 'User not found',
       });
     }
-    console.log(target.incomingRequests.includes(sender.user_id));
     if (
       !sender.outgoingRequests.includes(target.user_id)
       && !target.incomingRequests.includes(sender.user_id)
@@ -399,4 +422,5 @@ export default {
   cancelConnectionRequest,
   getIncomingRequests,
   getOutgoingRequests,
+  updateUserPreferenceTags,
 };

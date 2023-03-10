@@ -33,6 +33,7 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
     return next();
   }
 
+  // Profile Images
   if (req.files.picture) {
     req.files.picture[0].filename = `pp-user-${
       req.body.user_id
@@ -57,6 +58,7 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
       .toFile(`public/img/users/backdropPic/${req.files.backdrop[0].filename}`);
   }
 
+  // User Resume and CV
   if (req.files.resume) {
     req.files.resume[0].filename = `resume-user-${
       req.body.user_id
@@ -81,6 +83,44 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
     });
   }
 
+  // Post Images
+  if (req.files.image) {
+    req.files.image[0].filename = `post-user-${
+      req.body.creatorID
+    }-${Date.now()}.jpeg`;
+    const image = req.files.image[0];
+    sharp(image.buffer)
+      .resize(2000, 1000)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toFile(`public/img/users/posts/${req.files.image[0].filename}`);
+  }
+
+  // Application Files
+  if (req.files.applicationResume) {
+    req.files.applicationResume[0].filename = `appResume-user-${
+      req.body.applicantID
+    }-${Date.now()}.pdf`;
+    const applicationResume = req.files.applicationResume[0];
+    fs.writeFile(`public/files/applications/resume/${req.files.applicationResume[0].filename}`, applicationResume.buffer, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+
+  if (req.files.applicationCoverLetter) {
+    req.files.applicationCoverLetter[0].filename = `appCoverLetter-user-${
+      req.body.applicantID
+    }-${Date.now()}.pdf`;
+    const applicationCoverLetter = req.files.applicationCoverLetter[0];
+    fs.writeFile(`public/files/applications/coverLetter/${req.files.applicationCoverLetter[0].filename}`, applicationCoverLetter.buffer, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+
   return next();
 };
 
@@ -89,6 +129,9 @@ const uploadFiles = upload.fields([
   { name: 'backdrop', maxCount: 1 },
   { name: 'resume', maxCount: 1 },
   { name: 'coverLetter', maxCount: 1 },
+  { name: 'image', maxCount: 1 },
+  { name: 'applicationResume', maxCount: 1 },
+  { name: 'applicationCoverLetter', maxCount: 1 },
 ]);
 
 export { uploadFiles, resizeFile };

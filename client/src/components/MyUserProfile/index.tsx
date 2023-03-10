@@ -61,9 +61,12 @@ const MyUserProfile: React.FC<{
     values.courses = JSON.stringify(values.courses);
 
 
+    // Do not append connections to form data
     const formData = new FormData();
     for (const value in values) {
-      formData.append(value, values[value]);
+      if (value !== "connections") {
+        formData.append(value, values[value]);
+      }
     }
 
     if (editable) {
