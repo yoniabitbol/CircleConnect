@@ -140,7 +140,6 @@ const deletePost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id });
     const user = await User.findOne({ user_id: req.body.creatorID });
-    console.log(post?.creatorID, req.body.creatorID);
     if (post?.creatorID === req.body.creatorID) {
       await post?.deleteOne();
       await user?.updateOne({ $pull: { posts: req.params.post_id } });
