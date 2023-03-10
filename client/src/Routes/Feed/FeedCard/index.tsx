@@ -30,6 +30,20 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
     const commentClickHandler = () => {
         setShowComments(!showComments);
     }
+    const DummyComments = [
+        {
+            id: 1,
+            name: 'Reuven Ostrofsky',
+            userPic: 'https://images.unsplash.com/photo-1629209840003-8b2b0b2e1b1c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+            comment: 'This is a comment',
+        },
+        {
+            id: 2,
+            name: 'Jonathan Abitbol',
+            userPic: 'https://images.unsplash.com/photo-1629209840003-8b2b0b2e1b1c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+            comment: 'This is a comment',
+        }]
+
     return (
         <Card sx={{marginTop: 2, borderRadius:5}}>
             <CardContent sx={{padding: 0}}>
@@ -79,7 +93,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                 </div>
             </CardActions>
             <div className={`${!showComments && 'hidden'}`}>
-                <Comments userPic={userPic}/>
+                <Comments userPic={userPic} comments={DummyComments}/>
             </div>
         </Card>
     );
