@@ -140,13 +140,19 @@ const deletePost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id });
     const user = await User.findOne({ user_id: req.body.creatorID });
-
+    console.log(post?.creatorID, req.body.creatorID);
     if (post?.creatorID === req.body.creatorID) {
       await post?.deleteOne();
       await user?.updateOne({ $pull: { posts: req.params.post_id } });
       return res.status(200).json({
         status: 'success',
         message: 'Post deleted successfully',
+      });
+    }
+    if (!post) {
+      return res.status(403).json({
+        status: 'failure',
+        message: 'Post not found',
       });
     }
     return res.status(403).json({
@@ -164,7 +170,7 @@ const deletePost = async (req: Request, res: Response) => {
 const likePost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id });
-
+    console.log(post);
     if (post?.likes?.includes(req.body.user_id)) {
       await post?.updateOne({ $pull: { likes: req.body.user_id } });
       return res.status(200).json({
@@ -213,7 +219,7 @@ const getSocialFeed = async (req: Request, res: Response) => {
     const currentUser: any = await User.findOne({ user_id: req.params.user_id });
     const currentUserPosts = await Post.find({ creatorID: currentUser?.user_id });
     const connectionsPosts = await Promise.all(
-      currentUser?.connections.map((connectionID: string) => Post.find({ creatorID: connectionID })),
+      currentUser?.connections.map((connectionID: string) => Post.find({ creatorID: connectionID, isJobListing: false })),
     );
     return res.status(200).json({
       status: 'success',
@@ -232,7 +238,7 @@ const getJobFeed = async (req: Request, res: Response) => {
     const currentUser: any = await User.findOne({ user_id: req.params.user_id });
     const currentUserPosts = await Post.find({ creatorID: currentUser?.user_id });
     const recruiterPosts = await Promise.all(
-      currentUser?.preferenceTags.map((preferenceTag: string) => Post.find({ preferenceTags: { $in: [preferenceTag] } })),
+      currentUser?.preferenceTags.map((preferenceTag: string) => Post.find({ preferenceTags: { $in: [preferenceTag] }, isJobListing: true })),
     );
     return res.status(200).json({
       status: 'success',
