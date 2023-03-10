@@ -10,6 +10,9 @@ const postSchema = new mongoose.Schema({
     type: Boolean,
     required: [true, 'Specify if this is a Job Listing.'],
   },
+  jobTitle: {
+    type: String,
+  },
   text: {
     type: String,
   },
@@ -58,11 +61,13 @@ const postSchema = new mongoose.Schema({
 }, {
   timestamps: true,
   versionKey: false,
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true },
 });
 
-postSchema.virtual('commenters', {
+postSchema.virtual('creator', {
   ref: 'User',
-  localField: 'comments.commenter',
+  localField: 'creatorID',
   foreignField: 'user_id',
   justOne: true,
 });
