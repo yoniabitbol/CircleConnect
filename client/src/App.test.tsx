@@ -225,7 +225,7 @@ describe('Routes', () => {
   //       </>
   //     );
   //   });
-  });
+  // });
 });
 
 describe('SearchBar', () => {
