@@ -89,11 +89,11 @@ const deleteApplication = async (req: Request, res: Response) => {
 };
 
 const sendApplication = async (req: any, res: Response) => {
-  // handle the choice for an existing application
   try {
     const application: any = await Application.create(
       {
         applicantID: req.body.applicantID,
+        postID: req.params.post_id,
         text: req.body.text,
         resume:
           req.files && req.files.applicationResume
@@ -108,7 +108,7 @@ const sendApplication = async (req: any, res: Response) => {
     );
     const post: any = await Post.findOne({ _id: req.params.post_id });
     const user = await User.findOne({ user_id: req.body.applicantID });
-
+    await application.populate({ path: 'postID', model: 'Post', select: 'jobTitle' });
     if (!post) {
       return res.status(403).json({
         status: 'failure',
@@ -127,7 +127,7 @@ const sendApplication = async (req: any, res: Response) => {
     await user?.updateOne({ $push: { applications: application._id } });
     return res.status(200).json({
       status: 'success',
-      message: 'Application sent successfully',
+      data: application,
     });
   } catch (err) {
     return res.status(400).json({
@@ -140,15 +140,8 @@ const sendApplication = async (req: any, res: Response) => {
 const withdrawApplication = async (req: Request, res: Response) => {
   try {
     const application = await Application.findById(req.params.application_id);
-    const post: any = await Post.findById(req.body.postID);
+    const post: any = await Post.findOne(application?.postID);
     const user = await User.findOne({ user_id: req.body.user_id });
-
-    if (!post.applications.includes(application?._id)) {
-      return res.status(403).json({
-        status: 'failure',
-        message: 'Cannot withdraw application that has not been sent',
-      });
-    }
 
     if (!application) {
       return res.status(403).json({
@@ -156,8 +149,8 @@ const withdrawApplication = async (req: Request, res: Response) => {
         message: 'Application not found',
       });
     }
-    await post.updateOne({ $pull: { applications: application._id } });
-    await user?.updateOne({ $pull: { applications: application._id } });
+    await post.updateOne({ $pull: { applications: application?._id } });
+    await user?.updateOne({ $pull: { applications: application?._id } });
     return res.status(200).json({
       status: 'success',
       message: 'Application withdrawn successfully',

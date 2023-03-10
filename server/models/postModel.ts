@@ -10,7 +10,7 @@ const postSchema = new mongoose.Schema({
     type: Boolean,
     required: [true, 'Specify if this is a Job Listing.'],
   },
-  jobTitle: {
+  position: {
     type: String,
   },
   text: {

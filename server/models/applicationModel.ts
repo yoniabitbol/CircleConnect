@@ -5,6 +5,12 @@ const applicationSchema = new mongoose.Schema(
     applicantID: {
       type: String,
       ref: 'User',
+      required: [true, 'Applicant ID required.'],
+    },
+    postID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Post',
+      required: [true, 'Post ID required.'],
     },
     text: {
       type: String,
