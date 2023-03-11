@@ -3,7 +3,7 @@ import ApplicantRow from "./ApplicantRow";
 import placeholder from "./placeholder.png";
 
 const JobPosting: React.FC = () => {
-  const recruiter = false;
+  const recruiter = true;
   const [showApplicants, setShowApplicants] = useState(false);
 
   return (
