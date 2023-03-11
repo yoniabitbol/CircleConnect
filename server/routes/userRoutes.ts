@@ -20,6 +20,9 @@ router
   .get(UserController.getUser)
   .delete(UserController.deleteUser);
 
+router.route('/:user_id/tags')
+  .put(UserController.updateUserPreferenceTags);
+
 // User Connections Routes
 router.route('/:user_id/connections').get(UserController.getUserConnections);
 router.route('/:user_id/incoming').get(UserController.getIncomingRequests);
