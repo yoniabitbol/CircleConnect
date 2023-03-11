@@ -35,6 +35,9 @@ const JobPosting: React.FC = () => {
             See all applicants
           </button>
         ) : (
+          <p></p>
+        )}
+        {!recruiter ? (
           <div className="flex">
             <button
               onClick={(e) => {
@@ -55,6 +58,8 @@ const JobPosting: React.FC = () => {
               Delete
             </button>
           </div>
+        ) : (
+          <p></p>
         )}
         {showApplicants ? (
           <div className="text-sm mt-2">
