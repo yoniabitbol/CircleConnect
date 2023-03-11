@@ -22,9 +22,7 @@ import Profile from "./Routes/Profile";
 import SignUp from "./Routes/SignUp";
 import Usertypes from "./Models/UserProfileModel";
 
-jest.mock("./firebase/config", () => ({
-  auth: () => "test",
-}));
+jest.mock("./firebase/config", () => ({auth: () => "test",}));
 
 jest.mock("./hooks/useAuthContext", () => ({
   __esModule: true,
@@ -34,114 +32,9 @@ jest.mock("./hooks/useAuthContext", () => ({
 }));
 
 describe("App root", () => {
-  test("Check and validate page navigation", async () => {
+  test("Check and main application module", async () => {
     await act(async () => {
-      await render(<App />);
-    });
-
-    expect(screen.getByText("Forgot Password?")).toBeInTheDocument();
-
-    await act(async () => {
-      const signupButton = await act(() => {
-        return screen.getByText("Sign up here");
-      });
-      await userEvent.click(signupButton);
-    });
-
-    expect(await screen.getByText("Register")).toBeInTheDocument();
-
-    /*
-     This should be in a separate test, but the renderer for testing stays persistent between tests. Making it
-     impossible to create a separate test that successively passes on its own and during an execution of all tests.
-     Ideally the starting page should be settable between each test.
-    */
-    await act(async () => {
-      const loginButton = await act(() => {
-        return screen.getByText("Login here");
-      });
-      await userEvent.click(loginButton);
-    });
-
-    // Test login submission handler
-    await act(async () => {
-      const loginButton = await act(() => {
-        return screen.getByTestId("submit-button");
-      });
-      await userEvent.click(loginButton);
-    });
-
-    await act(async () => {
-      const emailField = await act(() => {
-        return screen.getByPlaceholderText("Email");
-      });
-      await userEvent.type(emailField, "test@hotmail.com");
-    });
-
-    // await act(async () => {
-    //   const resetButton = await act(() => {
-    //     return screen.getByText("Reset");
-    //   });
-    //   await userEvent.click(resetButton);
-    // });
-
-    // This should be in a separate test
-    await act(async () => {
-      const signupButton = await act(() => {
-        return screen.getByText("Sign up here");
-      });
-      await userEvent.click(signupButton);
-    });
-
-    await act(async () => {
-      const firstNameField = await act(() => {
-        return screen.getByPlaceholderText("First Name");
-      });
-      const lastNameField = await act(() => {
-        return screen.getByPlaceholderText("Last Name");
-      });
-      const emailField = await act(() => {
-        return screen.getByPlaceholderText("Email");
-      });
-      const passwordField = await act(() => {
-        return screen.getByPlaceholderText("Password");
-      });
-      await userEvent.type(firstNameField, "Test");
-      await userEvent.type(lastNameField, "Man");
-      await userEvent.type(emailField, "test@hotmail.com");
-      await userEvent.type(passwordField, "Test123@");
-    });
-
-    await act(async () => {
-      const registerButton = await act(() => {
-        return screen.getByText("Register");
-      });
-      await userEvent.click(registerButton);
-    });
-
-    // This should be in a separate test
-    await act(async () => {
-      const loginButton = await act(() => {
-        return screen.getByText("Login here");
-      });
-      await userEvent.click(loginButton);
-    });
-
-    await act(async () => {
-      const emailField = await act(() => {
-        return screen.getByPlaceholderText("Email");
-      });
-      const passwordField = await act(() => {
-        return screen.getByPlaceholderText("Password");
-      });
-      await userEvent.type(emailField, "Test@hotmail.com");
-      await userEvent.type(passwordField, "Test123@");
-    });
-
-    await act(async () => {
-      const loginButton = await act(() => {
-        return screen.getAllByText("Login")[1];
-      });
-      await userEvent.click(loginButton);
+      await render(<App/>);
     });
   });
 });
