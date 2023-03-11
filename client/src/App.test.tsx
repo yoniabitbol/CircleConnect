@@ -21,8 +21,12 @@ import Network from "./Routes/Network";
 import Profile from "./Routes/Profile";
 import SignUp from "./Routes/SignUp";
 import Usertypes from "./Models/UserProfileModel";
+import Feed from "./Routes/Feed";
 
-jest.mock("./firebase/config", () => ({auth: () => "test",}));
+jest.mock("./firebase/config", () => ({
+auth:
+    {currentUser: {getIdToken: () => {return "testToken";}, uid: "testUID"}},
+}));
 
 jest.mock("./hooks/useAuthContext", () => ({
   __esModule: true,
@@ -119,6 +123,27 @@ describe('Routes', () => {
   //     );
   //   });
   // });
+});
+
+describe('Test user feed', () => {
+  beforeEach(async () => {
+    // @ts-ignore
+    global.fetch = jest.fn(() =>
+      Promise.resolve({json: () => Promise.resolve({ data: {users: "test", connections: []} }), ok: true})
+    );
+  });
+
+  test('Render Feed', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <Feed />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
 });
 
 describe('SearchBar', () => {
@@ -310,7 +335,7 @@ describe('httpRequests', () => {
   test('Request currentUserprofile', async () => {
     const res = await getCurrentUserProfile();
 
-    expect(res).toBe(undefined);
+    expect(res.users).toBe("test");
   });
 
   test('Request saveUserToDB', async () => {
@@ -320,27 +345,9 @@ describe('httpRequests', () => {
   });
 
   test('Request updateUserProfile', async () => {
-    const res = await updateUserProfile({
-        name: "test",
-        title: "test",
-        location: "test",
-        email: "test",
-        phone: "test",
-        website: "test",
-        connections: 1,
-        picture: "test",
-        backdrop: "test",
-        summary: "test",
-        projects: [],
-        skills: [],
-        experience: [],
-        education: [],
-        languages: [],
-        awards: [],
-        courses: [],
-    });
+    const res = await updateUserProfile(new FormData());
 
-    expect(res).toBe(undefined);
+    expect(res.users).toBe("test");
   });
 
   test('Request userProfile', async () => {
