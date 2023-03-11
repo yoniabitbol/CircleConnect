@@ -1,7 +1,7 @@
 import JobPosting from "./JobPosting";
 
 const Dashboard: React.FC = () => {
-  const recruiter = true;
+  const recruiter = false;
   return (
     <div>
       <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
