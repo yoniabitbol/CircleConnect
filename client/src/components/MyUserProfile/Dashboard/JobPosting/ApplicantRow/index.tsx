@@ -5,7 +5,7 @@ const JobPosting: React.FC = () => {
     <div>
       <div className="flex mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
         <a href="/" className="mx-2">
-          Applicant Name
+          Applicant 1
         </a>
         <div className="">
           <button
