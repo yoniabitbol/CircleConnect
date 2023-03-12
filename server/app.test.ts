@@ -1,6 +1,7 @@
 import request from 'supertest';
 import app from './app';
 import User from './models/userModel';
+import Application from "./models/applicationModel";
 
 const mockingoose = require('mockingoose');
 
@@ -489,4 +490,53 @@ describe('Server tests', () => {
         done();
       });
   });
+
+  test('Request to get all applications', (done) => {
+    request(app)
+      .get('/api/applications')
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe('{"status":"success","data":{}}');
+        done();
+      });
+  });
+
+  test('Request to create applicatoon', (done) => {
+    request(app)
+      .post('/api/applications')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(201);
+        expect(response.text).toContain('{"status":"success","data":{"application":{"existingInfo":false,"_id"');
+        done();
+      });
+  });
+
+  test('Request to get application', (done) => {
+    request(app)
+      .get('/api/applications/testid')
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe('{"status":"success","data":{}}');
+        done();
+      });
+  });
+
+  // test('Request to update application', (done) => {
+  //   mockingoose(Application).toReturn(
+  //     {
+  //     },
+  //     'findByIdAndUpdate',
+  //   );
+  //
+  //
+  //   request(app)
+  //     .post('/api/applications/testid')
+  //     .send({ user_id: 'test' })
+  //     .then((response) => {
+  //       expect(response.statusCode).toBe(200);
+  //       expect(response.text).toBe('{"status":"success","data":{}}');
+  //       done();
+  //     });
+  // });
 });

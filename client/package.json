@@ -8,7 +8,15 @@
       "src/reportWebVitals",
       "src/firebase",
       "src/lib",
-      "src/Models"
+      "src/Models",
+      "src/components/Navbar",
+      "src/Routes/ScreenContent",
+      "src/components/UserProfile/Banner",
+      "src/components/MyUserProfile",
+      "src/http/getUserPicturePic.ts",
+      "src/components/UserProfileBanner",
+      "src/Routes/Feed/NewPostModal",
+      "src/Routes/Login"
     ]
   },
   "version": "0.1.0",

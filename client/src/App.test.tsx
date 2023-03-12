@@ -30,6 +30,14 @@ import ConnectionRow from "./components/ConnectionRow";
 import ConnectionsBanner from "./components/ConnectionsBanner";
 import NavBar from "./components/Navbar";
 import MyProfile from "./Routes/MyProfile";
+import acceptConnectionRequest from "./http/acceptConnectionRequest";
+import cancelConnectionRequest from "./http/cancelConnectionRequest";
+import declineConnectionRequest from "./http/declineConnectionRequest";
+import TagSelection from "./Routes/Feed/NewPostModal/TagSelection";
+import NavLinks from "./components/Navbar/NavLinks";
+import sendConnectionRequest from "./http/sendConnectionRequest";
+import removeConnectionRequest from "./http/removeConnection";
+import getUserProfilePic from "./http/getUserPicturePic";
 
 jest.mock("./firebase/config", () => ({
 auth:
@@ -96,8 +104,18 @@ describe('Routes', () => {
   beforeEach(async () => {
     // @ts-ignore
     global.fetch = jest.fn(() =>
-      Promise.resolve({json: () => Promise.resolve({ data: {users: "test", connections: []} }), ok: true})
+      Promise.resolve({
+        json: () => Promise.resolve({
+          data: {
+users: "test", connections: [], user:
+                    {picture: "test"}
+}
+        }), ok: true, blob: () => {return "";}
+      })
     );
+
+    // @ts-ignore
+    global.URL = jest.fn(() => {return {createObjectURL: () => {return "";}};})
   });
 
   test('Render Network', async () => {
@@ -163,6 +181,18 @@ describe('Test user feed', () => {
         <>
           <BrowserRouter>
             <Feed />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
+
+  test('Render TagSelection', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <TagSelection />
           </BrowserRouter>
         </>
       );
@@ -366,15 +396,21 @@ describe('Route Handlers', () => {
   //     });
   //     await userEvent.click(signUp);
   //   });
-  // });
+  });
 });
 
 describe('httpRequests', () => {
   beforeEach(async () => {
     // @ts-ignore
     global.fetch = jest.fn(() =>
-      Promise.resolve({json: () => Promise.resolve({ users: "test", connections: [] }), ok: true})
+      Promise.resolve({
+        json: () => Promise.resolve({ users: "test", connections: [] }), ok: true,
+          blob: () => {return;}
+      })
     );
+
+    // @ts-ignore
+    global.URL = jest.fn(() => {return {createObjectURL: () => {return "";}};})
   });
 
   test('Request allUsers', async () => {
@@ -412,6 +448,30 @@ describe('httpRequests', () => {
 
     expect(res.data).toBe(undefined);
   });
+
+  test('acceptConnectionRequest', async () => {
+    await acceptConnectionRequest("test");
+  });
+
+  test('cancelConnectionRequest', async () => {
+    await cancelConnectionRequest("test");
+  });
+
+  test('declineConnectionRequest', async () => {
+    await declineConnectionRequest("test");
+  });
+
+  test('sendConnectionRequest', async () => {
+    await sendConnectionRequest("test");
+  });
+
+  test('removeConnectionRequest', async () => {
+    await removeConnectionRequest("test");
+  });
+
+  // test('getUserProfilePic', async () => {
+  //   await getUserProfilePic("test");
+  // });
 });
 
 describe('Test userProfile Components', () => {
@@ -476,5 +536,16 @@ describe('Render misc components', () => {
   //       </>
   //     );
   //   });
-  });
+
+  // test('Render NavLinks', async () => {
+  //   await act(async () => {
+  //     await render(
+  //       <>
+  //         <BrowserRouter>
+  //           <NavLinks  links={[]}/>
+  //         </BrowserRouter>
+  //       </>
+  //     );
+  //   });
+  // });
 });
