@@ -22,6 +22,14 @@ import Profile from "./Routes/Profile";
 import SignUp from "./Routes/SignUp";
 import Usertypes from "./Models/UserProfileModel";
 import Feed from "./Routes/Feed";
+import MyUserProfile from "./components/MyUserProfile";
+import Banner from "./components/UserProfile/Banner";
+import Dashboard from "./components/UserProfile/Dashboard";
+import getOutgoingConnectionRequests from "./http/getOutgoingConnectionRequests";
+import ConnectionRow from "./components/ConnectionRow";
+import ConnectionsBanner from "./components/ConnectionsBanner";
+import NavBar from "./components/Navbar";
+import MyProfile from "./Routes/MyProfile";
 
 jest.mock("./firebase/config", () => ({
 auth:
@@ -43,17 +51,15 @@ describe("App root", () => {
   });
 });
 
-describe('User profile', () => {
+describe('Test user profile components', () => {
   beforeEach(async () => {
     // @ts-ignore
     global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({ users: "test" }),
-      })
+      Promise.resolve({json: () => Promise.resolve({ users: "test" }),})
     );
   });
 
-  test('Check and validate page navigation', async () => {
+  test('Render UserProfile', async () => {
     await act(async () => {
       await render(
         <UserProfile profile={{}}/>
@@ -64,29 +70,47 @@ describe('User profile', () => {
       await screen.getByText('About'),
     ).toBeInTheDocument();
   });
+
+  test('Render UserProfile Banner', async () => {
+    await act(async () => {
+      await render(
+        <BrowserRouter>
+          <Banner banner={{connections: [],}}/>
+        </BrowserRouter>
+      );
+    });
+  });
+
+  test('Render UserProfile Dashboard', async () => {
+    await act(async () => {
+      await render(
+        <BrowserRouter>
+          <Dashboard />
+        </BrowserRouter>
+      );
+    });
+  });
 });
 
 describe('Routes', () => {
   beforeEach(async () => {
     // @ts-ignore
     global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({ users: "test"}),
-      })
+      Promise.resolve({json: () => Promise.resolve({ data: {users: "test", connections: []} }), ok: true})
     );
   });
 
-  // test('Render Network', async () => {
-  //   await act(async () => {
-  //     await render(
-  //       <>
-  //         <BrowserRouter>
-  //           <Network />
-  //         </BrowserRouter>
-  //       </>
-  //     );
-  //   });
-  // });
+  test('Render Network', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <Network />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
 
   test('Render Notifications', async () => {
     await act(async () => {
@@ -276,6 +300,23 @@ describe('MobileNav', () => {
 });
 
 describe('Route Handlers', () => {
+  beforeEach(async () => {
+    // @ts-ignore
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({
+          data: {
+            users: "test", connections: [], user:
+                          {
+              projects: [""], skills: [""], experience: [""], education: [""], languages: [""],
+                                          awards: [""], courses: [""]
+}
+            }
+          }), ok: true
+        })
+    );
+  });
+
   test('ForgotPass Handler', async () => {
     await act(async () => {
       await render(
@@ -296,16 +337,28 @@ describe('Route Handlers', () => {
     });
   });
 
-  // test('Signup Handler', async () => {
-  //   await act(async () => {
-  //     await render(
-  //       <>
-  //         <BrowserRouter>
-  //           <SignUp />
-  //         </BrowserRouter>
-  //       </>
-  //     );
-  //   });
+  test('Profile Handler', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <MyProfile />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
+
+  test('Signup Handler', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <SignUp />
+          </BrowserRouter>
+        </>
+      );
+    });
   //
   //   await act(async () => {
   //     const signUp = await act(() => {
@@ -320,9 +373,7 @@ describe('httpRequests', () => {
   beforeEach(async () => {
     // @ts-ignore
     global.fetch = jest.fn(() =>
-      Promise.resolve({
-        json: () => Promise.resolve({ users: "test" }),
-      })
+      Promise.resolve({json: () => Promise.resolve({ users: "test", connections: [] }), ok: true})
     );
   });
 
@@ -354,5 +405,76 @@ describe('httpRequests', () => {
     const res = await getUserProfile("Meme");
 
     expect(res.data).toBe(undefined);
+  });
+
+  test('Get outgoing requests', async () => {
+    const res = await getOutgoingConnectionRequests();
+
+    expect(res.data).toBe(undefined);
+  });
+});
+
+describe('Test userProfile Components', () => {
+  test('Render MyUserProfile', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <MyUserProfile profile={{}} />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
+});
+
+describe('Render misc components', () => {
+  beforeEach(async () => {
+    // @ts-ignore
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        json: () => Promise.resolve({data: {users: "test", connections: [], user: {picture: "" }}}),
+                ok: true, blob: () => {return "";}
+        })
+    );
+
+    // @ts-ignore
+    global.URL = jest.fn(() => {return {createObjectURL: () => {return "";}};})
+  });
+
+  test('Render ConnectionRow', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <ConnectionRow  connections={[]}  name={''} picture={''} title={''}/>
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
+
+  test('Render ConnectionsBanner', async () => {
+    await act(async () => {
+      await render(
+        <>
+          <BrowserRouter>
+            <ConnectionsBanner  connections={[]} />
+          </BrowserRouter>
+        </>
+      );
+    });
+  });
+
+  // test('Render NavBar', async () => {
+  //   await act(async () => {
+  //     await render(
+  //       <>
+  //         <BrowserRouter>
+  //           <NavBar openSearch={false} searchClicked={() => {return;}} outsideClicked={() => {return;}}/>
+  //         </BrowserRouter>
+  //       </>
+  //     );
+  //   });
   });
 });
