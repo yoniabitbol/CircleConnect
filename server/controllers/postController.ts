@@ -215,9 +215,9 @@ const commentPost = async (req: Request, res: Response) => {
 const getSocialFeed = async (req: Request, res: Response) => {
   try {
     const currentUser: any = await User.findOne({ user_id: req.params.user_id });
-    const currentUserPosts = await Post.find({ creatorID: currentUser?.user_id });
+    const currentUserPosts = await Post.find({ creatorID: currentUser?.user_id }).populate('creator', 'name picture title');
     const connectionsPosts = await Promise.all(
-      currentUser?.connections.map((connectionID: string) => Post.find({ creatorID: connectionID, isJobListing: false })),
+      currentUser?.connections.map((connectionID: string) => Post.find({ creatorID: connectionID, isJobListing: false }).populate('creator', 'name picture title')),
     );
     return res.status(200).json({
       status: 'success',
@@ -234,9 +234,9 @@ const getSocialFeed = async (req: Request, res: Response) => {
 const getJobFeed = async (req: Request, res: Response) => {
   try {
     const currentUser: any = await User.findOne({ user_id: req.params.user_id });
-    const currentUserPosts = await Post.find({ creatorID: currentUser?.user_id });
+    const currentUserPosts = await Post.find({ creatorID: currentUser?.user_id }).populate('creator', 'name picture title');
     const recruiterPosts = await Promise.all(
-      currentUser?.preferenceTags.map((preferenceTag: string) => Post.find({ preferenceTags: { $in: [preferenceTag] }, isJobListing: true })),
+      currentUser?.preferenceTags.map((preferenceTag: string) => Post.find({ preferenceTags: { $in: [preferenceTag] }, isJobListing: true }).populate('creator', 'name picture title')),
     );
     return res.status(200).json({
       status: 'success',
