@@ -13,6 +13,9 @@ import { useEffect, useState } from 'react';
 import ConnectionsBanner from '../../components/ConnectionsBanner';
 import ConnectionsBannerSkeleton from '../../components/Skeleton/ConnectionsBannerSkeleton';
 import Usertypes from '../../Models/UserProfileModel';
+import getSocialFeed from '../../http/getSocialFeed';
+import getJobFeed from '../../http/getJobFeed';
+import { useLocation } from 'react-router-dom';
 const Feed = () => {
     const [user, setUser] = useState<Usertypes | null>(null);
     const [userProfilePic, setUserProfilePic] = useState<string>('');
@@ -20,9 +23,11 @@ const Feed = () => {
     const [userConnections, setUserConnections] = useState<string[] | null>(null);
     const [userBannerLoading, setUserBannerLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [feedData, setFeedData] = useState<any>(null);
     const handleModalClose = () => {
         setShowModal(false);
     }
+    const location = useLocation();
     useEffect(() => {
         getCurrentUserProfile().then((res) => {
             setUser(res.data.user);
@@ -32,6 +37,22 @@ const Feed = () => {
         });
 
     },[])
+    const fetchFeed = () => {
+        if(location.pathname === '/feed') {
+            getSocialFeed().then((res) => {
+                setFeedData(res.data);
+            });
+        }else if(location.pathname === '/jobs') {
+            getJobFeed().then((res) => {
+                setFeedData(res.data);
+            });
+        }
+    }
+    useEffect(() => {
+
+       fetchFeed();
+
+    },[location])
     useEffect(() => {
         getCurrentUserConnections().then((res) => {
             setUserConnections(res.data.connections);
@@ -67,7 +88,7 @@ const Feed = () => {
                         </div>
                         <hr className={style.line}/>
                     </div>
-                    <FeedContent userPic={userProfilePic}/>
+                    <FeedContent feedData={feedData} userPic={userProfilePic}/>
                 </div>
                 <div className="lg:w-[40rem] top-10 p-5">
                     <div className="sticky top-[7rem] flex-col space-y-5">
@@ -83,7 +104,7 @@ const Feed = () => {
                     </div>
                 </div>
             </div>
-            <NewPostModal showModal={showModal} handleModalClose={handleModalClose}/>
+            <NewPostModal showModal={showModal} handleModalClose={handleModalClose} fetchFeed={fetchFeed}/>
         </div>
 
     );

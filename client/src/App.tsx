@@ -42,6 +42,7 @@ function App() {
                 element={user ? <Notifications /> : <Navigate to="/" />}
               />
               <Route path="feed" element = {user ? <Feed /> : <Navigate to = "/" />}/>
+              <Route path="jobs" element = {user ? <Feed /> : <Navigate to = "/" />}/>
             </Route>
 
             <Route path="/*" element={<AuthHeader />}>

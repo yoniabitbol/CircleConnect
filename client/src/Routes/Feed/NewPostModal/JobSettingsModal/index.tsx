@@ -14,7 +14,7 @@ const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, val
     const {showModal, handleModalClose, onChange} = props;
 
     const handleDateChange = ( date: Date | null) => {
-        onChange('applicationDeadline',date);
+        onChange('uploadDeadline',date);
     }
 
    const handleResumeChange = (event: any) => {

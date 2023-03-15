@@ -1,19 +1,45 @@
-import * as React from 'react';
-import {Button, Menu, MenuItem} from '@mui/material';;
+import {FC, useState, MouseEvent, useEffect} from 'react';
+import {Button, Menu,  Typography} from '@mui/material';;
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import {UploadFile, FileCopy} from '@mui/icons-material';
+import {UploadFile, FileCopy, CheckCircleRounded} from '@mui/icons-material';
+import {useFormik} from 'formik';
 
 
-export default function CustomizedMenus() {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+const ApplyDropUp:FC<{postSettings: any}> = (props) => {
+    const {postSettings} = props;
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [canApply, setCanApply] = useState<boolean>(false);
     const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const checkIfCanApply = () => {
+        if(postSettings.isResumeRequired && !formik.values.Resume) {
+            return false;
+        }
+        if(postSettings.isCoverLetterRequired && !formik.values.coverLetter) {
+            return false;
+        }
+        return true;
+    }
 
+    const formik = useFormik<any>({
+        initialValues: {},
+        onSubmit: (values,{resetForm}) => {
+            const formData = new FormData();
+            for (const key in values) {
+                formData.append(key, values[key]);
+            }
+
+            resetForm();
+        }
+    })
+    useEffect(() => {
+        setCanApply(checkIfCanApply);
+    }, [formik.values])
     return (
         <div>
             <Button
@@ -27,25 +53,65 @@ export default function CustomizedMenus() {
             </Button>
             <Menu
                 id="demo-customized-menu"
-                MenuListProps={{'aria-labelledby': 'demo-customized-button',}}
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose} disableRipple>
-                    <Button component='label' variant='text' sx={{color:'black'}}>
-                        <UploadFile />
-                        Upload New CV
-                        <input hidden type="file"/>
-                    </Button>
-                </MenuItem>
-                <MenuItem onClick={handleClose} disableRipple>
-                    <Button variant='text' sx={{color:'black'}}>
-                        <FileCopy />
-                        Apply With Existing Resume
-                    </Button>
-                </MenuItem>
+                    <div className="h-[25rem] sm:w-[30rem] w-[21rem] px-1 flex-col justify-center">
+                            <h1 className="font-bold py-2 text-center text-2xl">Upload new Resume/CV</h1>
+                        <form className="flex-col" onSubmit={formik.handleSubmit}>
+                            <div className="flex items-center w-full">
+                                <Button  component='label' variant='text' sx={{ color:'black',fontSize: 15, '&:hover':{backgroundColor: '#615cc1', color:'white' }}}>
+                                    <UploadFile  />
+                                    Upload  CV
+                                    <input accept="application/msword, application/pdf" hidden type="file" onChange={(event) => {
+                                        const file: FileList | null = event.currentTarget.files;
+                                        if (!file) return;
+                                        else {
+                                            formik.setFieldValue('Resume', file[0]);
+                                        }
+                                    }}/>
+                                </Button>
+                                {postSettings.isResumeRequired && !formik.values.Resume && <span className="items-center absolute right-2 text-red-400">Required</span>}
+                                <div className="items-center absolute right-2 text-red-400">
+                                    {formik.values.Resume && <CheckCircleRounded sx={{color: '#0dcc0f'}}/>}
+                                </div>
+                            </div>
+                           <div className="flex items-center w-full">
+                               <Button component='label' variant='text' sx={{ color:'black',fontSize: 15, '&:hover':{backgroundColor: '#615cc1', color:'white' }}}>
+                                   <UploadFile  />
+                                   Upload Cover Letter
+                                   <input accept="application/msword, application/pdf" hidden type="file" onChange={(event) => {
+                                       const file: FileList | null = event.currentTarget.files;
+                                       if (!file) return;
+                                       else {
+                                           formik.setFieldValue('coverLetter', file[0]);
+                                       }
+                                   }}/>
+                               </Button>
+                               {postSettings.isCoverLetterRequired && !formik.values.coverLetter && <span className="items-center absolute right-2 text-red-400">Required</span>}
+                               <div className="items-center absolute right-2 text-red-400">
+                                   {formik.values.coverLetter && <CheckCircleRounded sx={{color: '#0dcc0f'}}/>}
+                               </div>
+                           </div>
+                            <Button disabled={!canApply} sx={{marginTop:2,fontSize: 20, width:'100%', backgroundColor:`${canApply ? '#4D47C3' : 'gray'}`,color:'white', '&:hover':{backgroundColor: '#3a32c2'}}} variant="text" type="submit">
+                                Apply
+                            </Button>
+                        </form>
+
+
+                        <Typography sx={{height:'20%',fontSize: 30, color:'gray', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center', marginTop:3}}>
+                            OR
+                        </Typography>
+                        <Button variant='text' sx={{marginTop:2,fontSize: 17, width:'100%', backgroundColor:'#4D47C3',color:'white', '&:hover':{backgroundColor: '#3a32c2'}}}>
+                            <FileCopy />
+                            Apply With Existing Resume
+                        </Button>
+                    </div>
+
             </Menu>
         </div>
     );
 }
+
+export default ApplyDropUp;
