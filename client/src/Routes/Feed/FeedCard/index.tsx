@@ -114,7 +114,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                     </div>
                 </div>
                 {postSettings.isJobListing && <div className="mr-3">
-                    <ApplyDropUp postSettings={postSettings}/>
+                    <ApplyDropUp postSettings={postSettings} postId={postInfo.id}/>
                 </div>}
             </CardActions>
             <div className={`${!showComments && 'hidden'}`}>

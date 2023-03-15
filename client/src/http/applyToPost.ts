@@ -11,8 +11,9 @@ async function applyToPost(post_id: string, formData: FormData) {
         return;
     }
     formData.append("applicantID", user_id);
-    formData.append("postID", post_id);
-
+    console.log('appid: ', formData.get('applicantID'));
+    console.log('postId ', formData.get('postID'));
+    console.log('coverLetter: ', formData.get('coverLetter'))
     const res = await fetch(url, {
         method: "PATCH",
         headers: {Authorization: `Bearer ${token}`,},

@@ -3,10 +3,11 @@ import {Button, Menu,  Typography} from '@mui/material';;
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {UploadFile, FileCopy, CheckCircleRounded} from '@mui/icons-material';
 import {useFormik} from 'formik';
+import applyToPost from '../../http/applyToPost';
 
 
-const ApplyDropUp:FC<{postSettings: any}> = (props) => {
-    const {postSettings} = props;
+const ApplyDropUp:FC<{postSettings: any, postId: string}> = (props) => {
+    const {postSettings, postId} = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [canApply, setCanApply] = useState<boolean>(false);
     const open = Boolean(anchorEl);
@@ -17,23 +18,25 @@ const ApplyDropUp:FC<{postSettings: any}> = (props) => {
         setAnchorEl(null);
     };
     const checkIfCanApply = () => {
-        if(postSettings.isResumeRequired && !formik.values.Resume) {
+        if(postSettings.isResumeRequired && !formik.values.applicationResume) {
             return false;
         }
-        if(postSettings.isCoverLetterRequired && !formik.values.coverLetter) {
+        if(postSettings.isCoverLetterRequired && !formik.values.applicationCoverLetter) {
             return false;
         }
         return true;
     }
 
     const formik = useFormik<any>({
-        initialValues: {},
+        initialValues: {existingInfo: false, applicationResume: null, applicationCoverLetter: null},
         onSubmit: (values,{resetForm}) => {
+            console.log(values)
             const formData = new FormData();
             for (const key in values) {
                 formData.append(key, values[key]);
             }
-
+            applyToPost(postId,formData);
+            handleClose();
             resetForm();
         }
     })
@@ -68,13 +71,13 @@ const ApplyDropUp:FC<{postSettings: any}> = (props) => {
                                         const file: FileList | null = event.currentTarget.files;
                                         if (!file) return;
                                         else {
-                                            formik.setFieldValue('Resume', file[0]);
+                                            formik.setFieldValue('applicationResume', file[0]);
                                         }
                                     }}/>
                                 </Button>
-                                {postSettings.isResumeRequired && !formik.values.Resume && <span className="items-center absolute right-2 text-red-400">Required</span>}
+                                {postSettings.isResumeRequired && !formik.values.applicationResume && <span className="items-center absolute right-2 text-red-400">Required</span>}
                                 <div className="items-center absolute right-2 text-red-400">
-                                    {formik.values.Resume && <CheckCircleRounded sx={{color: '#0dcc0f'}}/>}
+                                    {formik.values.applicationResume && <CheckCircleRounded sx={{color: '#0dcc0f'}}/>}
                                 </div>
                             </div>
                            <div className="flex items-center w-full">
@@ -85,13 +88,13 @@ const ApplyDropUp:FC<{postSettings: any}> = (props) => {
                                        const file: FileList | null = event.currentTarget.files;
                                        if (!file) return;
                                        else {
-                                           formik.setFieldValue('coverLetter', file[0]);
+                                           formik.setFieldValue('applicationCoverLetter', file[0]);
                                        }
                                    }}/>
                                </Button>
-                               {postSettings.isCoverLetterRequired && !formik.values.coverLetter && <span className="items-center absolute right-2 text-red-400">Required</span>}
+                               {postSettings.isCoverLetterRequired && !formik.values.applicationCoverLetter && <span className="items-center absolute right-2 text-red-400">Required</span>}
                                <div className="items-center absolute right-2 text-red-400">
-                                   {formik.values.coverLetter && <CheckCircleRounded sx={{color: '#0dcc0f'}}/>}
+                                   {formik.values.applicationCoverLetter && <CheckCircleRounded sx={{color: '#0dcc0f'}}/>}
                                </div>
                            </div>
                             <Button disabled={!canApply} sx={{marginTop:2,fontSize: 20, width:'100%', backgroundColor:`${canApply ? '#4D47C3' : 'gray'}`,color:'white', '&:hover':{backgroundColor: '#3a32c2'}}} variant="text" type="submit">
