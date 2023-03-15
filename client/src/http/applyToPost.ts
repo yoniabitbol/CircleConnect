@@ -5,7 +5,7 @@ async function applyToPost(post_id: string, formData: FormData) {
     const currentUser = auth.currentUser;
     const token = currentUser && (await currentUser.getIdToken());
     const user_id = currentUser && currentUser.uid;
-    const url = `http://localhost:${port}/api/posts/${post_id}/apply`;
+    const url = `http://localhost:${port}/api/applications/${post_id}/apply`;
 
     if(!user_id) {
         return;
