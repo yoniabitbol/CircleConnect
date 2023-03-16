@@ -12,9 +12,6 @@ const applicationSchema = new mongoose.Schema(
       ref: 'Post',
       required: [true, 'Post ID required.'],
     },
-    text: {
-      type: String,
-    },
     resume: {
       type: String,
     },

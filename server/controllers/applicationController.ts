@@ -94,7 +94,6 @@ const sendApplication = async (req: any, res: Response) => {
       {
         applicantID: req.body.applicantID,
         postID: req.params.post_id,
-        text: req.body.text,
         resume:
           req.files && req.files.applicationResume
             ? req.files.applicationResume[0].filename
