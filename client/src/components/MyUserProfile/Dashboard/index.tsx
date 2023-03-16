@@ -1,13 +1,7 @@
 import JobPosting from "./JobPosting";
-
-import Usertypes from "../../../Models/UserProfileModel";
 import JobApplied from "./JobApplied";
 
-const Dashboard: React.FC<{
-  applications: Usertypes["applications"];
-}> = ({ applications }) => {
-  console.log("Hey: " + applications);
-
+const Dashboard: React.FC = () => {
   return (
     <div>
       <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
