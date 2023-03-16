@@ -3,19 +3,77 @@
     width: 766px;
     height: 429px;
 }
+.tooltip {
+    color: #4D47C3;
+    background-color: white;
+}
 @media (max-width: 768px) {
     .modal {
         width: 100%;
 
     }
+    .tooltip {
+        display: none;
+    }
 }
-.sendButton:hover {
-    background-color: white;
-    color: white;
+@media (max-width:640px) {
+    .modal {
+        height: 100%;
+    }
 }
+/*.sendButton:hover {*/
+/*    background-color: white;*/
+/*    color: white;*/
+/*}*/
 
 .sendButton:hover .sendIcon{
-    color: #4B47B6;
+    animation: out 0.5s;
+   animation-fill-mode: forwards;
+    animation-play-state: running;
 }
+.sendButton .sendIcon{
+    animation: in 0.5s;
+    animation-fill-mode: forwards;
+}
+
+
+.buttonText{
+    position: absolute;
+    transition: opacity 0.5s;
+    opacity: 0;
+}
+.sendButton:hover .buttonText{
+    transition: opacity 0.5s;
+    opacity: 1;
+}
+
+
+
+@keyframes out {
+0% {
+        transform: translateX(0px);
+    }
+    25% {
+        transform: translateX(-8px);
+    }
+    100% {
+        transform: translateX(100px);
+    }
+
+}
+
+@keyframes in {
+    0% {
+        transform: translateX(100px);
+    }
+    25% {
+        transform: translateX(-8px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+
 
 

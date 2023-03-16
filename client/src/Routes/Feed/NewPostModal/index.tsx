@@ -1,8 +1,21 @@
-import * as React from 'react';
-import {Card, Modal, CardActions, TextareaAutosize, Button, IconButton, FormControlLabel, Checkbox, Tooltip} from '@mui/material';
+import {useState, FC, useEffect} from 'react';
+import createPost from '../../../http/createPost';
+import {
+    Card,
+    Modal,
+    CardActions,
+    TextareaAutosize,
+    Button,
+    IconButton,
+    FormControlLabel,
+    Checkbox,
+    Chip,
+} from '@mui/material';
 import styles from './style.module.css';
-import {Send, Videocam, InsertPhoto, AttachFile, Help} from '@mui/icons-material';
-
+import {Send, InsertPhoto, Tag, Settings, Close} from '@mui/icons-material';
+import TagSelection from './TagSelection';
+import JobSettingsModal from './JobSettingsModal';
+import {useFormik} from 'formik';
 const style = {
     position: 'absolute',
     top: '50%',
@@ -10,52 +23,145 @@ const style = {
     transform: 'translate(-50%, -50%)',
     bgColor: 'white',
 };
+const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void}> = (props) => {
+    const {showModal, handleModalClose, fetchFeed} = props;
+    const formik = useFormik<any>({
+            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[]},
+            onSubmit: (values,{resetForm}) => {
+                const formData = new FormData();
+                for (const key in values) {
+                    formData.append(key, values[key]);
+                }
 
-const NewPostModal:React.FC<{showModal: boolean, handleModalClose:()=>void}> = (props) => {
-    const {showModal, handleModalClose} = props;
+                createPost(formData)
+                resetForm();
+                handleModalClose();
+                fetchFeed();
+            }
+        })
+    const [showTagSelection, setShowTagSelection] =useState<boolean>(false);
+    const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const [showJobSettings, setShowJobSettings] = useState<boolean>(false);
+    const [settings, setSettings] = useState<{isResumeRequired: boolean, isCoverLetterRequired: boolean, uploadDeadline: Date | null}>({isResumeRequired: false, isCoverLetterRequired: false, uploadDeadline: null});
+    const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+
+    }, );
+    const textAreaRows = windowWidth > 640 ? 8 : 18;
+    const handleTagSelectionClose = () => {
+        setShowTagSelection(false);
+    }
+    const handleTagsSelection = (values: string) => {
+      const newTags = selectedTags?.concat(values);
+        setSelectedTags(newTags);
+        formik.setFieldValue('preferenceTags', newTags);
+    }
+    const handleTagDeletion = (value: string | undefined) => {
+        const newTags = selectedTags?.filter(tag => tag !== value);
+        setSelectedTags(newTags);
+        formik.setFieldValue('preferenceTags', newTags);
+    }
+    const resetTags = () => {
+        setSelectedTags([]);
+        formik.setFieldValue('preferenceTags', []);
+        handleModalClose();
+    }
+    const jobSettingsChangeHandler = (type: string, value: any) => {
+        const newSettings = {...settings, [type]: value};
+        setSettings(newSettings);
+        for(const key in newSettings){
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            formik.setFieldValue(key, newSettings[key]);
+        }
+    }
     return (
-
-                <Modal
-                    open={showModal}
-                    onClose={handleModalClose}
-                >
+            <Modal
+                open={showModal}
+                onClose={resetTags}
+            >
+                <>
                     <Card className={styles.modal} sx={style}>
                         <div className="w-full sticky top-0 bg-white p-2 z-20">
-                            <h6 className="font-bold p-3">NEW POST</h6>
+                            <div className="flex">
+                                <h6 className="font-bold p-3">NEW POST</h6>
+                                <IconButton onClick={handleModalClose} sx={{position:'absolute', right:0}}><Close/></IconButton>
+                            </div>
+
                             <hr className="ml-4 w-9/10 bg-gray-300"/>
                         </div>
-                        <div className="p-2">
-                            <TextareaAutosize minRows={7} maxRows={7} className="w-full  outline-none relative resize-none" placeholder="Whats on your mind?"/>
-                        </div>
-                        <CardActions className="fixed bottom-0 flex w-full p-2 z-20">
-                            <div className="flex w-1/2 items-center space-x-0">
-                                <Tooltip className="max-sm:hidden" title="Checking this will allow users to submit Resumés/CV to apply" sx={{color:'#4D47C3', backgroundColor:'white'}} placement="top">
-                                    <Help/>
-                                </Tooltip>
-                                <FormControlLabel className="w-fit"  control={<Checkbox defaultChecked sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3',}}}/>} color='success' label="This is a job posting"/>
+                        <form onSubmit={formik.handleSubmit}>
+                            <div className="p-2 relative bottom-0">
+                                <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder="Whats on your mind?"/>
+
+                                {formik.values.image && <div className="flex items-center space-x-1">
+                                <h6 className="font-semibold mt-2 p-2">Image</h6>
+                                <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
+                                    <Chip sx={{margin:1, backgroundColor: '#4D47C3', color:'white','& .MuiChip-deletable':{backgroundColor: 'white'}}}  key={1} label={formik.values.image.name}  onDelete={() => formik.setFieldValue('image', null)} />
+                                </div>
+                                </div>
+                                }
+                                {formik.values.preferenceTags.length > 0 && <div className="items-center flex">
+                                    <h6 className="font-semibold mt-2 p-2">Tags </h6>
+                                     <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
+                                        {formik.values.preferenceTags.map((tag : string, index: number) => {
+                                            return (
+                                                <Chip sx={{margin:1, backgroundColor: '#4D47C3', color:'white','& .MuiChip-deletable':{backgroundColor: 'white'}}}  key={index} label={tag} onDelete={() => handleTagDeletion(tag)} />
+                                            )
+                                        })}
+                                    </div>
+                                </div>}
+
                             </div>
-                            <div className="absolute right-0 flex w-1/2 space-x-1 px-2 justify-end">
-                                <IconButton>
-                                    <AttachFile/>
-                                </IconButton>
-                                <IconButton>
-                                    <InsertPhoto/>
-                                </IconButton>
-                                <IconButton>
-                                    <Videocam/>
-                                </IconButton>
-                                <Button
-                                    sx={{width: 'fit', backgroundColor: '#4D47C3', '&:hover': {backgroundColor: 'white'}}}
-                                    variant="contained"
-                                    disableElevation
-                                    className={styles.sendButton}
-                                >
-                                    <Send className={styles.sendIcon}/>
-                                </Button>
-                            </div>
-                        </CardActions>
+                            <CardActions className="fixed bottom-0 w-full p-2 z-20 flex">
+                                <div className="w-fit flex justify-start">
+                                    <FormControlLabel name="isJobListing"  control={<Checkbox onChange={formik.handleChange} checked={formik.values.isJobListing}  sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="Job posting"/>
+                                    <IconButton disabled={!formik.values.isJobListing} sx={{marginRight: 50}} onClick={()=> setShowJobSettings(true)}>
+                                        <Settings/>
+                                    </IconButton>
+                                </div>
+                                <div className="fixed right-0 bottom-1 flex space-x-1 px-2 justify-end">
+                                    <IconButton disabled={!formik.values.isJobListing} sx={{display:'flex', justifyContent: 'end'}} onClick={() => setShowTagSelection(true)}>
+                                        <Tag/>
+                                    </IconButton>
+                                    <IconButton component="label" sx={{display:'flex', justifyContent: 'end'}}>
+                                        <input hidden name="image"  onChange={(event) => {
+                                            const file: FileList | null = event.currentTarget.files;
+                                            if (!file) return;
+                                            else {
+                                                formik.setFieldValue('image', file[0]);
+                                            }
+                                        }}  accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                        text/plain, application/pdf, image/*" id="icon-button-file" type="file"/>
+                                        <InsertPhoto/>
+                                    </IconButton>
+                                    <Button
+                                        sx={{width: '100px', backgroundColor: '#4D47C3', '&:hover': {backgroundColor: '#4D47C3'}}}
+                                        variant="contained"
+                                        disableElevation
+                                        className={styles.sendButton}
+                                        type="submit"
+                                        disabled={formik.values.text === ''}
+                                    >
+                                        <span className={styles.buttonText}>Post</span>
+                                        <Send className={styles.sendIcon}/>
+                                    </Button>
+                                </div>
+                            </CardActions>
+                        </form>
                     </Card>
-                </Modal>
+                    <div>
+                        <TagSelection showModal={showTagSelection} handleModalClose={handleTagSelectionClose} onSelectTag={handleTagsSelection} onDeleteTag={handleTagDeletion} selectedTags={selectedTags}/>
+                        <JobSettingsModal showModal={showJobSettings} handleModalClose={()=>setShowJobSettings(false)} values={formik.values.jobSettings} onChange={jobSettingsChangeHandler}/>
+                    </div>
+
+                </>
+
+            </Modal>
+
 
 
     );

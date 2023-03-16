@@ -1,4 +1,5 @@
 import FeedContent from './FeedContent';
+import style from './style.module.css';
 import UserProfileBanner from '../../components/UserProfileBanner';
 import UserBannerSkeleton from '../../components/Skeleton/UserBannerSkeleton';
 import NewPostModal from './NewPostModal';
@@ -11,16 +12,22 @@ import getUserBackdrop from '../../http/getUserBackdrop';
 import { useEffect, useState } from 'react';
 import ConnectionsBanner from '../../components/ConnectionsBanner';
 import ConnectionsBannerSkeleton from '../../components/Skeleton/ConnectionsBannerSkeleton';
+import Usertypes from '../../Models/UserProfileModel';
+import getSocialFeed from '../../http/getSocialFeed';
+import getJobFeed from '../../http/getJobFeed';
+import { useLocation } from 'react-router-dom';
 const Feed = () => {
-    const [user, setUser] = useState<any>(null);
-    const [userProfilePic, setUserProfilePic] = useState<string>();
+    const [user, setUser] = useState<Usertypes | null>(null);
+    const [userProfilePic, setUserProfilePic] = useState<string>('');
     const [userBackdrop, setUserBackdrop] = useState<string>();
-    const [userConnections, setUserConnections] = useState<any>(null);
+    const [userConnections, setUserConnections] = useState<string[] | null>(null);
     const [userBannerLoading, setUserBannerLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [feedData, setFeedData] = useState<any>(null);
     const handleModalClose = () => {
         setShowModal(false);
     }
+    const location = useLocation();
     useEffect(() => {
         getCurrentUserProfile().then((res) => {
             setUser(res.data.user);
@@ -30,6 +37,22 @@ const Feed = () => {
         });
 
     },[])
+    const fetchFeed = () => {
+        if(location.pathname === '/feed') {
+            getSocialFeed().then((res) => {
+                setFeedData(res.data);
+            });
+        }else if(location.pathname === '/jobs') {
+            getJobFeed().then((res) => {
+                setFeedData(res.data);
+            });
+        }
+    }
+    useEffect(() => {
+
+       fetchFeed();
+
+    },[location])
     useEffect(() => {
         getCurrentUserConnections().then((res) => {
             setUserConnections(res.data.connections);
@@ -47,35 +70,41 @@ const Feed = () => {
     },[user])
     return (
         <div>
-            <div className="flex relative max-lg:flex-col-reverse xl:px-[200px] py-10 lg:px-[5rem] md:px-[3rem]" onClick={() =>  {showModal && setShowModal(false)}}>
+            <div className="flex relative max-lg:flex-col-reverse xl:px-[200px] py-10 lg:px-[5rem] md:px-[3rem]"
+                 onClick={() =>  {showModal && setShowModal(false)}}>
                 <div className="lg:w-[65rem] flex-col justify-center">
                     <div className="w-full flex items-center justify-center">
-                        <hr className="w-1/5 bg-[#4D47C3] h-0.5"/>
-                        <div className="p-2 w-3/5 flex justify-center">
+                        <hr className={style.line}/>
+                        <div className={style.buttonWrapper}>
                             <Button
-                                sx={{width: '100%', backgroundColor: '#4D47C3',transition: 'transform 0.6s', ':hover': {backgroundColor: '#3b389b'}, '&:hover':{transitionProperty:'transform', transitionDuration:'0.3s', transform:'scaleX(1.05)'}}}
-                                className="block mt-4 w-full px-2 py-3 rounded-lg bg-[#4D47C3] text-white hover:bg-signup-button-hover shadow-xl shadow-placeholder-purple"
+                                sx={{backgroundColor: '#4D47C3', '&:hover': {backgroundColor: '#4D47C3'}}}
+                                className={style.newPostButton}
                                 variant="contained"
                                 disableElevation
                                 onClick={() => setShowModal(true)}
                             >
-                                New Post
+                               <span className="">New Post</span>
                             </Button>
                         </div>
-                        <hr className="w-1/5 bg-[#4D47C3] h-0.5"/>
+                        <hr className={style.line}/>
                     </div>
-                    <FeedContent/>
+                    <FeedContent feedData={feedData} userPic={userProfilePic}/>
                 </div>
                 <div className="lg:w-[40rem] top-10 p-5">
                     <div className="sticky top-[7rem] flex-col space-y-5">
-                        {!userBannerLoading ? <Link to="/myprofile"><UserProfileBanner name={user.name} title={user.title} location={user.location} profilePic={userProfilePic} userBackdrop={userBackdrop}/></Link> : <UserBannerSkeleton/>}
+                        {!userBannerLoading && user ? <Link to="/myprofile">
+                            <UserProfileBanner name={user.name} title={user.title} location={user.location}
+                              profilePic={userProfilePic} userBackdrop={userBackdrop}/>
+                        </Link>
+                            : <UserBannerSkeleton/>}
                         <div className="max-lg:hidden">
-                            {!userBannerLoading ? <ConnectionsBanner  connections={userConnections}/> : <ConnectionsBannerSkeleton/> }
+                            {!userBannerLoading ? <ConnectionsBanner  connections={userConnections}/> :
+                                <ConnectionsBannerSkeleton/> }
                         </div>
                     </div>
                 </div>
             </div>
-            <NewPostModal showModal={showModal} handleModalClose={handleModalClose}/>
+            <NewPostModal showModal={showModal} handleModalClose={handleModalClose} fetchFeed={fetchFeed}/>
         </div>
 
     );
