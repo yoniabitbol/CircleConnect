@@ -1,9 +1,12 @@
 import {Card, CardContent, CardActions, Button, Avatar, IconButton} from '@mui/material';
 import { ThumbUpOffAlt, ChatBubbleOutline, ThumbUpAlt, ChatBubble} from '@mui/icons-material';
 import ApplyDropUp from '../../../components/ApplyDropUp';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Comments from './Comments';
 import classes from './style.module.css';
+import getUserProfilePic from '../../../http/getUserPicturePic';
+import likePost from '../../../http/likePost';
+import getPostImage from '../../../http/getPostImage';
 function getCount(str: string) {
     return str.split(' ').filter(function(num: string) {
         return num != ''
@@ -13,12 +16,30 @@ function getWordStr(str: string, num: number) {
     return str.split(/\s+/).slice(0, num).join(" ");
 }
 
-const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:any, userPic:string }> = (props) => {
-    const {userInfo, postInfo, numLikes, numComments, userPic} = props;
+const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:any, userPic:string, postSettings: any }> = (props) => {
+    const {userInfo, postInfo, numLikes, numComments, userPic, postSettings} = props;
     const [readMore, setReadMore] = useState(false);
     const [numberLikes, setNumberLikes] = useState(numLikes);
     const [like, setLike] = useState(false);
     const [showComments, setShowComments] = useState(false);
+    const [userProfilePic, setUserProfilePic] = useState<string>('');
+    const [postImage, setPostImage] = useState<string | null>(null);
+    useEffect(() => {
+        getUserProfilePic(userInfo.user_id).then(res => {
+            setUserProfilePic(res);
+        })
+    }, [])
+
+
+
+    useEffect(() => {
+        getPostImage(postInfo.img).then(res => {
+            if(res)
+            setPostImage(res);
+            else
+                setPostImage(null);
+        })
+    }, [ postInfo])
     const likeClickHandler = () => {
         setLike(!like);
         if (like) {
@@ -26,10 +47,27 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
         } else {
             setNumberLikes(numberLikes + 1);
         }
+        likePost(postInfo.id).then(res => {
+            console.log(res);
+        })
     }
     const commentClickHandler = () => {
         setShowComments(!showComments);
     }
+    // const DummyComments = [
+    //     {
+    //         id: 1,
+    //         name: 'Reuven Ostrofsky',
+    //         userPic: 'https://images.unsplash.com/photo-1629209840003-8b2b0b2e1b1c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    //         comment: 'This is a comment',
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'Jonathan Abitbol',
+    //         userPic: 'https://images.unsplash.com/photo-1629209840003-8b2b0b2e1b1c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+    //         comment: 'This is a comment',
+    //     }]
+
     return (
         <Card sx={{marginTop: 2, borderRadius:5}}>
             <CardContent sx={{padding: 0}}>
@@ -43,7 +81,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                 {/*</div>*/}
                 <div>
                     <div className="flex items-center p-3">
-                        <Avatar/>
+                        <Avatar src={userProfilePic}/>
                         <div className="ml-2">
                             <h1 className="font-bold">{userInfo.name}</h1>
                             <h2>{userInfo.title}</h2>
@@ -59,7 +97,8 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                             fontWeight: '600'
                         }}>{readMore ? 'SHOW LESS' : 'READ MORE'}</Button>
                         }
-                        <img style={{aspectRatio:2/1, marginTop: 5, fontFamily:'Poppins'}} className="w-full" src={postInfo.img}/>
+                        {postImage &&  <img  style={{aspectRatio: 2 / 1, marginTop: 5, fontFamily: 'Poppins'}} className="w-full"
+                              src={postImage}/>}
                     </div>
                 </div>
             </CardContent>
@@ -74,12 +113,12 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                         <span>{numComments}</span>
                     </div>
                 </div>
-                <div className="mr-3">
-                   <ApplyDropUp/>
-                </div>
+                {postSettings.isJobListing && <div className="mr-3">
+                    <ApplyDropUp postSettings={postSettings} postId={postInfo.id}/>
+                </div>}
             </CardActions>
             <div className={`${!showComments && 'hidden'}`}>
-                <Comments userPic={userPic}/>
+                <Comments userPic={userPic} comments={postInfo.comments} postId={postInfo.id}/>
             </div>
         </Card>
     );
