@@ -48,6 +48,7 @@ const MyUserProfile: React.FC<{
       languages: values.languages,
       awards: values.awards,
       courses: values.courses,
+      applications: values.applications,
     });
 
     values.projects = JSON.stringify(values.projects);
@@ -57,7 +58,6 @@ const MyUserProfile: React.FC<{
     values.languages = JSON.stringify(values.languages);
     values.awards = JSON.stringify(values.awards);
     values.courses = JSON.stringify(values.courses);
-
 
     // Do not append connections to form data
     const formData = new FormData();
@@ -95,6 +95,7 @@ const MyUserProfile: React.FC<{
           languages: User.languages,
           awards: User.awards,
           courses: User.courses,
+          applications: User.applications,
         }}
         enableReinitialize
         onSubmit={(values) => {
@@ -130,7 +131,7 @@ const MyUserProfile: React.FC<{
                 <Courses edit={editable} courses={User.courses} />
               </LeftSection>
               <RightSection>
-                <Dashboard />
+                <Dashboard applications={User.applications} />
               </RightSection>
             </Layout>
           </Form>
