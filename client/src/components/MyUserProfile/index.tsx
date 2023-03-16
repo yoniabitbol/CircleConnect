@@ -58,7 +58,6 @@ const MyUserProfile: React.FC<{
     values.awards = JSON.stringify(values.awards);
     values.courses = JSON.stringify(values.courses);
 
-
     // Do not append connections to form data
     const formData = new FormData();
     for (const value in values) {
