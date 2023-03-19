@@ -1,6 +1,8 @@
 import placeholder from "./placeholder.png";
+import { useTranslation } from "react-i18next";
 
 const JobApplied: React.FC = () => {
+  const {t} = useTranslation();
   // const recruiter = true;
   return (
     <div className="flex bg-white mt-2">
@@ -12,12 +14,16 @@ const JobApplied: React.FC = () => {
       </div>
       <div className="grow py-2">
         <a href="/" className="font-bold">
-          Job Title
+          {t('jobApplied.buttons.jobTitle')}
         </a>
-        <p className="text-sm">Company Name</p>
-        <p className="text-sm">Location</p>
+        <p className="text-sm">
+          {t('jobApplied.label.companyName')} 
+          </p>
+        <p className="text-sm">
+          {t('jobApplied.label.location')}
+        </p>
         <p className="text-sm" style={{ color: "#4c47bc" }}>
-          0 applicants
+          {t('jobApplied.label.applicants')}
         </p>
         <div className="flex">
           <button
@@ -27,7 +33,7 @@ const JobApplied: React.FC = () => {
             className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
           text-white hover:bg-signup-button-hover"
           >
-            View application
+            {t('jobApplied.buttons.viewApplication')}
           </button>
           <button
             onClick={(e) => {
@@ -36,7 +42,7 @@ const JobApplied: React.FC = () => {
             className="text-sm block mt-2 ml-2 w-auto px-3 py-1 rounded-md bg-red-500
           text-white hover:bg-red-700"
           >
-            Delete
+              {t('jobApplied.buttons.delete')}
           </button>
         </div>
       </div>
