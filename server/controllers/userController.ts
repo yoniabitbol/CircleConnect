@@ -148,7 +148,7 @@ const updateUserPreferenceTags = async (req: Request, res: Response) => {
     }
     console.log(req.body);
     const { preferenceTags } = req.body; // Access preferenceTags directly from req.body
-    console.log(preferenceTags);
+
     await user.updateOne({ preferenceTags: preferenceTags });
     return res.status(200).json({
       status: "success",
