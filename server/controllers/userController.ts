@@ -146,7 +146,6 @@ const updateUserPreferenceTags = async (req: Request, res: Response) => {
         message: "User does not exist",
       });
     }
-    console.log(req.body);
     const { preferenceTags } = req.body; // Access preferenceTags directly from req.body
 
     await user.updateOne({ preferenceTags: preferenceTags });
