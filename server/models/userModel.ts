@@ -190,6 +190,10 @@ const userSchema = new mongoose.Schema(
         },
       },
     ],
+    threads: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Thread',
+    }],
   },
   {
     timestamps: true,
