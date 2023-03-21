@@ -4,7 +4,7 @@ const Message: React.FC<{
   outbound: boolean;
   text: string;
 }> = ({ outbound, text }) => {
-  const textBoxStyle = outbound ? "bg-slate-100" : "bg-indigo-900 text-sky-50";
+  const textBoxStyle = outbound ? "bg-slate-100" : "bg-indigo-700 text-sky-50";
 
   return (
     <div>

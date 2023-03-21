@@ -27,11 +27,11 @@ const ChatDisplay: React.FC<{
   };
 
   return (
-    <div className="mx-5 mt-5 h-min rounded-md bg-slate-200">
+    <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
-        <span className="text-sm">CHAT WITH {session.user.name}</span>
+        <span className="text-sm font-bold">CHAT WITH <span style={{ color: "#4B47B7" }}>{session.user.name.toUpperCase()}</span></span>
       </div>
-      <hr className="border-gray-400 border" />
+      <hr className="border-gray-100 border" />
 
       <div className="w-11/12 h-[35rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
         {messages.map(message => (
@@ -43,7 +43,7 @@ const ChatDisplay: React.FC<{
           </div>
         ))}
       </div>
-      <hr className="border-gray-400 border" />
+      <hr className="border-gray-100 border" />
       <div className="ml-8 my-2">
         <Formik
           initialValues={{outbound: true, message: ""}}
@@ -55,7 +55,7 @@ const ChatDisplay: React.FC<{
         >
           <Form>
             <Field className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent" type="message" name="message" placeholder="Write your message" />
-            <button className="mx-5 bg-indigo-900 h-10 w-10 rounded-lg" type="submit"><PaperAirplaneIcon className="stroke-white" /></button>
+            <button className="mx-5 bg-indigo-700 h-10 w-10 rounded-lg" type="submit"><PaperAirplaneIcon className="stroke-white" /></button>
           </Form>
         </Formik>
       </div>

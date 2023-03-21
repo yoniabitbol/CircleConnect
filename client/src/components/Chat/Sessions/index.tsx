@@ -22,7 +22,7 @@ const Sessions: React.FC = () => {
         id: 1,
         name: "Hungry Boi",
         picture: "https://cdn.discordapp.com/attachments/672975677460447232/1072778010597535784/photo_2022-05-21_09-09-15.jpg",
-        latestMsg: "Are you food"
+        latestMsg: "Are you good"
       },]
   );
 
@@ -34,11 +34,11 @@ const Sessions: React.FC = () => {
 
   return (
     <div>
-      <div className="ml-15 mt-5 pb-5 rounded-md bg-slate-200 overflow-auto">
+      <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto">
         <div className="justify-start ml-10 my-6">
-          <span className="text-sm">CHATS</span>
+          <span className="text-sm font-bold">CHATS</span>
         </div>
-        <hr className="border-gray-400 border" />
+        <hr className="border-gray-100 border" />
         {sessions.map(sessionInMap => (
           <button className="w-full h-full" key={sessionInMap.id} data-key={sessionInMap.id} type="submit" onClick={selectSession}>
             <SessionItem
@@ -55,7 +55,7 @@ const Sessions: React.FC = () => {
         ))}
       </div>
 
-      <div className="mt-10 pb-5 rounded-md bg-slate-200">
+      <div className="mt-10 pb-5 rounded-md bg-white">
         <div className="flex justify-center">
           <Formik
             initialValues={{message: ""}}
@@ -65,8 +65,8 @@ const Sessions: React.FC = () => {
             }}
           >
             <Form className="flex justify-center w-full">
-              <button className="bg-indigo-900 w-4/5 pb-2 mt-5 text-sky-50 rounded-lg" type="submit">
-                <div className="flex justify-center">
+              <button className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg" type="submit" style={{ background: "#4B47B7" }}>
+                <div className="flex justify-center pt-1">
                   START NEW CHAT
                 </div>
               </button>
