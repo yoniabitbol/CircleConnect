@@ -7,10 +7,10 @@ const messageSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'Sender ID required.'],
     },
-    receiverID: {
-      type: String,
-      ref: 'User',
-      required: [true, 'Receiver ID required.'],
+    threadID: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Thread',
+      required: [true, 'Thread ID required.'],
     },
     text: {
       type: String,
