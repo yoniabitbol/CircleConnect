@@ -1,3 +1,5 @@
+import { Schema } from "mongoose";
+
 export default interface Usertypes {
   user_id?: string;
   name: string;
@@ -58,4 +60,11 @@ export default interface Usertypes {
     endDate: string;
     description: string;
   }[];
+  applications: [
+    {
+      type: Schema.Types.ObjectId;
+      ref: "Application";
+    }
+  ];
+  posts: [{ type: Schema.Types.ObjectId; ref: "Post" }];
 }

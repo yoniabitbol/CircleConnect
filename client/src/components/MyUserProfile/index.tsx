@@ -48,6 +48,8 @@ const MyUserProfile: React.FC<{
       languages: values.languages,
       awards: values.awards,
       courses: values.courses,
+      applications: User.applications,
+      posts: User.posts,
     });
 
     values.projects = JSON.stringify(values.projects);
@@ -129,7 +131,10 @@ const MyUserProfile: React.FC<{
                 <Courses edit={editable} courses={User.courses} />
               </LeftSection>
               <RightSection>
-                <Dashboard />
+                <Dashboard
+                  applications={User.applications}
+                  posts={User.posts}
+                />
               </RightSection>
             </Layout>
           </Form>

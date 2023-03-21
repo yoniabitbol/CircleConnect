@@ -1,7 +1,13 @@
 import placeholder from "./placeholder.png";
+import { Schema } from "mongoose";
 
-const JobApplied: React.FC = () => {
+interface JobAppliedProps {
+  application: Schema.Types.ObjectId;
+}
+
+const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
   // const recruiter = true;
+  console.log(application);
   return (
     <div className="flex bg-white mt-2">
       <div className="ml-2 mr-4 my-3">

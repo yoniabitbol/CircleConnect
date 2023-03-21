@@ -1,11 +1,54 @@
 import { useState } from "react";
 import ApplicantRow from "./ApplicantRow";
 import placeholder from "./placeholder.png";
+import { Schema } from "mongoose";
+import getPost from "../../../../http/getPost";
+import { useEffect } from "react";
 
-const JobPosting: React.FC = () => {
-  // const recruiter = true;
+interface JobPostingProps {
+  post: Schema.Types.ObjectId;
+}
+
+interface postType {
+  creatorID: string;
+  isJobListing: boolean;
+  position: string;
+  text: string;
+  image: string;
+  likes: string[];
+  comments: {
+    commenter: string;
+    comment: string;
+  }[];
+  preferenceTags: { type: string }[];
+  uploadDeadline: Date;
+  isThirdParty: boolean;
+  thirdPartyLink: string;
+  isResumeRequired: boolean;
+  isCoverLetterRequired: boolean;
+  applications: Schema.Types.ObjectId[];
+}
+
+const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
+  const [postInfo, setPostInfo] = useState("");
+
+  console.log(postInfo);
+
+  useEffect(() => {
+    async function fetchJobPosting(post: any) {
+      try {
+        if (post === "") return;
+        const posting = await getPost(post);
+        setPostInfo(posting);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchJobPosting(post);
+  }, [post]);
+
   const [showApplicants, setShowApplicants] = useState(false);
-
+  console.log(post.toString());
   return (
     <div className="flex bg-white mt-2">
       <div className="ml-2 mr-4 my-3">
@@ -15,9 +58,7 @@ const JobPosting: React.FC = () => {
         ></img>
       </div>
       <div className="grow py-2">
-        <a href="/" className="font-bold">
-          Job Title
-        </a>
+        <a href="/" className="font-bold"></a>
         <p className="text-sm">Company Name</p>
         <p className="text-sm">Location</p>
         <p className="text-sm" style={{ color: "#4c47bc" }}>
