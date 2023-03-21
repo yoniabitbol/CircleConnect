@@ -1,12 +1,16 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
+import MyProfile from "./Routes/MyProfile";
 import Profile from "./Routes/Profile";
 import Chat from "./Routes/Chat";
+import Notifications from "./Routes/Notifications";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
 import ForgotPass from "./Routes/ForgotPass";
-import NavBar from "./components/Navbar";
+import ScreenContent from "./Routes/ScreenContent";
+import Network from "./Routes/Network";
+import Feed from "./Routes/Feed";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -18,24 +22,34 @@ function App() {
             <Route
               path="/"
               element={
-                user ? (
-                  <Navigate to="/profile" />
-                ) : (
-                  <Navigate to="/login" />
-                )
+                user ? <Navigate to="/myprofile" /> : <Navigate to="/login" />
               }
             />
-            <Route path='/*' element={<NavBar/>}>
+            <Route path="/*" element={<ScreenContent />}>
               <Route
-                path="profile"
+                path="profile/:id"
                 element={user ? <Profile /> : <Navigate to="/" />}
               />
               <Route
                 path="chat"
                 element={user ? <Chat /> : <Navigate to="/" />}
               />
+              <Route
+                path="myprofile"
+                element={user ? <MyProfile /> : <Navigate to="/" />}
+              />
+              <Route
+                path="network"
+                element={user ? <Network /> : <Navigate to="/" />}
+              />
+              <Route
+                path="notifications"
+                element={user ? <Notifications /> : <Navigate to="/" />}
+              />
+              <Route path="feed" element = {user ? <Feed /> : <Navigate to = "/" />}/>
+              <Route path="jobs" element = {user ? <Feed /> : <Navigate to = "/" />}/>
             </Route>
-            
+
             <Route path="/*" element={<AuthHeader />}>
               <Route
                 path="signup"
@@ -45,7 +59,7 @@ function App() {
                 path="login"
                 element={!user ? <Login /> : <Navigate to="/" />}
               />
-             
+
               <Route
                 path="forgot"
                 element={!user ? <ForgotPass /> : <Navigate to="/" />}
