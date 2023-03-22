@@ -7,7 +7,8 @@ const navigationBar = {
         buttons: {
             jobTitle:'Titre du poste',
             viewApplication: 'Voir la demande',
-            delete:'Supprimer'
+            delete:'Supprimer',
+            chat:'Clavarder'
         }
     }
 }

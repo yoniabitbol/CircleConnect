@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
+import { useTranslation } from "react-i18next";
+
 
 const Experience: React.FC<{
   experience: {
@@ -14,6 +16,7 @@ const Experience: React.FC<{
   edit: boolean;
 }> = ({ experience, edit }) => {
   const [addOrDelete, setAddOrDelete] = useState(false);
+  const {t} = useTranslation();
 
   const addNewBtn = (
     <button
@@ -176,7 +179,7 @@ const Experience: React.FC<{
 
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold ">Experience</h1>
+      <h1 className="text-2xl font-bold ">{t('userProfile.label.experience')}</h1>
       {component}
     </div>
   );

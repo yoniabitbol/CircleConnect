@@ -8,7 +8,7 @@ const Dashboard: React.FC = () => {
   return (
     <div>
       <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-        Jobs you posted:
+      {t('jobPosted.label.posted')} 
         <JobPosting />
         <JobPosting />
         <JobPosting />
