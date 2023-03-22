@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
+import { useTranslation } from "react-i18next";
+
 
 const Projects: React.FC<{
   projects: {
@@ -14,6 +16,7 @@ const Projects: React.FC<{
 }> = ({ projects, edit }) => {
   // console.log(projects);
   const [addOrDelete, setAddOrDelete] = useState(false);
+  const {t} = useTranslation();
 
   const addNewBtn = (
     <button
@@ -189,7 +192,7 @@ const Projects: React.FC<{
 
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold ">Projects</h1>
+      <h1 className="text-2xl font-bold "> {t('userProfile.label.project')}</h1>
       {component}
     </div>
   );

@@ -1,5 +1,7 @@
+import React from "react";
 import placeholder from "./placeholder.png";
 import { useTranslation } from "react-i18next";
+
 
 const JobApplied: React.FC = () => {
   const {t} = useTranslation();

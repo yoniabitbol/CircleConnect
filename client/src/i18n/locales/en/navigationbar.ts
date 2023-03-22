@@ -7,7 +7,8 @@ const navigationBar = {
         buttons: {
             jobTitle:' Job Title',
             viewApplication: 'View application',
-            delete:'Delete'
+            delete:'Delete',
+            chat:'Clavarder'
         }
     }
 }
