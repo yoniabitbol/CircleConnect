@@ -16,13 +16,14 @@ const Summary: React.FC<{
           <h1 className="text-2xl font-bold ">{t('userProfile.label.about')}</h1>
           <div className="w-2/3 mx-auto pt-5">
             <label className="text-sm font-semibold text-gray-600 py-2">
-              Summary
+              {t('userProfile.label.summary')}
             </label>
             <Field
               as="textarea"
               name="summary"
               className="w-full rounded-sm"
               type="text"
+              default=''
             />
           </div>
         </div>
