@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 import { useTranslation } from "react-i18next";
 
-
 const Projects: React.FC<{
   projects: {
     title: string;
@@ -35,7 +34,7 @@ const Projects: React.FC<{
         setAddOrDelete(!addOrDelete);
       }}
     >
-      Add new
+      {t('userProfile.label.addNew')}
     </button>
   );
 
@@ -50,7 +49,7 @@ const Projects: React.FC<{
           setAddOrDelete(!addOrDelete);
         }}
       >
-        Delete
+       {t('userProfile.buttons.delete')}
       </button>
     );
   };
@@ -59,7 +58,7 @@ const Projects: React.FC<{
     return (
       <>
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Title
+          {t('userProfile.label.title')}
         </label>
         <input
           name={`projects[${index}].title`}
@@ -72,7 +71,7 @@ const Projects: React.FC<{
         />
 
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Description
+          {t('userProfile.label.description')}
         </label>
         <input
           name={`projects[${index}].description`}
@@ -84,7 +83,7 @@ const Projects: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Start Date
+          {t('userProfile.label.startDate')}
         </label>
         <input
           name={`projects[${index}].startDate`}
@@ -96,7 +95,7 @@ const Projects: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          End Date
+          {t('userProfile.label.endDate')}
         </label>
         <input
           name={`projects[${index}].endDate`}
@@ -120,7 +119,7 @@ const Projects: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Picture
+        {t('userProfile.label.picture')}
         </label>
         <input
           name={`projects[${index}].picture`}
@@ -157,7 +156,7 @@ const Projects: React.FC<{
   const component = edit ? (
     form
   ) : projects.length < 1 ? (
-    <p>Create at least 1 project</p>
+    <p>{t('userProfile.label.addProject')}</p>
   ) : (
     <div className="grid grid-cols-2 gap-4 my-4">
       {projects?.map((project) => {

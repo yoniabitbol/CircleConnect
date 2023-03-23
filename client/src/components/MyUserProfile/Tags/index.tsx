@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import updateUserPreferenceTags from "../../../http/updateUserPreferenceTags";
+import { useTranslation } from "react-i18next";
 
 interface TagsProps {
   preferenceTags: string[];
 }
 
 const Tags: React.FC<TagsProps> = ({ preferenceTags }) => {
+  const {t} = useTranslation();
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState<string>("");
 
@@ -33,7 +35,7 @@ const Tags: React.FC<TagsProps> = ({ preferenceTags }) => {
 
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold">Tags</h1>
+      <h1 className="text-2xl font-bold">{t('userProfile.label.tags')}</h1>
       <div className="flex flex-wrap font-bold">
         {tags.map((tag: string) => (
           <div
@@ -63,7 +65,7 @@ const Tags: React.FC<TagsProps> = ({ preferenceTags }) => {
         className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
         onClick={addTag}
       >
-        Add
+        {t('userProfile.label.add')}
       </button>
     </div>
   );
