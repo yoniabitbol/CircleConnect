@@ -3,7 +3,7 @@ import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
 import MyProfile from "./Routes/MyProfile";
 import Profile from "./Routes/Profile";
-import Chat from "./Routes/Chat";
+import ChatPage from "./Routes/Chat";
 import Notifications from "./Routes/Notifications";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
@@ -32,7 +32,7 @@ function App() {
               />
               <Route
                 path="chat"
-                element={user ? <Chat /> : <Navigate to="/" />}
+                element={user ? <ChatPage /> : <Navigate to="/" />}
               />
               <Route
                 path="myprofile"
@@ -46,8 +46,14 @@ function App() {
                 path="notifications"
                 element={user ? <Notifications /> : <Navigate to="/" />}
               />
-              <Route path="feed" element = {user ? <Feed /> : <Navigate to = "/" />}/>
-              <Route path="jobs" element = {user ? <Feed /> : <Navigate to = "/" />}/>
+              <Route
+                path="feed"
+                element={user ? <Feed /> : <Navigate to="/" />}
+              />
+              <Route
+                path="jobs"
+                element={user ? <Feed /> : <Navigate to="/" />}
+              />
             </Route>
 
             <Route path="/*" element={<AuthHeader />}>
