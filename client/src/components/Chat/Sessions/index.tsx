@@ -1,37 +1,19 @@
-import React, {useState} from "react";
+import React from "react";
 import SessionItem from "../SessionItem";
-import {Form, Formik} from "formik";
+import { Form, Formik } from "formik";
 
-interface SessionType {
+export interface SessionType {
   id: number;
   name: string;
   picture: string;
   latestMsg: string;
 }
 
-const Sessions: React.FC = () => {
-  const [sessions] = useState<SessionType[]>(
-    [
-      {
-        id: 0,
-        name: "Chad Thundercock",
-        picture: "https://cdn.discordapp.com/attachments/800804024109891595/1067509878534438972/IMG_20220119_162228_138.jpg",
-        latestMsg: "Hey gamer"
-      },
-      {
-        id: 1,
-        name: "Hungry Boi",
-        picture: "https://cdn.discordapp.com/attachments/672975677460447232/1072778010597535784/photo_2022-05-21_09-09-15.jpg",
-        latestMsg: "Are you good"
-      },]
-  );
-
-  const [selected, setSelected] = useState<number>(-1);
-
-  const selectSession = (event: any) => {
-    setSelected(event.currentTarget.getAttribute("data-key"));
-  };
-
+const Sessions: React.FC<{
+  sessions: SessionType[];
+  selectSession: (event: any) => void;
+  selected: number;
+}> = ({ sessions, selectSession, selected }) => {
   return (
     <div>
       <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto">
@@ -39,10 +21,16 @@ const Sessions: React.FC = () => {
           <span className="text-sm font-bold">CHATS</span>
         </div>
         <hr className="border-gray-100 border" />
-        {sessions.map(sessionInMap => (
-          <button className="w-full h-full" key={sessionInMap.id} data-key={sessionInMap.id} type="submit" onClick={selectSession}>
+        {sessions.map((sessionInMap) => (
+          <button
+            className="w-full h-full"
+            key={sessionInMap.id}
+            data-key={sessionInMap.id}
+            type="submit"
+            onClick={(event) => selectSession(event)}
+          >
             <SessionItem
-              selected={selected==sessionInMap.id}
+              selected={selected == sessionInMap.id}
               session={{
                 user: {
                   name: sessionInMap.name,
@@ -58,23 +46,26 @@ const Sessions: React.FC = () => {
       <div className="mt-10 pb-5 rounded-md bg-white">
         <div className="flex justify-center">
           <Formik
-            initialValues={{message: ""}}
+            initialValues={{ message: "" }}
             enableReinitialize
             onSubmit={(values) => {
               console.log(values);
             }}
           >
             <Form className="flex justify-center w-full">
-              <button className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg" type="submit" style={{ background: "#4B47B7" }}>
-                <div className="flex justify-center pt-1">
-                  START NEW CHAT
-                </div>
+              <button
+                className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg"
+                type="submit"
+                style={{ background: "#4B47B7" }}
+              >
+                <div className="flex justify-center pt-1">START NEW CHAT</div>
               </button>
             </Form>
           </Formik>
         </div>
       </div>
-    </div>);
+    </div>
+  );
 };
 
 export default Sessions;

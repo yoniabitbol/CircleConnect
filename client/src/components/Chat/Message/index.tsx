@@ -8,14 +8,13 @@ const Message: React.FC<{
 
   return (
     <div>
-      {outbound ? (
-        <span className="" />
-      ) : (<span />)}
+      {outbound ? <span className="" /> : <span />}
 
       <div className={"rounded-md inline-block px-3 py-1 " + textBoxStyle}>
         <span>{text}</span>
       </div>
-    </div>);
+    </div>
+  );
 };
 
 export default Message;
