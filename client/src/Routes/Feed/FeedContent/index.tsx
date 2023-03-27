@@ -52,6 +52,7 @@ const FeedContent:FC<{userPic: string, feedData: any}> = (props) => {
                               postSettings={{isJobListing:data.isJobListing, isResumeRequired:data.isResumeRequired, isCoverLetterRequired: data.isCoverLetterRequired, isThirdParty: data.isThirdParty, thirdPartyLink: data.thirdPartyLink, uploadDeadline: data.uploadDeadline}}
                               numLikes={data.likes.length} numComments={data.comments.length} userPic={userPic}/>
                 </div>)
+
             })
             }
         </div>

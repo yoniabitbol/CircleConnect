@@ -9,6 +9,7 @@ import {ChangeEvent, FC, useState} from 'react';
 import { useTranslation } from "react-i18next";
 
 
+
 const jobPositions = [
     {label: 'Software Engineer', value: 'Software Engineer'},
     {label: 'Software Developer', value: 'Software Developer'},
@@ -38,7 +39,6 @@ const jobPositions = [
 
 const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, values: object, onChange: (type:string,value: any) => void}> = (props) => {
     const {t} = useTranslation();
-
     const {showModal, handleModalClose, onChange} = props;
     const [thirdParty, setThirdParty] = useState<boolean>(false);
     const [thirdPartyLink, setThirdPartyLink] = useState<string | null>(null);
@@ -93,6 +93,7 @@ const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, val
    const handleJobPositionChange = (_ : any,value : any) => {
          onChange('position', value);
    }
+
     return (
         <Modal open={showModal} onClose={handleModalClose}>
             <Box className={style.box}>
@@ -116,6 +117,17 @@ const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, val
                     <div className="w-full flex">
                         <TextField sx={{width:'70%'}} value={thirdPartyLink ? thirdPartyLink : ''} margin='none' disabled={!thirdParty || linkSaved} onChange={(linkChangeHandler)} type="text" variant="filled" label="Enter 3rd party link"/>
                         <Button disabled={!thirdPartyLink} onClick={onLinkSave}  variant="contained" disableElevation sx={{ml:1,backgroundColor:'#4D47C3', color:'white', '&:hover':{backgroundColor:'#4D47C3'},height:55}}>{linkSaved ? 'Edit Link' : 'Save Link'}</Button>
+                        {thirdPartyLogo && thirdPartyLink && <img
+                            style={{ maxWidth: "5rem", maxHeight: "4rem" }}
+                            src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}
+                        />}
+                    </div>
+                </div>
+                <div className="mt-6">
+                    <FormControlLabel sx={{placeItems:'center'}} onChange={handleThirdPartyChange}  control={<Checkbox sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="Third Party Post"/>
+                    <div className="w-full flex">
+                        <TextField sx={{width:'70%'}} value={thirdPartyLink ? thirdPartyLink : ''} margin='none' disabled={!thirdParty || linkSaved} onChange={(linkChangeHandler)} type="text" variant="filled" label="Enter 3rd party link"/>
+                        <Button disabled={!thirdPartyLink} onClick={onLinkSave}  variant="contained" disableElevation sx={{ml:1,backgroundColor:'#4D47C3', color:'white', '&:hover':{backgroundColor:'#4D47C3'},height:55}}>{linkSaved ? 'Edit' : 'Save'}</Button>
                         {thirdPartyLogo && thirdPartyLink && <img
                             style={{ maxWidth: "5rem", maxHeight: "4rem" }}
                             src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}

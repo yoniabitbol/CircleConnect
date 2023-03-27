@@ -22,6 +22,7 @@ const glassdoorLogoFile = 'glassdoor-icon.webp'
 
 const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:any, userPic:string, postSettings: any, scrollTo:()=> void}> = (props) => {
     const {userInfo, postInfo, numLikes, numComments, userPic, postSettings, scrollTo} = props;
+
     const [readMore, setReadMore] = useState(false);
     const [numberLikes, setNumberLikes] = useState(numLikes);
     const [like, setLike] = useState(false);
@@ -77,6 +78,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
         return deadline < today;
     }
 
+
     const parseDate = (date: string) => {
         const dateObj = new Date(date);
         const month = dateObj.toLocaleString('default', { month: 'long' });
@@ -96,6 +98,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
             border: '1px solid #dadde9',
         },
     }));
+
     return (
         <Card id={postInfo.id} sx={{marginTop: 2, borderRadius:5, padding:0}}>
             <CardContent sx={{padding: 0}}>
@@ -127,13 +130,13 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                         }
                         {postImage &&  <img  style={{aspectRatio: 2 / 1, marginTop: 5, fontFamily: 'Poppins'}} className="w-full"
                               src={postImage}/>}
-                        {postSettings.isThirdParty && <div className="p-2 flex">
-                            <img
-                                style={{ maxWidth: "2rem", maxHeight: "2rem" }}
-                                src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}/>
-                            <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center" href={postSettings.thirdPartyLink}>{isIndeedLink ? 'ca.indeed.com' : isGlassdoorLink ? 'Glassdoor.com': 'Third Party Link'}</a>
-                        </div>}
                     </div>
+                    {postSettings.isThirdParty && <div className="p-3 ml-5 flex">
+                        <img
+                            style={{ maxWidth: "2rem", maxHeight: "2rem" }}
+                            src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}/>
+                        <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center" href={postSettings.thirdPartyLink}>{isIndeedLink ? 'ca.indeed.com' : isGlassdoorLink ? 'Glassdoor.com': 'Third Party Link'}</a>
+                    </div>}
                 </div>
             </CardContent>
             <CardActions >
