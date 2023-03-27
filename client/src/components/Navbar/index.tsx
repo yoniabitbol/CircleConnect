@@ -93,7 +93,7 @@ const NavBar: React.FC<{
             <Avatar src={userProfilePic} />
           </Link>
           <Button onClick={logout} sx={{ color: "#4B47B7" }}>
-            {t('common.buttons.logout')}
+            {t('loginAndRegistration.buttons.logout')}
           </Button>
         </div>
       </div>

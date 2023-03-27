@@ -2,12 +2,18 @@
 const common = {
     common: {
         label: {
-            motto:'Connect, Collaborate, and Grow Your Circle'
+            motto:'Connect, Collaborate, and Grow Your Circle',
+            feed:'Feed',
+            network:'Network',
+            jobs:'Jobs',
+            chat:'Chat',
+            notif:'Notifications',
+            onYourMind:'Whats on your mind?',
+            notifSettings:'NOTIFICATION SETTINGS',
         },
         buttons: {
-            login: 'Login',
-            signup: ' Sign up here',
-            logout:'Logout'
+            chat:'CHAT',
+            newPost:'New Post',
         }
     }
 }
