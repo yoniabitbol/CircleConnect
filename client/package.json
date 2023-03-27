@@ -17,6 +17,9 @@
       "src/components/UserProfileBanner",
       "src/Routes/Feed/NewPostModal",
       "src/Routes/Login"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!@mui)/"
     ]
   },
   "version": "0.1.0",
