@@ -1,5 +1,8 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Server, Socket } from 'socket.io';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import http from 'http';
 import app from './app';
 import { Logger } from './middleware/logger';
 
@@ -14,7 +17,23 @@ mongoose.connect(DB, connectionOptions).then(() => {
   Logger.info('Server-DB Connection Successful!');
 });
 
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+  },
+});
+
 const port = process.env.DEV_SERVER_PORT || 4000;
-app.listen(port, () => {
+
+io.on('connection', (socket: Socket) => {
+  Logger.info(`Socket connected: ${socket.id}`);
+  socket.on('disconnect', () => {
+    Logger.info(`Socket disconnected: ${socket.id}`);
+  });
+});
+
+server.listen(port, () => {
   Logger.info(`App listening on port ${port}`);
 });
