@@ -10,6 +10,7 @@ import ForgotPass from "./Routes/ForgotPass";
 import ScreenContent from "./Routes/ScreenContent";
 import Network from "./Routes/Network";
 import Feed from "./Routes/Feed";
+import Chat from "./Routes/Chat";
 
 function App() {
   const { user, authIsReady } = useAuthContext();
@@ -41,7 +42,14 @@ function App() {
                 path="notifications"
                 element={user ? <Notifications /> : <Navigate to="/" />}
               />
-              <Route path="feed" element = {user ? <Feed /> : <Navigate to = "/" />}/>
+              <Route
+                path="feed"
+                element={user ? <Feed /> : <Navigate to="/" />}
+              />
+              <Route
+                path="chat"
+                element={user ? <Chat /> : <Navigate to="/" />}
+              />
             </Route>
 
             <Route path="/*" element={<AuthHeader />}>
