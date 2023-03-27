@@ -6,14 +6,10 @@ const common = {
             feed:'Actualité',
             network:'Réseau',
             jobs:'Emplois',
-            chat:'Messagerie',
+            chat:'Clavarder',
             notif:'Notifications',
             onYourMind:'À quoi pensez-vous ?',
-            notifSettings:'PARAMÈTRES DE NOTIFICATION',
-            connections: 'RELATIONS',
-            connectionLc:'Relations',
-            search:'Recherche',
-            message:'Message',
+            notifSettings:'PARAMÈTRES DE NOTIFICATION'
         },
         buttons: {
             chat:'CLAVARDER',
