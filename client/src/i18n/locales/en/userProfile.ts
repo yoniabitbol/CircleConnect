@@ -42,9 +42,9 @@ const userProfile = {
 
         },
         buttons: {
-            jobTitle:'Titre du poste',
-            viewApplication: 'Voir la demande',
-            delete:'Supprimer',
+            jobTitle:'Job title',
+            viewApplication: 'View the Application',
+            delete:'Delete',
             addNew:'Add new',
         }
     }

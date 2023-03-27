@@ -16,6 +16,8 @@ import {Send, InsertPhoto, Tag, Settings, Close} from '@mui/icons-material';
 import TagSelection from './TagSelection';
 import JobSettingsModal from './JobSettingsModal';
 import {useFormik} from 'formik';
+import { useTranslation } from "react-i18next";
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -24,6 +26,7 @@ const style = {
     bgColor: 'white',
 };
 const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void}> = (props) => {
+    const {t} = useTranslation();
     const {showModal, handleModalClose, fetchFeed} = props;
     const formik = useFormik<any>({
             initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[]},
@@ -87,7 +90,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                     <Card className={styles.modal} sx={style}>
                         <div className="w-full sticky top-0 bg-white p-2 z-20">
                             <div className="flex">
-                                <h6 className="font-bold p-3">NEW POST</h6>
+                                <h6 className="font-bold p-3">{t('common.buttons.newPost')}</h6>
                                 <IconButton onClick={handleModalClose} sx={{position:'absolute', right:0}}><Close/></IconButton>
                             </div>
 

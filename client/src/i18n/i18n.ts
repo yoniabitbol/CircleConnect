@@ -11,6 +11,10 @@ import jobPostedEn from './locales/en/jobPosted';
 import jobPostedFr from './locales/fr/jobPosted';
 import editProfileEn from './locales/en/editProfile';
 import editProfileFr from './locales/fr/editProfile';
+import loginAndRegistrationEn from './locales/en/loginAndRegistration';
+import loginAndRegistrationFr from './locales/fr/loginAndRegistration';
+import notificationsEn from './locales/en/notifications';
+import notificationsFr from './locales/fr/notifications';
 
 
 const namespaceEnCommon = {
@@ -19,6 +23,8 @@ const namespaceEnCommon = {
     ...userProfileEn,
     ...jobPostedEn,
     ...editProfileEn,
+    ...loginAndRegistrationEn,
+    ...notificationsEn,
 };
 
 const namespaceFrCommon = {
@@ -27,6 +33,8 @@ const namespaceFrCommon = {
     ...userProfileFr,
     ...jobPostedFr,
     ...editProfileFr,
+    ...loginAndRegistrationFr,
+    ...notificationsFr,
 
 };
 

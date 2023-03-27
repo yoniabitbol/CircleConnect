@@ -2,12 +2,18 @@
 const common = {
     common: {
         label: {
-            motto:'Connectez-vous, collaborez et développez votre cercle'    
+            motto:'Connectez-vous, collaborez et développez votre cercle',
+            feed:'Actualité',
+            network:'Réseau',
+            jobs:'Emplois',
+            chat:'Clavarder',
+            notif:'Notifications',
+            onYourMind:'À quoi pensez-vous ?',
+            notifSettings:'PARAMÈTRES DE NOTIFICATION'
         },
         buttons: {
-            login: 'Connexion',
-            signup: 'Inscrivez-vous ici',
-            logout:'Déconnexion'
+            chat:'CLAVARDER',
+            newPost:'Nouveau poste',
         }
     }
 }
