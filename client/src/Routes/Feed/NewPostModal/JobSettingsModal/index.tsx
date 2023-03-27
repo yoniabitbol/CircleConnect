@@ -5,7 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {Switch} from '@mui/material';
-import { FC} from 'react';
+import {ChangeEvent, FC, useState} from 'react';
 
 
 const jobPositions = [
@@ -37,7 +37,12 @@ const jobPositions = [
 
 const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, values: object, onChange: (type:string,value: any) => void}> = (props) => {
     const {showModal, handleModalClose, onChange} = props;
-
+    const [thirdParty, setThirdParty] = useState<boolean>(false);
+    const [thirdPartyLink, setThirdPartyLink] = useState<string | null>(null);
+    const [thirdPartyLogo, setThirdPartyLogo] = useState<string | null>(null);
+    const [linkSaved, setLinkSaved] = useState<boolean>(false);
+    const indeedLogoFile = 'Indeed-Symbol.png'
+    const glassdoorLogoFile = 'glassdoor-icon.webp'
     const handleDateChange = ( date: Date | null) => {
         onChange('uploadDeadline',date);
     }
@@ -84,8 +89,9 @@ const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, val
    const handleJobPositionChange = (_ : any,value : any) => {
          onChange('position', value);
    }
+
     return (
-        <Modal  open={showModal} onClose={handleModalClose}>
+        <Modal open={showModal} onClose={handleModalClose}>
             <Box className={style.box}>
                <h1 className="font-bold">Job Posting Settings</h1>
                 <div className="flex-col justify-items-center mt-5">
@@ -107,6 +113,17 @@ const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, val
                     <div className="w-full flex">
                         <TextField sx={{width:'70%'}} value={thirdPartyLink ? thirdPartyLink : ''} margin='none' disabled={!thirdParty || linkSaved} onChange={(linkChangeHandler)} type="text" variant="filled" label="Enter 3rd party link"/>
                         <Button disabled={!thirdPartyLink} onClick={onLinkSave}  variant="contained" disableElevation sx={{ml:1,backgroundColor:'#4D47C3', color:'white', '&:hover':{backgroundColor:'#4D47C3'},height:55}}>{linkSaved ? 'Edit Link' : 'Save Link'}</Button>
+                        {thirdPartyLogo && thirdPartyLink && <img
+                            style={{ maxWidth: "5rem", maxHeight: "4rem" }}
+                            src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}
+                        />}
+                    </div>
+                </div>
+                <div className="mt-6">
+                    <FormControlLabel sx={{placeItems:'center'}} onChange={handleThirdPartyChange}  control={<Checkbox sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="Third Party Post"/>
+                    <div className="w-full flex">
+                        <TextField sx={{width:'70%'}} value={thirdPartyLink ? thirdPartyLink : ''} margin='none' disabled={!thirdParty || linkSaved} onChange={(linkChangeHandler)} type="text" variant="filled" label="Enter 3rd party link"/>
+                        <Button disabled={!thirdPartyLink} onClick={onLinkSave}  variant="contained" disableElevation sx={{ml:1,backgroundColor:'#4D47C3', color:'white', '&:hover':{backgroundColor:'#4D47C3'},height:55}}>{linkSaved ? 'Edit' : 'Save'}</Button>
                         {thirdPartyLogo && thirdPartyLink && <img
                             style={{ maxWidth: "5rem", maxHeight: "4rem" }}
                             src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}

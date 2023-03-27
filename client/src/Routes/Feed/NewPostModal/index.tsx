@@ -16,8 +16,6 @@ import {Send, InsertPhoto, Tag, Settings, Close} from '@mui/icons-material';
 import TagSelection from './TagSelection';
 import JobSettingsModal from './JobSettingsModal';
 import {useFormik} from 'formik';
-import { useTranslation } from "react-i18next";
-
 const style = {
     position: 'absolute',
     top: '50%',
@@ -26,16 +24,14 @@ const style = {
     bgColor: 'white',
 };
 const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void}> = (props) => {
-    const {t} = useTranslation();
     const {showModal, handleModalClose, fetchFeed} = props;
     const formik = useFormik<any>({
-            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[]},
+            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[], isThirdParty:false, thirdPartyLink: ''},
             onSubmit: (values,{resetForm}) => {
                 const formData = new FormData();
                 for (const key in values) {
                     formData.append(key, values[key]);
                 }
-                console.log(formData)
 
                 createPost(formData).then((res) => {
                     console.log(res);
@@ -79,6 +75,9 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
         const newSettings = {...settings, [type]: value};
         setSettings(newSettings);
         for(const key in newSettings){
+            if(key === 'uploadDeadline' && newSettings[key] === null){
+                continue;
+            }
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             formik.setFieldValue(key, newSettings[key]);
@@ -93,7 +92,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                     <Card className={styles.modal} sx={style}>
                         <div className="w-full sticky top-0 bg-white p-2 z-20">
                             <div className="flex">
-                                <h6 className="font-bold p-3">{t('common.buttons.newPost')}</h6>
+                                <h6 className="font-bold p-3">NEW POST</h6>
                                 <IconButton onClick={handleModalClose} sx={{position:'absolute', right:0}}><Close/></IconButton>
                             </div>
 
@@ -101,8 +100,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                         </div>
                         <form onSubmit={formik.handleSubmit}>
                             <div className="p-2 relative bottom-0">
-                                <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder={t('common.label.onYourMind') as string}/>
-
+                                <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder="Whats on your mind?"/>
                                 {formik.values.image && <div className="flex items-center space-x-1">
                                 <h6 className="font-semibold mt-2 p-2">Image</h6>
                                 <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
@@ -111,7 +109,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                                 </div>
                                 }
                                 {formik.values.preferenceTags.length > 0 && <div className="items-center flex">
-                                    <h6 className="font-semibold mt-2 p-2">{t('userProfile.label.tags')}</h6>
+                                    <h6 className="font-semibold mt-2 p-2">Tags </h6>
                                      <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
                                         {formik.values.preferenceTags.map((tag : string, index: number) => {
                                             return (
@@ -124,7 +122,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                             </div>
                             <CardActions className="fixed bottom-0 w-full p-2 z-20 flex">
                                 <div className="w-fit flex justify-start">
-                                    <FormControlLabel name="isJobListing"  control={<Checkbox onChange={formik.handleChange} checked={formik.values.isJobListing}  sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label={t('jobPosted.label.jobPosting')}/>
+                                    <FormControlLabel name="isJobListing"  control={<Checkbox onChange={formik.handleChange} checked={formik.values.isJobListing}  sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="Job posting"/>
                                     <IconButton disabled={!formik.values.isJobListing} sx={{marginRight: 50}} onClick={()=> setShowJobSettings(true)}>
                                         <Settings/>
                                     </IconButton>
@@ -152,7 +150,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                                         type="submit"
                                         disabled={formik.values.text === ''}
                                     >
-                                        <span className={styles.buttonText}>{t('common.buttons.post')}</span>
+                                        <span className={styles.buttonText}>Post</span>
                                         <Send className={styles.sendIcon}/>
                                     </Button>
                                 </div>
