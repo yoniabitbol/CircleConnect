@@ -1,5 +1,5 @@
 import {FC, useState, MouseEvent, useEffect} from 'react';
-import {Button, Menu,  Typography} from '@mui/material';;
+import {Button, Menu,  Typography, CircularProgress} from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {UploadFile, FileCopy, CheckCircleRounded} from '@mui/icons-material';
 import {useFormik} from 'formik';
@@ -10,6 +10,8 @@ const ApplyDropUp:FC<{postSettings: any, postId: string,}> = (props) => {
     const {postSettings, postId} = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [canApply, setCanApply] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [success, setSuccess] = useState<boolean>(false);
     const open = Boolean(anchorEl);
     const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -34,15 +36,22 @@ const ApplyDropUp:FC<{postSettings: any, postId: string,}> = (props) => {
 
     const formik = useFormik<any>({
         initialValues: {existingInfo: false, applicationResume: null, applicationCoverLetter: null},
-        onSubmit: (values,{resetForm}) => {
-            console.log(values)
+        onSubmit: (values) => {
             const formData = new FormData();
             for (const key in values) {
                 formData.append(key, values[key]);
             }
-            applyToPost(postId,formData);
-            handleClose();
-            resetForm();
+            applyToPost(postId,formData).then((res) => {
+                setLoading(true);
+                setTimeout(() => {
+                    if(res.status === 'success') {
+                        setLoading(false);
+                        setSuccess(true);
+                    }
+                },1500);
+            })
+            // handleClose();
+            // resetForm();
         }
     })
     useEffect(() => {
@@ -105,19 +114,21 @@ const ApplyDropUp:FC<{postSettings: any, postId: string,}> = (props) => {
                                    {formik.values.applicationCoverLetter && <CheckCircleRounded sx={{color: '#0dcc0f'}}/>}
                                </div>
                            </div>
-                            <Button disabled={!canApply} sx={{marginTop:2,fontSize: 20, width:'100%', backgroundColor:`${canApply ? '#4D47C3' : 'gray'}`,color:'white', '&:hover':{backgroundColor: '#3a32c2'}}} variant="text" type="submit">
-                                Apply
-                            </Button>
+                            {!success && <Button disabled={!canApply} sx={{marginTop:2,fontSize: 20, width:'100%', backgroundColor:`${canApply ? '#4D47C3' : 'gray'}`,color:'white', '&:hover':{backgroundColor: '#3a32c2'}}} variant="text" type="submit">
+                                {loading ? <CircularProgress size={20} color="inherit" /> : 'Apply'}
+                            </Button>}
                         </form>
 
+                        {!success ? <div className="h-full">
+                            <Typography sx={{height:'20%',fontSize: 30, color:'gray', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center', marginTop:3}}>
+                                OR
+                            </Typography>
+                            <Button variant='text' sx={{marginTop:2,fontSize: 17, width:'100%', backgroundColor:'#4D47C3',color:'white', '&:hover':{backgroundColor: '#3a32c2'}}}>
+                                <FileCopy />
+                                Apply With Existing Resume
+                            </Button>
+                        </div> : <h1 className="w-full text-center text-2xl text-green-500 mt-20">	&#127881; Successfully applied &#127881;</h1> }
 
-                        <Typography sx={{height:'20%',fontSize: 30, color:'gray', textAlign:'center', display:'flex', justifyContent:'center', alignItems:'center', marginTop:3}}>
-                            OR
-                        </Typography>
-                        <Button variant='text' sx={{marginTop:2,fontSize: 17, width:'100%', backgroundColor:'#4D47C3',color:'white', '&:hover':{backgroundColor: '#3a32c2'}}}>
-                            <FileCopy />
-                            Apply With Existing Resume
-                        </Button>
                     </div>
 
             </Menu>

@@ -26,7 +26,7 @@ const style = {
 const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void}> = (props) => {
     const {showModal, handleModalClose, fetchFeed} = props;
     const formik = useFormik<any>({
-            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[]},
+            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[], isThirdParty:false, thirdPartyLink: ''},
             onSubmit: (values,{resetForm}) => {
                 const formData = new FormData();
                 for (const key in values) {
@@ -75,6 +75,9 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
         const newSettings = {...settings, [type]: value};
         setSettings(newSettings);
         for(const key in newSettings){
+            if(key === 'uploadDeadline' && newSettings[key] === null){
+                continue;
+            }
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             formik.setFieldValue(key, newSettings[key]);
@@ -98,7 +101,6 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                         <form onSubmit={formik.handleSubmit}>
                             <div className="p-2 relative bottom-0">
                                 <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder="Whats on your mind?"/>
-
                                 {formik.values.image && <div className="flex items-center space-x-1">
                                 <h6 className="font-semibold mt-2 p-2">Image</h6>
                                 <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
