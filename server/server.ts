@@ -21,19 +21,22 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: 'http://localhost:3000',
   },
 });
 
 const port = process.env.DEV_SERVER_PORT || 4000;
 
 io.on('connection', (socket: Socket) => {
-  Logger.info(`Socket connected: ${socket.id}`);
+  const { userId } = socket.handshake.query;
+  Logger.info(`Socket connected: ${userId}`);
   socket.on('disconnect', () => {
-    Logger.info(`Socket disconnected: ${socket.id}`);
+    Logger.info(`Socket disconnected: ${userId}`);
   });
 });
 
 server.listen(port, () => {
   Logger.info(`App listening on port ${port}`);
 });
+
+export default io;
