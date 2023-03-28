@@ -10,10 +10,12 @@ const common = {
             notif:'Notifications',
             onYourMind:'Whats on your mind?',
             notifSettings:'NOTIFICATION SETTINGS',
+            
         },
         buttons: {
             chat:'CHAT',
             newPost:'New Post',
+            post:'Post',
         }
     }
 }
