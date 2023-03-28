@@ -19,8 +19,20 @@ const messageSchema = new mongoose.Schema(
       type: String,
     },
   },
-  { timestamps: true, versionKey: false },
+  {
+    timestamps: true,
+    versionKey: false,
+    toObject: { virtuals: true },
+    toJSON: { virtuals: true },
+  },
 );
+
+messageSchema.virtual('sender', {
+  ref: 'User',
+  localField: 'senderID',
+  foreignField: 'user_id',
+  justOne: true,
+});
 
 const Message = mongoose.model('Message', messageSchema);
 export default Message;
