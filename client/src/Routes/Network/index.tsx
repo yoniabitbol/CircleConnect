@@ -5,7 +5,7 @@ import getCurrentUserConnections from "../../http/getCurrentUserConnections";
 import getUserProfilePic from "../../http/getUserPicturePic";
 
 type ConnectionType = Omit<Usertypes, "location" | "email" | "phone" | "website" | "backdrop" | "summary" |
-  "projects" | "skills" | "experience" | "education" | "languages" | "awards" | "courses">;
+  "projects" | "skills" | "experience" | "education" | "languages" | "awards" | "courses" | "applications" | "posts">;
 
   const Network: React.FC = () => {
 const [connections, setConnections] = useState<any>([]);

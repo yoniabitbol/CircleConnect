@@ -1,8 +1,8 @@
 import placeholder from "./placeholder.png";
-import { Schema } from "mongoose";
+import PropTypes from "prop-types";
 
 interface JobAppliedProps {
-  application: Schema.Types.ObjectId;
+  application: string;
 }
 
 const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
@@ -49,5 +49,6 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
     </div>
   );
 };
+JobApplied.propTypes = { application: PropTypes.string.isRequired };
 
 export default JobApplied;

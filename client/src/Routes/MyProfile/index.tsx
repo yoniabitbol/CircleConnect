@@ -4,6 +4,7 @@ import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import Usertypes from "../../Models/UserProfileModel";
 import { useState, useEffect } from "react";
 
+
 const MyProfile: React.FC = () => {
   const [myUser, setMyUser] = useState<Usertypes>({
     name: "",
@@ -61,6 +62,8 @@ const MyProfile: React.FC = () => {
         description: "",
       },
     ],
+    applications: [""],
+    posts: [""],
   });
 
   const [fetchedUser, setFetchedUser] = useState(false);

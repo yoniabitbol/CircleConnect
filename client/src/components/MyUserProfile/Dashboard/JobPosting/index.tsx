@@ -1,33 +1,33 @@
 import { useState } from "react";
 import ApplicantRow from "./ApplicantRow";
 import placeholder from "./placeholder.png";
-import { Schema } from "mongoose";
 import getPost from "../../../../http/getPost";
 import { useEffect } from "react";
+import PropTypes from "prop-types";
 
 interface JobPostingProps {
-  post: Schema.Types.ObjectId;
+  post: string;
 }
 
-interface postType {
-  creatorID: string;
-  isJobListing: boolean;
-  position: string;
-  text: string;
-  image: string;
-  likes: string[];
-  comments: {
-    commenter: string;
-    comment: string;
-  }[];
-  preferenceTags: { type: string }[];
-  uploadDeadline: Date;
-  isThirdParty: boolean;
-  thirdPartyLink: string;
-  isResumeRequired: boolean;
-  isCoverLetterRequired: boolean;
-  applications: Schema.Types.ObjectId[];
-}
+// interface postType {
+//   creatorID: string;
+//   isJobListing: boolean;
+//   position: string;
+//   text: string;
+//   image: string;
+//   likes: string[];
+//   comments: {
+//     commenter: string;
+//     comment: string;
+//   }[];
+//   preferenceTags: { type: string }[];
+//   uploadDeadline: Date;
+//   isThirdParty: boolean;
+//   thirdPartyLink: string;
+//   isResumeRequired: boolean;
+//   isCoverLetterRequired: boolean;
+//   applications: Schema.Types.ObjectId[];
+// }
 
 const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
   const [postInfo, setPostInfo] = useState("");
@@ -105,5 +105,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
     </div>
   );
 };
+
+JobPosting.propTypes = { post: PropTypes.string.isRequired };
 
 export default JobPosting;
