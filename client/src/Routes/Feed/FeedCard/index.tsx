@@ -16,8 +16,11 @@ function getWordStr(str: string, num: number) {
     return str.split(/\s+/).slice(0, num).join(" ");
 }
 
-const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:any, userPic:string, postSettings: any }> = (props) => {
-    const {userInfo, postInfo, numLikes, numComments, userPic, postSettings} = props;
+const indeedLogoFile = 'Indeed-Symbol.png'
+const glassdoorLogoFile = 'glassdoor-icon.webp'
+
+const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:any, userPic:string, postSettings: any, scrollTo:()=> void}> = (props) => {
+    const {userInfo, postInfo, numLikes, numComments, userPic, postSettings, scrollTo} = props;
     const [readMore, setReadMore] = useState(false);
     const [numberLikes, setNumberLikes] = useState(numLikes);
     const [like, setLike] = useState(false);
@@ -53,6 +56,8 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
     }
     const commentClickHandler = () => {
         setShowComments(!showComments);
+        if(!showComments)
+        scrollTo();
     }
     // const DummyComments = [
     //     {
@@ -94,7 +99,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
         },
     }));
     return (
-        <Card sx={{marginTop: 2, borderRadius:5, padding:0}}>
+        <Card id={postInfo.id} sx={{marginTop: 2, borderRadius:5, padding:0}}>
             <CardContent sx={{padding: 0}}>
                 {/*<div className="flex p-3 items-center border-gray-100 border-b-2">*/}
                 {/*    <Typography sx={{ fontSize: 14, width: '100%'}} color="text.secondary" gutterBottom>*/}
