@@ -3,6 +3,7 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes';
 import postRoutes from './routes/postRoutes';
 import applicationRoutes from './routes/applicationRoutes';
+import threadRoutes from './routes/threadRoutes';
 import decodeToken from './middleware/decodeToken';
 import Morgan from './middleware/morgan';
 import usingAuth from './usingAuth';
@@ -19,6 +20,7 @@ if (usingAuth()) {
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/applications', applicationRoutes);
+app.use('/api/threads', threadRoutes);
 
 // Serve static assets in production
 app.use(express.static('./public'));

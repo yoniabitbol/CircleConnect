@@ -25,7 +25,7 @@ const createMessage = async (req: Request, res: Response) => {
   try {
     const message = await Message.create({
       senderID: req.body.senderID,
-      threadID: req.body.threadID,
+      threadID: req.params.thread_id,
       text: req.body.text,
       file: req.body.file,
     });
