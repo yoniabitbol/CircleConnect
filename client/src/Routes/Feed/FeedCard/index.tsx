@@ -1,5 +1,5 @@
-import {Card, CardContent, CardActions, Button, Avatar, IconButton} from '@mui/material';
-import { ThumbUpOffAlt, ChatBubbleOutline, ThumbUpAlt, ChatBubble} from '@mui/icons-material';
+import {Card, CardContent, CardActions, Button, Avatar, IconButton, Tooltip, TooltipProps, styled, tooltipClasses} from '@mui/material';
+import { ThumbUpOffAlt, ChatBubbleOutline, ThumbUpAlt, ChatBubble, Error} from '@mui/icons-material';
 import ApplyDropUp from '../../../components/ApplyDropUp';
 import React, {useEffect, useState} from 'react';
 import Comments from './Comments';
@@ -82,9 +82,33 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
     //         comment: 'This is a comment',
     //     }]
 
+    const isDeadlinePassed = () => {
+        const deadline = new Date(postSettings.uploadDeadline);
+        const today = new Date();
+        return deadline < today;
+    }
 
+    const parseDate = (date: string) => {
+        const dateObj = new Date(date);
+        const month = dateObj.toLocaleString('default', { month: 'long' });
+        const day = dateObj.getDate();
+        const year = dateObj.getFullYear();
+        return `${month} ${day}, ${year}`
+    }
+
+    const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+        <Tooltip placement='top' {...props} classes={{ popper: className }} />
+    ))(({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+            backgroundColor: 'red',
+            color: 'white',
+            maxWidth: 275,
+            fontSize: theme.typography.pxToRem(17),
+            border: '1px solid #dadde9',
+        },
+    }));
     return (
-        <Card sx={{marginTop: 2, borderRadius:5}}>
+        <Card sx={{marginTop: 2, borderRadius:5, padding:0}}>
             <CardContent sx={{padding: 0}}>
                 {/*<div className="flex p-3 items-center border-gray-100 border-b-2">*/}
                 {/*    <Typography sx={{ fontSize: 14, width: '100%'}} color="text.secondary" gutterBottom>*/}
@@ -114,19 +138,17 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                         }
                         {postImage &&  <img  style={{aspectRatio: 2 / 1, marginTop: 5, fontFamily: 'Poppins'}} className="w-full"
                               src={postImage}/>}
-
+                        {postSettings.isThirdParty && <div className="p-2 flex">
+                            <img
+                                style={{ maxWidth: "2rem", maxHeight: "2rem" }}
+                                src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}/>
+                            <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center" href={postSettings.thirdPartyLink}>{isIndeedLink ? 'ca.indeed.com' : isGlassdoorLink ? 'Glassdoor.com': 'Third Party Link'}</a>
+                        </div>}
                     </div>
-                    {postSettings.isThirdParty && <div className="p-3 ml-5 flex">
-                        <img
-                            style={{ maxWidth: "2rem", maxHeight: "2rem" }}
-                            src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}/>
-                        <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center" href={postSettings.thirdPartyLink}>{isIndeedLink ? 'ca.indeed.com' : isGlassdoorLink ? 'Glassdoor.com': 'Third Party Link'}</a>
-                    </div>}
-
                 </div>
             </CardContent>
             <CardActions >
-                <div className="w-full flex ">
+                <div className="w-full flex">
                     <div className="w-1/6 min-w-fit">
                         <IconButton onClick={likeClickHandler} size="small" style={{borderWidth:'2px', borderColor:'#4D47C3', color:'#4D47C3'}} >{like ? <ThumbUpAlt/> :<ThumbUpOffAlt/>}</IconButton>
                         <span>{numberLikes}</span>
@@ -136,7 +158,23 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                         <span>{numComments}</span>
                     </div>
                 </div>
-                {postSettings.isJobListing && <div className="mr-3">
+                {postSettings.isJobListing && <div className="mr-3 flex space-x-3 items-center min-w-fit p-2">
+                    {postSettings.uploadDeadline && <div className="flex">
+                        <div className="min-[460px]:flex text-center">
+                            <div className="flex">
+                                {isDeadlinePassed() && <HtmlTooltip
+                                    title="Application deadline has passed"
+                                >
+                                    <Error sx={{color: 'red'}}/>
+                                </HtmlTooltip>}
+                                <h2 className='font-bold'>&nbsp; Deadline &nbsp;</h2>
+                            </div>
+
+                            <h1>{parseDate(postSettings.uploadDeadline)}</h1>
+                        </div>
+
+                    </div>
+                    }
                     <ApplyDropUp postSettings={postSettings} postId={postInfo.id}/>
                 </div>}
             </CardActions>
