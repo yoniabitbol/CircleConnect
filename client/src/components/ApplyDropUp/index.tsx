@@ -6,7 +6,7 @@ import {useFormik} from 'formik';
 import applyToPost from '../../http/applyToPost';
 
 
-const ApplyDropUp:FC<{postSettings: any, postId: string}> = (props) => {
+const ApplyDropUp:FC<{postSettings: any, postId: string,}> = (props) => {
     const {postSettings, postId} = props;
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [canApply, setCanApply] = useState<boolean>(false);
