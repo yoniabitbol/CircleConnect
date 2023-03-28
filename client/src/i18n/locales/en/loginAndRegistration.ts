@@ -21,6 +21,8 @@ const loginAndRegistration = {
             password:'Password',
             firstName:'First Name',
             lastName:'Last Name',
+            login: 'Login',
+            loginLink:'Login here',
         },
         buttons: {
             login: 'Login',

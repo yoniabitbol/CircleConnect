@@ -11,9 +11,12 @@ const notifications = {
             viewsToday:"vues aujourd'hui",
             postViews:'publications vues',
             searchAppearance:"recherche d'apparence",
+            network:'Mon réseau',
         },
         buttons: {
             newPost:'Nouveau poste',
+            chat:'Clavarder',
+            showAll:'TOUT AFFICHER',
         }
     }
 }

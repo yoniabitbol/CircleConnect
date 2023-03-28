@@ -7,6 +7,11 @@ const jobPosted = {
             location:'Location',
             posted:'Jobs you posted:',
             applicantList:'Applicants:',
+            jobSettings:'Job Posting Settings',
+            requireResume: 'Require Resumé/CV',
+            requireCoverLetter:'Require Cover Letter',
+            applicationDeadline:'Application Deadline',
+            jobPosting:'Job posting',
 
         },
         buttons: {

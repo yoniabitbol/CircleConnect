@@ -18,7 +18,7 @@ const AuthContent: React.FC = () => {
               <div className="font-medium mt-3">
                 {t('loginAndRegistration.label.haveAccount')} <br /> {t('loginAndRegistration.label.youCan')}{" "}
                 <Link to="/login" className="text-blue-500">
-                {t('common.buttons.login')}
+                {t('loginAndRegistration.label.loginLink')}
                 </Link>
               </div>
             ) : (
