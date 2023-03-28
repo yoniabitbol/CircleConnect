@@ -7,6 +7,7 @@ import classes from './style.module.css';
 import getUserProfilePic from '../../../http/getUserPicturePic';
 import likePost from '../../../http/likePost';
 import getPostImage from '../../../http/getPostImage';
+import {Link} from 'react-router-dom';
 function getCount(str: string) {
     return str.split(' ').filter(function(num: string) {
         return num != ''
@@ -15,6 +16,9 @@ function getCount(str: string) {
 function getWordStr(str: string, num: number) {
     return str.split(/\s+/).slice(0, num).join(" ");
 }
+
+const indeedLogoFile = 'Indeed-Symbol.png'
+const glassdoorLogoFile = 'glassdoor-icon.webp'
 
 const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:any, userPic:string, postSettings: any }> = (props) => {
     const {userInfo, postInfo, numLikes, numComments, userPic, postSettings} = props;
@@ -31,6 +35,11 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
     }, [])
 
 
+    const isIndeedLink = postSettings.isThirdParty ? postSettings.thirdPartyLink.includes('ca.indeed.com') : false;
+    const isGlassdoorLink = postSettings.isThirdParty ? postSettings.thirdPartyLink.includes('glassdoor.com') : false;
+    const thirdPartyLogo = postSettings.isThirdParty ? isIndeedLink ? indeedLogoFile : isGlassdoorLink ? glassdoorLogoFile : null : null;
+
+
 
     useEffect(() => {
         getPostImage(postInfo.img).then(res => {
@@ -41,15 +50,20 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
         })
     }, [ postInfo])
     const likeClickHandler = () => {
-        setLike(!like);
-        if (like) {
-            setNumberLikes(numberLikes - 1);
-        } else {
-            setNumberLikes(numberLikes + 1);
-        }
         likePost(postInfo.id).then(res => {
-            console.log(res);
+            if(res.status === 'success'){
+                if (res.message === "Post disliked successfully") {
+                    setNumberLikes(numberLikes - 1);
+                    setLike(false);
+                } else {
+                    setNumberLikes(numberLikes + 1);
+                    setLike(true);
+                }
+            }
+
         })
+
+
     }
     const commentClickHandler = () => {
         setShowComments(!showComments);
@@ -68,6 +82,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
     //         comment: 'This is a comment',
     //     }]
 
+
     return (
         <Card sx={{marginTop: 2, borderRadius:5}}>
             <CardContent sx={{padding: 0}}>
@@ -80,13 +95,13 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                 {/*    </div>*/}
                 {/*</div>*/}
                 <div>
-                    <div className="flex items-center p-3">
+                    <Link to={`/profile/${userInfo.user_id}`}  className="flex items-center p-3">
                         <Avatar src={userProfilePic}/>
                         <div className="ml-2">
                             <h1 className="font-bold">{userInfo.name}</h1>
                             <h2>{userInfo.title}</h2>
                         </div>
-                    </div>
+                    </Link>
                     <div className="p-3 border-gray-100 border-b-2 h-full pt-2 pl-10 pr-10">
                         <div className={`${getCount(postInfo.text) > 60 ? !readMore && classes.postText : classes.postTextMore}`}>
                             <p className="break-words">{getCount(postInfo.text) > 60 && !readMore ? getWordStr(postInfo.text, 60) : postInfo.text}</p>
@@ -99,7 +114,15 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                         }
                         {postImage &&  <img  style={{aspectRatio: 2 / 1, marginTop: 5, fontFamily: 'Poppins'}} className="w-full"
                               src={postImage}/>}
+
                     </div>
+                    {postSettings.isThirdParty && <div className="p-3 ml-5 flex">
+                        <img
+                            style={{ maxWidth: "2rem", maxHeight: "2rem" }}
+                            src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}/>
+                        <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center" href={postSettings.thirdPartyLink}>{isIndeedLink ? 'ca.indeed.com' : isGlassdoorLink ? 'Glassdoor.com': 'Third Party Link'}</a>
+                    </div>}
+
                 </div>
             </CardContent>
             <CardActions >
