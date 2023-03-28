@@ -1,4 +1,4 @@
-import React from 'react';
+import {FC, useEffect, useRef, useState} from 'react';
 import FeedCard from '../FeedCard';
 
 // const FeedDummyData = [{
@@ -33,15 +33,25 @@ import FeedCard from '../FeedCard';
 //         numComments: 3,
 //     }
 // ]
-const FeedContent:React.FC<{userPic: string, feedData: any}> = (props) => {
+
+const FeedContent:FC<{userPic: string, feedData: any}> = (props) => {
     const {userPic, feedData} = props;
+    const ref = useRef<any>();
+    const [scrollTo, setScrollTo] = useState(0);
+    useEffect(() => {
+        if(ref.current) {
+            ref.current.scrollIntoView({behavior: 'smooth', block: 'center'})
+        }
+    }, [ref.current])
     return (
         <div className="flex-row w-full justify-center">
-            {feedData && feedData.map((data : any) => {
-                return <FeedCard key={data.id} userInfo={data.creator}
-                postInfo={{id:data._id,text: data.text, img: data.image, comments: data.comments}}
-                postSettings={{isJobListing:data.isJobListing, isResumeRequired:data.isResumeRequired, isCoverLetterRequired: data.isCoverLetterRequired, isThirdParty: data.isThirdParty, thirdPartyLink: data.thirdPartyLink, uploadDeadline: data.uploadDeadline}}
-                                 numLikes={data.likes.length} numComments={data.comments.length} userPic={userPic}/>
+            {feedData && feedData.map((data : any, i: number) => {
+                return ( <div key={data.id} ref={i === scrollTo ? ref: null}>
+                    <FeedCard  userInfo={data.creator} scrollTo={setScrollTo.bind(this, i)}
+                              postInfo={{id:data._id,text: data.text, img: data.image, comments: data.comments}}
+                              postSettings={{isJobListing:data.isJobListing, isResumeRequired:data.isResumeRequired, isCoverLetterRequired: data.isCoverLetterRequired, isThirdParty: data.isThirdParty, thirdPartyLink: data.thirdPartyLink, uploadDeadline: data.uploadDeadline}}
+                              numLikes={data.likes.length} numComments={data.comments.length} userPic={userPic}/>
+                </div>)
             })
             }
         </div>
