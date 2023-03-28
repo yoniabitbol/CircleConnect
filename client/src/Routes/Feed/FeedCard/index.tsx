@@ -72,12 +72,17 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
         scrollTo();
     }
 
+
+
+
+
+
+
     const isDeadlinePassed = () => {
         const deadline = new Date(postSettings.uploadDeadline);
         const today = new Date();
         return deadline < today;
     }
-
 
     const parseDate = (date: string) => {
         const dateObj = new Date(date);
@@ -101,6 +106,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
 
     return (
         <Card id={postInfo.id} sx={{marginTop: 2, borderRadius:5, padding:0}}>
+
             <CardContent sx={{padding: 0}}>
                 {/*<div className="flex p-3 items-center border-gray-100 border-b-2">*/}
                 {/*    <Typography sx={{ fontSize: 14, width: '100%'}} color="text.secondary" gutterBottom>*/}
@@ -130,13 +136,15 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                         }
                         {postImage &&  <img  style={{aspectRatio: 2 / 1, marginTop: 5, fontFamily: 'Poppins'}} className="w-full"
                               src={postImage}/>}
+
+                        {postSettings.isThirdParty && <div className="p-2 flex">
+                            <img
+                                style={{ maxWidth: "2rem", maxHeight: "2rem" }}
+                                src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}/>
+                            <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center" href={postSettings.thirdPartyLink}>{isIndeedLink ? 'ca.indeed.com' : isGlassdoorLink ? 'Glassdoor.com': 'Third Party Link'}</a>
+                        </div>}
                     </div>
-                    {postSettings.isThirdParty && <div className="p-3 ml-5 flex">
-                        <img
-                            style={{ maxWidth: "2rem", maxHeight: "2rem" }}
-                            src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}/>
-                        <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center" href={postSettings.thirdPartyLink}>{isIndeedLink ? 'ca.indeed.com' : isGlassdoorLink ? 'Glassdoor.com': 'Third Party Link'}</a>
-                    </div>}
+
 
                 </div>
             </CardContent>
