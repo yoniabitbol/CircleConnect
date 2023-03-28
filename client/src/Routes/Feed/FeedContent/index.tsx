@@ -35,11 +35,13 @@ import FeedCard from '../FeedCard';
 // ]
 const FeedContent:React.FC<{userPic: string, feedData: any}> = (props) => {
     const {userPic, feedData} = props;
-    console.log(feedData)
     return (
         <div className="flex-row w-full justify-center">
             {feedData && feedData.map((data : any) => {
-                return <FeedCard key={data.id} userInfo={data.creator} postInfo={{id:data._id,text: data.text, img: data.image, comments: data.comments}} postSettings={{isJobListing:data.isJobListing, isResumeRequired:data.isResumeRequired, isCoverLetterRequired: data.isCoverLetterRequired}} numLikes={data.likes.length} numComments={data.comments.length} userPic={userPic}/>
+                return <FeedCard key={data.id} userInfo={data.creator}
+                postInfo={{id:data._id,text: data.text, img: data.image, comments: data.comments}}
+                postSettings={{isJobListing:data.isJobListing, isResumeRequired:data.isResumeRequired, isCoverLetterRequired: data.isCoverLetterRequired, isThirdParty: data.isThirdParty, thirdPartyLink: data.thirdPartyLink, uploadDeadline: data.uploadDeadline}}
+                                 numLikes={data.likes.length} numComments={data.comments.length} userPic={userPic}/>
             })
             }
         </div>

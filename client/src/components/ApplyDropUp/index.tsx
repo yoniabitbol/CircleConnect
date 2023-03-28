@@ -26,6 +26,11 @@ const ApplyDropUp:FC<{postSettings: any, postId: string}> = (props) => {
         }
         return true;
     }
+    const isDeadlinePassed = () => {
+        const deadline = new Date(postSettings.uploadDeadline);
+        const today = new Date();
+        return deadline < today;
+    }
 
     const formik = useFormik<any>({
         initialValues: {existingInfo: false, applicationResume: null, applicationCoverLetter: null},
@@ -45,15 +50,18 @@ const ApplyDropUp:FC<{postSettings: any, postId: string}> = (props) => {
     }, [formik.values])
     return (
         <div>
-            <Button
-                sx={{backgroundColor:'#4D47C3', ':hover':{backgroundColor:'#4D47C3'},  '&:hover':{transitionProperty:'transform', transitionDuration:'0.3s', transform:'scale(1.02)',  filter: 'drop-shadow(0px 0px 2px #6947C3)'}}}
-                variant="contained"
-                component='label'
-                disableElevation
-                onClick={handleClick}
-                endIcon={<KeyboardArrowDownIcon />}>
-                Apply
-            </Button>
+            <div className="flex items-center space-x-2">
+                <Button
+                    disabled={isDeadlinePassed()}
+                    sx={{backgroundColor:'#4D47C3', ':hover':{backgroundColor:'#4D47C3'},  '&:hover':{transitionProperty:'transform', transitionDuration:'0.3s', transform:'scale(1.02)',  filter: 'drop-shadow(0px 0px 2px #6947C3)'}}}
+                    variant="contained"
+                    component='label'
+                    disableElevation
+                    onClick={handleClick}
+                    endIcon={<KeyboardArrowDownIcon />}>
+                    Apply
+                </Button>
+            </div>
             <Menu
                 id="demo-customized-menu"
                 anchorEl={anchorEl}
