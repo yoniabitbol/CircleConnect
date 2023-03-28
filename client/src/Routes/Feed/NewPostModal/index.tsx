@@ -29,7 +29,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
     const {t} = useTranslation();
     const {showModal, handleModalClose, fetchFeed} = props;
     const formik = useFormik<any>({
-            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[]},
+            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[], isThirdParty:false, thirdPartyLink: ''},
             onSubmit: (values,{resetForm}) => {
                 const formData = new FormData();
                 for (const key in values) {
@@ -76,6 +76,9 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
         const newSettings = {...settings, [type]: value};
         setSettings(newSettings);
         for(const key in newSettings){
+            if(key === 'uploadDeadline' && newSettings[key] === null){
+                continue;
+            }
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             formik.setFieldValue(key, newSettings[key]);
