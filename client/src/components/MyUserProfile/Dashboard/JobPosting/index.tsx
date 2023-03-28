@@ -9,28 +9,29 @@ interface JobPostingProps {
   post: string;
 }
 
-// interface postType {
-//   creatorID: string;
-//   isJobListing: boolean;
-//   position: string;
-//   text: string;
-//   image: string;
-//   likes: string[];
-//   comments: {
-//     commenter: string;
-//     comment: string;
-//   }[];
-//   preferenceTags: { type: string }[];
-//   uploadDeadline: Date;
-//   isThirdParty: boolean;
-//   thirdPartyLink: string;
-//   isResumeRequired: boolean;
-//   isCoverLetterRequired: boolean;
-//   applications: Schema.Types.ObjectId[];
-// }
+interface postType {
+  _id: string;
+  creatorID: string;
+  isJobListing: boolean;
+  position: string;
+  text: string;
+  image: string;
+  likes: string[];
+  comments: {
+    commenter: string;
+    comment: string;
+  }[];
+  preferenceTags: { type: string }[];
+  uploadDeadline: Date;
+  isThirdParty: boolean;
+  thirdPartyLink: string;
+  isResumeRequired: boolean;
+  isCoverLetterRequired: boolean;
+  applications: string[];
+}
 
 const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
-  const [postInfo, setPostInfo] = useState("");
+  const [postInfo, setPostInfo] = useState<postType>();
 
   console.log(postInfo);
 
