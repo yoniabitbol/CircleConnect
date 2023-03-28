@@ -17,7 +17,7 @@ import UserProfileBanner from "./UserProfileBanner";
 import NavLinks from "./Navbar/NavLinks";
 import ApplyDropUp from "./ApplyDropUp";
 
-jest.mock("./firebase/config", () => ({
+jest.mock("../firebase/config", () => ({
   auth:
     {currentUser: {getIdToken: () => {return "testToken";}, uid: "testUID"}},
 }));
