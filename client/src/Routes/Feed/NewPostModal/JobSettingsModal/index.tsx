@@ -123,17 +123,6 @@ const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, val
                         />}
                     </div>
                 </div>
-                <div className="mt-6">
-                    <FormControlLabel sx={{placeItems:'center'}} onChange={handleThirdPartyChange}  control={<Checkbox sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="Third Party Post"/>
-                    <div className="w-full flex">
-                        <TextField sx={{width:'70%'}} value={thirdPartyLink ? thirdPartyLink : ''} margin='none' disabled={!thirdParty || linkSaved} onChange={(linkChangeHandler)} type="text" variant="filled" label="Enter 3rd party link"/>
-                        <Button disabled={!thirdPartyLink} onClick={onLinkSave}  variant="contained" disableElevation sx={{ml:1,backgroundColor:'#4D47C3', color:'white', '&:hover':{backgroundColor:'#4D47C3'},height:55}}>{linkSaved ? 'Edit' : 'Save'}</Button>
-                        {thirdPartyLogo && thirdPartyLink && <img
-                            style={{ maxWidth: "5rem", maxHeight: "4rem" }}
-                            src={process.env.PUBLIC_URL + "/Third Party Link logos/" + thirdPartyLogo}
-                        />}
-                    </div>
-                </div>
             </Box>
         </Modal>
     );
