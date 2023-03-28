@@ -54,6 +54,7 @@ const FeedContent:FC<{ feedData: any}> = (props) => {
                               numLikes={data.likes.length} numComments={data.comments.length} userPic={data.image}/>
                 </div>)
 
+
             })
             }
         </div>
