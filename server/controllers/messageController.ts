@@ -6,7 +6,7 @@ const getThreadMessages = async (req: Request, res: Response) => {
   try {
     const messages = await Message.find({
       threadID: req.params.thread_id,
-    });
+    }).populate('sender', 'name picture');
     res.status(200).json({
       status: 'success',
       data: {
