@@ -10,10 +10,13 @@ const notifications = {
             stats:'GO TO STATS',
             viewsToday:'views today',
             postViews:'posts views',
-            searchAppearance:'search appearances'
+            searchAppearance:'search appearances',
+            network:'My Network',
         },
         buttons: {
             newPost:'New Post',
+            chat:'Chat',
+            showAll:'SHOW ALL',
         }
     }
 }

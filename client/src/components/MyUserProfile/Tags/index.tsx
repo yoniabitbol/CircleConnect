@@ -55,7 +55,7 @@ const Tags: React.FC<TagsProps> = ({ preferenceTags }) => {
       </div>
       <input
         type="text"
-        placeholder="Add a tag"
+        placeholder={t('userProfile.label.addTag') as string}
         onChange={handleChange}
         value={newTag}
         className="bg-white text-slate-500 py-2 px-4 rounded-xl m-2 w-fit"
