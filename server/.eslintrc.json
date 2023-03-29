@@ -16,6 +16,7 @@
   "rules": {
     "no-console": "warn",
     "max-len": "warn",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "import/no-cycle": "off"
   }
 }
