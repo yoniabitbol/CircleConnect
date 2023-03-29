@@ -143,12 +143,10 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                             <a target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center" href={postSettings.thirdPartyLink}>{isIndeedLink ? 'ca.indeed.com' : isGlassdoorLink ? 'Glassdoor.com': 'Third Party Link'}</a>
                         </div>}
                     </div>
-
-
                 </div>
             </CardContent>
             <CardActions >
-                <div className="w-full flex">
+                <div className="w-full flex space-x-3">
                     <div className="w-1/6 min-w-fit">
                         <IconButton onClick={likeClickHandler} size="small" style={{borderWidth:'2px', borderColor:'#4D47C3', color:'#4D47C3'}} >{like ? <ThumbUpAlt/> :<ThumbUpOffAlt/>}</IconButton>
                         <span>{numberLikes}</span>
@@ -160,7 +158,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                 </div>
                 {postSettings.isJobListing && <div className="mr-3 flex space-x-3 items-center min-w-fit p-2">
                     {postSettings.uploadDeadline && <div className="flex">
-                        <div className="min-[460px]:flex text-center">
+                        <div className="min-[460px]:flex text-center items-center">
                             <div className="flex">
                                 {isDeadlinePassed() && <HtmlTooltip
                                     title="Application deadline has passed"
@@ -169,10 +167,8 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
                                 </HtmlTooltip>}
                                 <h2 className='font-bold'>&nbsp; Deadline &nbsp;</h2>
                             </div>
-
-                            <h1>{parseDate(postSettings.uploadDeadline)}</h1>
+                            <h1 className="border-b-2 p-1">{parseDate(postSettings.uploadDeadline)}</h1>
                         </div>
-
                     </div>
                     }
                     <ApplyDropUp postSettings={postSettings} postId={postInfo.id}/>
