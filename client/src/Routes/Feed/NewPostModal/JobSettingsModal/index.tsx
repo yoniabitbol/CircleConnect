@@ -5,8 +5,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {Switch} from '@mui/material';
-import {ChangeEvent, FC, useState} from 'react';
-import { useTranslation } from "react-i18next";
+import { FC} from 'react';
 
 
 const jobPositions = [
@@ -35,16 +34,10 @@ const jobPositions = [
 ]
 
 
-const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, values: object, onChange: (type:string,value: any) => void}> = (props) => {
-    const {t} = useTranslation();
 
+const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, values: object, onChange: (type:string,value: any) => void}> = (props) => {
     const {showModal, handleModalClose, onChange} = props;
-    const [thirdParty, setThirdParty] = useState<boolean>(false);
-    const [thirdPartyLink, setThirdPartyLink] = useState<string | null>(null);
-    const [thirdPartyLogo, setThirdPartyLogo] = useState<string | null>(null);
-    const [linkSaved, setLinkSaved] = useState<boolean>(false);
-    const indeedLogoFile = 'Indeed-Symbol.png'
-    const glassdoorLogoFile = 'glassdoor-icon.webp'
+
     const handleDateChange = ( date: Date | null) => {
         onChange('uploadDeadline',date);
     }
@@ -91,11 +84,10 @@ const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, val
    const handleJobPositionChange = (_ : any,value : any) => {
          onChange('position', value);
    }
-
     return (
-        <Modal open={showModal} onClose={handleModalClose}>
+        <Modal  open={showModal} onClose={handleModalClose}>
             <Box className={style.box}>
-               <h1 className="font-bold">{t('jobPosted.label.jobSettings')}</h1>
+               <h1 className="font-bold">Job Posting Settings</h1>
                 <div className="flex-col justify-items-center mt-5">
                     <div className="flex items-center space-x-3">
                         <Autocomplete sx={{width:'50%'}} options={jobPositions}  onInputChange={handleJobPositionChange}  freeSolo={true} renderInput={(params) => <TextField {...params} label="Job Postion" />}/>
