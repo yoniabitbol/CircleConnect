@@ -32,7 +32,6 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                 for (const key in values) {
                     formData.append(key, values[key]);
                 }
-                console.log(formData)
 
                 createPost(formData).then((res) => {
                     console.log(res);
