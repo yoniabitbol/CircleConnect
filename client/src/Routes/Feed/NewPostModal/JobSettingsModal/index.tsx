@@ -6,11 +6,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {Switch} from '@mui/material';
 import {ChangeEvent, FC, useState} from 'react';
-
-
+import { useTranslation } from "react-i18next";
 
 
 const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, values: object, onChange: (type:string,value: any) => void}> = (props) => {
+    const {t} = useTranslation();
+
     const {showModal, handleModalClose, onChange} = props;
     const [thirdParty, setThirdParty] = useState<boolean>(false);
     const [thirdPartyLink, setThirdPartyLink] = useState<string | null>(null);
@@ -66,12 +67,12 @@ const JobSettingsModal:FC<{showModal: boolean, handleModalClose: () => void, val
     return (
         <Modal open={showModal} onClose={handleModalClose}>
             <Box className={style.box}>
-               <h1 className="font-bold">Job Posting Settings</h1>
+               <h1 className="font-bold">{t('jobPosted.label.jobSettings')}</h1>
                 <div className="flex-col justify-items-center mt-5">
-                          <FormControlLabel onChange={handleResumeChange}  labelPlacement="start" control={<Switch color="secondary"/>} label="Require Resumé/CV"/>
-                          <FormControlLabel onChange={handleCoverLetterChange}  labelPlacement="start" control={<Switch color="secondary"/>} label="Require Cover Letter"/>
+                          <FormControlLabel onChange={handleResumeChange}  labelPlacement="start" control={<Switch color="secondary"/>} label={t('jobPosted.label.requireResume')}/>
+                          <FormControlLabel onChange={handleCoverLetterChange}  labelPlacement="start" control={<Switch color="secondary"/>} label={t('jobPosted.label.requireCoverLetter')}/>
                     <div className="mt-5 ml-5 flex-col justify-items-center">
-                        <h2>Application Deadline</h2>
+                        <h2>{t('jobPosted.label.applicationDeadline')}</h2>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DatePicker']}>
                                 <DatePicker onChange={handleDateChange}/>

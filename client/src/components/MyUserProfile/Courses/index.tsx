@@ -1,11 +1,13 @@
 import Divider from "@mui/material/Divider";
 import React, { useState } from "react";
 import Usertypes from "../../../Models/UserProfileModel";
+import { useTranslation } from "react-i18next";
 
 const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
   courses,
   edit,
 }) => {
+  const {t} = useTranslation();
   const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
@@ -25,7 +27,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
         setAddOrDelete(!addOrDelete);
       }}
     >
-      Add new
+      {t('userProfile.buttons.addNew')}
     </button>
   );
 
@@ -49,7 +51,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
     return (
       <>
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Title
+        {t('userProfile.label.title')}
         </label>
         <input
           name={`courses[${index}].title`}
@@ -61,7 +63,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Number
+          {t('userProfile.label.number')}
         </label>
         <input
           name={`courses[${index}].number`}
@@ -73,7 +75,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          School
+          {t('userProfile.label.school')}
         </label>
         <input
           name={`courses[${index}].school`}
@@ -85,7 +87,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Description
+        {t('userProfile.label.description')}
         </label>
         <input
           name={`courses[${index}].description`}
@@ -96,7 +98,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Start Date
+        {t('userProfile.label.startDate')}
         </label>
         <input
           name={`courses[${index}].startDate`}
@@ -108,7 +110,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          End Date
+        {t('userProfile.label.endDate')}
         </label>
         <input
           name={`courses[${index}].endDate`}
@@ -142,7 +144,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
   const component = edit ? (
     form
   ) : courses.length < 1 ? (
-    <p>Add at least 1 course</p>
+    <p>{t('userProfile.label.addCourse')}</p>
   ) : (
     <div className="grid grid-cols-2 gap-4 my-4">
       {courses.map((course) => {
@@ -165,7 +167,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
 
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold ">Courses</h1>
+      <h1 className="text-2xl font-bold ">{t('userProfile.label.courses')}</h1>
       {component}
     </div>
   );
