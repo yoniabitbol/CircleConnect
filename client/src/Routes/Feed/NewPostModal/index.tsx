@@ -25,9 +25,10 @@ const style = {
     transform: 'translate(-50%, -50%)',
     bgColor: 'white',
 };
-const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void}> = (props) => {
+
+const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void, postStatus: (value: boolean) => void}> = (props) => {
     const {t} = useTranslation();
-    const {showModal, handleModalClose, fetchFeed} = props;
+    const {showModal, handleModalClose, fetchFeed, postStatus} = props;
     const formik = useFormik<any>({
             initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[], isThirdParty:false, thirdPartyLink: ''},
             onSubmit: (values,{resetForm}) => {
@@ -36,12 +37,22 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                     formData.append(key, values[key]);
                 }
 
-                createPost(formData).then((res) => {
-                    console.log(res);
-                })
-                resetForm();
-                handleModalClose();
-                fetchFeed();
+                    createPost(formData).then((res) => {
+                        if(res.status === 'success') {
+                            resetForm();
+                            handleModalClose();
+                            postStatus(true);
+                            fetchFeed();
+                        }else {
+                            handleModalClose();
+                            postStatus(false);
+                        }
+                    }).catch(() => {
+                        handleModalClose();
+                        postStatus(false);
+                    })
+
+
             }
         })
     const [showTagSelection, setShowTagSelection] =useState<boolean>(false);
@@ -164,9 +175,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                         <TagSelection showModal={showTagSelection} handleModalClose={handleTagSelectionClose} onSelectTag={handleTagsSelection} onDeleteTag={handleTagDeletion} selectedTags={selectedTags}/>
                         <JobSettingsModal showModal={showJobSettings} handleModalClose={()=>setShowJobSettings(false)} values={formik.values.jobSettings} onChange={jobSettingsChangeHandler}/>
                     </div>
-
                 </>
-
             </Modal>
 
 

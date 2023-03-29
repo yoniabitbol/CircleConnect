@@ -4,7 +4,7 @@ import UserProfileBanner from '../../components/UserProfileBanner';
 import UserBannerSkeleton from '../../components/Skeleton/UserBannerSkeleton';
 import NewPostModal from './NewPostModal';
 import { Link } from 'react-router-dom';
-import {Button} from '@mui/material';
+import {Alert, Button, Snackbar} from '@mui/material';
 import getCurrentUserProfile from '../../http/getCurrentUserProfile';
 import getUserProfilePic from '../../http/getUserPicturePic';
 import getCurrentUserConnections from '../../http/getCurrentUserConnections';
@@ -27,6 +27,8 @@ const Feed = () => {
     const [userBannerLoading, setUserBannerLoading] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [feedData, setFeedData] = useState<any>(null);
+    const [showAlert, setShowAlert] = useState<boolean>(false);
+    const [postStatus,setPostStatus] = useState<boolean>(false);
     const handleModalClose = () => {
         setShowModal(false);
     }
@@ -71,6 +73,17 @@ const Feed = () => {
             })
         }
     },[user])
+
+    const isPostedSuccess = (value : boolean) => {
+        if(value){
+            setPostStatus(true);
+        }else
+            setPostStatus(false);
+        setShowAlert(true);
+
+
+    }
+
     return (
         <div>
             <div className="flex relative max-lg:flex-col-reverse xl:px-[200px] py-10 lg:px-[5rem] md:px-[3rem]"
@@ -107,7 +120,10 @@ const Feed = () => {
                     </div>
                 </div>
             </div>
-            <NewPostModal showModal={showModal} handleModalClose={handleModalClose} fetchFeed={fetchFeed}/>
+            <NewPostModal showModal={showModal} handleModalClose={handleModalClose} fetchFeed={fetchFeed} postStatus={isPostedSuccess}/>
+            <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}} open={showAlert} autoHideDuration={6000} onClose={()=> setShowAlert(false)}>
+                <Alert severity={postStatus ? "success" : "error"} >{postStatus ? 'Post Posted Successfully' : 'Oops! There was an error'}</Alert>
+            </Snackbar>
         </div>
 
     );
