@@ -1,6 +1,7 @@
 import {RssFeed, PeopleAltOutlined, WorkOutlineOutlined, ChatBubbleOutlineOutlined, NotificationsNoneOutlined} from "@mui/icons-material";
 import i18n from "../i18n/i18n";
 
+i18n.changeLanguage(window.sessionStorage.getItem('language') as string)
 const NavLinkModels = [
   {
     key: 1,
