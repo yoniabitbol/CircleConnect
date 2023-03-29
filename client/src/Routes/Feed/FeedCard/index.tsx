@@ -77,6 +77,7 @@ const FeedCard:React.FC<{userInfo:any, postInfo: any, numLikes:any, numComments:
 
 
 
+
     const isDeadlinePassed = () => {
         const deadline = new Date(postSettings.uploadDeadline);
         const today = new Date();
