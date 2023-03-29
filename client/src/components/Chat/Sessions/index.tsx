@@ -1,16 +1,17 @@
 import React from "react";
 import SessionItem from "../SessionItem";
 import { Form, Formik } from "formik";
+// import SessionType from "../../../Models/SessionModel";
 
-export interface SessionType {
+export type Thread = {
   id: number;
   name: string;
   picture: string;
   latestMsg: string;
-}
+};
 
 const Sessions: React.FC<{
-  sessions: SessionType[];
+  sessions: Thread[];
   selectSession: (event: any) => void;
   selected: number;
 }> = ({ sessions, selectSession, selected }) => {

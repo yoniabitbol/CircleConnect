@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Sessions from "./Sessions";
 import ChatDisplay from "./ChatDisplay";
-import { SessionType } from "./Sessions";
+import { Thread } from "../../Models/SessionModel";
+
 const Chat: React.FC = () => {
-  const [sessions] = useState<SessionType[]>([
+  const [sessions] = useState<Thread[]>([
     {
       id: 0,
       name: "Chad Thundercock",

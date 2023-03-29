@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Message from "../Message";
 import { Field, Form, Formik } from "formik";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import { SessionType } from "../Sessions";
+import { Thread } from "../../../Models/SessionModel";
 
 export interface MessageType {
   id: number;
@@ -11,7 +11,7 @@ export interface MessageType {
 }
 
 const ChatDisplay: React.FC<{
-  session: SessionType;
+  session: Thread;
 }> = ({ session }) => {
   const [messages, setMessages] = useState<MessageType[]>([
     { id: 0, outbound: false, text: "Memes" },
@@ -30,9 +30,7 @@ const ChatDisplay: React.FC<{
       <div className="justify-start ml-10 my-3">
         <span className="text-sm font-bold">
           CHAT WITH{" "}
-          <span style={{ color: "#4B47B7" }}>
-            {session.name.toUpperCase()}
-          </span>
+          <span style={{ color: "#4B47B7" }}>{session.name.toUpperCase()}</span>
         </span>
       </div>
       <hr className="border-gray-100 border" />
