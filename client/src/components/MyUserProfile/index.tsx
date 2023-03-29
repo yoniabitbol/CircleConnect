@@ -31,7 +31,7 @@ const MyUserProfile: React.FC<{
   }, [profile]);
 
   const editProfile = (values: any) => {
-    
+
     setUser({
       name: values.name,
       title: values.title,

@@ -32,6 +32,19 @@ const createMessage = async (req: Request, res: Response) => {
     await Thread.findOneAndUpdate(message.threadID, {
       $push: { messages: message._id },
     });
+
+    // // Get recipient user ID(s)
+    // const thread = await Thread.findById(req.params.thread_id);
+    // const recipientIDs = thread?.participants.filter((id) => id !== req.body.senderID);
+    //
+    // // Emit message to recipient(s)
+    // recipientIDs?.forEach((id) => {
+    //   const socketID = userSocketMap.get(id);
+    //   if (socketID) {
+    //     io.to(socketID).emit('message', message);
+    //   }
+    // });
+
     res.status(201).json({
       status: 'success',
       data: {
