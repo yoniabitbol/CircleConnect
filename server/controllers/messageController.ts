@@ -23,13 +23,13 @@ const getThreadMessages = async (req: Request, res: Response) => {
 };
 
 // Creates a message in a thread
-const createMessage = async (req: Request, res: Response) => {
+const createMessage = async (req: any, res: Response) => {
   try {
     const message = await Message.create({
       senderID: req.body.senderID,
       threadID: req.params.thread_id,
       text: req.body.text,
-      file: req.body.file,
+      file: req.files && req.files.messageFile ? req.files.messageFile[0].filename : req.body.image,
     });
     await Thread.findOneAndUpdate(message.threadID, {
       $push: { messages: message._id },

@@ -74,6 +74,7 @@ const createUser = async (req: Request, res: Response) => {
 // Updates a user based on ID
 const updateUser = async (req: any, res: Response) => {
   try {
+    console.log(req.files);
     const filter = { user_id: req.body.user_id };
     const update = {
       title: req.body.title,
