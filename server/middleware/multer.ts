@@ -119,6 +119,19 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
     });
   }
 
+  // Message Files
+  if (req.files.messageFile) {
+    req.files.messageFile[0].filename = `msg-user-${
+      req.body.senderID
+    }-${Date.now()}.${req.files.messageFile[0].mimetype.split('/')[1]}`;
+    const messageFile = req.files.messageFile[0];
+    fs.writeFile(`public/files/messages/${req.files.messageFile[0].filename}`, messageFile.buffer, (err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+
   return next();
 };
 
@@ -130,6 +143,7 @@ const uploadFiles = upload.fields([
   { name: 'image', maxCount: 1 },
   { name: 'applicationResume', maxCount: 1 },
   { name: 'applicationCoverLetter', maxCount: 1 },
+  { name: 'messageFile', maxCount: 1 },
 ]);
 
 export { uploadFiles, resizeFile };
