@@ -1,8 +1,10 @@
-import SessionType from "./SessionModel";
-
-export default interface MessageType {
+export default interface MessageModel {
+    _id: string;
     senderID: string;
-    threadID: SessionType;
+    threadID: string;
     text: string;
-    file: string;
+    file: string | null;
+    cretedAt: string;
+    updatedAt: string;
+
 }

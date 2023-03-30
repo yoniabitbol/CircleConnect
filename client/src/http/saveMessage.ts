@@ -2,7 +2,7 @@ import { auth } from "../firebase/config";
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 const url = `http://localhost:${port}/api/threads/`;
 
-async function sendMessage(thread_id: string, senderID: string, text: string, file: string,) {
+async function saveMessage(thread_id: string, senderID: string, text: string, file: string,) {
     const currentUser = auth.currentUser;
     const token = currentUser && (await currentUser.getIdToken());
     const id = currentUser && currentUser.uid;
@@ -20,4 +20,4 @@ async function sendMessage(thread_id: string, senderID: string, text: string, fi
     return res.json();
 }
 
-export default sendMessage;
+export default saveMessage;

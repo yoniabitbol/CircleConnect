@@ -1,7 +1,8 @@
 import React from "react";
 import SessionItem from "../SessionItem";
 import { Form, Formik } from "formik";
-// import SessionType from "../../../Models/SessionModel";
+import ThreadModel from "../../../Models/ThreadModel";
+import UserProfileModel from "../../../Models/UserProfileModel";
 
 export type Thread = {
   id: number;
@@ -11,10 +12,11 @@ export type Thread = {
 };
 
 const Sessions: React.FC<{
-  sessions: Thread[];
-  selectSession: (event: any) => void;
+  threads: ThreadModel[];
+  selectThread: (event: any) => void;
   selected: number;
-}> = ({ sessions, selectSession, selected }) => {
+  threadProfiles: UserProfileModel[];
+}> = ({ threads, selectThread, selected, threadProfiles }) => {
   return (
     <div>
       <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto">
@@ -22,26 +24,28 @@ const Sessions: React.FC<{
           <span className="text-sm font-bold">CHATS</span>
         </div>
         <hr className="border-gray-100 border" />
-        {sessions.map((sessionInMap) => (
-          <button
-            className="w-full h-full"
-            key={sessionInMap.id}
-            data-key={sessionInMap.id}
-            type="submit"
-            onClick={(event) => selectSession(event)}
-          >
-            <SessionItem
-              selected={selected == sessionInMap.id}
-              session={{
-                user: {
-                  name: sessionInMap.name,
-                  picture: sessionInMap.picture,
-                },
-                latestMsg: sessionInMap.latestMsg,
-              }}
-            />
-          </button>
-        ))}
+        {threads.map((thread, index) => {
+          return (
+            <button
+              className="w-full h-full"
+              key={thread._id}
+              data-key={thread._id}
+              type="submit"
+              onClick={(event) => selectThread(event)}
+            >
+              <SessionItem
+                selected={selected.toString() == thread._id}
+                session={{
+                  user: {
+                    name: threadProfiles[index].name,
+                    picture: "default-avatar.jpeg",
+                  },
+                  latestMsg: "",
+                }}
+              />
+            </button>
+          );
+        })}
       </div>
 
       <div className="mt-10 pb-5 rounded-md bg-white">
