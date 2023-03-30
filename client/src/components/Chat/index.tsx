@@ -3,17 +3,25 @@ import Sessions from "./Sessions";
 import ChatDisplay from "./ChatDisplay";
 import ThreadModel from "../../Models/ThreadModel";
 import UserProfileModel from "../../Models/UserProfileModel";
+import MessageModel from "../../Models/MessageModel";
+import getThreadMessages from "../../http/getThreadMessages";
 
 const Chat: React.FC<{
   threads: ThreadModel[];
   connections: UserProfileModel[];
   uid: string;
   receivingParticipants: string[];
-}> = ({ threads, connections, receivingParticipants }) => {
+}> = ({ threads, connections, receivingParticipants, uid }) => {
   const [selected, setSelected] = useState<number>(0);
+  const [messages, setMessages] = useState<MessageModel[]>([]);
 
   const selectThread = (event: any) => {
-    setSelected(event.currentTarget.getAttribute("data-key"));
+    const index = event.currentTarget.getAttribute("data-key");
+    setSelected(index);
+
+    getThreadMessages(threads[index]._id).then((res) => {
+      setMessages(res.data.messages);
+    });
   };
 
   // Get only the profiles which the user has a conversation/thread with
@@ -28,7 +36,7 @@ const Chat: React.FC<{
         selectThread={selectThread}
         selected={selected}
       />
-      <ChatDisplay session={threads[selected]} />
+      <ChatDisplay session={threads[selected]} messages={messages} uid={uid} />
     </div>
   );
 };

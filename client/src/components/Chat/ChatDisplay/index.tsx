@@ -3,6 +3,7 @@ import Message from "../Message";
 import { Field, Form, Formik } from "formik";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import ThreadModel from "../../../Models/ThreadModel";
+import MessageModel from "../../../Models/MessageModel";
 
 export interface MessageType {
   id: number;
@@ -12,18 +13,10 @@ export interface MessageType {
 
 const ChatDisplay: React.FC<{
   session: ThreadModel;
-}> = () => {
-  const [messages, setMessages] = useState<MessageType[]>([
-    { id: 0, outbound: false, text: "Memes" },
-    { id: 1, outbound: true, text: "Test" },
-  ]);
-
-  const sendMessage = (values: any) => {
-    setMessages([
-      ...messages,
-      { id: messages.length, outbound: values.outbound, text: values.message },
-    ]);
-  };
+  messages: MessageModel[];
+  uid: string;
+}> = ({ session, messages, uid }) => {
+  const sendMessage = (values: any) => {};
 
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-white">
@@ -37,14 +30,14 @@ const ChatDisplay: React.FC<{
       <div className="w-11/12 h-[20rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
         {messages.map((message) => (
           <div
-            key={message.id}
+            key={message._id}
             className={
-              message.outbound
+              message.senderID == uid
                 ? "ml-20 mt-2 justify-end flex"
                 : "mx-5 mt-2 justify-start flex" + " flex"
             }
           >
-            <Message outbound={message.outbound} text={message.text} />
+            <Message outbound={message.senderID == uid} text={message.text} />
           </div>
         ))}
       </div>

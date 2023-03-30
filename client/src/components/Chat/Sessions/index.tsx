@@ -29,7 +29,7 @@ const Sessions: React.FC<{
             <button
               className="w-full h-full"
               key={thread._id}
-              data-key={thread._id}
+              data-key={index}
               type="submit"
               onClick={(event) => selectThread(event)}
             >

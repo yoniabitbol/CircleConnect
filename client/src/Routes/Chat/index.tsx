@@ -12,6 +12,7 @@ const ChatPage: React.FC = () => {
   let receivingParticipants: string[] = [];
   const [connections, setConnections] = useState<UserProfileModel[]>([]);
   const uid = auth.currentUser?.uid;
+  
 
   useEffect(() => {
     getCurrentUserThreads().then((res) => {
