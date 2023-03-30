@@ -3,6 +3,7 @@ import Application from '../models/applicationModel';
 import Post from '../models/postModel';
 import User from '../models/userModel';
 
+// Fetches all applications made on all posts
 const getAllApplications = async (req: Request, res: Response) => {
   try {
     const applications = await Application.find();
@@ -20,6 +21,7 @@ const getAllApplications = async (req: Request, res: Response) => {
   }
 };
 
+// Fetches application based on ID
 const getApplication = async (req: Request, res: Response) => {
   try {
     const application = await Application.findById(req.params.application_id);
@@ -37,6 +39,7 @@ const getApplication = async (req: Request, res: Response) => {
   }
 };
 
+// Creates an application document
 const createApplication = async (req: Request, res: Response) => {
   try {
     const application = await Application.create(req.body);
@@ -54,6 +57,7 @@ const createApplication = async (req: Request, res: Response) => {
   }
 };
 
+// Updates an application based on ID
 const updateApplication = async (req: Request, res: Response) => {
   try {
     const application = await Application.findByIdAndUpdate(req.params.application_id, req.body, {
@@ -73,6 +77,7 @@ const updateApplication = async (req: Request, res: Response) => {
   }
 };
 
+// Deletes an application based on ID
 const deleteApplication = async (req: Request, res: Response) => {
   try {
     await Application.findByIdAndDelete(req.params.application_id);
@@ -88,6 +93,7 @@ const deleteApplication = async (req: Request, res: Response) => {
   }
 };
 
+// Sends an application based on the post ID
 const sendApplication = async (req: any, res: Response) => {
   try {
     const application: any = await Application.create(
@@ -136,6 +142,7 @@ const sendApplication = async (req: any, res: Response) => {
   }
 };
 
+// Withdraws an application based on the post ID
 const withdrawApplication = async (req: Request, res: Response) => {
   try {
     const application = await Application.findById(req.params.application_id);

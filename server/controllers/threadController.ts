@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Thread from '../models/threadModel';
 import User from '../models/userModel';
 
+// Fetches all messaging threads
 const getAllThreads = async (req: Request, res: Response) => {
   try {
     const threads = await Thread.find();
@@ -19,6 +20,7 @@ const getAllThreads = async (req: Request, res: Response) => {
   }
 };
 
+// Fetches all threads a user is a part of
 const getUserThreads = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
@@ -39,6 +41,7 @@ const getUserThreads = async (req: Request, res: Response) => {
   }
 };
 
+// Creates a thread between two users
 const createThread = async (req: Request, res: Response) => {
   try {
     const existingThread = await Thread.findOne({
