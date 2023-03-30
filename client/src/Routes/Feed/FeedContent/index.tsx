@@ -20,9 +20,9 @@ const feedDataD = [{
 
 ]
 
-const FeedContent:FC<{userPic: string, feedData: any}> = (props) => {
-    const {userPic, feedData} = props;
-    console.log(feedData)
+
+const FeedContent:FC<{ feedData: any}> = (props) => {
+    const {feedData} = props;
     const ref = useRef<any>();
     const [scrollTo, setScrollTo] = useState(0);
     useEffect(() => {
@@ -30,14 +30,15 @@ const FeedContent:FC<{userPic: string, feedData: any}> = (props) => {
             ref.current.scrollIntoView({behavior: 'smooth', block: 'center'})
         }
     }, [ref.current])
+    console.log(feedData)
     return (
         <div className="flex-row w-full justify-center">
             {feedDataD && feedDataD.map((data : any, i: number) => {
                 return ( <div key={data.id} ref={i === scrollTo ? ref: null}>
                     <FeedCard  userInfo={data.creator} scrollTo={setScrollTo.bind(this, i)}
-                              postInfo={{id:data._id,text: data.text, img: data.image, comments: data.comments}}
+                              postInfo={{id:data._id,text: data.text, img: data.image, comments: data.comments, date: data.createdAt, position: data.position}}
                               postSettings={{isJobListing:data.isJobListing, isResumeRequired:data.isResumeRequired, isCoverLetterRequired: data.isCoverLetterRequired, isThirdParty: data.isThirdParty, thirdPartyLink: data.thirdPartyLink, uploadDeadline: data.uploadDeadline}}
-                              numLikes={data.likes.length} numComments={data.comments.length} userPic={userPic}/>
+                              numLikes={data.likes.length} numComments={data.comments.length} userPic={data.image}/>
                 </div>)
             })
             }

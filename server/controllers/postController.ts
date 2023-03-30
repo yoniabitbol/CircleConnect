@@ -49,7 +49,7 @@ const createPost = async (req: any, res: Response) => {
       position: req.body.position,
       text: req.body.text,
       image: req.files && req.files.image ? req.files.image[0].filename : req.body.image,
-      preferenceTags: req.body.preferenceTags,
+      preferenceTags: req.body.preferenceTags.split(','),
       uploadDeadline: req.body.uploadDeadline,
       isThirdParty: req.body.isThirdParty,
       thirdPartyLink: req.body.thirdPartyLink,
@@ -247,7 +247,7 @@ const getJobFeed = async (req: Request, res: Response) => {
     const currentUser: any = await User.findOne({ user_id: req.params.user_id });
     const currentUserPosts = await Post.find({ creatorID: currentUser?.user_id, isJobListing: true }).populate('creator', 'name picture title');
     const recruiterPosts = await Promise.all(
-      currentUser?.preferenceTags.map((preferenceTag: string) => Post.find({ preferenceTags: { $in: [preferenceTag] }, isJobListing: true }).populate('creator', 'name picture title')),
+      currentUser?.connections.map((connectionID: string) => Post.find({ creatorID: connectionID, isJobListing: true }).populate('creator', 'name picture title')),
     );
     const feedArray = currentUserPosts.concat(...recruiterPosts).sort((a: any, b: any) => b.createdAt - a.createdAt);
     const feed = feedArray.filter((post: any, index: number) => feedArray.findIndex((p: any) => p._id.toString() === post._id.toString()) === index);
