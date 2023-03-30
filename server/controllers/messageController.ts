@@ -25,7 +25,6 @@ const getThreadMessages = async (req: Request, res: Response) => {
 // Creates a message in a thread
 const createMessage = async (req: any, res: Response) => {
   try {
-    console.log(req.files);
     const message = await Message.create({
       senderID: req.body.senderID,
       threadID: req.params.thread_id,
