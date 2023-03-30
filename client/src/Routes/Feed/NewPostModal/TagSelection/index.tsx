@@ -1,17 +1,8 @@
 import { Modal,Box,Chip} from '@mui/material';
 import style from './style.module.css';
+import defaultTags from '../../../../lib/Constants/defaultTags';
 import React from 'react';
 
-const defaultTags = [
-    'software',
-    'engineering',
-    'javascript',
-    'react',
-    'typescript',
-    'node',
-    'express',
-    'mongodb'
-    ]
 
 const TagSelection:React.FC<{showModal: boolean, handleModalClose:() => void, onSelectTag: (tag : string) => void, onDeleteTag: (tag : string) => void, selectedTags:string[] | undefined}> = (props) => {
     const {showModal, handleModalClose, onSelectTag, onDeleteTag, selectedTags} = props;
@@ -31,6 +22,7 @@ const TagSelection:React.FC<{showModal: boolean, handleModalClose:() => void, on
     return (
         <Modal open={showModal}
         onClose={handleModalClose}
+               sx={{overflow:'scroll'}}
         >
             <Box className={style.box}>
                 <h1>Tags</h1>
