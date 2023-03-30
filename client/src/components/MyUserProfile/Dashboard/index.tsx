@@ -27,7 +27,7 @@ interface postType {
 
 interface DashboardProps {
   posts: postType[];
-  applications: string[];
+  applications: postType[];
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ posts, applications }) => {
@@ -43,8 +43,8 @@ const Dashboard: React.FC<DashboardProps> = ({ posts, applications }) => {
       </div>
       <div className="mt-2 w-full p-5 rounded-md bg-slate-200 mx-auto">
         Jobs you applied to:
-        {applications.map((application: string) => (
-          <div key={application}>
+        {applications.map((application: postType) => (
+          <div key={application._id}>
             <JobApplied application={application} />
           </div>
         ))}

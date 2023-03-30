@@ -82,6 +82,6 @@ export default interface Usertypes {
     endDate: string;
     description: string;
   }[];
-  applications: string[];
+  applications: postType[];
   posts: postType[];
 }

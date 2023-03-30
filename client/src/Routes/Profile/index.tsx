@@ -70,7 +70,7 @@ const Profile: React.FC<Props> = ({ id }) => {
         description: "",
       },
     ],
-    applications: [""],
+    applications: [],
     posts: [],
   });
 

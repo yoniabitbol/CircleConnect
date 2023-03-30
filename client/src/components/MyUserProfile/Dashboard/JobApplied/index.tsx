@@ -4,10 +4,6 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import getPost from "../../../../http/getPost";
 
-interface JobAppliedProps {
-  application: string;
-}
-
 interface postType {
   _id: string;
   creatorID: string;
@@ -29,9 +25,13 @@ interface postType {
   applications: string[];
 }
 
+interface JobAppliedProps {
+  application: postType;
+}
+
 const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
   // const recruiter = true;
-  console.log(application);
+  //console.log("APPLIED: ", application._id);
 
   const [postInfo, setPostInfo] = useState<postType>();
 
@@ -61,7 +61,7 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
           {postInfo?.position}
         </a>
         <p className="text-sm">{postInfo?.text}</p>
-        {/* <p className="text-sm">Location</p> */}
+        <p className="text-sm">{application._id}</p>
         <p className="text-sm" style={{ color: "#4c47bc" }}>
           {postInfo?.applications.length} applicants
         </p>
@@ -90,6 +90,6 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
     </div>
   );
 };
-JobApplied.propTypes = { application: PropTypes.string.isRequired };
+JobApplied.propTypes = { application: PropTypes.any.isRequired };
 
 export default JobApplied;

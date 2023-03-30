@@ -62,7 +62,7 @@ const MyProfile: React.FC = () => {
         description: "",
       },
     ],
-    applications: [""],
+    applications: [],
     posts: [],
   });
 
