@@ -1,6 +1,7 @@
 import express from 'express';
 import threadController from '../controllers/threadController';
 import messageController from '../controllers/messageController';
+import { resizeFile, uploadFiles } from '../middleware/multer';
 
 const router = express.Router();
 
@@ -16,6 +17,10 @@ router.route('/:user_id')
 // Routes based on thread id
 router.route('/:thread_id/messages')
   .get(messageController.getThreadMessages)
-  .post(messageController.createMessage);
+  .post(
+    uploadFiles,
+    resizeFile,
+    messageController.createMessage,
+  );
 
 export default router;
