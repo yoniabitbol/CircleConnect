@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import multer from 'multer';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import sharp from 'sharp';
 import { NextFunction, Request, Response } from 'express';
 import fs from 'fs';

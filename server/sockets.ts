@@ -5,6 +5,7 @@ import { Logger } from './middleware/logger';
 const userSocketMap = new Map();
 const io = new Server();
 
+// Socket.io event handlers
 io.on('connection', (socket: Socket) => {
   const { userId } = socket.handshake.query;
   const socketId = socket.id;
@@ -15,6 +16,7 @@ io.on('connection', (socket: Socket) => {
     Logger.info(`User ${userId} disconnected`);
   });
 
+  // Send message to recipient event handler
   socket.on('send-message', async ({
     senderID, threadID, text, file,
   }) => {

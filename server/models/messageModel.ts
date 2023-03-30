@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Database schema for message documents=
 const messageSchema = new mongoose.Schema(
   {
     senderID: {

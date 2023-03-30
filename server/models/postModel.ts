@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Database schema for post documents
 const postSchema = new mongoose.Schema({
   creatorID: {
     type: String,
