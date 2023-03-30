@@ -10,7 +10,6 @@ io.on('connection', (socket: Socket) => {
   const socketId = socket.id;
   userSocketMap.set(userId, socketId);
   Logger.info(`User ${userId} connected with socket ${socketId}`);
-
   socket.on('disconnect', () => {
     userSocketMap.delete(userId);
     Logger.info(`User ${userId} disconnected`);
@@ -21,11 +20,11 @@ io.on('connection', (socket: Socket) => {
   }) => {
     try {
       const thread = await Thread.findById(threadID);
-      const recipient = thread?.participants.filter((id) => id !== senderID);
+      Logger.info(`Message sent from ${senderID} to ${thread?.participants}`);
+      const recipient = thread?.participants.filter((id) => id !== senderID)[0];
       const recipientId = userSocketMap.get(recipient);
       if (recipientId) {
         io.to(recipientId).emit('receive-message', {
-          recipient,
           sender: userId,
           text,
           file,
