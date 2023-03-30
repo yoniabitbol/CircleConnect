@@ -1,8 +1,11 @@
 import { useState } from "react";
 import ApplicantRow from "./ApplicantRow";
 import placeholder from "./placeholder.png";
+import { useTranslation } from "react-i18next";
 
 const JobPosting: React.FC = () => {
+  const {t} = useTranslation();
+
   // const recruiter = true;
   const [showApplicants, setShowApplicants] = useState(false);
 
@@ -16,12 +19,12 @@ const JobPosting: React.FC = () => {
       </div>
       <div className="grow py-2">
         <a href="/" className="font-bold">
-          Job Title
+        {t('jobPosted.buttons.jobTitle')} 
         </a>
-        <p className="text-sm">Company Name</p>
-        <p className="text-sm">Location</p>
+        <p className="text-sm">  {t('jobPosted.label.companyName')} </p>
+        <p className="text-sm">{t('jobPosted.label.location')}</p>
         <p className="text-sm" style={{ color: "#4c47bc" }}>
-          0 applicants
+        {t('jobPosted.label.applicants')}
         </p>
         {!showApplicants ? (
           <button
@@ -32,7 +35,7 @@ const JobPosting: React.FC = () => {
             className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
           text-white hover:bg-signup-button-hover"
           >
-            See all applicants
+           {t('jobPosted.buttons.allApplicants')}
           </button>
         ) : (
           <p></p>
@@ -40,7 +43,7 @@ const JobPosting: React.FC = () => {
 
         {showApplicants ? (
           <div className="text-sm mt-2">
-            <h3>Applicants:</h3>
+            <h3> {t('jobPosted.label.applicantList')}</h3>
             <ul>
               <ApplicantRow />
               <ApplicantRow />
@@ -54,7 +57,7 @@ const JobPosting: React.FC = () => {
               className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
             text-white hover:bg-signup-button-hover"
             >
-              Close
+               {t('jobPosted.buttons.close')}
             </button>
           </div>
         ) : (
