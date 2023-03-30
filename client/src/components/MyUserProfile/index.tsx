@@ -31,7 +31,6 @@ const MyUserProfile: React.FC<{
   }, [profile]);
 
   const editProfile = (values: any) => {
-    
     setUser({
       name: values.name,
       title: values.title,
@@ -77,7 +76,7 @@ const MyUserProfile: React.FC<{
 
     setEditable(!editable);
   };
-
+  console.log("User posts ", User.posts);
   return (
     <div>
       <Formik
@@ -124,7 +123,7 @@ const MyUserProfile: React.FC<{
                     backdrop: User.backdrop,
                   }}
                 />
-                <Tags preferenceTags={User.preferenceTags}/>
+                <Tags preferenceTags={User.preferenceTags} />
                 <Summary edit={editable} summary={User.summary} />
                 <Projects edit={editable} projects={User.projects} />
                 <Skills edit={editable} skills={User.skills} />

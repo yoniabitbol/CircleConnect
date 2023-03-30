@@ -71,7 +71,7 @@ const Profile: React.FC<Props> = ({ id }) => {
       },
     ],
     applications: [""],
-    posts: [""],
+    posts: [],
   });
 
   useEffect(() => {

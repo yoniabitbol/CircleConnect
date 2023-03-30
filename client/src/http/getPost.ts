@@ -15,6 +15,7 @@ async function getPost(postId: any) {
       Authorization: `Bearer ${token}`,
     },
   });
+  console.log(await res.json());
   return res.json();
 }
 

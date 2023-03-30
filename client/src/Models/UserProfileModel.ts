@@ -1,4 +1,25 @@
-
+interface postType {
+  _id: string;
+  creatorID: string;
+  isJobListing: boolean;
+  position: string;
+  text: string;
+  image: string;
+  likes: string[];
+  comments: {
+    commenter: string;
+    comment: string;
+  }[];
+  preferenceTags: { type: string }[];
+  uploadDeadline: Date;
+  isThirdParty: boolean;
+  thirdPartyLink: string;
+  isResumeRequired: boolean;
+  isCoverLetterRequired: boolean;
+  applications: string[];
+  createdAt: string;
+  updatedAt: string;
+}
 
 export default interface Usertypes {
   user_id?: string;
@@ -62,5 +83,5 @@ export default interface Usertypes {
     description: string;
   }[];
   applications: string[];
-  posts: string[];
+  posts: postType[];
 }

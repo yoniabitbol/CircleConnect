@@ -5,10 +5,6 @@ import getPost from "../../../../http/getPost";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 
-interface JobPostingProps {
-  post: string;
-}
-
 interface postType {
   _id: string;
   creatorID: string;
@@ -28,6 +24,12 @@ interface postType {
   isResumeRequired: boolean;
   isCoverLetterRequired: boolean;
   applications: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface JobPostingProps {
+  post: postType;
 }
 
 const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
@@ -45,11 +47,11 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
         console.log(error);
       }
     }
-    fetchJobPosting(post);
+    fetchJobPosting(post._id);
   }, [post]);
 
   const [showApplicants, setShowApplicants] = useState(false);
-  console.log(post.toString());
+
   return (
     <div className="flex bg-white mt-2">
       <div className="ml-2 mr-4 my-3">
@@ -60,7 +62,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
       </div>
       <div className="grow py-2">
         <a href="/" className="font-bold"></a>
-        <p className="text-sm">Company Name</p>
+        <p className="text-sm">{post._id}</p>
         <p className="text-sm">Location</p>
         <p className="text-sm" style={{ color: "#4c47bc" }}>
           {/*t("jobPosted.label.applicants")*/}
@@ -107,6 +109,6 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
   );
 };
 
-JobPosting.propTypes = { post: PropTypes.string.isRequired };
+JobPosting.propTypes = { post: PropTypes.any.isRequired };
 
 export default JobPosting;
