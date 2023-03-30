@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Message from "../Message";
 import { Field, Form, Formik } from "formik";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import ThreadModel from "../../../Models/ThreadModel";
 import MessageModel from "../../../Models/MessageModel";
+import UserProfileModel from "../../../Models/UserProfileModel";
 
 export interface MessageType {
   id: number;
@@ -12,17 +13,19 @@ export interface MessageType {
 }
 
 const ChatDisplay: React.FC<{
-  session: ThreadModel;
+  thread: ThreadModel;
   messages: MessageModel[];
   uid: string;
-}> = ({ session, messages, uid }) => {
-  const sendMessage = (values: any) => {};
-
+  threadProfile: UserProfileModel | undefined;
+}> = ({ threadProfile, messages, uid }) => {
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
         <span className="text-sm font-bold">
-          CHAT WITH <span style={{ color: "#4B47B7" }}>{"Name of user"}</span>
+          CHAT WITH{" "}
+          <span style={{ color: "#4B47B7" }}>
+            {threadProfile ? threadProfile.name : ""}
+          </span>
         </span>
       </div>
       <hr className="border-gray-100 border" />
@@ -47,7 +50,6 @@ const ChatDisplay: React.FC<{
           initialValues={{ outbound: true, message: "" }}
           enableReinitialize
           onSubmit={(values, { resetForm }) => {
-            sendMessage(values);
             resetForm();
           }}
         >

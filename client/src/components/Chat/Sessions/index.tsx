@@ -34,7 +34,7 @@ const Sessions: React.FC<{
               onClick={(event) => selectThread(event)}
             >
               <SessionItem
-                selected={selected.toString() == thread._id}
+                selected={selected == index}
                 session={{
                   user: {
                     name: threadProfiles[index].name,

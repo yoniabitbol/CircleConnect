@@ -12,7 +12,7 @@ const Chat: React.FC<{
   uid: string;
   receivingParticipants: string[];
 }> = ({ threads, connections, receivingParticipants, uid }) => {
-  const [selected, setSelected] = useState<number>(0);
+  const [selected, setSelected] = useState<number>(-1);
   const [messages, setMessages] = useState<MessageModel[]>([]);
 
   const selectThread = (event: any) => {
@@ -36,7 +36,21 @@ const Chat: React.FC<{
         selectThread={selectThread}
         selected={selected}
       />
-      <ChatDisplay session={threads[selected]} messages={messages} uid={uid} />
+      {selected != -1 ? (
+        <ChatDisplay
+          thread={threads[selected]}
+          threadProfile={threadProfiles.find((profile) => {
+            return (
+              profile.user_id == threads[selected].participants[0] ||
+              profile.user_id == threads[selected].participants[1]
+            );
+          })}
+          messages={messages}
+          uid={uid}
+        />
+      ) : (
+        <div className="p-10">{"<<< Select a conversation!"}</div>
+      )}
     </div>
   );
 };
