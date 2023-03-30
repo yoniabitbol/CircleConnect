@@ -11,9 +11,6 @@ async function applyToPost(post_id: string, formData: FormData) {
         return;
     }
     formData.append("applicantID", user_id);
-    console.log('appid: ', formData.get('applicantID'));
-    console.log('postId ', formData.get('postID'));
-    console.log('coverLetter: ', formData.get('coverLetter'))
     const res = await fetch(url, {
         method: "PATCH",
         headers: {Authorization: `Bearer ${token}`,},
@@ -24,6 +21,7 @@ async function applyToPost(post_id: string, formData: FormData) {
     if (!res.ok) {
         throw new Error("Failed to apply to post.");
     }
+    return res.json();
 }
 
 export default applyToPost;

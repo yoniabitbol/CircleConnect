@@ -2,17 +2,12 @@ import JobPosting from "./JobPosting";
 import JobApplied from "./JobApplied";
 import PropTypes from "prop-types";
 
-
-
-
 interface DashboardProps {
   posts: string[];
   applications: string[];
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ posts, applications }) => {
-
-
   return (
     <div>
       <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">

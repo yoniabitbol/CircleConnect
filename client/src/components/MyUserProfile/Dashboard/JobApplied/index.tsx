@@ -1,3 +1,4 @@
+import React from "react";
 import placeholder from "./placeholder.png";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
@@ -72,7 +73,7 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
             className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
           text-white hover:bg-signup-button-hover"
           >
-            View application
+            {/*t('jobApplied.buttons.viewApplication')*/}
           </button>
 
           <button
@@ -82,7 +83,7 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
             className="text-sm block mt-2 ml-2 w-auto px-3 py-1 rounded-md bg-red-500
           text-white hover:bg-red-700"
           >
-            Delete
+            {/*t('jobApplied.buttons.delete')*/}
           </button>
         </div>
       </div>

@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const AuthContent: React.FC = () => {
   const location = useLocation();
+  const {t} = useTranslation();
   return (
     
       <div className="relative lg:w-1/2">
@@ -10,20 +12,20 @@ const AuthContent: React.FC = () => {
           <div className="lg:mt-48">
             <h1 className="text-4xl font-bold">CircleConnect</h1>
             <h2 className="text-2xl font-medium mt-3">
-              Connect, Collaborate, and Grow Your Circle
+              {t('common.label.motto')}
             </h2>
             {location.pathname === "/signup" ? (
               <div className="font-medium mt-3">
-                If you already have an account <br /> You can{" "}
+                {t('loginAndRegistration.label.haveAccount')} <br /> {t('loginAndRegistration.label.youCan')}{" "}
                 <Link to="/login" className="text-blue-500">
-                  Login here
+                {t('loginAndRegistration.label.loginLink')}
                 </Link>
               </div>
             ) : (
               <div className="font-medium mt-3">
-                If you don&apos;t already have an account <br /> You can{" "}
+                {t('loginAndRegistration.label.noAccount')} <br /> {t('loginAndRegistration.label.youCan')}{" "}
                 <Link to="/signup" className="text-blue-500">
-                  Sign up here
+                  {t('loginAndRegistration.buttons.signup')}
                 </Link>
               </div>
             )}
