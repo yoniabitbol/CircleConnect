@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Database schema for application documents
 const applicationSchema = new mongoose.Schema(
   {
     applicantID: {
@@ -26,17 +27,8 @@ const applicationSchema = new mongoose.Schema(
   {
     timestamps: true,
     versionKey: false,
-    // toObject: { virtuals: true },
-    // toJSON: { virtuals: true },
   },
 );
-
-// applicationSchema.virtual('applicant', {
-//   ref: 'User',
-//   localField: 'applicantID',
-//   foreignField: 'user_id',
-//   justOne: true,
-// });
 
 const Application = mongoose.model('Application', applicationSchema);
 export default Application;

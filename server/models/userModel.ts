@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Database schema for user documents
 const userSchema = new mongoose.Schema(
   {
     user_id: {
@@ -190,10 +191,6 @@ const userSchema = new mongoose.Schema(
         },
       },
     ],
-    // threads: [{
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Thread',
-    // }],
   },
   {
     timestamps: true,
