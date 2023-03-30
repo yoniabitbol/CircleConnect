@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import http from 'http';
+import io from './sockets';
 import app from './app';
 import { Logger } from './middleware/logger';
 
@@ -19,19 +20,11 @@ const server = http.createServer(app);
 
 const port = process.env.DEV_SERVER_PORT || 4000;
 
-// const userSocketMap = new Map();
-//
-// io.on('connection', (socket: Socket) => {
-//   const { userId } = socket.handshake.query;
-//   const socketId = socket.id;
-//   userSocketMap.set(userId, socketId);
-//   Logger.info(`User ${userId} connected with socket ${socketId}`);
-//
-//   socket.on('disconnect', () => {
-//     userSocketMap.delete(userId);
-//     Logger.info(`User ${userId} disconnected`);
-//   });
-// });
+io.attach(server, {
+  cors: {
+    origin: '*',
+  },
+});
 
 server.listen(port, () => {
   Logger.info(`App listening on port ${port}`);
