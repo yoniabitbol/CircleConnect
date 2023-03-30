@@ -1,9 +1,8 @@
 import { Button, Paper } from "@mui/material";
 import { FilterAlt } from "@mui/icons-material";
 import TagDropdown from "./TagDropdown";
-import ApplicationDeadline from "./ApplicationDeadline";
+import ApplicationDeadline from './ApplicationDeadline';
 import { FC, useEffect, useState } from "react";
-import { useFormik } from "formik";
 
 const followedTags = [
   "software",
@@ -13,26 +12,12 @@ const followedTags = [
   "typescript",
 ];
 
-const FilterCard: FC<{
-  onFilter: (values: object) => void;
-  applyFilterDisabled: boolean;
-}> = (props) => {
-  const { onFilter, applyFilterDisabled } = props;
+const FilterCard: FC<{ onFilter: (values: object) => void }> = (props) => {
+  const { onFilter } = props;
+  const [filter, setFilter] = useState<any>({});
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const formik = useFormik<{ tags: string[]; beforeDeadline: boolean,resumeOptional:boolean, coverLetterOptional: boolean, jobPosition: string[] }>({
-    initialValues: {
-      tags: [],
-      beforeDeadline: false,
-      resumeOptional: false,
-      coverLetterOptional: false,
-      jobPosition: [],
-    },
-    onSubmit: (values) => {
-      onFilter(values);
-    },
-  });
   useEffect(() => {
-    formik.setFieldValue("tags", selectedTags);
+    setFilter({ tags: selectedTags });
   }, [selectedTags]);
   const handleTagSelection = (value: string) => {
     if (selectedTags?.includes(value)) return;
@@ -59,21 +44,17 @@ const FilterCard: FC<{
   };
 
   const handleBeforeDeadlineSwitch = (event: any) => {
-    formik.setFieldValue("beforeDeadline", event.target.checked);
-  };
+      console.log(event.target.checked)
+    setFilter({ ...filter, beforeDeadline: event.target.checked });
+  }
 
+  const isFiltersAreEmpty = filter.tags?.length === 0;
+
+  const handleApplyFilter = () => {
+    onFilter(filter);
+  };
   const handleRemoveFilter = () => {
     onFilter({});
-  };
-  const handleResumeOptionalSwitch = (event: any) => {
-    formik.setFieldValue("resumeOptional", event.target.checked);
-  };
-  const handleCoverLetterOptionalSwitch = (event: any) => {
-    formik.setFieldValue("coverLetterOptional", event.target.checked);
-  };
-  const handleJobPositionChange = (_: any, value: any) => {
-    if (formik.values.jobPosition?.includes(value)) return;
-    formik.setFieldValue("jobPosition", value);
   };
   return (
     <Paper className="w-full h-1/3 p-3">
@@ -90,12 +71,7 @@ const FilterCard: FC<{
         onApplyAll={handleApplyAll}
         onRemoveAll={removeAllHandler}
       />
-      <ApplicationDeadline
-        onJobPositionChange={handleJobPositionChange}
-        onBeforeDeadlineSwitch={handleBeforeDeadlineSwitch}
-        onCoverLetterOptionalSwitch={handleCoverLetterOptionalSwitch}
-        onResumeOptionalSwitch={handleResumeOptionalSwitch}
-      />
+        <ApplicationDeadline onBeforeDeadlineSwitch={handleBeforeDeadlineSwitch}/>
       <div className="flex space-x-1 justify-center max-md:space-x-9">
         <Button
           onClick={handleRemoveFilter}
@@ -115,8 +91,8 @@ const FilterCard: FC<{
           Remove
         </Button>
         <Button
-          onClick={formik.submitForm}
-          disabled={applyFilterDisabled}
+          onClick={handleApplyFilter}
+          disabled={isFiltersAreEmpty}
           variant="contained"
           component="label"
           size="small"
