@@ -1,15 +1,9 @@
 import { Server, Socket } from 'socket.io';
-import { Logger } from './middleware/logger';
-import server from './server';
 import Thread from './models/threadModel';
-
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-  },
-});
+import { Logger } from './middleware/logger';
 
 const userSocketMap = new Map();
+const io = new Server();
 
 io.on('connection', (socket: Socket) => {
   const { userId } = socket.handshake.query;
@@ -42,3 +36,5 @@ io.on('connection', (socket: Socket) => {
     }
   });
 });
+
+export default io;
