@@ -22,9 +22,10 @@ const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
                         </Link>
                        <Link to="/chat">
                            <Button
-                               sx={{width:'100%',backgroundColor: '#4D47C3', height: 30 ,'&:hover':{backgroundColor: '#3b3799'}}}
+                               sx={{width:'100%', height: 30 }}
                                variant="contained"
-                               disableElevation>
+                               disableElevation={true}
+                              >
                                Chat
                            </Button>
                        </Link>
