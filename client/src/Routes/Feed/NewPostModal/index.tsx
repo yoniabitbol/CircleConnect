@@ -25,9 +25,10 @@ const style = {
     transform: 'translate(-50%, -50%)',
     bgColor: 'white',
 };
-const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void}> = (props) => {
+
+const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void, postStatus: (value: boolean) => void}> = (props) => {
     const {t} = useTranslation();
-    const {showModal, handleModalClose, fetchFeed} = props;
+    const {showModal, handleModalClose, fetchFeed, postStatus} = props;
     const formik = useFormik<any>({
             initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[], isThirdParty:false, thirdPartyLink: ''},
             onSubmit: (values,{resetForm}) => {
@@ -36,10 +37,22 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                     formData.append(key, values[key]);
                 }
 
-                createPost(formData)
-                resetForm();
-                handleModalClose();
-                fetchFeed();
+                    createPost(formData).then((res) => {
+                        if(res.status === 'success') {
+                            resetForm();
+                            handleModalClose();
+                            postStatus(true);
+                            fetchFeed();
+                        }else {
+                            handleModalClose();
+                            postStatus(false);
+                        }
+                    }).catch(() => {
+                        handleModalClose();
+                        postStatus(false);
+                    })
+
+
             }
         })
     const [showTagSelection, setShowTagSelection] =useState<boolean>(false);
@@ -101,8 +114,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                         </div>
                         <form onSubmit={formik.handleSubmit}>
                             <div className="p-2 relative bottom-0">
-                                <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder={t('common.label.onYourMind') as string}/>
-
+                     <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder="Whats on your mind?"/>
                                 {formik.values.image && <div className="flex items-center space-x-1">
                                 <h6 className="font-semibold mt-2 p-2">Image</h6>
                                 <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
@@ -163,9 +175,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                         <TagSelection showModal={showTagSelection} handleModalClose={handleTagSelectionClose} onSelectTag={handleTagsSelection} onDeleteTag={handleTagDeletion} selectedTags={selectedTags}/>
                         <JobSettingsModal showModal={showJobSettings} handleModalClose={()=>setShowJobSettings(false)} values={formik.values.jobSettings} onChange={jobSettingsChangeHandler}/>
                     </div>
-
                 </>
-
             </Modal>
 
 

@@ -1,6 +1,8 @@
 import request from 'supertest';
 import app from './app';
 import User from './models/userModel';
+import Application from "./models/applicationModel";
+import Post from "./models/postModel";
 
 const mockingoose = require('mockingoose');
 
@@ -41,16 +43,18 @@ describe('Server tests', () => {
         done();
       });
   });
+});
 
+describe('User route tests', () => {
   test('Request create user for already existing user', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
       'findOne',
     );
 
     request(app)
       .post('/api/users')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"user exists","data":{"user":{"user_id":'
@@ -67,7 +71,7 @@ describe('Server tests', () => {
 
     request(app)
       .post('/api/users')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(201);
         expect(response.text).toContain('{"status":"success","data":{"user":{"user_id":"test"');
@@ -92,13 +96,13 @@ describe('Server tests', () => {
 
   test('Request get user', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
       'findOne',
     );
 
     request(app)
       .get('/api/users/:user_id')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"success","data":{');
@@ -114,7 +118,7 @@ describe('Server tests', () => {
 
     request(app)
       .get('/api/users/:user_id')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toContain('{"status":"ERROR: Error","message":"error getting user"}');
@@ -124,7 +128,7 @@ describe('Server tests', () => {
 
   test('Request get all users', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
       'find',
     );
 
@@ -154,13 +158,13 @@ describe('Server tests', () => {
 
   test('Request update user', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
       'findOneAndUpdate',
     );
 
     request(app)
       .patch('/api/users')
-      .send({ user_id: 'test', profile: { name: 'testProfile' } })
+      .send({user_id: 'test', profile: {name: 'testProfile'}})
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"success","data":{');
@@ -176,7 +180,7 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toBe('{"status":"ERROR: Error","message":"error updating user"}');
@@ -186,7 +190,7 @@ describe('Server tests', () => {
 
   test('Request delete user', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
       'findOneAndDelete',
     );
 
@@ -207,7 +211,7 @@ describe('Server tests', () => {
 
     request(app)
       .delete('/api/users/:user_id')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toBe('{"status":"ERROR: Error","message":"Error deleting user"}');
@@ -217,7 +221,7 @@ describe('Server tests', () => {
 
   test('Request get user connections', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
       'findOne',
     );
 
@@ -326,13 +330,13 @@ describe('Server tests', () => {
 
   test('Request to connect to user', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
       'findOne',
     );
 
     request(app)
       .patch('/api/users/:user_id/connect')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"success","message"');
@@ -353,7 +357,7 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users/test/connect')
-      .send({ user_id: 'testTargetId' })
+      .send({user_id: 'testTargetId'})
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toBe('{"status":"ERROR: Error","message":"Error sending connection request"}');
@@ -383,7 +387,7 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users/test/accept')
-      .send({ user_id: 'senderTestId' })
+      .send({user_id: 'senderTestId'})
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toBe('{"status":"success","message":"Connection request accepted"}');
@@ -399,7 +403,7 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users/:user_id/accept')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toBe('{"status":"ERROR: Error","message":"Error accepting connection request"}');
@@ -409,13 +413,13 @@ describe('Server tests', () => {
 
   test('Request to decline connection', (done) => {
     mockingoose(User).toReturn(
-      { user_id: 'testUser', name: 'testUser', email: 'testUser' },
+      {user_id: 'testUser', name: 'testUser', email: 'testUser'},
       'findOne',
     );
 
     request(app)
       .patch('/api/users/:user_id/decline')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"success","message"');
@@ -431,7 +435,7 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users/:user_id/decline')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toBe('{"status":"ERROR: Error","message":"Error declining connection request"}');
@@ -457,7 +461,7 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users/test/remove')
-      .send({ user_id: 'testUser' })
+      .send({user_id: 'testUser'})
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toBe('{"status":"success","message":"Connection removed"}');
@@ -473,11 +477,169 @@ describe('Server tests', () => {
 
     request(app)
       .patch('/api/users/test/remove')
-      .send({ user_id: 'test' })
+      .send({user_id: 'test'})
       .then((response) => {
         expect(response.statusCode).toBe(400);
         expect(response.text).toBe('{"status":"ERROR: Error","message":"Error removing connection"}');
         done();
       });
   });
+});
+
+describe('Application route tests', () => {
+  test('Request to get all applications', (done) => {
+    request(app)
+      .get('/api/applications')
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe('{"status":"success","data":{}}');
+        done();
+      });
+  });
+
+  test('Request to create applicatoon', (done) => {
+    request(app)
+      .post('/api/applications')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(201);
+        expect(response.text).toContain('{"status":"success","data":{"application":{"existingInfo":false,"_id"');
+        done();
+      });
+  });
+
+  test('Request to get application', (done) => {
+    request(app)
+      .get('/api/applications/testid')
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe('{"status":"success","data":{}}');
+        done();
+      });
+  });
+
+  test('Request to update application', (done) => {
+    mockingoose(Application).toReturn(
+      {
+      },
+      'findByIdAndUpdate',
+    );
+
+    request(app)
+      .patch('/api/applications/testid')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe('{"status":"success","data":{}}');
+        done();
+      });
+  });
+
+  test('Request to delete application', (done) => {
+    mockingoose(Application).toReturn(
+      {
+      },
+      'findByIdAndDelete',
+    );
+
+    request(app)
+      .delete('/api/applications/testid')
+      .send({ user_id: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(204);
+        expect(response.text).toBe('');
+        done();
+      });
+  });
+});
+
+describe('Post route tests', () => {
+  test('Request to get all posts', (done) => {
+    request(app)
+      .get('/api/posts')
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe('{"status":"success","data":{}}');
+        done();
+      });
+  });
+
+  test('Request to create post', (done) => {
+    mockingoose(User).toReturn(
+      {},
+      'findOne',
+    );
+
+    request(app)
+      .post('/api/posts')
+      .send({ creatorID: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(201);
+        expect(response.text).toContain('{"status":"success","data":{');
+        done();
+      });
+  });
+
+  test('Request to get specific post', (done) => {
+    request(app)
+      .get('/api/posts/test_id')
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toBe('{"status":"success","data":{}}');
+        done();
+      });
+  });
+
+  test('Request to update specific post', (done) => {
+    mockingoose(Post).toReturn(
+      {
+      },
+      'findOne',
+    );
+    mockingoose(User).toReturn(
+      {
+      },
+      'findOne',
+    );
+
+    request(app)
+      .patch('/api/posts/test_id')
+      .send({ creatorID: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        expect(response.text).toContain('{"status":"success","data":{');
+        done();
+      });
+  });
+
+  // test('Request to delete specific post', (done) => {
+  //   mockingoose(Post).toReturn(
+  //     { creatorID: 'test', deleteOne: () => { return { creatorID: 'test' }; } },
+  //     'findOne',
+  //   );
+  //   mockingoose(User).toReturn(
+  //     {
+  //     },
+  //     'findOne',
+  //   );
+  //
+  //   // mockingoose(posts).toReturn(
+  //   //   { creatorID: 'test' },
+  //   //   'deleteOne',
+  //   // );
+  //   // mockingoose(User).toReturn(
+  //   //   {
+  //   //   },
+  //   //   'updateOne',
+  //   // );
+  //
+  //   request(app)
+  //     .delete('/api/posts/test_id')
+  //     .send({ creatorID: 'test' })
+  //     .then((response) => {
+  //       expect(response.statusCode).toBe(200);
+  //       expect(response.text).toContain('{"status":"success","message":"Post deleted successfully"');
+  //       done();
+  //     });
+  // });
 });

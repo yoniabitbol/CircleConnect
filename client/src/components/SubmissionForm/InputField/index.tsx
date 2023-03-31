@@ -12,7 +12,7 @@ const InputField: React.FC<{
   const { type, name, placeholder, Error,  validation  } = props;
   return (
     <div>
-      <Field
+      <Field data-testid={"input-" + name}
         className="block mt-4 w-full px-2 py-3 rounded-lg bg-input-purple placeholder-placeholder-purple"
         type={type}
         name={name}

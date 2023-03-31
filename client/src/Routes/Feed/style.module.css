@@ -21,7 +21,7 @@
 
 .newPostButton:hover {
     transition-property: width;
-    width: 35rem;
+    width: 27rem;
     transition-duration: 0.3s;
     transition-timing-function: ease-out;
 }

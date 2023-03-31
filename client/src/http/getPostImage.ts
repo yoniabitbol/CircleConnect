@@ -14,11 +14,13 @@ async function getPostImage(postImage: string) {
       Authorization: `Bearer ${token}`,
     },
   });
+  if(!res.ok) {
+    throw new Error("Failed to fetch post image.");
+  }
   if (res.ok) {
     const blob = await res.blob();
     return URL.createObjectURL(blob);
   }
-  throw new Error("Failed to fetch post image.");
 }
 
 export default getPostImage;

@@ -30,12 +30,11 @@ const NavBar: React.FC<{
   useEffect(() => {
     async function fetchUserProfile() {
       const res = await getCurrentUserProfile();
-      const profilePicUrl = await getUserProfilePic(res.data.user.picture);
+      const profilePicUrl = await getUserProfilePic(res ? res.data.user.picture : '');
       setUserProfilePic(profilePicUrl);
     }
     fetchUserProfile();
   }, []);
-
 
   const onChangeHandler = async () => {
     const res = await getAllUsers();
