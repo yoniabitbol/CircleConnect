@@ -157,9 +157,8 @@ const Feed = () => {
                         <hr className={style.line}/>
                         <div className={style.buttonWrapper}>
                             <Button
-                                color="primary"
-                                className={style.newPostButton}
                                 variant="contained"
+                                className={style.newPostButton}
                                 onClick={() => setShowModal(true)}
                             >
                                <span className="">{t('notifications.buttons.newPost')}</span>
