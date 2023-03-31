@@ -16,8 +16,6 @@ import {Send, InsertPhoto, Tag, Settings, Close} from '@mui/icons-material';
 import TagSelection from './TagSelection';
 import JobSettingsModal from './JobSettingsModal';
 import {useFormik} from 'formik';
-import { useTranslation } from "react-i18next";
-
 const style = {
     position: 'absolute',
     top: '50%',
@@ -25,26 +23,35 @@ const style = {
     transform: 'translate(-50%, -50%)',
     bgColor: 'white',
 };
-const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void}> = (props) => {
-    const {t} = useTranslation();
-    const {showModal, handleModalClose, fetchFeed} = props;
+const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void, postStatus: (value: boolean) => void}> = (props) => {
+    const {showModal, handleModalClose, fetchFeed, postStatus} = props;
     const formik = useFormik<any>({
-            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[]},
-            onSubmit: (values,{resetForm}) => {
-                const formData = new FormData();
-                for (const key in values) {
-                    formData.append(key, values[key]);
-                }
-                console.log(formData)
-
-                createPost(formData).then((res) => {
-                    console.log(res);
-                })
-                resetForm();
-                handleModalClose();
-                fetchFeed();
+        initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[], isThirdParty:false, thirdPartyLink: ''},
+        onSubmit: (values,{resetForm}) => {
+            const formData = new FormData();
+            for (const key in values) {
+                formData.append(key, values[key]);
             }
-        })
+            console.log(formData)
+
+            createPost(formData).then((res) => {
+                if(res.status === 'success') {
+                    resetForm();
+                    handleModalClose();
+                    postStatus(true);
+                    fetchFeed();
+                }else {
+                    handleModalClose();
+                    postStatus(false);
+                }
+            }).catch(() => {
+                handleModalClose();
+                postStatus(false);
+            })
+
+
+        }
+    })
     const [showTagSelection, setShowTagSelection] =useState<boolean>(false);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [showJobSettings, setShowJobSettings] = useState<boolean>(false);
@@ -61,7 +68,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
         setShowTagSelection(false);
     }
     const handleTagsSelection = (values: string) => {
-      const newTags = selectedTags?.concat(values);
+        const newTags = selectedTags?.concat(values);
         setSelectedTags(newTags);
         formik.setFieldValue('preferenceTags', newTags);
     }
@@ -79,94 +86,94 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
         const newSettings = {...settings, [type]: value};
         setSettings(newSettings);
         for(const key in newSettings){
+            if(key === 'uploadDeadline' && newSettings[key] === null){
+                continue;
+            }
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             formik.setFieldValue(key, newSettings[key]);
         }
     }
     return (
-            <Modal
-                open={showModal}
-                onClose={resetTags}
-            >
-                <>
-                    <Card className={styles.modal} sx={style}>
-                        <div className="w-full sticky top-0 bg-white p-2 z-20">
-                            <div className="flex">
-                                <h6 className="font-bold p-3">{t('common.buttons.newPost')}</h6>
-                                <IconButton onClick={handleModalClose} sx={{position:'absolute', right:0}}><Close/></IconButton>
-                            </div>
-
-                            <hr className="ml-4 w-9/10 bg-gray-300"/>
+        <Modal
+            open={showModal}
+            onClose={resetTags}
+        >
+            <>
+                <Card className={styles.modal} sx={style}>
+                    <div className="w-full sticky top-0 bg-white p-2 z-20">
+                        <div className="flex">
+                            <h6 className="font-bold p-3">NEW POST</h6>
+                            <IconButton onClick={handleModalClose} sx={{position:'absolute', right:0}}><Close/></IconButton>
                         </div>
-                        <form onSubmit={formik.handleSubmit}>
-                            <div className="p-2 relative bottom-0">
-                                <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder={t('common.label.onYourMind') as string}/>
 
-                                {formik.values.image && <div className="flex items-center space-x-1">
+                        <hr className="ml-4 w-9/10 bg-gray-300"/>
+                    </div>
+                    <form onSubmit={formik.handleSubmit}>
+                        <div className="p-2 relative bottom-0">
+                            <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder="Whats on your mind?"/>
+                            {formik.values.image && <div className="flex items-center space-x-1">
                                 <h6 className="font-semibold mt-2 p-2">Image</h6>
                                 <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
                                     <Chip sx={{margin:1, backgroundColor: '#4D47C3', color:'white','& .MuiChip-deletable':{backgroundColor: 'white'}}}  key={1} label={formik.values.image.name}  onDelete={() => formik.setFieldValue('image', null)} />
                                 </div>
-                                </div>
-                                }
-                                {formik.values.preferenceTags.length > 0 && <div className="items-center flex">
-                                    <h6 className="font-semibold mt-2 p-2">{t('userProfile.label.tags')}</h6>
-                                     <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
-                                        {formik.values.preferenceTags.map((tag : string, index: number) => {
-                                            return (
-                                                <Chip sx={{margin:1, backgroundColor: '#4D47C3', color:'white','& .MuiChip-deletable':{backgroundColor: 'white'}}}  key={index} label={tag} onDelete={() => handleTagDeletion(tag)} />
-                                            )
-                                        })}
-                                    </div>
-                                </div>}
-
                             </div>
-                            <CardActions className="fixed bottom-0 w-full p-2 z-20 flex">
-                                <div className="w-fit flex justify-start">
-                                    <FormControlLabel name="isJobListing"  control={<Checkbox onChange={formik.handleChange} checked={formik.values.isJobListing}  sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label={t('jobPosted.label.jobPosting')}/>
-                                    <IconButton disabled={!formik.values.isJobListing} sx={{marginRight: 50}} onClick={()=> setShowJobSettings(true)}>
-                                        <Settings/>
-                                    </IconButton>
+                            }
+                            {formik.values.preferenceTags.length > 0 && <div className="items-center flex">
+                                <h6 className="font-semibold mt-2 p-2">Tags </h6>
+                                <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
+                                    {formik.values.preferenceTags.map((tag : string, index: number) => {
+                                        return (
+                                            <Chip sx={{margin:1, backgroundColor: '#4D47C3', color:'white','& .MuiChip-deletable':{backgroundColor: 'white'}}}  key={index} label={tag} onDelete={() => handleTagDeletion(tag)} />
+                                        )
+                                    })}
                                 </div>
-                                <div className="fixed right-0 bottom-1 flex space-x-1 px-2 justify-end">
-                                    <IconButton disabled={!formik.values.isJobListing} sx={{display:'flex', justifyContent: 'end'}} onClick={() => setShowTagSelection(true)}>
-                                        <Tag/>
-                                    </IconButton>
-                                    <IconButton component="label" sx={{display:'flex', justifyContent: 'end'}}>
-                                        <input hidden name="image"  onChange={(event) => {
-                                            const file: FileList | null = event.currentTarget.files;
-                                            if (!file) return;
-                                            else {
-                                                formik.setFieldValue('image', file[0]);
-                                            }
-                                        }}  accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                            </div>}
+
+                        </div>
+                        <CardActions className="fixed bottom-0 w-full p-2 z-20 flex">
+                            <div className="w-fit flex justify-start">
+                                <FormControlLabel name="isJobListing"  control={<Checkbox onChange={formik.handleChange} checked={formik.values.isJobListing}  sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="Job posting"/>
+                                <IconButton disabled={!formik.values.isJobListing} sx={{marginRight: 50}} onClick={()=> setShowJobSettings(true)}>
+                                    <Settings/>
+                                </IconButton>
+                            </div>
+                            <div className="fixed right-0 bottom-1 flex space-x-1 px-2 justify-end">
+                                <IconButton disabled={!formik.values.isJobListing} sx={{display:'flex', justifyContent: 'end'}} onClick={() => setShowTagSelection(true)}>
+                                    <Tag/>
+                                </IconButton>
+                                <IconButton component="label" sx={{display:'flex', justifyContent: 'end'}}>
+                                    <input hidden name="image"  onChange={(event) => {
+                                        const file: FileList | null = event.currentTarget.files;
+                                        if (!file) return;
+                                        else {
+                                            formik.setFieldValue('image', file[0]);
+                                        }
+                                    }}  accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
                                         text/plain, application/pdf, image/*" id="icon-button-file" type="file"/>
-                                        <InsertPhoto/>
-                                    </IconButton>
-                                    <Button
-                                        sx={{width: '100px', backgroundColor: '#4D47C3', '&:hover': {backgroundColor: '#4D47C3'}}}
-                                        variant="contained"
-                                        disableElevation
-                                        className={styles.sendButton}
-                                        type="submit"
-                                        disabled={formik.values.text === ''}
-                                    >
-                                        <span className={styles.buttonText}>{t('common.buttons.post')}</span>
-                                        <Send className={styles.sendIcon}/>
-                                    </Button>
-                                </div>
-                            </CardActions>
-                        </form>
-                    </Card>
-                    <div>
-                        <TagSelection showModal={showTagSelection} handleModalClose={handleTagSelectionClose} onSelectTag={handleTagsSelection} onDeleteTag={handleTagDeletion} selectedTags={selectedTags}/>
-                        <JobSettingsModal showModal={showJobSettings} handleModalClose={()=>setShowJobSettings(false)} values={formik.values.jobSettings} onChange={jobSettingsChangeHandler}/>
-                    </div>
-
-                </>
-
-            </Modal>
+                                    <InsertPhoto/>
+                                </IconButton>
+                                <Button
+                                    sx={{width: '100px', backgroundColor: '#4D47C3', '&:hover': {backgroundColor: '#4D47C3'}}}
+                                    variant="contained"
+                                    disableElevation
+                                    className={styles.sendButton}
+                                    type="submit"
+                                    disabled={formik.values.text === ''}
+                                >
+                                    <span className={styles.buttonText}>Post</span>
+                                    <Send className={styles.sendIcon}/>
+                                </Button>
+                            </div>
+                        </CardActions>
+                    </form>
+                </Card>
+                <div>
+                    <TagSelection showModal={showTagSelection} handleModalClose={handleTagSelectionClose} onSelectTag={handleTagsSelection} onDeleteTag={handleTagDeletion} selectedTags={selectedTags}/>
+                    <JobSettingsModal showModal={showJobSettings} handleModalClose={()=>setShowJobSettings(false)} values={formik.values.jobSettings} onChange={jobSettingsChangeHandler}/>
+                </div>
+            </>
+        </Modal>
 
 
 
