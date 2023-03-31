@@ -562,16 +562,21 @@ describe('Post route tests', () => {
       });
   });
 
-  // test('Request to create post', (done) => {
-  //   request(app)
-  //     .post('/api/posts')
-  //     .send({ creatorID: 'test' })
-  //     .then((response) => {
-  //       expect(response.statusCode).toBe(201);
-  //       expect(response.text).toContain('{"status":"success","data":{');
-  //       done();
-  //     });
-  // });
+  test('Request to create post', (done) => {
+    mockingoose(User).toReturn(
+      {},
+      'findOne',
+    );
+
+    request(app)
+      .post('/api/posts')
+      .send({ creatorID: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(201);
+        expect(response.text).toContain('{"status":"success","data":{');
+        done();
+      });
+  });
 
   test('Request to get specific post', (done) => {
     request(app)
@@ -607,7 +612,7 @@ describe('Post route tests', () => {
 
   // test('Request to delete specific post', (done) => {
   //   mockingoose(Post).toReturn(
-  //     { creatorID: 'test', deleteOne: () => ({ creatorID: 'test' }) },
+  //     { creatorID: 'test', deleteOne: () => { return { creatorID: 'test' }; } },
   //     'findOne',
   //   );
   //   mockingoose(User).toReturn(
