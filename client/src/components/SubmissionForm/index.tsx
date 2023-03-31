@@ -3,9 +3,12 @@ import { Formik, Form} from "formik";
 import inputFieldModel, { initialValuesModel } from "../../Models/InputFieldModel";
 import InputField from "./InputField";
 import {useLocation} from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 
 import ThirdPartyLogin from "./ThirdPartyLogin";
 import { Link } from "react-router-dom";
+
 
 const SubmissionForm: React.FC<{
   fields: inputFieldModel[];
@@ -15,6 +18,7 @@ const SubmissionForm: React.FC<{
   initialValues: initialValuesModel;
   error?: any;
 }> = (props) => {
+  const {t} = useTranslation();
   const { fields, header, buttonField,  initialValues, onSubmit, error } = props;
   const location = useLocation();
   return (
@@ -38,7 +42,7 @@ const SubmissionForm: React.FC<{
                 validation={field.validation}
               />
             ))}
-            {location.pathname === '/login' && <Link data-testid="forgot-pass" to="/forgot" className="text-blue-500">Forgot Password?</Link>}
+            {location.pathname === '/login' && <Link data-testid="forgot-pass" to="/forgot" className="text-blue-500">{t('loginAndRegistration.buttons.forgotPassword')}</Link>}
             <button
               type="submit"
               className="block mt-4 w-full px-2 py-3 rounded-lg bg-signup-button
@@ -46,7 +50,7 @@ const SubmissionForm: React.FC<{
             >
               {buttonField}
             </button>
-            {error && <div className="text-red-400 my-4 text-center text-xl">Password invalid</div>}
+            {error && <div className="text-red-400 my-4 text-center text-xl">{t('loginAndRegistration.label.invalidPassword')}</div>}
           </Form>
         </Formik>
         {(location.pathname === '/signup' || location.pathname === '/login') && <ThirdPartyLogin />}

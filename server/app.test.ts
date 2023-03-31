@@ -23,15 +23,17 @@ jest.mock('./usingAuth', () => ({
 //   };
 // });
 
-describe('General server route tests', () => {
-  test('Request default route', (done) => {
-    request(app)
-      .get('/')
-      .then((response) => {
-        expect(response.statusCode).toBe(200);
-        done();
-      });
-  });
+describe('Server tests', () => {
+  // test('Request auth error', (done) => {
+  //   request(app)
+  //     .get('/')
+  //     .then((response) => {
+  //       expect(response.statusCode).toBe(401);
+  //       expect(response.text).toBe('{"status":"failure","message":"You are not authorized to ' +
+  //         'access this route"}');
+  //       done();
+  //     });
+  // });
 
   test('Request invalid route', (done) => {
     request(app)

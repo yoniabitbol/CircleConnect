@@ -4,17 +4,18 @@ import { uploadFiles, resizeFile } from '../middleware/multer';
 
 const router = express.Router();
 
-// potentially remove these routes later
+// Default route for applications
 router.route('/')
   .get(applicationController.getAllApplications)
   .post(applicationController.createApplication);
 
+// Routes based on application id
 router.route('/:application_id')
   .get(applicationController.getApplication)
   .patch(applicationController.updateApplication)
   .delete(applicationController.deleteApplication);
 
-// Send files here?
+// Routes based on post id
 router.route('/:post_id/apply')
   .patch(
     uploadFiles,

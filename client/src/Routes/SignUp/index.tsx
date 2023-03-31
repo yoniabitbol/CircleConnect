@@ -5,8 +5,11 @@ import { SignUpFields } from "../../lib/InputFieldModels";
 import useSignup from "../../hooks/useSignup";
 import { initialValuesSignUp } from "../../lib/InputFieldModels";
 import { initialValuesModel } from "../../Models/InputFieldModel";
+import { useTranslation } from "react-i18next";
+
 
 const SignUp: React.FC = () => {
+  const {t} = useTranslation();
     const { error, signup } = useSignup();
     const onSubmitHandler = async (values: initialValuesModel) => {
         await signup(values.email, values.password, values.firstName, values.lastName)
@@ -20,9 +23,9 @@ const SignUp: React.FC = () => {
     <div className="lg:flex justify-center lg:text-left text-center">
       <AuthContent />
       <SubmissionForm
-        header="Sign up"
+        header={t('loginAndRegistration.label.signup')}
         fields={SignUpFields}
-        buttonField="Register"
+        buttonField={t('loginAndRegistration.buttons.register')}
         onSubmit={onSubmitHandler}
         initialValues= {initialValuesSignUp}
       />
