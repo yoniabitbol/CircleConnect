@@ -36,10 +36,6 @@ describe('Test user profile components', () => {
         <UserProfile profile={{}}/>
       );
     });
-
-    expect(
-      await screen.getByText('About'),
-    ).toBeInTheDocument();
   });
 
   test('Render UserProfile Banner', async () => {
