@@ -99,13 +99,15 @@ const Feed = () => {
         const today = new Date();
         return deadline <= today;
     };
+
+    let emptyFilter : boolean;
+    const isFilterEmpty = (filter : any) => {
+        return filter.tags && filter.tags.length === 0 && !filter.beforeDeadline && !filter.resumeOptional && !filter.coverLetterOptional && filter.jobPosition && filter.jobPosition.length === 0;
+    }
     const handleOnApplyFilter = (filter : any) => {
-        console.log('filter',filter)
-        const isFiltersAreEmpty : boolean = filter.tags && filter.tags.length === 0 && !filter.beforeDeadline && !filter.resumeOptional && !filter.coverLetterOptional && filter.jobPosition && filter.jobPosition.length === 0;
-        console.log('empty',isFiltersAreEmpty)
+        emptyFilter = isFilterEmpty(filter);
         //remove filter if empty object
-        if(isFiltersAreEmpty || isFiltersAreEmpty === undefined){
-            console.log('sdfg')
+        if(emptyFilter || emptyFilter === undefined){
             fetchFeed();
             return;
         }
