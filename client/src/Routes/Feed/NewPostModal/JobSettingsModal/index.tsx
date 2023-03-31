@@ -7,7 +7,6 @@ import {
   TextField,
   Button,
   Autocomplete,
-  Typography,
 } from "@mui/material";
 import style from "./style.module.css";
 // import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -107,8 +106,8 @@ const JobSettingsModal: FC<{
             <FormControlLabel
               onChange={handleResumeChange}
               labelPlacement="start"
-              control={<Switch color="secondary" />}
-              label={<Typography>Require CV</Typography>}
+              control={<Switch/>}
+              label="Require CV"
             />
             <FormControlLabel
               onChange={handleCoverLetterChange}
