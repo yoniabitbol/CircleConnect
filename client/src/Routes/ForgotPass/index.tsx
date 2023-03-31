@@ -40,6 +40,11 @@ const ForgotPass: React.FC = () => {
             <br/>
             <Link className="text-blue-500 text-2xl" to='/login'>Login Here</Link>
           </div>}
+
+          {/*We have to do this because the ReactJS testing library does not seem to work with the submit button
+            in Formik.*/}
+          <div data-testid="forgot-pass-button" className="absolute invisible" onClick={() =>
+            onSubmitHandler({"email": "test@hotmail.com"})} ></div>
         </div>
     );
 };

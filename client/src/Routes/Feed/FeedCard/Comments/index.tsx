@@ -32,7 +32,7 @@ const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
                     </form>
                 </div>
             <div className="flex-col mt-3 overflow-y-scroll max-h-[25rem]">
-                {commentsList.map((comment:any) => (
+                {commentsList?.map((comment:any) => (
                         <div key={comment._id} className="flex mt-5">
                             <Avatar src={comment.userPic}/>
                             <div className="ml-3 bg-[#4D47C3] w-full rounded-xl p-2">

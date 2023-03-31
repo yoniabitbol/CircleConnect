@@ -94,7 +94,7 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
         )}
         renderOption={SearchResultsBox}
         renderInput={(params) => (
-          <TextField
+          <TextField data-testid="link-click-0"
             {...params}
             onClick={textBoxClickHandler}
             sx={{ height: '100%'}}
