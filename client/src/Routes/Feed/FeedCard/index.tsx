@@ -165,7 +165,7 @@ const FeedCard: React.FC<{
     [`& .${tooltipClasses.tooltip}`]: {
       backgroundColor: "rgba(255,255,255,0.7)",
       color: "#F44336",
-      maxWidth: 275,
+      maxWidth: 300,
       fontSize: theme.typography.pxToRem(17),
       border: "1px solid #F44336",
     },
@@ -175,7 +175,7 @@ const FeedCard: React.FC<{
     <Card id={postInfo.id} sx={{ marginTop: 2, borderRadius: 5, padding: 0 }}>
       <CardContent sx={{ padding: 0 }}>
         {postInfo.position && (
-          <div className="flex p-3 items-center border-gray-100 border-b-2">
+          <div className="pl-3 pt-2 flex items-center border-gray-100 border-b-2">
             <Typography
               sx={{ fontSize: 14, width: "100%" }}
               color="text.secondary"
@@ -197,8 +197,11 @@ const FeedCard: React.FC<{
             <Avatar sx={{height:70, width:70}} src={userProfilePic}/>
             <div className="ml-2 flex-col -space-y-1">
               <h1 className="font-bold">{userInfo.name}</h1>
-              <h2>{userInfo.title}</h2>
-              <p className="font-light">{howLongAgo(postInfo.date)}</p>
+              <div className="flex-col -space-y-3">
+                <h2>{userInfo.title}</h2>
+                <Typography sx={{padding:0}} variant="caption">{howLongAgo(postInfo.date)}</Typography>
+              </div>
+
             </div>
           </Link>
           <div className="border-gray-100 border-b-2 h-full pt-2">
