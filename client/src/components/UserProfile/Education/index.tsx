@@ -1,12 +1,16 @@
 import React from "react";
 import Usertypes from "../../../Models/UserProfileModel";
+import { useTranslation } from "react-i18next";
+
 
 const Education: React.FC<{
   education: Usertypes["education"];
 }> = ({ education }) => {
+  const {t} = useTranslation();
+
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold ">Education</h1>
+      <h1 className="text-2xl font-bold ">{t('userProfile.label.education')}</h1>
       <div className="grid grid-cols-2 gap-4 my-4">
         {education.map((edu) => {
           return (

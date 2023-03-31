@@ -1,9 +1,8 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import multer from 'multer';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import sharp from 'sharp';
 import { NextFunction, Request, Response } from 'express';
 import fs from 'fs';
+import { Logger } from './logger';
 
 const fileStorage = multer.memoryStorage();
 
@@ -12,9 +11,14 @@ const multerFilter = (
   file: Express.Multer.File,
   callback: (error: Error | null, acceptFile: boolean) => void,
 ) => {
-  if (file.mimetype.startsWith('image')) {
-    callback(null, true);
-  } else if (file.mimetype === 'application/pdf') {
+  if (file.mimetype.startsWith('image')
+      || file.mimetype === 'application/pdf'
+      || file.mimetype === 'application/vnd.ms-powerpoint'
+      || file.mimetype === 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+      || file.mimetype === 'application/msword'
+      || file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      || file.mimetype === 'application/vnd.ms-excel'
+      || file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
     callback(null, true);
   } else {
     callback(new Error('Invalid File Type! Please upload only images.'), false);
@@ -66,7 +70,7 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
     const resume = req.files.resume[0];
     fs.writeFile(`public/files/users/resume/${req.files.resume[0].filename}`, resume.buffer, (err) => {
       if (err) {
-        console.log(err);
+        Logger.error(err);
       }
     });
   }
@@ -78,7 +82,7 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
     const coverLetter = req.files.coverLetter[0];
     fs.writeFile(`public/files/users/coverLetter/${req.files.coverLetter[0].filename}`, coverLetter.buffer, (err) => {
       if (err) {
-        console.log(err);
+        Logger.error(err);
       }
     });
   }
@@ -104,7 +108,7 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
     const applicationResume = req.files.applicationResume[0];
     fs.writeFile(`public/files/applications/resume/${req.files.applicationResume[0].filename}`, applicationResume.buffer, (err) => {
       if (err) {
-        console.log(err);
+        Logger.error(err);
       }
     });
   }
@@ -116,7 +120,31 @@ const resizeFile = (req: any, res: Response, next: NextFunction) => {
     const applicationCoverLetter = req.files.applicationCoverLetter[0];
     fs.writeFile(`public/files/applications/coverLetter/${req.files.applicationCoverLetter[0].filename}`, applicationCoverLetter.buffer, (err) => {
       if (err) {
-        console.log(err);
+        Logger.error(err);
+      }
+    });
+  }
+
+  // Manage file extensions
+  const getExtension = (mimeType: string) => {
+    if (mimeType === 'application/vnd.ms-powerpoint') return 'ppt';
+    if (mimeType === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') return 'pptx';
+    if (mimeType === 'application/msword') return 'doc';
+    if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') return 'docx';
+    if (mimeType === 'application/vnd.ms-excel') return 'xls';
+    if (mimeType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') return 'xlsx';
+    return 'pdf';
+  };
+
+  // Message Files
+  if (req.files.messageFile) {
+    req.files.messageFile[0].filename = `msg-user-${
+      req.body.senderID
+    }-${Date.now()}.${getExtension(req.files.messageFile[0].mimetype)}`;
+    const messageFile = req.files.messageFile[0];
+    fs.writeFile(`public/files/messages/${req.files.messageFile[0].filename}`, messageFile.buffer, (err) => {
+      if (err) {
+        Logger.error(err);
       }
     });
   }
@@ -132,6 +160,7 @@ const uploadFiles = upload.fields([
   { name: 'image', maxCount: 1 },
   { name: 'applicationResume', maxCount: 1 },
   { name: 'applicationCoverLetter', maxCount: 1 },
+  { name: 'messageFile', maxCount: 1 },
 ]);
 
 export { uploadFiles, resizeFile };

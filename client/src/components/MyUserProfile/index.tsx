@@ -5,6 +5,7 @@ import Usertypes from "../../Models/UserProfileModel";
 import updateUserProfile from "../../http/updateUserProfile";
 
 import Banner from "./Banner";
+import Tags from "./Tags";
 import Summary from "./Summary";
 import Projects from "./Projects";
 import Skills from "./Skills";
@@ -30,6 +31,7 @@ const MyUserProfile: React.FC<{
   }, [profile]);
 
   const editProfile = (values: any) => {
+
     setUser({
       name: values.name,
       title: values.title,
@@ -41,6 +43,7 @@ const MyUserProfile: React.FC<{
       picture: values.picture,
       backdrop: values.backdrop,
       summary: values.summary,
+      preferenceTags: User.preferenceTags,
       projects: values.projects,
       skills: values.skills,
       experience: values.experience,
@@ -57,7 +60,6 @@ const MyUserProfile: React.FC<{
     values.languages = JSON.stringify(values.languages);
     values.awards = JSON.stringify(values.awards);
     values.courses = JSON.stringify(values.courses);
-
 
     // Do not append connections to form data
     const formData = new FormData();
@@ -120,6 +122,7 @@ const MyUserProfile: React.FC<{
                     backdrop: User.backdrop,
                   }}
                 />
+                <Tags preferenceTags={User.preferenceTags}/>
                 <Summary edit={editable} summary={User.summary} />
                 <Projects edit={editable} projects={User.projects} />
                 <Skills edit={editable} skills={User.skills} />
