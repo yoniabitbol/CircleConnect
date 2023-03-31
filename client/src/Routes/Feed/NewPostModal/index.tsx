@@ -16,6 +16,8 @@ import {Send, InsertPhoto, Tag, Settings, Close} from '@mui/icons-material';
 import TagSelection from './TagSelection';
 import JobSettingsModal from './JobSettingsModal';
 import {useFormik} from 'formik';
+import { useTranslation } from "react-i18next";
+
 const style = {
     position: 'absolute',
     top: '50%',
@@ -103,7 +105,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                     <Card className={styles.modal} sx={style}>
                         <div className="w-full sticky top-0 bg-white p-2 z-20">
                             <div className="flex">
-                                <h6 className="font-bold p-3">NEW POST</h6>
+                                <h6 className="font-bold p-3">{t('common.buttons.newPost')}</h6>
                                 <IconButton onClick={handleModalClose} sx={{position:'absolute', right:0}}><Close/></IconButton>
                             </div>
 
@@ -112,6 +114,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                         <form onSubmit={formik.handleSubmit}>
                             <div className="p-2 relative bottom-0">
                                 <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder="Whats on your mind?"/>
+
                                 {formik.values.image && <div className="flex items-center space-x-1">
                                 <h6 className="font-semibold mt-2 p-2">Image</h6>
                                 <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
@@ -120,7 +123,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                                 </div>
                                 }
                                 {formik.values.preferenceTags.length > 0 && <div className="items-center flex">
-                                    <h6 className="font-semibold mt-2 p-2">Tags </h6>
+                                    <h6 className="font-semibold mt-2 p-2">{t('userProfile.label.tags')}</h6>
                                      <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
                                         {formik.values.preferenceTags.map((tag : string, index: number) => {
                                             return (
@@ -133,7 +136,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                             </div>
                             <CardActions className="fixed bottom-0 w-full p-2 z-20 flex">
                                 <div className="w-fit flex justify-start">
-                                    <FormControlLabel name="isJobListing"  control={<Checkbox onChange={formik.handleChange} checked={formik.values.isJobListing}  sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label="Job posting"/>
+                                    <FormControlLabel name="isJobListing"  control={<Checkbox onChange={formik.handleChange} checked={formik.values.isJobListing}  sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label={t('jobPosted.label.jobPosting')}/>
                                     <IconButton disabled={!formik.values.isJobListing} sx={{marginRight: 50}} onClick={()=> setShowJobSettings(true)}>
                                         <Settings/>
                                     </IconButton>
@@ -161,7 +164,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                                         type="submit"
                                         disabled={formik.values.text === ''}
                                     >
-                                        <span className={styles.buttonText}>Post</span>
+                                        <span className={styles.buttonText}>{t('common.buttons.post')}</span>
                                         <Send className={styles.sendIcon}/>
                                     </Button>
                                 </div>

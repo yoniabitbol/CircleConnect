@@ -1,11 +1,13 @@
 import Divider from "@mui/material/Divider";
 import React, { useState } from "react";
 import Usertypes from "../../../Models/UserProfileModel";
+import { useTranslation } from "react-i18next";
 
 const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
   awards,
   edit,
 }) => {
+  const {t} = useTranslation();
   const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
@@ -18,7 +20,7 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
         setAddOrDelete(!addOrDelete);
       }}
     >
-      Add new
+      {t('userProfile.buttons.addNew')}
     </button>
   );
 
@@ -33,7 +35,7 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
           setAddOrDelete(!addOrDelete);
         }}
       >
-        Delete
+         {t('userProfile.buttons.delete')}
       </button>
     );
   };
@@ -42,7 +44,7 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
     return (
       <>
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Award
+        {t('userProfile.label.award')}
         </label>
         <input
           name={`awards[${index}].title`}
@@ -53,7 +55,7 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
             awards[index].title = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">Date</label>
+        <label className="text-sm font-semibold text-gray-600 py-2">{t('userProfile.label.date')}</label>
         <input
           name={`awards[${index}].date`}
           className="w-full rounded-sm"
@@ -64,7 +66,7 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Awarder
+        {t('userProfile.label.awarder')}
         </label>
         <input
           name={`awards[${index}].awarder`}
@@ -76,7 +78,7 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Summary
+          {t('userProfile.label.summary')}
         </label>
         <input
           name={`awards[${index}].summary`}
@@ -111,7 +113,7 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
   const component = edit ? (
     form
   ) : awards.length < 1 ? (
-    <p>Add at least 1 award</p>
+    <p>{t('userProfile.label.addAward')}</p>
   ) : (
     <div className="grid grid-cols-3 gap-4 my-4">
       {awards.map((award) => {
@@ -121,7 +123,7 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
             className="flex flex-col bg-white rounded-md p-5"
           >
             <h1 className="text-lg font-semibold pt-2">{award.title}</h1>
-            <h3 className="">Awarded by {award.awarder}</h3>
+            <h3 className="">{t('userProfile.label.awardedBy')} {award.awarder}</h3>
             <h3 className="">{award.summary}</h3>
             <h2 className="text-sm">{award.date}</h2>
           </div>
@@ -132,7 +134,7 @@ const Awards: React.FC<{ awards: Usertypes["awards"]; edit: boolean }> = ({
 
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold ">Awards</h1>
+      <h1 className="text-2xl font-bold ">{t('userProfile.label.awards')}</h1>
       {component}
     </div>
   );
