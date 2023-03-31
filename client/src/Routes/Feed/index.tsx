@@ -91,7 +91,7 @@ const Feed = () => {
                         </div>
                         <hr className={style.line}/>
                     </div>
-                    <FeedContent feedData={feedData} userPic={userProfilePic}/>
+                    <FeedContent feedData={feedData} />
                 </div>
                 <div className="lg:w-[40rem] top-10 p-5">
                     <div className="sticky top-[7rem] flex-col space-y-5">
