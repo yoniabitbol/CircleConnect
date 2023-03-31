@@ -42,12 +42,14 @@ const Feed = () => {
 
     },[])
     const fetchFeed = () => {
+        setFeedData(null)
         if(location.pathname === '/feed') {
             getSocialFeed().then((res) => {
                setInitialFeedData(res.data);
                setFeedData(res.data)
             });
         }else if(location.pathname === '/jobs') {
+            setFeedData(null)
             getJobFeed().then((res) => {
                 if(res.status ==='success'){
                    setInitialFeedData(res.data);
@@ -87,16 +89,51 @@ const Feed = () => {
 
 
     }
+
+    const isDeadlinePassed = (date : any) => {
+        const deadline = new Date(date);
+        const today = new Date();
+        return deadline <= today;
+    };
     const handleOnApplyFilter = (filter : any) => {
+        console.log('filter',filter)
+        const isFiltersAreEmpty : boolean = filter.tags && filter.tags.length === 0 && !filter.beforeDeadline && !filter.resumeOptional && !filter.coverLetterOptional && filter.jobPosition && filter.jobPosition.length === 0;
+        console.log('empty',isFiltersAreEmpty)
         //remove filter if empty object
-        if(Object.keys(filter).length === 0) {
+        if(isFiltersAreEmpty || isFiltersAreEmpty === undefined){
+            console.log('sdfg')
             fetchFeed();
             return;
         }
+        let filteredFeed  = initialFeedData
         //filter feed where it contains one of the tags
-        const filteredFeed = initialFeedData.filter((post : any) => {
-            return post.preferenceTags.some((tag : string) => filter.tags.includes(tag))
-        })
+        if (filter.tags.length > 0){
+            filteredFeed = filteredFeed.filter((post : any) => {
+                return post.preferenceTags.some((tag : string) => filter.tags.includes(tag))
+            })
+        }
+        if(filter.beforeDeadline){
+            console.log('before deadline')
+            filteredFeed = filteredFeed.filter((post : any) => {
+                   return !post.uploadDeadline || !isDeadlinePassed(post.uploadDeadline)
+            })
+        }
+         if(filter.jobPosition && filter.jobPosition.length > 0){
+            filteredFeed = filteredFeed.filter((post : any) => {
+                return filter.jobPosition.includes(post.position)
+            })
+         }
+         if(filter.resumeOptional){
+            filteredFeed = filteredFeed.filter((post : any) => {
+                return post.isResumeRequired !== filter.resumeOptional
+            })
+         }
+        if(filter.coverLetterOptional){
+            filteredFeed = filteredFeed.filter((post : any) => {
+                return post.isCoverLetterRequired !== filter.coverLetterOptional
+            })
+        }
+
         setFeedData(filteredFeed);
 
     }
@@ -106,7 +143,7 @@ const Feed = () => {
                  onClick={() =>  {showModal && setShowModal(false)}}>
                 {location.pathname === '/jobs' && <div className="lg:w-[40rem] top-10 px-5 max-lg:order-2">
                     <div className="sticky top-[7rem]">
-                        <FilterCard onFilter={handleOnApplyFilter}/>
+                        <FilterCard applyFilterDisabled={false} onFilter={handleOnApplyFilter}/>
                     </div>
                 </div>}
                 <div className="lg:w-[65rem] flex-col justify-center max-lg:order-3">
