@@ -3,11 +3,8 @@ import Alert from "./Alert";
 import Dashboard from "./Dashboard";
 import NavSettings from "./NavSettings";
 import ConnectionInvite from "./ConnectionInvite";
-import { useTranslation } from "react-i18next";
-
 
 const UserNotifications: React.FC = () => {
-  const {t} = useTranslation();
   return (
     <body className="justify-center py-6" style={{ backgroundColor: "#F7F9FB" }}>
       <div className="lg:flex lg:flex-row justify-center">
@@ -24,7 +21,7 @@ const UserNotifications: React.FC = () => {
         <div className="flex flex-col">
           <div className="flex flex-row">
             <hr className="w-1/3 h-px mx-auto my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
-            <div className="">{t('notifications.label.recent')}</div>
+            <div className="">RECENT</div>
             <hr className="w-1/3 h-px mx-auto my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
           </div>
           <div className="row-span-2 col-span-2">

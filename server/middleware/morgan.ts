@@ -1,7 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import morgan, { StreamOptions } from 'morgan';
 import { Logger, RequestLogger } from './logger';
 
-// Morgan stream for logging HTTP requests
 const stream: StreamOptions = {
   write: (message) => {
     const data = JSON.parse(message);
@@ -10,7 +10,6 @@ const stream: StreamOptions = {
   },
 };
 
-// Morgan middleware for logging HTTP requests
 const Morgan = morgan(
   (tokens, req, res) => JSON.stringify({
     method: tokens.method(req, res),

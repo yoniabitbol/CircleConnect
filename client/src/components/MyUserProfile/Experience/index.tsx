@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
-import { useTranslation } from "react-i18next";
-
 
 const Experience: React.FC<{
   experience: {
@@ -16,7 +14,6 @@ const Experience: React.FC<{
   edit: boolean;
 }> = ({ experience, edit }) => {
   const [addOrDelete, setAddOrDelete] = useState(false);
-  const {t} = useTranslation();
 
   const addNewBtn = (
     <button
@@ -36,7 +33,7 @@ const Experience: React.FC<{
         setAddOrDelete(!addOrDelete);
       }}
     >
-      {t('userProfile.buttons.addNew')}
+      Add new
     </button>
   );
 
@@ -51,7 +48,7 @@ const Experience: React.FC<{
           setAddOrDelete(!addOrDelete);
         }}
       >
-       {t('userProfile.buttons.delete')}
+        Delete
       </button>
     );
   };
@@ -60,7 +57,7 @@ const Experience: React.FC<{
     return (
       <>
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.company')}
+          Company
         </label>
         <input
           name={`experience[${index}].company`}
@@ -72,7 +69,7 @@ const Experience: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.title')}
+          Title
         </label>
         <input
           name={`experience[${index}].title`}
@@ -84,7 +81,7 @@ const Experience: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.description')}
+          Description
         </label>
         <input
           name={`experience[${index}].description`}
@@ -96,7 +93,7 @@ const Experience: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.startDate')}
+          Start Date
         </label>
         <input
           name={`experience[${index}].startDate`}
@@ -108,7 +105,7 @@ const Experience: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.endDate')}
+          End Date
         </label>
         <input
           name={`experience[${index}].endDate`}
@@ -120,7 +117,7 @@ const Experience: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.location')}
+          Location
         </label>
         <input
           name={`experience[${index}].location`}
@@ -155,7 +152,7 @@ const Experience: React.FC<{
   const component = edit ? (
     form
   ) : experience.length < 1 ? (
-    <p>{t('userProfile.label.addExp')}</p>
+    <p>Add at least 1 work/volunteer/... experience</p>
   ) : (
     <div className="grid grid-cols-2 gap-4 my-4">
       {experience?.map((experience) => {
@@ -165,9 +162,9 @@ const Experience: React.FC<{
             className="flex flex-col bg-white rounded-md p-5"
           >
             <h1 className="text-lg font-semibold ">{experience.company}</h1>
-            <h2 className="">{t('userProfile.label.position')}: {experience.title}</h2>
+            <h2 className="">Position: {experience.title}</h2>
             <h3 className="">{experience.description}</h3>
-            <h3 className="">{t('userProfile.label.location')}: {experience.location}</h3>
+            <h3 className="">Location: {experience.location}</h3>
             <h3 className="text-sm ">
               {experience.startDate} → {experience.endDate}
             </h3>
@@ -179,7 +176,7 @@ const Experience: React.FC<{
 
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold ">{t('userProfile.label.experience')}</h1>
+      <h1 className="text-2xl font-bold ">Experience</h1>
       {component}
     </div>
   );

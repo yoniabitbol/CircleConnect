@@ -4,7 +4,7 @@ import { uploadFiles, resizeFile } from '../middleware/multer';
 
 const router = express.Router();
 
-// Default route for users
+// User Profile Routes
 router
   .route('/')
   .get(UserController.getAllUsers)
@@ -15,7 +15,6 @@ router
     UserController.updateUser,
   );
 
-// Routes based on user id
 router
   .route('/:user_id')
   .get(UserController.getUser)

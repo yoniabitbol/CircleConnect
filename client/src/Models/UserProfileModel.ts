@@ -10,7 +10,6 @@ export default interface Usertypes {
   picture: string;
   backdrop: string;
   summary: string;
-  preferenceTags: string[];
   projects: {
     title: string;
     description: string;

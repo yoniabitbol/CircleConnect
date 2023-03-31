@@ -16,10 +16,7 @@ import ConnectionsBannerSkeleton from '../../components/Skeleton/ConnectionsBann
 import Usertypes from '../../Models/UserProfileModel';
 import getSocialFeed from '../../http/getSocialFeed';
 import getJobFeed from '../../http/getJobFeed';
-import { useTranslation } from "react-i18next";
-
 const Feed = () => {
-    const {t} = useTranslation();
     const [user, setUser] = useState<Usertypes | null>(null);
     const [userProfilePic, setUserProfilePic] = useState<string>('');
     const [userBackdrop, setUserBackdrop] = useState<string>();
@@ -161,7 +158,7 @@ const Feed = () => {
                                 variant="contained"
                                 onClick={() => setShowModal(true)}
                             >
-                               <span className="">{t('notifications.buttons.newPost')}</span>
+                               <span className="">New Post</span>
                             </Button>
                         </div>
                         <hr className={style.line}/>

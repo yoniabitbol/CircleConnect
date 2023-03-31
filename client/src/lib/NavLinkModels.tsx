@@ -1,36 +1,34 @@
 import {RssFeed, PeopleAltOutlined, WorkOutlineOutlined, ChatBubbleOutlineOutlined, NotificationsNoneOutlined} from "@mui/icons-material";
-import i18n from "../i18n/i18n";
 
-i18n.changeLanguage(window.sessionStorage.getItem('language') as string)
 const NavLinkModels = [
   {
     key: 1,
     icon: <RssFeed/>,
-    text: i18n.t("common.label.feed"),
+    text: "Feed",
     path: "/feed",
   },
   {
     key: 2,
     icon: <PeopleAltOutlined/> ,
-    text: i18n.t("common.label.network"),
+    text: "Network",
     path: "/network",
   },
   {
     key: 3,
     icon: <WorkOutlineOutlined/> ,
-    text: i18n.t("common.label.jobs"),
+    text: "Jobs",
     path: "/jobs",
   },
   {
     key: 4,
     icon: <ChatBubbleOutlineOutlined/>,
-    text: i18n.t("common.label.chat"),
+    text: "Chat",
     path: "/chat",
   },
   {
     key: 5,
     icon: <NotificationsNoneOutlined/> ,
-    text: i18n.t("common.label.notif"),
+    text: "Notifications",
     path: "/notifications",
     
   },]

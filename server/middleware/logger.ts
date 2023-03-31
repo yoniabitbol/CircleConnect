@@ -1,7 +1,8 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { createLogger, format, transports } from 'winston';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import DailyRotateFile from 'winston-daily-rotate-file';
 
-// Logger for general server logs
 export const Logger = createLogger({
   format: format.combine(
     format.timestamp({
@@ -35,7 +36,6 @@ export const Logger = createLogger({
   ],
 });
 
-// Logger for HTTP requests
 export const RequestLogger = createLogger({
   format: format.combine(
     format.timestamp({

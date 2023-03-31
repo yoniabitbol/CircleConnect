@@ -5,7 +5,6 @@ import usingAuth from '../usingAuth';
 
 // User Profile API
 
-// Fetches all users
 const getAllUsers = async (req: Request, res: Response) => {
   try {
     const users = await User.find();
@@ -23,7 +22,6 @@ const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-// Fetches user based on ID
 const getUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
@@ -43,7 +41,6 @@ const getUser = async (req: Request, res: Response) => {
   }
 };
 
-// Creates a user document
 const createUser = async (req: Request, res: Response) => {
   try {
     const checkUser = await User.findOne({ user_id: req.body.user_id });
@@ -71,10 +68,8 @@ const createUser = async (req: Request, res: Response) => {
   }
 };
 
-// Updates a user based on ID
 const updateUser = async (req: any, res: Response) => {
   try {
-    console.log(req.files);
     const filter = { user_id: req.body.user_id };
     const update = {
       title: req.body.title,
@@ -99,13 +94,13 @@ const updateUser = async (req: any, res: Response) => {
           ? req.files.backdrop[0].filename
           : req.body.backdrop,
       resume:
-        req.files && req.files.resume
-          ? req.files.resume[0].filename
-          : req.body.resume,
+          req.files && req.files.resume
+            ? req.files.resume[0].filename
+            : req.body.resume,
       coverLetter:
-        req.files && req.files.coverLetter
-          ? req.files.coverLetter[0].filename
-          : req.body.coverLetter,
+          req.files && req.files.coverLetter
+            ? req.files.coverLetter[0].filename
+            : req.body.coverLetter,
     };
     const updatedUser = await User.findOneAndUpdate(filter, update, {
       new: true,
@@ -124,7 +119,6 @@ const updateUser = async (req: any, res: Response) => {
   }
 };
 
-// Deletes a user based on ID
 const deleteUser = async (req: Request, res: Response) => {
   try {
     if (usingAuth()) {
@@ -143,7 +137,6 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-// Job Preference Tags API
 const updateUserPreferenceTags = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
@@ -153,9 +146,8 @@ const updateUserPreferenceTags = async (req: Request, res: Response) => {
         message: 'User does not exist',
       });
     }
-    const { preferenceTags } = req.body; // Access preferenceTags directly from req.body
-
-    await user.updateOne({ preferenceTags });
+    const { tags } = req.body;
+    await user.updateOne({ preferenceTags: tags });
     return res.status(200).json({
       status: 'success',
       message: 'Job preference tags updated',
@@ -170,7 +162,6 @@ const updateUserPreferenceTags = async (req: Request, res: Response) => {
 
 // Connections API
 
-// Fetches all connections for a user
 const getUserConnections = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
@@ -192,7 +183,6 @@ const getUserConnections = async (req: Request, res: Response) => {
   }
 };
 
-// Sends a connection request to another user
 const sendConnectionRequest = async (req: Request, res: Response) => {
   if (req.params.user_id === req.body.user_id) {
     return res.status(400).json({
@@ -236,7 +226,6 @@ const sendConnectionRequest = async (req: Request, res: Response) => {
   }
 };
 
-// Accepts a connection request from another user
 const acceptConnectionRequest = async (req: Request, res: Response) => {
   try {
     const sender: any = await User.findOne({ user_id: req.body.user_id });
@@ -269,7 +258,6 @@ const acceptConnectionRequest = async (req: Request, res: Response) => {
   }
 };
 
-// Rejects a connection request from another user
 const declineConnectionRequest = async (req: Request, res: Response) => {
   try {
     const sender: any = await User.findOne({ user_id: req.body.user_id });
@@ -294,7 +282,6 @@ const declineConnectionRequest = async (req: Request, res: Response) => {
   }
 };
 
-// Cancels a connection request from another user
 const cancelConnectionRequest = async (req: Request, res: Response) => {
   try {
     const sender = await User.findOne({ user_id: req.body.user_id });
@@ -332,7 +319,6 @@ const cancelConnectionRequest = async (req: Request, res: Response) => {
   }
 };
 
-// Removes a connection between another user
 const removeConnection = async (req: Request, res: Response) => {
   try {
     const sender: any = await User.findOne({ user_id: req.body.user_id });
@@ -361,7 +347,6 @@ const removeConnection = async (req: Request, res: Response) => {
   }
 };
 
-// Gets all incoming connection requests for a user
 const getIncomingRequests = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
@@ -392,7 +377,6 @@ const getIncomingRequests = async (req: Request, res: Response) => {
   }
 };
 
-// Gets all outgoing connection requests for a user
 const getOutgoingRequests = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });

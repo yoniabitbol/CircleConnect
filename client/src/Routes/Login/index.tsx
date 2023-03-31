@@ -6,10 +6,8 @@ import useLogin from "../../hooks/useLogin";
 import { initialValuesLogin } from "../../lib/InputFieldModels";
 import { initialValuesModel } from "../../Models/InputFieldModel";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 const Login: React.FC = () => {
-  const { t } = useTranslation();
   const { error, login } = useLogin();
   const navigate = useNavigate();
 
@@ -32,9 +30,9 @@ const Login: React.FC = () => {
 
       <SubmissionForm
         onSubmit={onSubmitHandler}
-        header={t('loginAndRegistration.label.login')}
+        header="Login"
         fields={LoginFields}
-        buttonField={t('loginAndRegistration.buttons.login')}
+        buttonField="Login"
         initialValues={initialValuesLogin}
         error={error}
       />

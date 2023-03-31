@@ -13,14 +13,12 @@ import Usertypes from "../../Models/UserProfileModel";
 import usersInSearchModel from "../../Models/UsersInSearchModel";
 import getUserProfilePic from "../../http/getUserPicturePic";
 import style from "./style.module.css";
-import { useTranslation } from "react-i18next";
 
 const NavBar: React.FC<{
   openSearch: boolean;
   searchClicked: MouseEventHandler<HTMLDivElement>;
   outsideClicked: MouseEventHandler<HTMLDivElement>;
 }> = (props) => {
-  const {t} = useTranslation();
   const { openSearch, searchClicked, outsideClicked } = props;
   const { logout } = useLogout();
   const [userProfilePic, setUserProfilePic] = useState<string>();
@@ -93,7 +91,7 @@ const NavBar: React.FC<{
             <Avatar src={userProfilePic} />
           </Link>
           <Button onClick={logout} sx={{ color: "#4B47B7" }}>
-            {t('loginAndRegistration.buttons.logout')}
+            Logout
           </Button>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
-import { useTranslation } from "react-i18next";
 
 const Skills: React.FC<{
   skills: {
@@ -9,7 +8,6 @@ const Skills: React.FC<{
   }[];
   edit: boolean;
 }> = ({ skills, edit }) => {
-  const {t} = useTranslation();
   // console.log(`Skills: \n${JSON.stringify(skills)}`);
   const [addOrDelete, setAddOrDelete] = useState(false);
 
@@ -23,7 +21,7 @@ const Skills: React.FC<{
         setAddOrDelete(!addOrDelete);
       }}
     >
-      {t('userProfile.buttons.addNew')}
+      Add new
     </button>
   );
 
@@ -38,7 +36,7 @@ const Skills: React.FC<{
           setAddOrDelete(!addOrDelete);
         }}
       >
-        {t('userProfile.label.delete')}
+        Delete
       </button>
     );
   };
@@ -47,7 +45,7 @@ const Skills: React.FC<{
     return (
       <>
         <label className="text-sm font-semibold text-gray-600 py-2">
-        {t('userProfile.label.skill')}
+          Skill
         </label>
         <input
           name={`skills[${index}].name`}
@@ -94,7 +92,7 @@ const Skills: React.FC<{
   const component = edit ? (
     form
   ) : skills.length < 1 ? (
-    <p> {t('userProfile.label.addSkill')}</p>
+    <p>Add at least 1 skill</p>
   ) : (
     <div className="grid grid-cols-3 gap-4 my-4">
       {skills?.map((skill) => {
@@ -105,7 +103,7 @@ const Skills: React.FC<{
           >
             <h1 className="text-lg font-semibold pt-2">{skill.name}</h1>
             <h2 className="">
-            {t('userProfile.label.level')} <span className="font-bold">{skill.level}</span>
+              Level <span className="font-bold">{skill.level}</span>
             </h2>
           </div>
         );
@@ -115,7 +113,7 @@ const Skills: React.FC<{
 
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold ">{t('userProfile.label.skills')}</h1>
+      <h1 className="text-2xl font-bold ">Skills</h1>
       {component}
     </div>
   );

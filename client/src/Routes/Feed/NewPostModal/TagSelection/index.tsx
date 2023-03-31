@@ -2,11 +2,9 @@ import { Modal,Box,Chip} from '@mui/material';
 import style from './style.module.css';
 import defaultTags from '../../../../lib/Constants/defaultTags';
 import React from 'react';
-import { useTranslation } from "react-i18next";
 
 
 const TagSelection:React.FC<{showModal: boolean, handleModalClose:() => void, onSelectTag: (tag : string) => void, onDeleteTag: (tag : string) => void, selectedTags:string[] | undefined}> = (props) => {
-    const {t} = useTranslation();
     const {showModal, handleModalClose, onSelectTag, onDeleteTag, selectedTags} = props;
     const handleTagSelection = (value : string) => {
         onSelectTag(value);
@@ -27,7 +25,7 @@ const TagSelection:React.FC<{showModal: boolean, handleModalClose:() => void, on
                sx={{overflow:'scroll'}}
         >
             <Box className={style.box}>
-                <h1>{t('userProfile.label.tags')}</h1>
+                <h1>Tags</h1>
                 <input type="text" placeholder="Insert tags" className="w-full h-10 outline-1 focus:outline-none" onKeyDown={handleKeyDown}/>
                 <hr className=""/>
                 <div className="mt-4">

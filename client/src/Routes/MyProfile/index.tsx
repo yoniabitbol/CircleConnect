@@ -16,7 +16,6 @@ const MyProfile: React.FC = () => {
     picture: "",
     backdrop: "",
     summary: "",
-    preferenceTags: [""],
     projects: [
       {
         title: "",
@@ -69,9 +68,6 @@ const MyProfile: React.FC = () => {
     if (fetchedUser) return;
     getCurrentUserProfile().then((res) => {
       // This bug should eventually be fixed
-      if (res.data.user.preferenceTags[0] === "") {
-        res.data.user.preferenceTags = [];
-      }
       if (res.data.user.projects[0] === "") {
         res.data.user.projects = [];
       }

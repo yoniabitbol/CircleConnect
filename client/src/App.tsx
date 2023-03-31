@@ -11,7 +11,6 @@ import ScreenContent from "./Routes/ScreenContent";
 import Network from "./Routes/Network";
 import Feed from "./Routes/Feed";
 import { createTheme, ThemeProvider } from "@mui/material";
-import './i18n/i18n'
 
 function App() {
   const { user, authIsReady } = useAuthContext();

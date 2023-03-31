@@ -2,18 +2,18 @@ import InputFieldModel from "../Models/InputFieldModel";
 import {initialValuesModel} from "../Models/InputFieldModel";
 import { fetchSignInMethodsForEmail } from 'firebase/auth';
 import { auth } from '../firebase/config';
-import i18n from "../i18n/i18n";
 
-    async function validateEmailSignUp(value: string){
+ 
+   async function validateEmailSignUp(value: string){
      let error ="";
      if (!value) {
-       error = i18n.t('loginAndRegistration.label.emailRequired');
+       error = "Email is required";
      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-       error = i18n.t('loginAndRegistration.label.invalidEmail');
+       error = "Invalid email address";
      }else{
        const err = await fetchSignInMethodsForEmail(auth, value)
        if(err?.length !== 0) {
-         error = i18n.t('loginAndRegistration.label.emailRegistered');
+         error = "Email already registered"
        }
      }
      return error;
@@ -22,13 +22,13 @@ import i18n from "../i18n/i18n";
    async function  validateEmailDoesNotExist(value: string) {
        let error ="";
      if (!value) {
-       error = i18n.t('loginAndRegistration.label.emailRequired');
+       error = "Email is required";
      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-       error =i18n.t('loginAndRegistration.label.invalidEmail');
+       error = "Invalid email address";
      }else{
        const err = await  fetchSignInMethodsForEmail(auth, value)
        if(err?.length === 0) {
-         error = i18n.t('loginAndRegistration.label.emailNotRegistered');
+         error = "Email is not registered"
        }
      }
      return error
@@ -40,18 +40,18 @@ import i18n from "../i18n/i18n";
     function validatePassword(value: string) {
         let error ="";
         if (!value) {
-            error = i18n.t('loginAndRegistration.label.passwordRequired');
+            error = "Password is required";
         } else if (value.length < 8) {
-            error = i18n.t('loginAndRegistration.label.passwordLength');
+            error = "Password must be at least 8 characters";
         }
         return error;
     }
     function validateName(value: string) {
         let error ="";
         if (!value) {
-            error =  i18n.t('loginAndRegistration.label.nameIsRequired');
+            error = "Name is required";
         } else if (value.length < 3) {
-            error = i18n.t('loginAndRegistration.label.nameLength');
+            error = "Name must be at least 3 characters";
         }
         return error;
     }
@@ -59,7 +59,7 @@ const LoginFields: InputFieldModel[] = [
   {
     id: 1,
     name: "email",
-    placeholder: i18n.t('loginAndRegistration.label.email'),
+    placeholder: "Email",
     type: "email",
     validation: validateEmailDoesNotExist,
     Error: {
@@ -70,7 +70,7 @@ const LoginFields: InputFieldModel[] = [
   {
     id: 2,
     name: "password",
-    placeholder: i18n.t('loginAndRegistration.label.password'),
+    placeholder: "Password",
     type: "password",
     validation: validatePassword,
     Error: {
@@ -84,7 +84,7 @@ const SignUpFields: InputFieldModel[] = [
   {
     id: 1,
     name: "firstName",
-    placeholder: i18n.t('loginAndRegistration.label.firstName'),
+    placeholder: "First Name",
     type: undefined,
     validation: validateName,
     Error: {
@@ -95,7 +95,7 @@ const SignUpFields: InputFieldModel[] = [
   {
     id: 2,
     name: "lastName",
-    placeholder: i18n.t('loginAndRegistration.label.lastName'),
+    placeholder: "Last Name",
     type: undefined,
     validation: validateName,
     Error: {
@@ -106,7 +106,7 @@ const SignUpFields: InputFieldModel[] = [
   {
     id: 3,
     name: "email",
-    placeholder: i18n.t('loginAndRegistration.label.email'),
+    placeholder: "Email",
     type: "email",
     validation: validateEmailSignUp,
     Error: {
@@ -117,7 +117,7 @@ const SignUpFields: InputFieldModel[] = [
   {
     id: 4,
     name: "password",
-    placeholder:  i18n.t('loginAndRegistration.label.password'),
+    placeholder: "Password",
     type: "password",
     validation: validatePassword,
     Error: {
@@ -131,7 +131,7 @@ const forgotPassFields = [
     {
         id: 1,
         name: "email",
-        placeholder:  i18n.t('loginAndRegistration.label.email'),
+        placeholder: "Email",
         type: "email",
         validation: validateEmailDoesNotExist,
         Error: {

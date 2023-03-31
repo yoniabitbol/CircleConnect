@@ -4,7 +4,6 @@ import { uploadFiles, resizeFile } from '../middleware/multer';
 
 const router = express.Router();
 
-// Default route for posts
 router.route('/')
   .get(postController.getAllPosts)
   .post(
@@ -13,7 +12,6 @@ router.route('/')
     postController.createPost,
   );
 
-// Routes based on post id
 router.route('/:post_id')
   .get(postController.getPost)
   .patch(

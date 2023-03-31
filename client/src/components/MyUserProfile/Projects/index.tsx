@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
-import { useTranslation } from "react-i18next";
 
 const Projects: React.FC<{
   projects: {
@@ -15,7 +14,6 @@ const Projects: React.FC<{
 }> = ({ projects, edit }) => {
   // console.log(projects);
   const [addOrDelete, setAddOrDelete] = useState(false);
-  const {t} = useTranslation();
 
   const addNewBtn = (
     <button
@@ -34,7 +32,7 @@ const Projects: React.FC<{
         setAddOrDelete(!addOrDelete);
       }}
     >
-      {t('userProfile.buttons.addNew')}
+      Add new
     </button>
   );
 
@@ -49,7 +47,7 @@ const Projects: React.FC<{
           setAddOrDelete(!addOrDelete);
         }}
       >
-       {t('userProfile.buttons.delete')}
+        Delete
       </button>
     );
   };
@@ -58,7 +56,7 @@ const Projects: React.FC<{
     return (
       <>
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.title')}
+          Title
         </label>
         <input
           name={`projects[${index}].title`}
@@ -71,7 +69,7 @@ const Projects: React.FC<{
         />
 
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.description')}
+          Description
         </label>
         <input
           name={`projects[${index}].description`}
@@ -83,7 +81,7 @@ const Projects: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.startDate')}
+          Start Date
         </label>
         <input
           name={`projects[${index}].startDate`}
@@ -95,7 +93,7 @@ const Projects: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          {t('userProfile.label.endDate')}
+          End Date
         </label>
         <input
           name={`projects[${index}].endDate`}
@@ -119,7 +117,7 @@ const Projects: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-        {t('userProfile.label.picture')}
+          Picture
         </label>
         <input
           name={`projects[${index}].picture`}
@@ -156,7 +154,7 @@ const Projects: React.FC<{
   const component = edit ? (
     form
   ) : projects.length < 1 ? (
-    <p>{t('userProfile.label.addProject')}</p>
+    <p>Create at least 1 project</p>
   ) : (
     <div className="grid grid-cols-2 gap-4 my-4">
       {projects?.map((project) => {
@@ -191,7 +189,7 @@ const Projects: React.FC<{
 
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold "> {t('userProfile.label.project')}</h1>
+      <h1 className="text-2xl font-bold ">Projects</h1>
       {component}
     </div>
   );

@@ -1,9 +1,7 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 const NavSettings: React.FC = () => {
-  const {t} = useTranslation();
   const [isClicked, setIsClicked] = useState('notif');
 
   function handleClick(tabName: string) {
@@ -15,12 +13,12 @@ const NavSettings: React.FC = () => {
       <Link className={`px-6 text-sm 
       ${isClicked === 'notif' ? 'text-gray-400 ' : ''}`} 
         to="/notifications" onClick={() => handleClick('notif')}>
-        {t('notifications.label.notifications')}
+        NOTIFICATIONS
       </Link>
       <hr className="w-full h-px my-2 bg-gray-200 border-0 rounded md:my-5 dark:bg-gray-300" />
       <Link className={`px-6 text-sm ${isClicked === 'setting' ? 'text-gray-400' : ''}`} 
         to="/notifications" onClick={() => handleClick('setting')}>
-        {t('notifications.label.notifSettings')}
+        NOTIFICATION SETTINGS
       </Link>
     </div>
   );

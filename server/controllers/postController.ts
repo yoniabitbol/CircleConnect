@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import Post from '../models/postModel';
 import User from '../models/userModel';
 
-// Fetches all posts
 const getAllPosts = async (req: Request, res: Response) => {
   try {
     const posts = await Post.find();
@@ -20,7 +19,6 @@ const getAllPosts = async (req: Request, res: Response) => {
   }
 };
 
-// Fetches post based on ID
 const getPost = async (req: Request, res: Response) => {
   try {
     const post: any = await Post.findById(req.params.post_id);
@@ -40,7 +38,6 @@ const getPost = async (req: Request, res: Response) => {
   }
 };
 
-// Creates a post document
 const createPost = async (req: any, res: Response) => {
   try {
     const post = await Post.create({
@@ -87,7 +84,6 @@ const createPost = async (req: any, res: Response) => {
   }
 };
 
-// Updates a post based on ID
 const updatePost = async (req: any, res: Response) => {
   try {
     const filter = ({ _id: req.params.post_id });
@@ -140,7 +136,6 @@ const updatePost = async (req: any, res: Response) => {
   }
 };
 
-// Deletes a post based on ID
 const deletePost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id });
@@ -171,7 +166,6 @@ const deletePost = async (req: Request, res: Response) => {
   }
 };
 
-// Likes a post based on ID
 const likePost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id });
@@ -195,7 +189,6 @@ const likePost = async (req: Request, res: Response) => {
   }
 };
 
-// Comments on a post based on ID
 const commentPost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id });
@@ -219,7 +212,6 @@ const commentPost = async (req: Request, res: Response) => {
   }
 };
 
-// Fetches all non job-listing posts created by the user and their connections
 const getSocialFeed = async (req: Request, res: Response) => {
   try {
     const currentUser: any = await User.findOne({ user_id: req.params.user_id });
@@ -241,7 +233,6 @@ const getSocialFeed = async (req: Request, res: Response) => {
   }
 };
 
-// Fetches all job-listing posts that match the user's preferences
 const getJobFeed = async (req: Request, res: Response) => {
   try {
     const currentUser: any = await User.findOne({ user_id: req.params.user_id });

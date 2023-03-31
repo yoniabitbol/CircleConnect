@@ -24,7 +24,6 @@ const Profile: React.FC<Props> = ({ id }) => {
     picture: "",
     backdrop: "",
     summary: "",
-    preferenceTags: [""],
     projects: [
       {
         title: "",

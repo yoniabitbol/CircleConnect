@@ -33,6 +33,15 @@ describe('Server tests', () => {
   //     });
   // });
 
+  test('Request default route', (done) => {
+    request(app)
+      .get('/')
+      .then((response) => {
+        expect(response.statusCode).toBe(200);
+        done();
+      });
+  });
+
   test('Request invalid route', (done) => {
     request(app)
       .get('/test')

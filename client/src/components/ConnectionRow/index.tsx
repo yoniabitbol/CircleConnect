@@ -1,10 +1,8 @@
 import React from "react";
 import { ConnectionType } from "../../Routes/Network";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 
 const ConnectionRow: React.FC<ConnectionType> = (props:ConnectionType) => {
-  const {t} = useTranslation();
   const ConnectionClickHandler = () => {
     setTimeout(() => {
       window.location.reload();
@@ -27,7 +25,7 @@ const ConnectionRow: React.FC<ConnectionType> = (props:ConnectionType) => {
           <p className="font-bold">{props.name}</p>
           </Link>
           <p className="text-gray-500">{props.title}</p>
-          <p className="text-gray-500">{props.connections.length} {t('common.label.connectionLc')}</p>
+          <p className="text-gray-500">{props.connections.length} Connections</p>
         </div>
         
         <div className="">
@@ -36,7 +34,7 @@ const ConnectionRow: React.FC<ConnectionType> = (props:ConnectionType) => {
             className="block lg:mt-4 w-auto px-5 py-2 rounded-md bg-signup-button
                text-white hover:bg-signup-button-hover"
           >
-            {t('common.label.message')}
+            MESSAGE
           </button>
         </div>
         <div className="">

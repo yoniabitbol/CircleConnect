@@ -172,7 +172,6 @@ const JobSettingsModal: FC<{
       </Box>
     </Modal>
   );
-
 };
 
 export default JobSettingsModal;
