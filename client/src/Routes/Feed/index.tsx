@@ -119,7 +119,6 @@ const Feed = () => {
             })
         }
         if(filter.beforeDeadline){
-            console.log('before deadline')
             filteredFeed = filteredFeed.filter((post : any) => {
                    return !post.uploadDeadline || !isDeadlinePassed(post.uploadDeadline)
             })

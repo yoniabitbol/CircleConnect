@@ -12,7 +12,6 @@ const FeedContent:FC<{ feedData: any}> = (props) => {
             ref.current.scrollIntoView({behavior: 'smooth', block: 'center'})
         }
     }, [ref.current])
-    console.log(feedData)
     return (
         <div className="flex-row w-full justify-center">
             {feedData && feedData.map((data : any, i: number) => {
