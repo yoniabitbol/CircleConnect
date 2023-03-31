@@ -1,18 +1,9 @@
 import { Modal,Box,Chip} from '@mui/material';
 import style from './style.module.css';
+import defaultTags from '../../../../lib/Constants/defaultTags';
 import React from 'react';
 import { useTranslation } from "react-i18next";
 
-const defaultTags = [
-    'software',
-    'engineering',
-    'javascript',
-    'react',
-    'typescript',
-    'node',
-    'express',
-    'mongodb'
-    ]
 
 const TagSelection:React.FC<{showModal: boolean, handleModalClose:() => void, onSelectTag: (tag : string) => void, onDeleteTag: (tag : string) => void, selectedTags:string[] | undefined}> = (props) => {
     const {t} = useTranslation();
@@ -33,6 +24,7 @@ const TagSelection:React.FC<{showModal: boolean, handleModalClose:() => void, on
     return (
         <Modal open={showModal}
         onClose={handleModalClose}
+               sx={{overflow:'scroll'}}
         >
             <Box className={style.box}>
                 <h1>{t('userProfile.label.tags')}</h1>
