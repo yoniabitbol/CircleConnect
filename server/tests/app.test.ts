@@ -1,7 +1,7 @@
 import request from 'supertest';
-import app from './app';
+import app from '../app';
 
-jest.mock('./usingAuth', () => ({
+jest.mock('../usingAuth', () => ({
   default: () => false,
   __esModule: true,
 }));

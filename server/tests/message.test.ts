@@ -1,11 +1,11 @@
 import request from 'supertest';
-import app from './app';
-import Message from './models/messageModel';
-import Thread from './models/threadModel';
+import app from '../app';
+import Message from '../models/messageModel';
+import Thread from '../models/threadModel';
 
 const mockingoose = require('mockingoose');
 
-jest.mock('./usingAuth', () => ({
+jest.mock('../usingAuth', () => ({
   default: () => false,
   __esModule: true,
 }));

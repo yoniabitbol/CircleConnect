@@ -1,10 +1,10 @@
 import request from 'supertest';
-import User from './models/userModel';
-import app from './app';
+import User from '../models/userModel';
+import app from '../app';
 
 const mockingoose = require('mockingoose');
 
-jest.mock('./usingAuth', () => ({
+jest.mock('../usingAuth', () => ({
   default: () => false,
   __esModule: true,
 }));
