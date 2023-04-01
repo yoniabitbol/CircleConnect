@@ -564,21 +564,21 @@ describe('Post route tests', () => {
       });
   });
 
-  // test('Request to create post', (done) => {
-  //   mockingoose(User).toReturn(
-  //     {},
-  //     'findOne',
-  //   );
-  //
-  //   request(app)
-  //     .post('/api/posts')
-  //     .send({ creatorID: 'test' })
-  //     .then((response) => {
-  //       expect(response.statusCode).toBe(201);
-  //       expect(response.text).toContain('{"status":"success","data":{');
-  //       done();
-  //     });
-  // });
+  test('Request to create post', (done) => {
+    mockingoose(User).toReturn(
+      {},
+      'findOne',
+    );
+
+    request(app)
+      .post('/api/posts')
+      .send({ creatorID: 'test', preferenceTags: 'test' })
+      .then((response) => {
+        expect(response.statusCode).toBe(201);
+        expect(response.text).toContain('{"status":"success","data":{');
+        done();
+      });
+  });
 
   test('Request to get specific post', (done) => {
     request(app)
@@ -612,26 +612,20 @@ describe('Post route tests', () => {
       });
   });
 
+  // We cannot test that the posts work properly, because I cannot figure out how the mocking for instances of models work
   // test('Request to delete specific post', (done) => {
   //   mockingoose(Post).toReturn(
-  //     { creatorID: 'test', deleteOne: () => { return { creatorID: 'test' }; } },
-  //     'findOne',
-  //   );
-  //   mockingoose(User).toReturn(
-  //     {
-  //     },
-  //     'findOne',
+  //       (query: any) => { creatorID: 'test' }
   //   );
   //
-  //   // mockingoose(posts).toReturn(
-  //   //   { creatorID: 'test' },
-  //   //   'deleteOne',
-  //   // );
-  //   // mockingoose(User).toReturn(
-  //   //   {
-  //   //   },
-  //   //   'updateOne',
-  //   // );
+  //   const mockedUser = new User();
+  //   mockingoose(User).toReturn(
+  //     mockedUser,
+  //       'findOne'
+  //   ).toReturn(
+  //       {},
+  //       'updateOne'
+  //   );
   //
   //   request(app)
   //     .delete('/api/posts/test_id')
@@ -641,5 +635,50 @@ describe('Post route tests', () => {
   //       expect(response.text).toContain('{"status":"success","message":"Post deleted successfully"');
   //       done();
   //     });
+  // });
+});
+
+describe('Post interaction route tests', () => {
+  // These tests will fail for similar reasons mentioned before related to mocking.
+  // test('Request to like post', (done) => {
+  //   request(app)
+  //       .patch('/postID/like')
+  //        .send({})
+  //       .then((response) => {
+  //         expect(response.statusCode).toBe(200);
+  //         expect(response.text).toBe('{"status":"success","data":{}}');
+  //         done();
+  //       });
+  // });
+
+  // test('Request to comment on post', (done) => {
+  //   request(app)
+  //       .patch('/postID/comment')
+  //       .send({})
+  //       .then((response) => {
+  //         expect(response.statusCode).toBe(200);
+  //         expect(response.text).toBe('{"status":"success","data":{}}');
+  //         done();
+  //       });
+  // });
+  //
+  // test('Request to get user feed', (done) => {
+  //   request(app)
+  //       .get('/userId/feed')
+  //       .then((response) => {
+  //         expect(response.statusCode).toBe(200);
+  //         expect(response.text).toBe('{"status":"success","data":{}}');
+  //         done();
+  //       });
+  // });
+  //
+  // test('Request to get user job feed', (done) => {
+  //   request(app)
+  //       .get('/userId/jobFeed')
+  //       .then((response) => {
+  //         expect(response.statusCode).toBe(200);
+  //         expect(response.text).toBe('{"status":"success","data":{}}');
+  //         done();
+  //       });
   // });
 });
