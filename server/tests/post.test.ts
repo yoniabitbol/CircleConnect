@@ -317,11 +317,321 @@ describe('post routes', () => {
     });
   });
 
-  describe('DELETE /posts/:post_id', () => {
-    // Add tests for deletePost here
+  describe('deletePost', () => {
+    beforeEach(() => {
+      mockingoose.resetAll();
+    });
+
+    it('should return success if the post is deleted', async () => {
+      // const mockPost = {
+      //   _id: '507f1f77bcf86cd799439011',
+      //   creatorID: 'user123',
+      //   deleteOne: jest.fn(),
+      // };
+      // const mockUser = {
+      //   user_id: 'user123',
+      //   posts: ['507f1f77bcf86cd799439011'],
+      //   updateOne: jest.fn(),
+      // };
+      // mockingoose(Post).toReturn(mockPost, 'findOne');
+      // mockingoose(User).toReturn(mockUser, 'findOne');
+      //
+      // const res = await request(app)
+      //   .delete('/api/posts/507f1f77bcf86cd799439011')
+      //   .send({ creatorID: 'user123' });
+      //
+      // expect(res.statusCode).toEqual(200);
+      // expect(res.body).toEqual({
+      //   status: 'success',
+      //   message: 'Post deleted successfully',
+      // });
+      // expect(mockPost.deleteOne).toHaveBeenCalled();
+      // expect(mockUser.updateOne).toHaveBeenCalled();
+    });
+
+    it('should return failure if post not found', async () => {
+      mockingoose(User).toReturn({}, 'findOne');
+      mockingoose(Post).toReturn(null, 'findOne');
+
+      const res = await request(app)
+        .delete('/api/posts/507f1f77bcf86cd799439011')
+        .send({ creatorID: 'user123' });
+
+      expect(res.statusCode).toEqual(403);
+      expect(res.body).toEqual({
+        status: 'failure',
+        message: 'Post not found',
+      });
+    });
+
+    it('should return failure if user is not the creator of the post', async () => {
+      const mockPost = {
+        _id: '507f1f77bcf86cd799439011',
+        creatorID: 'user456',
+      };
+
+      const mockUser = {
+        _id: '507f1f77bcf86cd799439021',
+        creatorID: 'user123',
+      };
+      mockingoose(Post).toReturn(mockPost, 'findOne');
+      mockingoose(User).toReturn(mockUser, 'findOne');
+
+      const res = await request(app)
+        .delete('/api/posts/507f1f77bcf86cd799439011')
+        .send({ creatorID: 'user123' });
+
+      expect(res.statusCode).toEqual(403);
+      expect(res.body).toEqual({
+        status: 'failure',
+        message: 'You can only delete your own posts',
+      });
+    });
+
+    it('should return error when Post.findOne throws an error', async () => {
+      mockingoose(Post).toReturn(new Error(), 'findOne');
+
+      const res = await request(app)
+        .delete('/api/posts/507f1f77bcf86cd799439011')
+        .send({ creatorID: 'user123' });
+
+      expect(res.statusCode).toEqual(400);
+      expect(res.body.status).toContain('ERROR Error');
+      expect(res.body.message).toEqual('Error deleting post');
+    });
   });
 
-  describe('GET /posts', () => {
-    // Add tests for getAllPosts here
+  describe('likePost controller', () => {
+    afterEach(() => {
+      mockingoose.resetAll();
+    });
+
+    it('should return success message when post is liked', async () => {
+      mockingoose(Post).toReturn(null, 'findOne');
+
+      const res = await request(app)
+        .patch('/api/posts/postId/like')
+        .send({ user_id: 'userId' });
+
+      expect(res.status).toBe(200);
+      expect(res.body.status).toBe('success');
+      expect(res.body.message).toBe('Post liked successfully');
+    });
+
+    it('should return success message when post is disliked', async () => {
+      const mockPost = {
+        _id: 'postId',
+        likes: ['userId'],
+      };
+      mockingoose(Post).toReturn(mockPost, 'findOne');
+
+      const res = await request(app)
+        .patch('/api/posts/postId/like')
+        .send({ user_id: 'userId' });
+
+      expect(res.status).toBe(200);
+      expect(res.body.status).toBe('success');
+      expect(res.body.message).toBe('Post disliked successfully');
+    });
+
+    it('should return error message when Post.findOne throws an error', async () => {
+      mockingoose(Post).toReturn(new Error(), 'findOne');
+
+      const res = await request(app)
+        .patch('/api/posts/postId/like')
+        .send({ user_id: 'userId' });
+
+      expect(res.status).toBe(400);
+      expect(res.body.status).toMatch('ERROR Error');
+      expect(res.body.message).toBe('Error liking post');
+    });
+  });
+
+  describe('commentPost', () => {
+    beforeEach(() => {
+      mockingoose.resetAll();
+    });
+
+    it('should return success when comment is added to post', async () => {
+      const mockPost = {
+        _id: 'post_id',
+        comments: [],
+        updateOne: jest.fn(),
+      };
+      mockingoose(Post).toReturn(mockPost, 'findOne');
+
+      const res = await request(app)
+        .patch('/api/posts/post_id/comment')
+        .send({
+          commenter: 'John Doe',
+          comment: 'Great post!',
+        });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual({
+        status: 'success',
+        message: 'Post commented successfully',
+      });
+    });
+
+    it('should return error when Post.findOne throws an error', async () => {
+      mockingoose(Post).toReturn(new Error(), 'findOne');
+
+      const res = await request(app)
+        .patch('/api/posts/post_id/comment')
+        .send({
+          commenter: 'John Doe',
+          comment: 'Great post!',
+        });
+
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({
+        status: 'ERROR Error',
+        message: 'Error commenting post',
+      });
+    });
+  });
+
+  describe('getSocialFeed', () => {
+    beforeEach(() => {
+      mockingoose.resetAll();
+    });
+
+    it('should return the social feed of the user and their connections', async () => {
+      // Mock User.findOne to return a user with connections
+      const mockUser = {
+        _id: 'abc123',
+        user_id: 'user1',
+        connections: ['user2', 'user3'],
+      };
+      mockingoose(User).toReturn(mockUser, 'findOne');
+
+      // Mock Post.find for currentUserPosts
+      const mockUserPosts = [{
+        _id: 'post1',
+        creatorID: 'user1',
+        createdAt: new Date('2022-04-01T00:00:00Z'),
+        isJobListing: false,
+      }, {
+        _id: 'post2', creatorID: 'user1', createdAt: new Date('2022-04-02T00:00:00Z'), isJobListing: false,
+      }];
+      mockingoose(Post).toReturn(mockUserPosts, 'find');
+
+      // Mock Post.find for connectionsPosts
+      const mockConnection1Posts = [{
+        _id: 'post3',
+        creatorID: 'user2',
+        createdAt: new Date('2022-04-03T00:00:00Z'),
+        isJobListing: false,
+      }];
+      mockingoose(Post).toReturn(mockConnection1Posts, 'find');
+      const mockConnection2Posts = [{
+        _id: 'post4',
+        creatorID: 'user3',
+        createdAt: new Date('2022-04-04T00:00:00Z'),
+        isJobListing: false,
+      }, {
+        _id: 'post5', creatorID: 'user3', createdAt: new Date('2022-04-05T00:00:00Z'), isJobListing: false,
+      }];
+      mockingoose(Post).toReturn(mockConnection2Posts, 'find');
+
+      // Send request to get social feed for user1
+      const res = await request(app).get('/api/posts/user1/feed');
+
+      // Check response
+      expect(res.status).toBe(200);
+      expect(res.body.status).toBe('success');
+    });
+
+    it('exception in finding user', async () => {
+      // Mock User.findOne to return null
+      mockingoose(User).toReturn(new Error(), 'findOne');
+
+      // Send request to get social feed for nonexistent user
+      const res = await request(app).get('/api/posts/nonexistent-user/feed');
+
+      // Check response
+      expect(res.status).toBe(400);
+      expect(res.body.status).toBe('ERROR Error');
+      expect(res.body.message).toBe('Error social getting feed');
+    });
+  });
+
+  describe('getJobFeed', () => {
+    afterEach(() => {
+      mockingoose.resetAll();
+    });
+
+    it('should return job feed for the given user', async () => {
+      const user = {
+        user_id: '123',
+        preferenceTags: ['tag1', 'tag2'],
+      };
+
+      const currentUserPosts = [
+        {
+          _id: 'post1',
+          creatorID: user.user_id,
+          isJobListing: true,
+          createdAt: new Date('2022-01-01'),
+          creator: { name: 'John Doe', picture: 'url', title: 'Developer' },
+        },
+        {
+          _id: 'post2',
+          creatorID: user.user_id,
+          isJobListing: true,
+          createdAt: new Date('2022-02-01'),
+          creator: { name: 'Jane Doe', picture: 'url', title: 'Designer' },
+        },
+      ];
+
+      const recruiterPosts = [
+        [
+          {
+            _id: 'post3',
+            creatorID: '456',
+            isJobListing: true,
+            createdAt: new Date('2022-02-15'),
+            creator: { name: 'Bob Smith', picture: 'url', title: 'Recruiter' },
+          },
+          {
+            _id: 'post4',
+            creatorID: '789',
+            isJobListing: true,
+            createdAt: new Date('2022-02-20'),
+            creator: { name: 'Alice Smith', picture: 'url', title: 'Recruiter' },
+          },
+        ],
+        [
+          {
+            _id: 'post5',
+            creatorID: '012',
+            isJobListing: true,
+            createdAt: new Date('2022-03-01'),
+            creator: { name: 'Sarah Johnson', picture: 'url', title: 'Recruiter' },
+          },
+        ],
+      ];
+
+      mockingoose(User).toReturn(user, 'findOne');
+      mockingoose(Post).toReturn(currentUserPosts, 'find').toReturn(recruiterPosts[0], 'find', { query: { preferenceTags: 'tag1' } }).toReturn(recruiterPosts[1], 'find', { query: { preferenceTags: 'tag2' } });
+
+      const res = await request(app)
+        .get('/api/posts/123/jobFeed')
+        .expect(200);
+
+      expect(res.body.status).toBe('success');
+    });
+
+    it('should return an error when User.findOne throws an error', async () => {
+      mockingoose(User).toReturn(new Error(), 'findOne');
+
+      const response = await request(app)
+        .get('/api/posts/123/jobFeed')
+        .expect(400);
+
+      expect(response.body.status).toMatch('ERROR Error');
+      expect(response.body.message).toBe('Error job getting feed');
+    });
   });
 });

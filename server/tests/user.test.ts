@@ -448,4 +448,45 @@ describe('User route tests', () => {
         done();
       });
   });
+
+  describe('updateUserPreferenceTags', () => {
+    it('should update the user preference tags and return 200', async () => {
+      const mockUser = { user_id: 'test-user' };
+      mockingoose(User).toReturn(mockUser, 'findOne');
+
+      const response = await request(app)
+        .put('/api/users/test-user/tags')
+        .send({ preferenceTags: ['tag1', 'tag2'] })
+        .expect(200);
+
+      expect(response.body).toEqual({ status: 'success', message: 'Job preference tags updated' });
+    });
+
+    it('should return an error if the user does not exist', async () => {
+      mockingoose(User).toReturn(null, 'findOne');
+
+      const response = await request(app)
+        .put('/api/users/non-existent-user/tags')
+        .send({ preferenceTags: ['tag1', 'tag2'] })
+        .expect(400);
+
+      expect(response.body.status).toEqual('error');
+      expect(response.body.message).toEqual('User does not exist');
+    });
+
+    it('should return an error if there is an error updating the user', async () => {
+      const mockUser = { user_id: 'test-user' };
+      mockingoose(User).toReturn(mockUser, 'findOne');
+
+      mockingoose(User).toReturn(new Error(), 'updateOne');
+
+      const response = await request(app)
+        .put('/api/users/test-user/tags')
+        .send({ preferenceTags: ['tag1', 'tag2'] })
+        .expect(400);
+
+      expect(response.body.status).toEqual('ERROR: Error');
+      expect(response.body.message).toEqual('Error updating preference tags');
+    });
+  });
 });
