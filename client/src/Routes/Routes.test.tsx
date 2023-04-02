@@ -152,7 +152,7 @@ describe('Test user feed', () => {
       await render(
         <>
           <BrowserRouter>
-            <TagSelection />
+            <TagSelection  handleModalClose={() => {return;}}  onDeleteTag={() => {return;}} onSelectTag={() => {return;}} selectedTags={['']} showModal={false}/>
           </BrowserRouter>
         </>
       );
@@ -164,7 +164,7 @@ describe('Test user feed', () => {
       await render(
         <>
           <BrowserRouter>
-            <FeedCard postSettings={{}} postInfo={{text: 'text'}} userInfo={{}} />
+            <FeedCard postSettings={{}} postInfo={{text: 'text'}} userInfo={{}}  numComments={0} numLikes={0} scrollTo={() => {return;}} userPic={''}/>
           </BrowserRouter>
         </>
       );
@@ -176,7 +176,7 @@ describe('Test user feed', () => {
       await render(
         <>
           <BrowserRouter>
-            <Comments />
+            <Comments  comments={['']} postId={0} userPic={''}/>
           </BrowserRouter>
         </>
       );
@@ -188,7 +188,7 @@ describe('Test user feed', () => {
       await render(
         <>
           <BrowserRouter>
-            <NewPostModal />
+            <NewPostModal  fetchFeed={() => {return;}} handleModalClose={() => {return;}} postStatus={() => {return;}} showModal={false}/>
           </BrowserRouter>
         </>
       );
@@ -200,7 +200,7 @@ describe('Test user feed', () => {
       await render(
         <>
           <BrowserRouter>
-            <JobSettingsModal />
+            <JobSettingsModal  handleModalClose={() => {return;}} onChange={() => {return;}} showModal={false} values={{}}/>
           </BrowserRouter>
         </>
       );

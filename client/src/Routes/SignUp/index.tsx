@@ -37,8 +37,11 @@ const SignUp: React.FC = () => {
       {/*We have to do this because the ReactJS testing library does not seem to work with the submit button
             in Formik.*/}
       <div data-testid="signup-button" className="absolute invisible" onClick={() =>
-        onSubmitHandler({"email": "test@hotmail.com", "password": "test123456@", "firstName": "test",
-                                "lastName": "test"})} ></div>
+        onSubmitHandler({
+                                "email": "test@hotmail.com", "password": "test123456@", "firstName": "test",
+                                "lastName": "test"
+        })} >
+      </div>
     </div>
   );
 };

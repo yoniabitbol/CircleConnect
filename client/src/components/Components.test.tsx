@@ -33,6 +33,7 @@ describe('Test user profile components', () => {
   test('Render UserProfile', async () => {
     await act(async () => {
       await render(
+        // @ts-ignore
         <UserProfile profile={{}}/>
       );
     });
@@ -42,7 +43,7 @@ describe('Test user profile components', () => {
     await act(async () => {
       await render(
         <BrowserRouter>
-          <Banner banner={{connections: [],}}/>
+          <Banner banner={{name: '', title: '', location: '', email: '', phone: '', website: '', connections: [''], picture: '', backdrop: ''}} />
         </BrowserRouter>
       );
     });
@@ -103,7 +104,7 @@ describe('SearchBar', () => {
       await render(
         <>
           <BrowserRouter>
-            <SearchBar  inputChangeHandler={() => {}} loading={false} outsideClicked={() => {}} searchOpen={true}
+            <SearchBar  inputChangeHandler={() => {return;}} loading={false} outsideClicked={() => {return;}} searchOpen={true}
                         searchResults={[]} />
           </BrowserRouter>
         </>
@@ -195,7 +196,7 @@ describe('Render misc components', () => {
       await render(
         <>
           <BrowserRouter>
-            <UserProfileBanner />
+            <UserProfileBanner  location={''} name={''} profilePic={''} title={''} userBackdrop={''}/>
           </BrowserRouter>
         </>
       );
@@ -235,7 +236,7 @@ describe('Render misc components', () => {
       await render(
         <>
           <BrowserRouter>
-            <ApplyDropUp postSettings={{}}/>
+            <ApplyDropUp postSettings={{}} postId={''}/>
           </BrowserRouter>
         </>
       );
