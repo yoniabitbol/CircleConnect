@@ -31,6 +31,7 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ posts, applications }) => {
+  console.log("//POSTS: ", posts);
   return (
     <div>
       <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">

@@ -35,8 +35,7 @@ interface JobPostingProps {
 const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
   const [postInfo, setPostInfo] = useState<postType>();
 
-  console.log(postInfo);
-
+  console.log("POST INFO: ", postInfo);
   useEffect(() => {
     async function fetchJobPosting(post: any) {
       try {
@@ -63,7 +62,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
       <div className="grow py-2">
         <a href="/" className="font-bold"></a>
         <p className="text-sm">{post._id}</p>
-        <p className="text-sm">Location</p>
+        {/* <p className="text-sm">Location</p> */}
         <p className="text-sm" style={{ color: "#4c47bc" }}>
           {/*t("jobPosted.label.applicants")*/}
         </p>
@@ -85,11 +84,12 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
         {showApplicants ? (
           <div className="text-sm mt-2">
             <h3> {/*t("jobPosted.label.applicantList")*/}</h3>
-            <ul>
-              <ApplicantRow />
-              <ApplicantRow />
-              <ApplicantRow />
-            </ul>
+            {post.applications.map((applicant) => (
+              <div key={applicant}>
+                <ApplicantRow applicant={applicant} />
+              </div>
+            ))}
+
             <button
               onClick={(e) => {
                 e.preventDefault();

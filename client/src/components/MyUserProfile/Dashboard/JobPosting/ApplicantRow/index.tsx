@@ -1,11 +1,15 @@
 // import placeholder from "../placeholder.png";
 
-const JobPosting: React.FC = () => {
+interface ApplicantRowProps {
+  applicant: string;
+}
+
+const ApplicantRow: React.FC<ApplicantRowProps> = ({ applicant }) => {
   return (
     <div>
       <div className="flex mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
         <a href="/" className="mx-2">
-          Applicant #
+          {applicant}
         </a>
         <div className="">
           <button
@@ -23,4 +27,4 @@ const JobPosting: React.FC = () => {
   );
 };
 
-export default JobPosting;
+export default ApplicantRow;
