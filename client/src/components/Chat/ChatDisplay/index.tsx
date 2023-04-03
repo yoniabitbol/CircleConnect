@@ -50,6 +50,7 @@ const ChatDisplay: React.FC<{
           initialValues={{ outbound: true, message: "" }}
           enableReinitialize
           onSubmit={(values, { resetForm }) => {
+            console.log(values);
             resetForm();
           }}
         >
