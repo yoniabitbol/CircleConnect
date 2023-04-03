@@ -61,7 +61,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
       </div>
       <div className="grow py-2">
         <a href="/" className="font-bold"></a>
-        <p className="text-sm">{post._id}</p>
+        <p className="text-sm">{post.text}</p>
         {/* <p className="text-sm">Location</p> */}
         <p className="text-sm" style={{ color: "#4c47bc" }}>
           {/*t("jobPosted.label.applicants")*/}
