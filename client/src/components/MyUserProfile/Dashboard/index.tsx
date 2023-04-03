@@ -38,7 +38,7 @@ const Dashboard: React.FC<DashboardProps> = ({ posts, applications }) => {
         Jobs you posted:
         {posts.map((post: postType) => (
           <div key={post._id}>
-            <JobPosting post={post} />
+            {post.isJobListing ? <JobPosting post={post} /> : null}
           </div>
         ))}
       </div>
