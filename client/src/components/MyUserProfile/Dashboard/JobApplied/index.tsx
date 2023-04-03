@@ -48,6 +48,8 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
     fetchJobPosting(application);
   }, [application]);
 
+  console.log("APPLICATION ", application);
+
   return (
     <div className="flex bg-white mt-2">
       <div className="ml-2 mr-4 my-3">
@@ -63,7 +65,7 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
         <p className="text-sm">{postInfo?.text}</p>
         <p className="text-sm">{application._id}</p>
         <p className="text-sm" style={{ color: "#4c47bc" }}>
-          {postInfo?.applications.length} applicants
+          {postInfo?.applications.length} 0 applicants
         </p>
         <div className="flex">
           <button
