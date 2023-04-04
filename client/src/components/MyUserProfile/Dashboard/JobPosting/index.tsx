@@ -15,7 +15,7 @@ interface JobPostingProps {
 const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
   const [postInfo, setPostInfo] = useState<postType>();
   const [applicantsInfo, setApplicantsInfo] = useState<Usertypes[]>();
-  console.log(applicantsInfo);
+  // console.log(applicantsInfo);
 
   useEffect(() => {
     async function fetchJobPosting(post: postType) {
@@ -80,7 +80,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
             <h3> {/*t("jobPosted.label.applicantList")*/}</h3>
             {applicantsInfo?.map((applicant: Usertypes) => (
               <div key={applicant.name}>
-                <ApplicantRow applicant={applicant} />
+                <ApplicantRow applicant={applicant} postID={post._id} />
               </div>
             ))}
 
