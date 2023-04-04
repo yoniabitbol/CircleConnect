@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Database schema for user documents
 const userSchema = new mongoose.Schema(
   {
     user_id: {

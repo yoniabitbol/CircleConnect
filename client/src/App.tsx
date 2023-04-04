@@ -11,6 +11,7 @@ import ForgotPass from "./Routes/ForgotPass";
 import ScreenContent from "./Routes/ScreenContent";
 import Network from "./Routes/Network";
 import Feed from "./Routes/Feed";
+import './i18n/i18n'
 
 function App() {
   const { user, authIsReady } = useAuthContext();
