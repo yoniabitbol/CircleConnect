@@ -1,4 +1,4 @@
-interface postType {
+export interface postType {
   _id: string;
   creatorID: string;
   isJobListing: boolean;
@@ -82,6 +82,17 @@ export default interface Usertypes {
     endDate: string;
     description: string;
   }[];
-  applications: postType[];
+  applications: applicationType[];
   posts: postType[];
+}
+
+export interface applicationType {
+  applicantID: string;
+  coverLetter: string;
+  createdAt: string;
+  existingInfo: boolean;
+  postID: string;
+  resume: string;
+  updatedAt: string;
+  _id: string;
 }

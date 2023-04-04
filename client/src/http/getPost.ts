@@ -2,7 +2,7 @@ import { auth } from "../firebase/config";
 
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 
-async function getPost(postId: any) {
+async function getPost(postId: string) {
   const url = `http://localhost:${port}/api/posts/${postId}`;
   const user = auth.currentUser;
   const token = user && (await user.getIdToken());
@@ -15,7 +15,6 @@ async function getPost(postId: any) {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log(await res.json());
   return res.json();
 }
 

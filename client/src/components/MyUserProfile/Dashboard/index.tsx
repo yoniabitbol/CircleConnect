@@ -1,37 +1,14 @@
 import JobPosting from "./JobPosting";
 import JobApplied from "./JobApplied";
 import PropTypes from "prop-types";
-
-interface postType {
-  _id: string;
-  creatorID: string;
-  isJobListing: boolean;
-  position: string;
-  text: string;
-  image: string;
-  likes: string[];
-  comments: {
-    commenter: string;
-    comment: string;
-  }[];
-  preferenceTags: { type: string }[];
-  uploadDeadline: Date;
-  isThirdParty: boolean;
-  thirdPartyLink: string;
-  isResumeRequired: boolean;
-  isCoverLetterRequired: boolean;
-  applications: string[];
-  createdAt: string;
-  updatedAt: string;
-}
+import { applicationType, postType } from "../../../Models/UserProfileModel";
 
 interface DashboardProps {
   posts: postType[];
-  applications: postType[];
+  applications: applicationType[];
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ posts, applications }) => {
-  console.log("//POSTS: ", posts);
   return (
     <div>
       <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
@@ -44,7 +21,7 @@ const Dashboard: React.FC<DashboardProps> = ({ posts, applications }) => {
       </div>
       <div className="mt-2 w-full p-5 rounded-md bg-slate-200 mx-auto">
         Jobs you applied to:
-        {applications.map((application: postType) => (
+        {applications.map((application: applicationType) => (
           <div key={application._id}>
             <JobApplied application={application} />
           </div>
@@ -56,7 +33,7 @@ const Dashboard: React.FC<DashboardProps> = ({ posts, applications }) => {
 
 Dashboard.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.any).isRequired,
-  applications: PropTypes.array.isRequired,
+  applications: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default Dashboard;

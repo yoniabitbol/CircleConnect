@@ -76,8 +76,7 @@ const MyUserProfile: React.FC<{
 
     setEditable(!editable);
   };
-  // console.log("User posts ", User.posts);
-  console.log("User Applications: ", User.applications);
+
   return (
     <div>
       <Formik
