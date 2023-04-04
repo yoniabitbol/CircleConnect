@@ -28,7 +28,7 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
   //   fetchJobPosting(application);
   // }, [application]);
 
-  console.log("APPLICATION ", application);
+  // console.log("APPLICATION ", application);
 
   return (
     <div className="flex bg-white mt-2">

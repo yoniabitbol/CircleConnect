@@ -16,7 +16,7 @@ export interface postType {
   thirdPartyLink: string;
   isResumeRequired: boolean;
   isCoverLetterRequired: boolean;
-  applications: string[];
+  applications: applicationType[];
   createdAt: string;
   updatedAt: string;
 }

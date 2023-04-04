@@ -43,6 +43,8 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
   //   fetchUserProfile();
   // }, [post.applications]);
 
+  console.log(postInfo);
+
   const [showApplicants, setShowApplicants] = useState(false);
 
   return (
@@ -79,7 +81,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
           <div className="text-sm mt-2">
             <h3> {/*t("jobPosted.label.applicantList")*/}</h3>
             {postInfo?.applications.map((applicant) => (
-              <div key={applicant}>
+              <div key={applicant._id}>
                 <ApplicantRow applicant={applicant} />
               </div>
             ))}
