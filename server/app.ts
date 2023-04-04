@@ -4,6 +4,7 @@ import userRoutes from './routes/userRoutes';
 import postRoutes from './routes/postRoutes';
 import applicationRoutes from './routes/applicationRoutes';
 import threadRoutes from './routes/threadRoutes';
+import notificationRoutes from './routes/notificationRoutes';
 import decodeToken from './middleware/decodeToken';
 import Morgan from './middleware/morgan';
 import usingAuth from './usingAuth';
@@ -23,6 +24,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/threads', threadRoutes);
+app.use('api/notifications', notificationRoutes);
 
 // Serve static assets in production
 app.use(express.static('./public'));
