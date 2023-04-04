@@ -1,6 +1,6 @@
 import React from "react";
 import SessionItem from "../SessionItem";
-import { Form, Formik } from "formik";
+import { Form, Formik, Field } from "formik";
 import ThreadModel from "../../../Models/ThreadModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
 
@@ -16,7 +16,13 @@ const Sessions: React.FC<{
   selectThread: (event: any) => void;
   selected: number;
   threadProfiles: UserProfileModel[];
-}> = ({ threads, selectThread, selected, threadProfiles }) => {
+  connections: UserProfileModel[];
+}> = ({ threads, selectThread, selected, threadProfiles, connections }) => {
+  // Get the profiles who you DON'T have a conversation with yet
+  const filteredConnections = connections.filter(
+    (conn) =>
+      !threadProfiles.map((profile) => profile.user_id).includes(conn.user_id)
+  );
   return (
     <div>
       <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto">
@@ -51,13 +57,32 @@ const Sessions: React.FC<{
       <div className="mt-10 pb-5 rounded-md bg-white">
         <div className="flex justify-center">
           <Formik
-            initialValues={{ message: "" }}
+            initialValues={{ chatTarget: "" }}
             enableReinitialize
             onSubmit={(values) => {
-              console.log(values);
+              const { chatTarget } = values;
+              if (chatTarget == "") {
+                alert("Please select a connection");
+                return;
+              } else {
+                console.log("User id: " +chatTarget);
+              }
             }}
           >
-            <Form className="flex justify-center w-full">
+            <Form className="flex flex-col justify-center w-full">
+              {filteredConnections.length > 0 ? (
+                <Field as="select" name="chatTarget">
+                  <option value="">Select a connection</option>
+                  {filteredConnections.map((conn) => (
+                    <option key={conn.user_id} value={conn.user_id}>
+                      {conn.name}
+                    </option>
+                  ))}
+                </Field>
+              ) : (
+                <div>You have a conversation with each connection</div>
+              )}
+
               <button
                 className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg"
                 type="submit"

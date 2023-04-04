@@ -28,6 +28,7 @@ const Chat: React.FC<{
   const threadProfiles = connections.filter((profile) => {
     return profile.user_id && receivingParticipants.includes(profile.user_id);
   });
+  
   return (
     <div className="lg:ml-5 m-5 grid gap-0 grid-cols-1 md:grid-cols-[30%_70%]">
       <Sessions
@@ -35,6 +36,7 @@ const Chat: React.FC<{
         threadProfiles={threadProfiles}
         selectThread={selectThread}
         selected={selected}
+        connections={connections}
       />
       {selected != -1 ? (
         <ChatDisplay
