@@ -4,9 +4,9 @@ import placeholder from "./placeholder.png";
 import getPost from "../../../../http/getPost";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
-import { postType } from "../../../../Models/UserProfileModel";
-// import getUserProfile from "../../../../http/getUserProfile";
-// import Usertypes from "../../../../Models/UserProfileModel";
+import { applicationType, postType } from "../../../../Models/UserProfileModel";
+import getUserProfile from "../../../../http/getUserProfile";
+import Usertypes from "../../../../Models/UserProfileModel";
 
 interface JobPostingProps {
   post: postType;
@@ -14,7 +14,8 @@ interface JobPostingProps {
 
 const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
   const [postInfo, setPostInfo] = useState<postType>();
-  // const [applicantsInfo, setApplicantsInfo] = useState<Usertypes[]>();
+  const [applicantsInfo, setApplicantsInfo] = useState<Usertypes[]>();
+  console.log(applicantsInfo);
 
   useEffect(() => {
     async function fetchJobPosting(post: postType) {
@@ -29,21 +30,18 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
     fetchJobPosting(post);
   }, [post]);
 
-  // useEffect(() => {
-  //   async function fetchUserProfile() {
-  //     const applicants = await Promise.all(
-  //       post.applications.map(async (applicantID: string) => {
-  //         const applicant = await getUserProfile(applicantID);
-  //         console.log("Current applicant: ", applicant.data);
-  //         return applicant.data;
-  //       })
-  //     );
-  //     setApplicantsInfo(applicants);
-  //   }
-  //   fetchUserProfile();
-  // }, [post.applications]);
-
-  console.log(postInfo);
+  useEffect(() => {
+    async function fetchUserProfile(postInfo: postType) {
+      const applicants = await Promise.all(
+        postInfo.applications.map(async (eachApplicant: applicationType) => {
+          const applicant = await getUserProfile(eachApplicant.applicantID);
+          return applicant.data.user;
+        })
+      );
+      setApplicantsInfo(applicants);
+    }
+    if (postInfo) fetchUserProfile(postInfo);
+  }, [post.applications]);
 
   const [showApplicants, setShowApplicants] = useState(false);
 
@@ -80,8 +78,8 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
         {showApplicants ? (
           <div className="text-sm mt-2">
             <h3> {/*t("jobPosted.label.applicantList")*/}</h3>
-            {postInfo?.applications.map((applicant) => (
-              <div key={applicant._id}>
+            {applicantsInfo?.map((applicant: Usertypes) => (
+              <div key={applicant.name}>
                 <ApplicantRow applicant={applicant} />
               </div>
             ))}

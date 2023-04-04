@@ -1,9 +1,9 @@
 // import placeholder from "../placeholder.png";
 
-import { applicationType } from "../../../../../Models/UserProfileModel";
+import Usertypes from "../../../../../Models/UserProfileModel";
 
 interface ApplicantRowProps {
-  applicant: applicationType;
+  applicant: Usertypes;
 }
 
 const ApplicantRow: React.FC<ApplicantRowProps> = ({ applicant }) => {
@@ -11,7 +11,7 @@ const ApplicantRow: React.FC<ApplicantRowProps> = ({ applicant }) => {
     <div>
       <div className="flex mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
         <a href="/" className="mx-2">
-          {applicant._id}
+          {applicant.name}
         </a>
         <div className="">
           <button
