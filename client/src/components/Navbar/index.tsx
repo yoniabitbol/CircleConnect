@@ -25,7 +25,6 @@ const NavBar: React.FC<{
   const { logout } = useLogout();
   const [userProfilePic, setUserProfilePic] = useState<string>();
   const [usersInSearch, setUsersInSearch] = useState<UserInSearch[]>([]);
-  // console.log(openSearch);
 
   useEffect(() => {
     async function fetchUserProfile() {
@@ -57,7 +56,7 @@ const NavBar: React.FC<{
         <MobileNav links={NavLinkModels} />
       </div>
       <div className="flex w-1/2 h-max max-lg:hidden" onClick={outsideClicked}>
-        <Link className="ml-5 w-1/5" to="/">
+        <Link className="ml-5 w-1/5" to="feed">
           <img
             style={{ maxWidth: "5rem" }}
             src={process.env.PUBLIC_URL + "/Brand Logo/officccccc.png"}
