@@ -10,7 +10,11 @@
       "src/lib",
       "src/Models",
       "src/components/MyUserProfile/",
-      "src/Routes/ScreenContent"
+      "src/Routes/ScreenContent",
+      "src/i18n",
+      "src/Routes/Feed/FilterCard",
+      "src/components/Footer/LanguageDropdown",
+      "src/components/Footer/LanguageDropdown"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!@mui)/"
