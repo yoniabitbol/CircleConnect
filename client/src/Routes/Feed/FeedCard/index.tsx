@@ -65,7 +65,7 @@ const FeedCard: React.FC<{
   const [userProfilePic, setUserProfilePic] = useState<string>("");
   const [postImage, setPostImage] = useState<string | null>(null);
   useEffect(() => {
-    getUserProfilePic(userInfo.user_id).then(res => {
+    getUserProfilePic(userInfo.picture).then(res => {
         if(res)
         setUserProfilePic(res);
     }).catch(() => {
