@@ -38,7 +38,7 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
       }
     }
     fetchJobPosting(application.postID);
-  }, [1]);
+  }, []);
 
   return (
     <div className="flex bg-white mt-2">
