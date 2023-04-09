@@ -31,7 +31,6 @@ const MyUserProfile: React.FC<{
   }, [profile]);
 
   const editProfile = (values: any) => {
-
     setUser({
       name: values.name,
       title: values.title,
@@ -51,6 +50,8 @@ const MyUserProfile: React.FC<{
       languages: values.languages,
       awards: values.awards,
       courses: values.courses,
+      applications: User.applications,
+      posts: User.posts,
     });
 
     values.projects = JSON.stringify(values.projects);
@@ -122,18 +123,42 @@ const MyUserProfile: React.FC<{
                     backdrop: User.backdrop,
                   }}
                 />
-                <Tags preferenceTags={User.preferenceTags}/>
+                <Tags preferenceTags={User.preferenceTags} />
                 <Summary edit={editable} summary={User.summary} />
-                <Projects edit={editable} projects={User.projects ? User.projects : []} />
-                <Skills edit={editable} skills={User.skills ? User.skills : []} />
-                <Experience edit={editable} experience={User.experience ? User.experience : []} />
-                <Education edit={editable} education={User.education ? User.education : []} />
-                <Languages edit={editable} languages={User.languages ? User.languages : []} />
-                <Awards edit={editable} awards={User.awards ? User.awards : []} />
-                <Courses edit={editable} courses={User.courses ? User.courses : []} />
+                <Projects
+                  edit={editable}
+                  projects={User.projects ? User.projects : []}
+                />
+                <Skills
+                  edit={editable}
+                  skills={User.skills ? User.skills : []}
+                />
+                <Experience
+                  edit={editable}
+                  experience={User.experience ? User.experience : []}
+                />
+                <Education
+                  edit={editable}
+                  education={User.education ? User.education : []}
+                />
+                <Languages
+                  edit={editable}
+                  languages={User.languages ? User.languages : []}
+                />
+                <Awards
+                  edit={editable}
+                  awards={User.awards ? User.awards : []}
+                />
+                <Courses
+                  edit={editable}
+                  courses={User.courses ? User.courses : []}
+                />
               </LeftSection>
               <RightSection>
-                <Dashboard />
+                <Dashboard
+                  applications={User.applications}
+                  posts={User.posts}
+                />
               </RightSection>
             </Layout>
           </Form>

@@ -48,16 +48,22 @@ const Feed = () => {
     const fetchFeed = () => {
         setFeedData(null)
         if(location.pathname === '/feed') {
+            //set timeout
+
             getSocialFeed().then((res) => {
                setInitialFeedData(res.data);
-               setFeedData(res.data)
+               setTimeout(() => {
+                     setFeedData(res.data);
+               },1000)
             });
         }else if(location.pathname === '/jobs') {
             setFeedData(null)
             getJobFeed().then((res) => {
                 if(res.status ==='success'){
                    setInitialFeedData(res.data);
-                   setFeedData(res.data)
+                     setTimeout(() => {
+                        setFeedData(res.data);
+                     },1000)
                 }
             });
         }

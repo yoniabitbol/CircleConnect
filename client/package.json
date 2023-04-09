@@ -10,7 +10,11 @@
       "src/lib",
       "src/Models",
       "src/components/MyUserProfile/",
-      "src/Routes/ScreenContent"
+      "src/Routes/ScreenContent",
+      "src/i18n",
+      "src/Routes/Feed/FilterCard",
+      "src/components/Footer/LanguageDropdown",
+      "src/components/Footer/LanguageDropdown"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!@mui)/"
@@ -80,10 +84,10 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "i18next": "^22.4.12",
     "prettier": "2.8.3",
-    "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.4",
     "react-i18next": "^12.2.0",
-    "i18next": "^22.4.12"
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.9.4"
   }
 }
