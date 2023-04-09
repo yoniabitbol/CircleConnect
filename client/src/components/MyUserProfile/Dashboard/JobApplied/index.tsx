@@ -40,10 +40,6 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
     fetchJobPosting(application.postID);
   }, [1]);
 
-  console.log("POSTINFO: ", postInfo);
-  console.log("CL: ", coverletter);
-  console.log("R: ", resume);
-
   return (
     <div className="flex bg-white mt-2">
       <div className="grow ml-4 py-2">
