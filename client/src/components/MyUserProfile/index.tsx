@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import Usertypes from "../../Models/UserProfileModel";
+import FeedContent from '../../Routes/Feed/FeedContent';
 import updateUserProfile from "../../http/updateUserProfile";
-
 import Banner from "./Banner";
 import Tags from "./Tags";
 import Summary from "./Summary";
@@ -14,17 +14,30 @@ import Education from "./Education";
 import Languages from "./Languages";
 import Awards from "./Awards";
 import Courses from "./Courses";
-
 import Layout from "./Layout/layout";
 import LeftSection from "./Layout/leftSection";
 import RightSection from "./Layout/rightSection";
 import Dashboard from "./Dashboard";
-
+import {Tabs, Tab} from '@mui/material';
+import getSocialFeed from '../../http/getSocialFeed';
 const MyUserProfile: React.FC<{
   profile: Usertypes;
 }> = ({ profile }) => {
   const [User, setUser] = useState<Usertypes>(profile);
   const [editable, setEditable] = useState(false);
+    const [tabValue, setTabValue] = useState(0);
+    const [feedData, setFeedData] = useState<any>(null);
+
+    const fetchFeed = () => {
+        getSocialFeed().then((res) => {
+            if(res.status ==='success'){
+                setFeedData(res.data);
+            }
+        });
+    }
+    useEffect(() => {
+        fetchFeed();
+    },[])
 
   useEffect(() => {
     setUser(profile);
@@ -76,6 +89,10 @@ const MyUserProfile: React.FC<{
 
     setEditable(!editable);
   };
+  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+
+  }
 
   return (
     <div>
@@ -123,36 +140,22 @@ const MyUserProfile: React.FC<{
                     backdrop: User.backdrop,
                   }}
                 />
-                <Tags preferenceTags={User.preferenceTags} />
-                <Summary edit={editable} summary={User.summary} />
-                <Projects
-                  edit={editable}
-                  projects={User.projects ? User.projects : []}
-                />
-                <Skills
-                  edit={editable}
-                  skills={User.skills ? User.skills : []}
-                />
-                <Experience
-                  edit={editable}
-                  experience={User.experience ? User.experience : []}
-                />
-                <Education
-                  edit={editable}
-                  education={User.education ? User.education : []}
-                />
-                <Languages
-                  edit={editable}
-                  languages={User.languages ? User.languages : []}
-                />
-                <Awards
-                  edit={editable}
-                  awards={User.awards ? User.awards : []}
-                />
-                <Courses
-                  edit={editable}
-                  courses={User.courses ? User.courses : []}
-                />
+                <Tabs value={tabValue} onChange={handleTabChange}>
+                    <Tab label="Summary" />
+                    <Tab label="Posts" />
+                </Tabs>
+                  { tabValue === 0 && <div className="flex-col space-y-3">
+                      <Tags preferenceTags={User.preferenceTags}/>
+                      <Summary edit={editable} summary={User.summary} />
+                      <Projects edit={editable} projects={User.projects ? User.projects : []} />
+                      <Skills edit={editable} skills={User.skills ? User.skills : []} />
+                      <Experience edit={editable} experience={User.experience ? User.experience : []} />
+                      <Education edit={editable} education={User.education ? User.education : []} />
+                      <Languages edit={editable} languages={User.languages ? User.languages : []} />
+                      <Awards edit={editable} awards={User.awards ? User.awards : []} />
+                      <Courses edit={editable} courses={User.courses ? User.courses : []} />
+                  </div>}
+                    { tabValue === 1 && <FeedContent editable={true} feedData={feedData.filter((post: any) => post.creatorID === User.user_id)}/>}
               </LeftSection>
               <RightSection>
                 <Dashboard
