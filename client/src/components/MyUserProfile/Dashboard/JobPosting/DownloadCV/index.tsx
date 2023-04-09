@@ -17,7 +17,10 @@ const DownloadCV: React.FC<DownloadCVProps> = ({ applicant, postID }) => {
     applicant.applications.map((application: applicationType) => {
       if (application.postID === postID) {
         console.log("Entering...");
-        setFileName("" + application.coverLetter);
+        setFileName(
+          "../../../../../../../server\\public\\files\\applications\\coverLetter\\" +
+            application.coverLetter
+        );
       }
     });
     console.log("FILE: ", fileName);
