@@ -15,7 +15,6 @@ interface JobPostingProps {
 const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
   const [postInfo, setPostInfo] = useState<postType>();
   const [applicantsInfo, setApplicantsInfo] = useState<Usertypes[]>();
-  // console.log(applicantsInfo);
 
   useEffect(() => {
     async function fetchJobPosting(post: postType) {
@@ -50,20 +49,17 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
       <div className="grow py-2 ml-4">
         <a href="/" className="font-bold"></a>
         <p className="text-sm">{postInfo?.text}</p>
-        {/* <p className="text-sm">Location</p> */}
-        <p className="text-sm" style={{ color: "#4c47bc" }}>
-          {/*t("jobPosted.label.applicants")*/}
-        </p>
+        <p className="text-sm" style={{ color: "#4c47bc" }}></p>
         {!showApplicants ? (
           <button
             onClick={(e) => {
               e.preventDefault();
-              setShowApplicants(true);
+              if (applicantsInfo?.length != 0) setShowApplicants(true);
             }}
             className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
           text-white hover:bg-signup-button-hover"
           >
-            {/*t("jobPosted.buttons.allApplicants")*/}
+            View applicants
           </button>
         ) : (
           <p></p>
@@ -71,7 +67,6 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
 
         {showApplicants ? (
           <div className="text-sm mt-2">
-            <h3> {/*t("jobPosted.label.applicantList")*/}</h3>
             {applicantsInfo?.map((applicant: Usertypes) => (
               <div key={applicant.name}>
                 <div className="mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
@@ -89,7 +84,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
               className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
             text-white hover:bg-signup-button-hover"
             >
-              {/*t("jobPosted.buttons.close")*/}
+              Close
             </button>
           </div>
         ) : (
