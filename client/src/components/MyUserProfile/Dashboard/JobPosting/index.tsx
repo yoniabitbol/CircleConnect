@@ -48,8 +48,12 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
     <div className="flex bg-white mt-2">
       <div className="grow py-2 ml-4">
         <a href="/" className="font-bold"></a>
-        <p className="text-sm">{postInfo?.position}</p>
-        <p className="text-sm" style={{ color: "#4c47bc" }}></p>
+        <p className="text-md" style={{ color: "#4c47bc" }}>
+          {postInfo?.position}
+        </p>
+        <p className="text-sm">
+          No. of applications: {postInfo?.applications.length}
+        </p>
         {!showApplicants ? (
           <button
             onClick={(e) => {
