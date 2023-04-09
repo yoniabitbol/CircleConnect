@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { applicationType } from "../../../../../Models/UserProfileModel";
 import { Usertypes } from "../../../../UserProfile";
 // import { saveAs } from "file-saver";
+import getCoverLetter from "../../../../../http/getCoverLetter";
 
 interface DownloadCVProps {
   applicant: Usertypes;
@@ -9,38 +10,33 @@ interface DownloadCVProps {
 }
 
 const DownloadCV: React.FC<DownloadCVProps> = ({ applicant, postID }) => {
-  const [fileName, setFileName] = useState("");
+  const [coverletter, setCoverletter] = useState<string | undefined>(undefined);
   // console.log(applicant);
   // console.log(postID);
 
-  const saveFile = () => {
+  useEffect(() => {
     applicant.applications.map((application: applicationType) => {
       if (application.postID === postID) {
-        console.log("Entering...");
-        setFileName(
-          "../../../../../../../server\\public\\files\\applications\\coverLetter\\" +
-            application.coverLetter
-        );
+        getCoverLetter(application.coverLetter).then((res) => {
+          if (res) setCoverletter(res);
+          else setCoverletter(undefined);
+        });
       }
     });
-    console.log("FILE: ", fileName);
-    // saveAs(fileName, "Cover Letter.pdf");
-  };
+  }, []);
 
   return (
     <div>
       <div>
         <div className="">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              saveFile();
-            }}
+          <a
+            href={coverletter}
+            download
             className="text-xs block w-auto px-3 py-1 rounded-md bg-signup-button
           text-white hover:bg-signup-button-hover"
           >
             Download
-          </button>
+          </a>
         </div>
       </div>
     </div>
