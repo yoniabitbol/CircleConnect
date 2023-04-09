@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { applicationType, postType } from "../../../../Models/UserProfileModel";
 import getUserProfile from "../../../../http/getUserProfile";
 import Usertypes from "../../../../Models/UserProfileModel";
+import DownloadCV from "./DownloadCV";
 
 interface JobPostingProps {
   post: postType;
@@ -80,7 +81,10 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
             <h3> {/*t("jobPosted.label.applicantList")*/}</h3>
             {applicantsInfo?.map((applicant: Usertypes) => (
               <div key={applicant.name}>
-                <ApplicantRow applicant={applicant.name} />
+                <div className="flex mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
+                  <ApplicantRow applicant={applicant.name} />
+                  <DownloadCV applicant={applicant} postID={post._id} />
+                </div>
               </div>
             ))}
 
