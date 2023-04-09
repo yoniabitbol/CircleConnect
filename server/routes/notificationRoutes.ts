@@ -3,7 +3,7 @@ import notificationController from '../controllers/notificationController';
 
 const router = express.Router();
 
-// Fetches all unread notifications for a user
+// Notification API routes
 router.route('/:user_id')
   .get(notificationController.getUnreadNotifications)
   .post(notificationController.sendNotification)

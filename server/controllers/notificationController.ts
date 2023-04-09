@@ -6,7 +6,7 @@ const getUnreadNotifications = async (req: Request, res: Response) => {
     const notifications = await Notification.find({
       user_id: req.params.user_id,
       isRead: false,
-    });
+    }).populate('initiator', 'name picture');
     res.status(200).json({
       status: 'success',
       data: {

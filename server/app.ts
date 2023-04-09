@@ -24,7 +24,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/threads', threadRoutes);
-app.use('api/notifications', notificationRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Serve static assets in production
 app.use(express.static('./public'));
