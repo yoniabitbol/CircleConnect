@@ -3,7 +3,7 @@ import ConnectionRow from "../../components/ConnectionRow";
 import Usertypes from "../../Models/UserProfileModel";
 import getCurrentUserConnections from "../../http/getCurrentUserConnections";
 import getUserProfilePic from "../../http/getUserPicturePic";
-//import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 type ConnectionType = Omit<
   Usertypes,
@@ -26,7 +26,7 @@ type ConnectionType = Omit<
 >;
 
 const Network: React.FC = () => {
-  //const { t } = useTranslation();
+  const { t } = useTranslation();
   const [connections, setConnections] = useState<any>([]);
   const [search, setSearch] = useState<string>("");
   const [filteredConnections, setFilteredConnections] = useState<any>([]);
@@ -76,10 +76,10 @@ const Network: React.FC = () => {
       <div className="flex justify-center sm:text-left py-2">
         <div className="grid grid-cols-4 flex items-center gap-4 p-4 sm:text-sm text-xs w-full sm:w-7/12 bg-white">
           <div className="col-span-3 font-bold">
-            {connections.length} {/*t("common.label.connections")*/}
+            {connections.length} {t("common.label.connections")}
           </div>
           <input
-            //placeholder={t("common.label.search") as string}
+            placeholder={t("common.label.search") as string}
             onChange={onInputChangeHandler}
             value={search}
             className="border p-2"
