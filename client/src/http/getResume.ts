@@ -1,22 +1,23 @@
 import { auth } from "../firebase/config";
-const host = process.env.REACT_APP_HOST || 'localhost';
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
-const url = `http://${host}:${port}/api/users/`;
+const url = `http://localhost:${port}/files/applications/resume/`;
 
-async function getUserProfile(user_id: string) {
+async function getResume(resume: string) {
   const currentUser = auth.currentUser;
   const token = currentUser && (await currentUser.getIdToken());
-  if (!user_id) {
-    return;
-  }
-  const res = await fetch(url + user_id, {
+
+  const res = await fetch(url + resume, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
-  return await res.json();
+  if (res.ok) {
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
+  }
+  throw new Error("Failed to fetch cover letter.");
 }
 
-export default getUserProfile;
+export default getResume;
