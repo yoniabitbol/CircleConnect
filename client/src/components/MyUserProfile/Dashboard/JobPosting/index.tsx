@@ -40,56 +40,29 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
       setApplicantsInfo(applicants);
     }
     if (postInfo) fetchUserProfile(postInfo);
-  }, [post.applications]);
-
-  const [showApplicants, setShowApplicants] = useState(false);
+  });
 
   return (
     <div className="flex bg-white mt-2">
       <div className="grow py-2 ml-4">
         <a href="/" className="font-bold"></a>
         <p className="text-sm">{postInfo?.text}</p>
-        <p className="text-sm" style={{ color: "#4c47bc" }}></p>
-        {!showApplicants ? (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              if (applicantsInfo?.length != 0) setShowApplicants(true);
-            }}
-            className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
-          text-white hover:bg-signup-button-hover"
-          >
-            View applicants
-          </button>
-        ) : (
-          <p></p>
-        )}
 
-        {showApplicants ? (
-          <div className="text-sm mt-2">
-            {applicantsInfo?.map((applicant: Usertypes) => (
-              <div key={applicant.name}>
-                <div className="mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
-                  <ApplicantRow applicant={applicant.name} />
-                  <DownloadCV applicant={applicant} postID={post._id} />
-                </div>
+        {applicantsInfo && applicantsInfo.length != 0 ? (
+          <p className="text-sm mt-2 " style={{ color: "#4c47bc" }}>
+            Applicants:
+          </p>
+        ) : null}
+        <div className="text-sm mt-2">
+          {applicantsInfo?.map((applicant: Usertypes) => (
+            <div key={applicant.name}>
+              <div className="mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
+                <ApplicantRow applicant={applicant.name} />
+                <DownloadCV applicant={applicant} postID={postInfo?._id} />
               </div>
-            ))}
-
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setShowApplicants(false);
-              }}
-              className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
-            text-white hover:bg-signup-button-hover"
-            >
-              Close
-            </button>
-          </div>
-        ) : (
-          <p></p>
-        )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
