@@ -118,20 +118,41 @@ const MyUserProfile: React.FC<{
                     email: User.email,
                     phone: User.phone,
                     website: User.website,
-                    connections: User.connections,
+                    connections: User.connections ? User.connections : [],
                     picture: User.picture,
                     backdrop: User.backdrop,
                   }}
                 />
                 <Tags preferenceTags={User.preferenceTags} />
                 <Summary edit={editable} summary={User.summary} />
-                <Projects edit={editable} projects={User.projects} />
-                <Skills edit={editable} skills={User.skills} />
-                <Experience edit={editable} experience={User.experience} />
-                <Education edit={editable} education={User.education} />
-                <Languages edit={editable} languages={User.languages} />
-                <Awards edit={editable} awards={User.awards} />
-                <Courses edit={editable} courses={User.courses} />
+                <Projects
+                  edit={editable}
+                  projects={User.projects ? User.projects : []}
+                />
+                <Skills
+                  edit={editable}
+                  skills={User.skills ? User.skills : []}
+                />
+                <Experience
+                  edit={editable}
+                  experience={User.experience ? User.experience : []}
+                />
+                <Education
+                  edit={editable}
+                  education={User.education ? User.education : []}
+                />
+                <Languages
+                  edit={editable}
+                  languages={User.languages ? User.languages : []}
+                />
+                <Awards
+                  edit={editable}
+                  awards={User.awards ? User.awards : []}
+                />
+                <Courses
+                  edit={editable}
+                  courses={User.courses ? User.courses : []}
+                />
               </LeftSection>
               <RightSection>
                 <Dashboard

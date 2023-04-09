@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Database schema for thread documents
 const threadSchema = new mongoose.Schema(
   {
     participants: [{

@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import admin from '../firebase/config';
 
+// Decodes the token sent in the request header
 async function decodeToken(req: Request, res:Response, next: NextFunction) {
   const { authorization } = req.headers;
   if (!authorization) {

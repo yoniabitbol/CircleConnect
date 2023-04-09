@@ -8,7 +8,16 @@
       "src/reportWebVitals",
       "src/firebase",
       "src/lib",
-      "src/Models"
+      "src/Models",
+      "src/components/MyUserProfile/",
+      "src/Routes/ScreenContent",
+      "src/i18n",
+      "src/Routes/Feed/FilterCard",
+      "src/components/Footer/LanguageDropdown",
+      "src/components/Footer/LanguageDropdown"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!@mui)/"
     ]
   },
   "version": "0.1.0",
@@ -56,6 +65,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
+    "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },

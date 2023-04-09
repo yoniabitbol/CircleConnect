@@ -147,7 +147,7 @@ const Banner: React.FC<{
 
         <div className="flex flex-col justify-center mt-5 ml-5">
           <h1 className="text-lg font-semibold ">
-            {banner.connections.length} Connections
+            {banner.connections ? banner.connections.length : 0} Connections
           </h1>
         </div>
 
