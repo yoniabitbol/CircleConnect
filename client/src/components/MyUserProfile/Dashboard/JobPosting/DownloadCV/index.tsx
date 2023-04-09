@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { applicationType } from "../../../../../Models/UserProfileModel";
 import { Usertypes } from "../../../../UserProfile";
-// import { saveAs } from "file-saver";
 import getCoverLetter from "../../../../../http/getCoverLetter";
 import getResume from "../../../../../http/getResume";
 
@@ -13,8 +12,6 @@ interface DownloadCVProps {
 const DownloadCV: React.FC<DownloadCVProps> = ({ applicant, postID }) => {
   const [coverletter, setCoverletter] = useState<string | undefined>(undefined);
   const [resume, setResume] = useState<string | undefined>(undefined);
-  // console.log(applicant);
-  // console.log(postID);
 
   useEffect(() => {
     applicant.applications.map((application: applicationType) => {
