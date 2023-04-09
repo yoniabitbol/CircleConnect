@@ -60,7 +60,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
               e.preventDefault();
               if (applicantsInfo?.length != 0) setShowApplicants(true);
             }}
-            className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
+            className="text-xs block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
           text-white hover:bg-signup-button-hover"
           >
             View applicants
@@ -85,7 +85,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
                 e.preventDefault();
                 setShowApplicants(false);
               }}
-              className="text-sm block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
+              className="text-xs block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
             text-white hover:bg-signup-button-hover"
             >
               Close
