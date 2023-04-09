@@ -8,6 +8,11 @@ const notificationSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'User ID required.'],
     },
+    initiatorID: {
+      type: String,
+      ref: 'User',
+      required: [true, 'Initiator ID required.'],
+    },
     type: {
       type: String,
       required: [true, 'Notification type required.'],
