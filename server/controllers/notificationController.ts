@@ -51,7 +51,7 @@ const sendNotification = async (req: Request, res: Response) => {
 
 const markNotificationAsRead = async (req: Request, res: Response) => {
   try {
-    const notification = await Notification.findOneAndUpdate(
+    const notification = await Notification.updateMany(
       { user_id: req.params.user_id },
       { isRead: true },
     );
