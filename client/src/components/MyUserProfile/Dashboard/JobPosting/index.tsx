@@ -1,6 +1,5 @@
 import { useState } from "react";
 import ApplicantRow from "./ApplicantRow";
-import placeholder from "./placeholder.png";
 import getPost from "../../../../http/getPost";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
@@ -48,13 +47,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
 
   return (
     <div className="flex bg-white mt-2">
-      <div className="ml-2 mr-4 my-3">
-        <img
-          src={placeholder}
-          className="w-16 rounded-full md:align-center"
-        ></img>
-      </div>
-      <div className="grow py-2">
+      <div className="grow py-2 ml-4">
         <a href="/" className="font-bold"></a>
         <p className="text-sm">{postInfo?.text}</p>
         {/* <p className="text-sm">Location</p> */}
@@ -81,7 +74,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
             <h3> {/*t("jobPosted.label.applicantList")*/}</h3>
             {applicantsInfo?.map((applicant: Usertypes) => (
               <div key={applicant.name}>
-                <div className="flex mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
+                <div className="mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
                   <ApplicantRow applicant={applicant.name} />
                   <DownloadCV applicant={applicant} postID={post._id} />
                 </div>
