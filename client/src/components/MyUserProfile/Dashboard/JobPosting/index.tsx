@@ -80,7 +80,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
             <h3> {/*t("jobPosted.label.applicantList")*/}</h3>
             {applicantsInfo?.map((applicant: Usertypes) => (
               <div key={applicant.name}>
-                <ApplicantRow applicant={applicant} />
+                <ApplicantRow applicant={applicant.name} />
               </div>
             ))}
 

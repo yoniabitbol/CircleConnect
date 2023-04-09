@@ -1,18 +1,12 @@
-// import placeholder from "../placeholder.png";
-
-import Usertypes from "../../../../../Models/UserProfileModel"; // applicationType,
-
 interface ApplicantRowProps {
-  applicant: Usertypes;
+  applicant: string;
 }
 
 const ApplicantRow: React.FC<ApplicantRowProps> = ({ applicant }) => {
   return (
     <div>
       <div className="flex mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
-        <a href="/" className="mx-2">
-          {applicant.name + " " + applicant.user_id}
-        </a>
+        <p className="mx-2">{applicant}</p>
         <div className="">
           <button
             onClick={(e) => {
