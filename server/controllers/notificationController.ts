@@ -23,19 +23,26 @@ const getUnreadNotifications = async (req: Request, res: Response) => {
 
 const sendNotification = async (req: Request, res: Response) => {
   try {
+    if (req.body.type !== 'message' || req.body.type !== 'connection' || req.body.type !== 'relatedPost') {
+      return res.status(400).json({
+        status: 'failure',
+        message: 'Invalid notification type',
+      });
+    }
+
     const notification = await Notification.create({
       user_id: req.params.user_id,
       type: req.body.type,
       initiatorID: req.body.initiatorID,
     });
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       data: {
         notification,
       },
     });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       status: `ERROR ${err}`,
       message: 'Failed to send notification',
     });
