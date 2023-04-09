@@ -26,6 +26,7 @@ const sendNotification = async (req: Request, res: Response) => {
     const notification = await Notification.create({
       user_id: req.params.user_id,
       type: req.body.type,
+      initiatorID: req.body.initiatorID,
     });
     res.status(201).json({
       status: 'success',
