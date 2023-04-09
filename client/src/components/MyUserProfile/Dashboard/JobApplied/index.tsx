@@ -1,51 +1,43 @@
-import React from "react";
-import placeholder from "./placeholder.png";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-// import { useState, useEffect } from "react";
-// import getPost from "../../../../http/getPost";
-import { applicationType } from "../../../../Models/UserProfileModel";
+import { applicationType, postType } from "../../../../Models/UserProfileModel";
+import getPost from "../../../../http/getPost";
 
 interface JobAppliedProps {
   application: applicationType;
 }
 
 const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
-  // const recruiter = true;
-  //console.log("APPLIED: ", application._id);
+  const [postInfo, setPostInfo] = useState<postType>();
 
-  // const [postInfo, setPostInfo] = useState<postType>();
+  useEffect(() => {
+    async function fetchJobPosting(postID: string) {
+      try {
+        if (postID === null) return;
+        const posting = await getPost(postID);
+        setPostInfo(posting.data.post); // get post from the response object
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchJobPosting(application.postID);
+  }, [1]);
 
-  // useEffect(() => {
-  //   async function fetchJobPosting(application: any) {
-  //     try {
-  //       if (application === "") return;
-  //       const posting = await getPost(application);
-  //       setPostInfo(posting);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   fetchJobPosting(application);
-  // }, [application]);
-
-  // console.log("APPLICATION ", application);
+  console.log("POSTINFO: ", postInfo);
 
   return (
     <div className="flex bg-white mt-2">
-      <div className="ml-2 mr-4 my-3">
-        <img
-          src={placeholder}
-          className="w-16 rounded-full md:align-center"
-        ></img>
-      </div>
-      <div className="grow py-2">
+      <div className="grow ml-4 py-2">
         <a href="/" className="font-bold">
-          {/* {postInfo?.position} */}
+          {postInfo?.text}
         </a>
         {/* <p className="text-sm">{postInfo?.text}</p> */}
-        <p className="text-sm">{application._id}</p>
+
         <p className="text-sm" style={{ color: "#4c47bc" }}>
-          {application.createdAt}
+          {postInfo?.position}
+        </p>
+        <p className="text-sm">
+          No. of applicants: {postInfo?.applications.length}
         </p>
         <div className="flex">
           <button
