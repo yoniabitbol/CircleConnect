@@ -40,7 +40,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
       setApplicantsInfo(applicants);
     }
     if (postInfo) fetchUserProfile(postInfo);
-  });
+  }, [postInfo?.applications]);
 
   const [showApplicants, setShowApplicants] = useState(false);
 
