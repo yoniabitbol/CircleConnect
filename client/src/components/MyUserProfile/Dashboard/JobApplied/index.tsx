@@ -43,11 +43,6 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
   return (
     <div className="flex bg-white mt-2">
       <div className="grow ml-4 py-2">
-        <a href="/" className="font-bold">
-          {postInfo?.text}
-        </a>
-        {/* <p className="text-sm">{postInfo?.text}</p> */}
-
         <p className="text-sm" style={{ color: "#4c47bc" }}>
           {postInfo?.position}
         </p>
