@@ -33,22 +33,26 @@ const DownloadCV: React.FC<DownloadCVProps> = ({ applicant, postID }) => {
 
   return (
     <div className="flex mt-2">
-      <a
-        href={coverletter}
-        download
-        className="text-xs block w-auto px-3 py-1 rounded-md bg-signup-button
+      {coverletter ? (
+        <a
+          href={coverletter}
+          download
+          className="text-xs block w-auto px-3 py-1 rounded-md bg-signup-button
           text-white hover:bg-signup-button-hover mr-3"
-      >
-        Download Cover Letter
-      </a>
-      <a
-        href={resume}
-        download
-        className="text-xs block w-auto px-3 py-1 rounded-md bg-signup-button
+        >
+          Download Cover Letter
+        </a>
+      ) : null}
+      {resume ? (
+        <a
+          href={resume}
+          download
+          className="text-xs block w-auto px-3 py-1 rounded-md bg-signup-button
           text-white hover:bg-signup-button-hover"
-      >
-        Download Resume
-      </a>
+        >
+          Download Resume
+        </a>
+      ) : null}
     </div>
   );
 };
