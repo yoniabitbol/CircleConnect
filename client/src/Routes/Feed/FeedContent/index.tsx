@@ -1,5 +1,6 @@
 import {FC, useEffect, useRef, useState} from 'react';
 import FeedCard from '../FeedCard';
+import FeedSkeleton from '../../../components/Skeleton/FeedSkeleton';
 
 
 
@@ -14,6 +15,7 @@ const FeedContent:FC<{ feedData: any}> = (props) => {
     }, [ref.current])
     return (
         <div className="flex-row w-full justify-center">
+            {!feedData && <FeedSkeleton/>}
             {feedData && feedData.map((data : any, i: number) => {
                 return ( <div key={data.id} ref={i === scrollTo ? ref: null}>
                     <FeedCard  userInfo={data.creator} scrollTo={setScrollTo.bind(this, i)}

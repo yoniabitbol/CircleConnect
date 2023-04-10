@@ -29,7 +29,7 @@ const MobileNav: React.FC<{links: NavLinkModel[]}> = (props) => {
           >
             <MenuIcon />
             <div className=" md:hidden">
-              <Menu elevation={0} sx={{mt:5}} open={toggleNav && windowWidth < 940} anchorOrigin={{vertical:"top", horizontal:"left"}}>
+              <Menu elevation={0} sx={{mt:5}} open={toggleNav && windowWidth < 1024} anchorOrigin={{vertical:"top", horizontal:"left"}}>
                 {links.map((link: NavLinkModel) => (
                   <MenuItem key={link.key} className="mr-10 max-md:mr-5 md:hidden">
                     <NavLink
