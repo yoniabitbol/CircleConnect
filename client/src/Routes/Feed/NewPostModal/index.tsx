@@ -90,7 +90,6 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
         setSettings({isResumeRequired: false, isCoverLetterRequired: false, uploadDeadline: null, thirdPartyLink: '', position: null});
         formik.setFieldValue('isResumeRequired', false);
         formik.setFieldValue('isCoverLetterRequired', false);
-        formik.setFieldValue('uploadDeadline', null);
         formik.setFieldValue('thirdPartyLink', '');
         formik.setFieldValue('position', null);
     }
