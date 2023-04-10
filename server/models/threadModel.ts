@@ -12,7 +12,10 @@ const threadSchema = new mongoose.Schema(
       ref: 'Message',
     }],
   },
-  { timestamps: true, versionKey: false },
+  {
+    timestamps: true,
+    versionKey: false,
+  },
 );
 
 const Thread = mongoose.model('Thread', threadSchema);
