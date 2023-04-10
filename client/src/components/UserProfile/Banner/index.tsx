@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import getUserBackdrop from "../../../http/getUserBackdrop";
 import getUserProfilePic from "../../../http/getUserPicturePic";
 import { auth } from "../../../firebase/config";
@@ -48,9 +47,9 @@ const Banner: React.FC<{
     async function fetchUserProfile() {
       try {
         // if (banner.backdrop === "" || banner.picture === "") return;
-        const backdropUrl = await getUserBackdrop("default-backdrop.jpg");
-        const profilePicUrl = await getUserProfilePic("default-user.jpg");
-
+        const backdropUrl = await getUserBackdrop(banner.backdrop);
+        const profilePicUrl = await getUserProfilePic(banner.picture);
+        
         setBackdropUrl(backdropUrl);
         setProfilePicUrl(profilePicUrl);
       } catch (error) {

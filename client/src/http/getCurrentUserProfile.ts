@@ -12,6 +12,7 @@ async function getCurrentUserProfile() {
   if (!id) {
     return;
   }
+  
   const res = await fetch(url + id, {
     method: "GET",
     headers: {
