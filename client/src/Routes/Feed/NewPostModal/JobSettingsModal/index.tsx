@@ -22,7 +22,7 @@ import { useTranslation } from "react-i18next";
 const JobSettingsModal: FC<{
   showModal: boolean;
   handleModalClose: () => void;
-  values: object;
+  values: any;
   onChange: (type: string, value: any) => void;
 }> = (props) => {
   const { showModal, handleModalClose, onChange } = props;
@@ -83,24 +83,31 @@ const JobSettingsModal: FC<{
     <Modal open={showModal} onClose={handleModalClose}>
       <Box className={style.box}>
         <h1 className="font-bold">{t('jobPosted.label.jobSettings')}</h1>
-        <div className="flex-col justify-items-center mt-5">
-          <div className="flex items-center space-x-3">
-            <Autocomplete
-              sx={{ width: "50%" }}
-              options={defaultJobPositions}
-              onInputChange={handleJobPositionChange}
-              freeSolo={true}
-              renderInput={(params) => (
-                <TextField {...params} label="Job Postion" />
-              )}
-            />
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="Application Deadline"
-                disablePast={true}
-                onChange={handleDateChange}
+        <div className="flex-col  mt-5">
+          <div className="flex space-x-3 h-[70px]">
+            <div className='w-1/2 flex-col items-center'>
+              <Autocomplete
+                  sx={{ width: "100%" }}
+                  options={defaultJobPositions}
+                  onInputChange={handleJobPositionChange}
+                  value={props.values.position}
+                  freeSolo={true}
+                  renderInput={(params) => (
+                      <TextField {...params} label="Job Postion" />
+                  )}
               />
-            </LocalizationProvider>
+              {!props.values.position && <span className="text-red-500">Required</span>
+              }
+            </div>
+            <div>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                    label="Application Deadline"
+                    disablePast={true}
+                    onChange={handleDateChange}
+                />
+              </LocalizationProvider>
+            </div>
           </div>
           <div className="mt-4 border-t-2 border-b-2 flex space-x-[5rem]">
             <FormControlLabel
