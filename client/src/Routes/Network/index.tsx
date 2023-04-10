@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import ConnectionRow from "../../components/ConnectionRow";
 import Usertypes from "../../Models/UserProfileModel";
 import getCurrentUserConnections from "../../http/getCurrentUserConnections";
-import getUserProfilePic from "../../http/getUserPicturePic";
 import { useTranslation } from "react-i18next";
-
 type ConnectionType = Omit<
   Usertypes,
   | "location"
@@ -30,7 +28,6 @@ const Network: React.FC = () => {
   const [connections, setConnections] = useState<any>([]);
   const [search, setSearch] = useState<string>("");
   const [filteredConnections, setFilteredConnections] = useState<any>([]);
-  const [userProfilePic, setUserProfilePic] = useState<string[]>();
 
   useEffect(() => {
     getCurrentUserConnections().then((res) => {
@@ -40,20 +37,6 @@ const Network: React.FC = () => {
       setFilteredConnections(res.data.connections);
     });
   }, []);
-
-  useEffect(() => {
-    async function fetchUserProfile() {
-      const profilePicUrls = await Promise.all(
-        connections.map(async (user: ConnectionType) => {
-          const profilePicUrl = await getUserProfilePic(user.picture);
-
-          return profilePicUrl;
-        })
-      );
-      setUserProfilePic(profilePicUrls);
-    }
-    fetchUserProfile();
-  }, [connections]);
 
   const onInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -86,15 +69,15 @@ const Network: React.FC = () => {
           ></input>
         </div>
       </div>
-      {filteredConnections.map((connection: ConnectionType, index: number) => {
+      {filteredConnections.map((connection: ConnectionType) => {
         return (
           <ConnectionRow
-            key={index}
+            key={connection.user_id}
             user_id={connection.user_id}
             name={connection.name}
             title={connection.title}
             connections={connection.connections}
-            picture={userProfilePic ? userProfilePic[index] : ""}
+            picture={connection.picture && connection.picture}
           />
         );
       })}
