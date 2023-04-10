@@ -54,45 +54,49 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
         <p className="text-sm">
           No. of applications: {postInfo?.applications.length}
         </p>
-        {!showApplicants ? (
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              if (applicantsInfo?.length != 0) setShowApplicants(true);
-            }}
-            className="text-xs block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
+        {applicantsInfo?.length == 0 ? null : (
+          <div>
+            {!showApplicants ? (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (applicantsInfo?.length != 0) setShowApplicants(true);
+                }}
+                className="text-xs block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
           text-white hover:bg-signup-button-hover"
-          >
-            View applicants
-          </button>
-        ) : (
-          <p></p>
-        )}
+              >
+                View applicants
+              </button>
+            ) : (
+              <p></p>
+            )}
 
-        {showApplicants ? (
-          <div className="text-sm mt-2">
-            {applicantsInfo?.map((applicant: Usertypes) => (
-              <div key={applicant.name}>
-                <div className="mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
-                  <ApplicantRow applicant={applicant.name} />
-                  <DownloadCV applicant={applicant} postID={post._id} />
-                </div>
-              </div>
-            ))}
+            {showApplicants ? (
+              <div className="text-sm mt-2">
+                {applicantsInfo?.map((applicant: Usertypes) => (
+                  <div key={applicant.name}>
+                    <div className="mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
+                      <ApplicantRow applicant={applicant.name} />
+                      <DownloadCV applicant={applicant} postID={post._id} />
+                    </div>
+                  </div>
+                ))}
 
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                setShowApplicants(false);
-              }}
-              className="text-xs block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowApplicants(false);
+                  }}
+                  className="text-xs block mt-2 w-auto px-3 py-1 rounded-md bg-signup-button
             text-white hover:bg-signup-button-hover"
-            >
-              Close
-            </button>
+                >
+                  Close
+                </button>
+              </div>
+            ) : (
+              <p></p>
+            )}
           </div>
-        ) : (
-          <p></p>
         )}
       </div>
     </div>
