@@ -14,7 +14,6 @@ import usersInSearchModel from "../../Models/UsersInSearchModel";
 import getUserProfilePic from "../../http/getUserPicturePic";
 import style from "./style.module.css";
 import { useTranslation } from "react-i18next";
-import getUserPicturePic from '../../http/getUserPicturePic';
 
 const NavBar: React.FC<{
   openSearch: boolean;
@@ -41,7 +40,7 @@ const NavBar: React.FC<{
     const filteredArray: usersInSearchModel[] = [];
     let userPic = '';
     res.data.users.map(async (user: Usertypes) => {
-      userPic = await getUserPicturePic(user.picture)
+      userPic = await getUserProfilePic(user.picture)
       filteredArray.push({
         id: user.user_id,
         position: user.title,
