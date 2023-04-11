@@ -83,6 +83,7 @@ const FeedCard: React.FC<{
     setUserProfilePic("");
   }, []);
 
+
   const isIndeedLink = postSettings.isThirdParty
     ? postSettings.thirdPartyLink.includes("ca.indeed.com")
     : false;

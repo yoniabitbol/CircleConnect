@@ -73,7 +73,7 @@ const PostModal: FC<{
             preferenceTags: postSettings.preferenceTags,
             isThirdParty: postSettings.isThirdParty,
             thirdPartyLink: postSettings.thirdPartyLink,
-            position: postSettings.position,
+            position: postInfo.position,
         },
         onSubmit: (values) => {
             const formData = new FormData();
@@ -94,6 +94,7 @@ const PostModal: FC<{
 
         }
     })
+    console.log(postSettings)
     const style = {
         position: 'absolute',
         top: '50%',
