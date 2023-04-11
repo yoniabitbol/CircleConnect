@@ -2,10 +2,11 @@ import { auth } from "../firebase/config";
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 const url = `http://localhost:${port}/api/threads/`;
 
-async function createNewThread(participant1: string, participant2: string) {
+async function createNewThread(participant2: string) {
     const currentUser = auth.currentUser;
     const token = currentUser && (await currentUser.getIdToken());
     const id = currentUser && currentUser.uid;
+    const participant1 = id
     if (!id) {
         return;
     }

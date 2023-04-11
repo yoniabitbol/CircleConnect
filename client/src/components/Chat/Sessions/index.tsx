@@ -3,6 +3,7 @@ import SessionItem from "../SessionItem";
 import { Form, Formik, Field } from "formik";
 import ThreadModel from "../../../Models/ThreadModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
+import createNewThread from "../../../http/createNewThread";
 
 export type Thread = {
   id: number;
@@ -13,11 +14,19 @@ export type Thread = {
 
 const Sessions: React.FC<{
   threads: ThreadModel[];
+  refreshThreads: () => void;
   selectThread: (event: any) => void;
   selected: number;
   threadProfiles: UserProfileModel[];
   connections: UserProfileModel[];
-}> = ({ threads, selectThread, selected, threadProfiles, connections }) => {
+}> = ({
+  threads,
+  refreshThreads,
+  selectThread,
+  selected,
+  threadProfiles,
+  connections,
+}) => {
   // Get the profiles who you DON'T have a conversation with yet
   const filteredConnections = connections.filter(
     (conn) =>
@@ -65,7 +74,12 @@ const Sessions: React.FC<{
                 alert("Please select a connection");
                 return;
               } else {
-                console.log("User id: " +chatTarget);
+                createNewThread(chatTarget).then((res) => {
+                  if (res.ok) {
+                    refreshThreads();
+                  }
+                });
+                console.log("User id: " + chatTarget);
               }
             }}
           >

@@ -16,6 +16,7 @@ async function getCurrentUserThreads() {
             Authorization: `Bearer ${token}`,
         },
     });
+    // console.log(token)
     return res.json();
 }
 

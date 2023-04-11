@@ -11,7 +11,8 @@ const Chat: React.FC<{
   connections: UserProfileModel[];
   uid: string;
   receivingParticipants: string[];
-}> = ({ threads, connections, receivingParticipants, uid }) => {
+  refreshThreads: () => void;
+}> = ({ threads, connections, receivingParticipants, uid, refreshThreads }) => {
   const [selected, setSelected] = useState<number>(-1);
   const [messages, setMessages] = useState<MessageModel[]>([]);
 
@@ -25,10 +26,14 @@ const Chat: React.FC<{
   };
 
   // Get only the profiles which the user has a conversation/thread with
-  const threadProfiles = connections.filter((profile) => {
-    return profile.user_id && receivingParticipants.includes(profile.user_id);
+  const threadProfiles: UserProfileModel[] = [];
+  receivingParticipants.forEach((user_id) => {
+    const profile = connections.find(
+      (profile) => profile.user_id && profile.user_id == user_id
+    );
+    profile && threadProfiles.push(profile);
   });
-  
+
   return (
     <div className="lg:ml-5 m-5 grid gap-0 grid-cols-1 md:grid-cols-[30%_70%]">
       <Sessions
@@ -37,10 +42,10 @@ const Chat: React.FC<{
         selectThread={selectThread}
         selected={selected}
         connections={connections}
+        refreshThreads={refreshThreads}
       />
       {selected != -1 ? (
         <ChatDisplay
-          thread={threads[selected]}
           threadProfile={threadProfiles.find((profile) => {
             return (
               profile.user_id == threads[selected].participants[0] ||

@@ -13,10 +13,14 @@ const ChatPage: React.FC = () => {
   const [connections, setConnections] = useState<UserProfileModel[]>([]);
   const uid = auth.currentUser?.uid;
 
-  useEffect(() => {
+  const refreshThreads = () => {
     getCurrentUserThreads().then((res) => {
       setThreads(res.data.threads);
     });
+  };
+
+  useEffect(() => {
+    refreshThreads();
 
     uid &&
       getUserConnections(uid).then((res) => {
@@ -42,6 +46,7 @@ const ChatPage: React.FC = () => {
           connections={connections}
           receivingParticipants={receivingParticipants}
           uid={uid}
+          refreshThreads={refreshThreads}
         />
       ) : (
         // Replace with loading bar in the future

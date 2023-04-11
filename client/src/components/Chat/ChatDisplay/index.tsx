@@ -2,7 +2,6 @@ import React from "react";
 import Message from "../Message";
 import { Field, Form, Formik } from "formik";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
-import ThreadModel from "../../../Models/ThreadModel";
 import MessageModel from "../../../Models/MessageModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
 
@@ -13,7 +12,6 @@ export interface MessageType {
 }
 
 const ChatDisplay: React.FC<{
-  thread: ThreadModel;
   messages: MessageModel[];
   uid: string;
   threadProfile: UserProfileModel | undefined;
@@ -24,7 +22,7 @@ const ChatDisplay: React.FC<{
         <span className="text-sm font-bold">
           CHAT WITH{" "}
           <span style={{ color: "#4B47B7" }}>
-            {threadProfile ? threadProfile.name : ""}
+            {threadProfile ? threadProfile.name.toUpperCase() : ""}
           </span>
         </span>
       </div>
