@@ -17,7 +17,7 @@ async function getResume(resume: string) {
     const blob = await res.blob();
     return URL.createObjectURL(blob);
   }
-  throw new Error("Failed to fetch cover letter.");
+  throw new Error("Failed to fetch resume.");
 }
 
 export default getResume;

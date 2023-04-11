@@ -6,7 +6,7 @@ import getResume from "../../../../../http/getResume";
 
 interface DownloadCVProps {
   applicant: Usertypes;
-  postID: string;
+  postID: string | undefined;
 }
 
 const DownloadCV: React.FC<DownloadCVProps> = ({ applicant, postID }) => {
