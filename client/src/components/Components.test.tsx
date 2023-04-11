@@ -8,7 +8,7 @@ import Dashboard from "./UserProfile/Dashboard";
 import NavSettings from "./UserNotifications/NavSettings";
 import UserNotifications from "./UserNotifications";
 import SearchBar from "./SearchBar";
-import SearchResultsBox from "./SearchBar/SearchResultsBox/index.";
+import SearchResultsBox from "./SearchBar/SearchResultsBox";
 import MobileNav from "./Navbar/MobileNav";
 import ConnectionRow from "./ConnectionRow";
 import ConnectionsBanner from "./ConnectionsBanner";

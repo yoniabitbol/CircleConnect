@@ -38,13 +38,15 @@ const NavBar: React.FC<{
   const onChangeHandler = async () => {
     const res = await getAllUsers();
     const filteredArray: usersInSearchModel[] = [];
-    res.data.users.map((user: Usertypes) => {
+    let userPic = '';
+    res.data.users.map(async (user: Usertypes) => {
+      userPic = await getUserProfilePic(user.picture)
       filteredArray.push({
         id: user.user_id,
         position: user.title,
         name: user.name,
         type: "USERS",
-        avatar: user.picture,
+        picture: userPic,
         label: user.name,
       });
     });
