@@ -40,6 +40,25 @@ const getPost = async (req: Request, res: Response) => {
   }
 };
 
+// Get all posts by a user
+const getUserPosts = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ user_id: req.params.user_id });
+    const posts = await Post.find({ creatorID: user?.user_id });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        posts,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `ERROR ${err}`,
+      message: 'Error getting user posts',
+    });
+  }
+};
+
 // Creates a post document
 const createPost = async (req: any, res: Response) => {
   try {
@@ -266,6 +285,7 @@ const getJobFeed = async (req: Request, res: Response) => {
 export default {
   getAllPosts,
   getPost,
+  getUserPosts,
   createPost,
   updatePost,
   deletePost,
