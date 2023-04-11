@@ -44,7 +44,8 @@ const getPost = async (req: Request, res: Response) => {
 const getUserPosts = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({ user_id: req.params.user_id });
-    const posts = await Post.find({ creatorID: user?.user_id });
+    let posts = await Post.find({ creatorID: user?.user_id }).populate('creator', 'name picture title');
+    posts = posts.sort((a: any, b: any) => b.updatedAt - a.updatedAt);
     res.status(200).json({
       status: 'success',
       data: {
@@ -113,7 +114,7 @@ const updatePost = async (req: any, res: Response) => {
     const update = {
       creatorID: req.body.creatorID,
       isJobListing: req.body.isJobListing,
-      position: req.body.jobTitle,
+      position: req.body.position,
       text: req.body.text,
       image: req.files && req.files.image ? req.files.image[0].filename : req.body.image,
       preferenceTags: req.body.preferenceTags,

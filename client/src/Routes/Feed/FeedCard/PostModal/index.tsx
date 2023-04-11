@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import {FC, useState} from 'react';
 import styles from './style.module.css'
-import {InsertPhoto, Settings, Tag, DeleteForever} from '@mui/icons-material';
+import {InsertPhoto, Settings, Tag, DeleteForever, DisabledByDefault} from '@mui/icons-material';
 import {useFormik} from 'formik';
 import JobSettingsModal from '../../NewPostModal/JobSettingsModal';
 import TagSelection from '../../NewPostModal/TagSelection';
@@ -25,9 +25,24 @@ const PostModal: FC<{
     profilePic: any,
     date: string | undefined,
     onModalClose: () => void,
-    editable?: boolean
+    editable?: boolean,
+    fetchFeed: any,
+    postStatus: any,
+    image: any,
 }> = (props) => {
-    const {editable,open, userInfo, postInfo, profilePic, date, onModalClose, postSettings} = props;
+    const {
+        image,
+        postStatus,
+        editable,
+        open,
+        userInfo,
+        postInfo,
+        profilePic,
+        date,
+        onModalClose,
+        postSettings,
+        fetchFeed
+    } = props;
     const [settings, setSettings] = useState<{
         isResumeRequired: boolean,
         isCoverLetterRequired: boolean,
@@ -56,16 +71,19 @@ const PostModal: FC<{
             thirdPartyLink: postSettings.thirdPartyLink,
             position: postSettings.position,
         },
-        onSubmit: (values,) => {
+        onSubmit: (values) => {
             const formData = new FormData();
             for (const key in values) {
                 formData.append(key, values[key]);
             }
-            patchPost(postInfo.id,formData).then((res) => {
+            patchPost(postInfo.id, formData).then((res) => {
                 if (res.status === 'success') {
-                    console.log('success')
+                    onModalClose();
+                    postStatus(true);
+                    fetchFeed();
                 } else {
-                    console.log('error')
+                    onModalClose();
+                    postStatus(false);
                 }
             })
 
@@ -106,7 +124,6 @@ const PostModal: FC<{
         setSelectedTags(newTags);
         formik.setFieldValue('preferenceTags', newTags);
     }
-    console.log(postInfo)
     const handleTagDeletion = (value: string | undefined) => {
         const newTags = selectedTags?.filter(tag => tag !== value);
         setSelectedTags(newTags);
@@ -126,46 +143,55 @@ const PostModal: FC<{
                             <Typography sx={{padding: 0}} variant="caption">{date}</Typography>
                         </div>
                     </div>
-                    <IconButton>
-                        <DeleteForever/>
-                    </IconButton>
                 </div>
+                {editable && <IconButton sx={{position: 'fixed', top: 0, right: 0, color: 'red'}}>
+                    <DeleteForever/>
+                </IconButton>}
                 <form onSubmit={formik.handleSubmit}>
-                    <input disabled={!editable} className="w-full bg-gray-200 p-2 mt-3 rounded-lg" value={formik.values.text}
+                    <input disabled={!editable} className="w-full bg-gray-200 p-2 mt-3 rounded-lg"
+                           value={formik.values.text}
                            onChange={postTextChangeHandler}/>
-                    {formik.values.image && <div className="flex items-center space-x-1">
-                        <h6 className="font-semibold mt-2 p-2">Image</h6>
-                        <div
-                            className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
-                            <Chip sx={{
-                                margin: 1,
-                                backgroundColor: '#4D47C3',
-                                color: 'white',
-                                '& .MuiChip-deletable': {backgroundColor: 'white'}
-                            }} key={1} label={formik.values.image.name}
-                                  onDelete={() => formik.setFieldValue('image', null)}/>
+                    {formik.values.image && formik.values.image !== 0 ?
+                        <div className='relative'>
+                            <img className="relative mt-2 z-2" style={{aspectRatio: 16 / 9, objectFit: 'cover'}}
+                                 src={URL.createObjectURL(formik.values.image)}/>
+                            <div className='text-red-600 absolute right-0 top-1 z-3'>
+                                <IconButton size="large"   onClick={() => formik.setFieldValue('image', 0)}>
+                                    <DisabledByDefault sx={{color:'red'}}/>
+                                </IconButton>
+                            </div>
                         </div>
-                    </div>
-                    }
-                    {formik.values.preferenceTags && formik.values.preferenceTags.length > 0 && <div className="items-center flex">
-                        <h6 className="font-semibold mt-2 p-2">Tags</h6>
-                        <div
-                            className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
-                            {formik.values.preferenceTags.map((tag: string, index: number) => {
-                                return (
-                                    <Chip sx={{
-                                        margin: 1,
-                                        backgroundColor: '#4D47C3',
-                                        color: 'white',
-                                        '& .MuiChip-deletable': {backgroundColor: 'white'}
-                                    }} key={index} label={tag} onDelete={() => handleTagDeletion(tag)}/>
-                                )
-                            })}
-                        </div>
-                    </div>}
-                    <CardActions>
+                        : image && formik.values.image !== 0 &&
+                        <div className='relative'>
+                            <img className="relative mt-2 z-2" style={{aspectRatio: 16 / 9, objectFit: 'cover'}}
+                                 src={image}/>
+                            <div className='text-red-600 absolute right-1 top-1 z-3'>
+                                <IconButton size='large' onClick={() => formik.setFieldValue('image', 0)}>
+                                    <DisabledByDefault sx={{color:'red', width:50,height:50}}/>
+                                </IconButton>
+                            </div>
+                        </div>}
+                    {formik.values.preferenceTags && formik.values.preferenceTags.length > 0 &&
+                        <div className="items-center flex">
+                            <h6 className="font-semibold mt-2 p-2">Tags</h6>
+                            <div
+                                className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
+                                {formik.values.preferenceTags.map((tag: string, index: number) => {
+                                    return (
+                                        <Chip sx={{
+                                            margin: 1,
+                                            backgroundColor: '#4D47C3',
+                                            color: 'white',
+                                            '& .MuiChip-deletable': {backgroundColor: 'white'}
+                                        }} key={index} label={tag} onDelete={() => handleTagDeletion(tag)}/>
+                                    )
+                                })}
+                            </div>
+                        </div>}
+                    {editable && <CardActions>
                         <div className="w-fit flex justify-start fixed bottom-1">
-                            <FormControlLabel onChange={formik.handleChange} name="isJobListing" control={<Checkbox sx={{
+                            <FormControlLabel onChange={formik.handleChange} name="isJobListing"
+                                              checked={formik.values.isJobListing} control={<Checkbox sx={{
                                 color: '#4D47C3',
                                 '&.Mui-checked': {color: '#4D47C3'},
                                 'label': {width: 'fit-content', color: 'red'}
@@ -203,7 +229,7 @@ const PostModal: FC<{
                                 Edit
                             </Button>
                         </div>
-                    </CardActions>
+                    </CardActions>}
                 </form>
                 <div>
                     <TagSelection showModal={showTagSelection} handleModalClose={handleTagSelectionClose}

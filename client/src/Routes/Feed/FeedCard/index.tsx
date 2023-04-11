@@ -51,6 +51,8 @@ const FeedCard: React.FC<{
   postSettings: any;
   scrollTo: () => void;
   editable?: boolean;
+  fetchFeed?: any;
+  postStatus?: any;
 }> = (props) => {
   const {
     userInfo,
@@ -61,6 +63,8 @@ const FeedCard: React.FC<{
     postSettings,
     scrollTo,
     editable,
+    fetchFeed,
+      postStatus,
   } = props;
   const [readMore, setReadMore] = useState(false);
   const [numberLikes, setNumberLikes] = useState(numLikes);
@@ -193,8 +197,8 @@ const FeedCard: React.FC<{
             <Edit/>
           </IconButton>
         </div>}
-        {postInfo.position && (
-          <div className="pl-3 pt-2 flex items-center border-gray-100 border-b-2">
+        {postSettings.isJobListing && postInfo.position && (
+          <div className="ml-3 p-1.5 flex items-center border-gray-100 border-b-2">
             <Typography
               sx={{ fontSize: 14, width: "100%" }}
               color="text.secondary"
@@ -346,7 +350,7 @@ const FeedCard: React.FC<{
         />
       </div>
     </Card>
-        <PostModal open={openModal} postInfo={postInfo} postSettings={postSettings} userInfo={userInfo} profilePic={userProfilePic} date={howLongAgo(postInfo.date)} onModalClose={handleModalClose} editable={editable}/>
+        <PostModal image={postImage} postStatus={postStatus} fetchFeed={fetchFeed} open={openModal} postInfo={postInfo} postSettings={postSettings} userInfo={userInfo} profilePic={userProfilePic} date={howLongAgo(postInfo.date)} onModalClose={handleModalClose} editable={editable}/>
         </>
   );
 };

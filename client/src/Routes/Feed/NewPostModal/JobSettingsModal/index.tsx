@@ -76,6 +76,7 @@ const JobSettingsModal: FC<{
   };
 
   const handleJobPositionChange = (_: any, value: any) => {
+    console.log(value)
     onChange("position", value);
   };
 
@@ -90,6 +91,7 @@ const JobSettingsModal: FC<{
                   sx={{ width: "100%" }}
                   options={defaultJobPositions}
                   onInputChange={handleJobPositionChange}
+                  onChange={handleJobPositionChange}
                   value={props.values.position}
                   freeSolo={true}
                   renderInput={(params) => (

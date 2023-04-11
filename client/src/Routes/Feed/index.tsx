@@ -49,7 +49,6 @@ const Feed = () => {
         setFeedData(null)
         if(location.pathname === '/feed') {
             //set timeout
-
             getSocialFeed().then((res) => {
                setInitialFeedData(res.data);
                setTimeout(() => {

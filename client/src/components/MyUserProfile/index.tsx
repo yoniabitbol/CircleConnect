@@ -19,7 +19,7 @@ import LeftSection from "./Layout/leftSection";
 import RightSection from "./Layout/rightSection";
 import Dashboard from "./Dashboard";
 import {Tabs, Tab} from '@mui/material';
-import getSocialFeed from '../../http/getSocialFeed';
+import getCurrentUserPosts from '../../http/getCurrentUserPosts';
 const MyUserProfile: React.FC<{
   profile: Usertypes;
 }> = ({ profile }) => {
@@ -29,16 +29,16 @@ const MyUserProfile: React.FC<{
     const [feedData, setFeedData] = useState<any>(null);
 
     const fetchFeed = () => {
-        getSocialFeed().then((res) => {
+        getCurrentUserPosts().then((res) => {
             if(res.status ==='success'){
-                setFeedData(res.data);
+                setFeedData(res.data.posts);
             }
+
         });
     }
     useEffect(() => {
         fetchFeed();
     },[])
-
   useEffect(() => {
     setUser(profile);
   }, [profile]);
@@ -155,7 +155,7 @@ const MyUserProfile: React.FC<{
                       <Awards edit={editable} awards={User.awards ? User.awards : []} />
                       <Courses edit={editable} courses={User.courses ? User.courses : []} />
                   </div>}
-                    { tabValue === 1 && <FeedContent editable={true} feedData={feedData.filter((post: any) => post.creatorID === User.user_id)}/>}
+                    { tabValue === 1 && <FeedContent fetchFeed={fetchFeed} editable={true} feedData={feedData}/>}
               </LeftSection>
               <RightSection>
                 <Dashboard
