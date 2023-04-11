@@ -36,23 +36,28 @@ const Chat: React.FC<{
 
   return (
     <div className="lg:ml-5 m-5 grid gap-0 grid-cols-1 md:grid-cols-[30%_70%]">
-      <Sessions
-        threads={threads}
-        threadProfiles={threadProfiles}
-        selectThread={selectThread}
-        selected={selected}
-        connections={connections}
-        refreshThreads={refreshThreads}
-      />
+      {threadProfiles && (
+        <Sessions
+          threads={threads}
+          threadProfiles={threadProfiles}
+          selectThread={selectThread}
+          selected={selected}
+          connections={connections}
+          refreshThreads={refreshThreads}
+        />
+      )}
+
       {selected != -1 ? (
         <ChatDisplay
+          thread={threads[selected]}
           threadProfile={threadProfiles.find((profile) => {
+            const [participant1, participant2] = threads[selected].participants;
             return (
-              profile.user_id == threads[selected].participants[0] ||
-              profile.user_id == threads[selected].participants[1]
+              profile.user_id == participant1 || profile.user_id == participant2
             );
           })}
           messages={messages}
+          setMessages={setMessages}
           uid={uid}
         />
       ) : (

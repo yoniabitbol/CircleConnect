@@ -4,6 +4,8 @@ import { Field, Form, Formik } from "formik";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import MessageModel from "../../../Models/MessageModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
+import saveMessage from "../../../http/saveMessage";
+import ThreadModel from "../../../Models/ThreadModel";
 
 export interface MessageType {
   id: number;
@@ -13,9 +15,11 @@ export interface MessageType {
 
 const ChatDisplay: React.FC<{
   messages: MessageModel[];
+  setMessages: React.Dispatch<React.SetStateAction<MessageModel[]>>;
   uid: string;
   threadProfile: UserProfileModel | undefined;
-}> = ({ threadProfile, messages, uid }) => {
+  thread: ThreadModel;
+}> = ({ threadProfile, messages, setMessages, uid, thread }) => {
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
@@ -48,7 +52,30 @@ const ChatDisplay: React.FC<{
           initialValues={{ outbound: true, message: "" }}
           enableReinitialize
           onSubmit={(values, { resetForm }) => {
-            console.log(values);
+            const { message } = values;
+            if (threadProfile) {
+              saveMessage(thread._id, uid, message).then((res) => {
+                if (res.ok) {
+                  setMessages([
+                    ...messages,
+                    {
+                      _id: Math.random().toString().substring(2),
+                      threadID: thread._id,
+                      senderID: uid,
+                      sender: {
+                        name: threadProfile?.name,
+                        picture: threadProfile?.picture,
+                      },
+                      text: message,
+                      file: null,
+                      createdAt: new Date().toISOString(),
+                      updatedAt: new Date().toISOString(),
+                    },
+                  ]);
+                }
+              });
+            }
+
             resetForm();
           }}
         >

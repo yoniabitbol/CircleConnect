@@ -8,7 +8,7 @@ export default interface MessageModel {
     threadID: string;
     text: string;
     file: string | null;
-    cretedAt: string;
+    createdAt: string;
     updatedAt: string;
 
 }
