@@ -9,7 +9,7 @@ const FeedContent:FC<{ feedData: any, editable?:boolean, fetchFeed?:any}> = (pro
     const {feedData, editable, fetchFeed} = props;
     const ref = useRef<any>();
     const [scrollTo, setScrollTo] = useState(0);
-    const [postStatus,setPostStatus] = useState<boolean>(false);
+    const [postStatus,setPostStatus] = useState<{status: boolean,message?: string}>({status: false});
     const [showAlert, setShowAlert] = useState<boolean>(false);
     useEffect(() => {
         if(ref.current) {
@@ -17,11 +17,11 @@ const FeedContent:FC<{ feedData: any, editable?:boolean, fetchFeed?:any}> = (pro
         }
     }, [ref.current])
 
-    const isPostedSuccess = (value : boolean) => {
+    const isPostedSuccess = (value : boolean, Message?: string) => {
         if(value){
-            setPostStatus(true);
+            setPostStatus({status: true, message: Message});
         }else
-            setPostStatus(false);
+            setPostStatus({status: false, message: Message});
         setShowAlert(true);
 
 
@@ -40,7 +40,7 @@ const FeedContent:FC<{ feedData: any, editable?:boolean, fetchFeed?:any}> = (pro
             })
             }
             <Snackbar anchorOrigin={{horizontal: 'right', vertical: 'bottom'}} open={showAlert} autoHideDuration={6000} onClose={()=> setShowAlert(false)}>
-                <Alert severity={postStatus ? "success" : "error"} >{postStatus ? 'Post Edited Successfully' : 'Oops! There was an error'}</Alert>
+                <Alert severity={postStatus ? "success" : "error"} >{postStatus.message && postStatus.message}</Alert>
             </Snackbar>
         </div>
     );

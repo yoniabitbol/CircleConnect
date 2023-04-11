@@ -6,15 +6,17 @@ import {
     FormControlLabel,
     IconButton,
     Modal,
-    Typography
+    Typography,
+    Popper, Fade, Box
 } from '@mui/material'
-import {FC, useState} from 'react';
+import React, {FC, useState} from 'react';
 import styles from './style.module.css'
 import {InsertPhoto, Settings, Tag, DeleteForever, DisabledByDefault} from '@mui/icons-material';
 import {useFormik} from 'formik';
 import JobSettingsModal from '../../NewPostModal/JobSettingsModal';
 import TagSelection from '../../NewPostModal/TagSelection';
 import patchPost from '../../../../http/patchPost';
+import deletePost from '../../../../http/deletePost';
 
 
 const PostModal: FC<{
@@ -59,6 +61,8 @@ const PostModal: FC<{
     const [showJobSettings, setShowJobSettings] = useState<boolean>(false);
     const [showTagSelection, setShowTagSelection] = useState<boolean>(false);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
+    const [openDeletePopper, setOpenDeletePopper] = useState(false);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const formik = useFormik<any>({
         initialValues: {
@@ -79,11 +83,11 @@ const PostModal: FC<{
             patchPost(postInfo.id, formData).then((res) => {
                 if (res.status === 'success') {
                     onModalClose();
-                    postStatus(true);
+                    postStatus(true, 'Post updated successfully');
                     fetchFeed();
                 } else {
                     onModalClose();
-                    postStatus(false);
+                    postStatus(false, 'Something went wrong');
                 }
             })
 
@@ -98,6 +102,27 @@ const PostModal: FC<{
         bgColor: 'white',
         padding: 3,
         borderRadius: 5
+    };
+
+    const handleDeletePost = () => {
+        deletePost(postInfo.id).then((res:any) => {
+            console.log(res)
+            if (res.status === 200) {
+                onModalClose();
+                fetchFeed();
+                postStatus( true, 'Post deleted successfully');
+            } else {
+                onModalClose();
+                postStatus(false, 'Something went wrong');
+            }
+        }).catch(()=>{
+            postStatus(false, 'Something went wrong');
+        })
+    }
+
+    const handleDeleteClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+        setOpenDeletePopper((previousOpen) => !previousOpen);
     };
     const handleTagSelectionClose = () => {
         setShowTagSelection(false);
@@ -129,9 +154,13 @@ const PostModal: FC<{
         setSelectedTags(newTags);
         formik.setFieldValue('preferenceTags', newTags);
     }
+    const handleModalClose = () => {
+        onModalClose();
+        setOpenDeletePopper(false);
+    }
     const disablePostButton = formik.values.text === '' || formik.values.isJobListing && !formik.values.position
     return (
-        <Modal open={open} onClose={onModalClose}>
+        <Modal open={open} onClose={handleModalClose}>
             <Card className={styles.modal} sx={style}>
                 <div className="flex">
                     <Avatar sx={{height: 70, width: 70}} src={profilePic}/>
@@ -144,30 +173,50 @@ const PostModal: FC<{
                         </div>
                     </div>
                 </div>
-                {editable && <IconButton sx={{position: 'fixed', top: 0, right: 0, color: 'red'}}>
-                    <DeleteForever/>
-                </IconButton>}
+                {openDeletePopper && <Popper modifiers={[{
+                    name: 'arrow',
+                    enabled: true,
+
+                }]} sx={{zIndex: 1300}} placement="top" open={openDeletePopper} anchorEl={anchorEl} transition>
+                    {({TransitionProps}) => (
+                        <Fade {...TransitionProps} timeout={350}>
+                            <Box sx={{border: 1, p: 3, bgcolor: 'white'}}>
+                                <h1 className="text-lg">Are you sure you want to delete this post?</h1>
+                                <div className="flex justify-end mt-3">
+                                    <Button onClick={() => setOpenDeletePopper(false)}>Cancel</Button>
+                                    <Button variant="contained" sx={{backgroundColor: 'red'}}
+                                            color="error" onClick={handleDeletePost}>Delete</Button>
+                                </div>
+
+                            </Box>
+                        </Fade>
+                    )}
+                </Popper>}
+                {editable &&
+                    <IconButton onClick={handleDeleteClick} sx={{position: 'fixed', top: 0, right: 0, color: 'red'}}>
+                        <DeleteForever/>
+                    </IconButton>}
                 <form onSubmit={formik.handleSubmit}>
                     <input disabled={!editable} className="w-full bg-gray-200 p-2 mt-3 rounded-lg"
                            value={formik.values.text}
                            onChange={postTextChangeHandler}/>
                     {formik.values.image && formik.values.image !== 0 ?
-                        <div className='relative'>
+                        <div className="relative">
                             <img className="relative mt-2 z-2" style={{aspectRatio: 16 / 9, objectFit: 'cover'}}
                                  src={URL.createObjectURL(formik.values.image)}/>
-                            <div className='text-red-600 absolute right-0 top-1 z-3'>
-                                <IconButton size="large"   onClick={() => formik.setFieldValue('image', 0)}>
-                                    <DisabledByDefault sx={{color:'red'}}/>
+                            <div className="text-red-600 absolute right-0 top-1 z-3">
+                                <IconButton size="large" onClick={() => formik.setFieldValue('image', 0)}>
+                                    <DisabledByDefault sx={{color: 'red', width: 30, height: 30}}/>
                                 </IconButton>
                             </div>
                         </div>
                         : image && formik.values.image !== 0 &&
-                        <div className='relative'>
+                        <div className="relative">
                             <img className="relative mt-2 z-2" style={{aspectRatio: 16 / 9, objectFit: 'cover'}}
                                  src={image}/>
-                            <div className='text-red-600 absolute right-1 top-1 z-3'>
-                                <IconButton size='large' onClick={() => formik.setFieldValue('image', 0)}>
-                                    <DisabledByDefault sx={{color:'red', width:50,height:50}}/>
+                            <div className="text-red-600 absolute right-1 top-1 z-3">
+                                <IconButton size="large" onClick={() => formik.setFieldValue('image', 0)}>
+                                    <DisabledByDefault sx={{color: 'red', width: 30, height: 30}}/>
                                 </IconButton>
                             </div>
                         </div>}

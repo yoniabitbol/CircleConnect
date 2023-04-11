@@ -120,7 +120,8 @@ const updatePost = async (req: any, res: Response) => {
       preferenceTags: req.body.preferenceTags,
       uploadDeadline: req.body.uploadDeadline,
       isThirdParty: req.body.isThirdParty,
-      requiredDocuments: req.body.requiredDocuments,
+      isResumeRequired: req.body.isResumeRequired,
+      isCoverLetterRequired: req.body.isCoverLetterRequired,
     };
     const post = await Post.findOne({ _id: req.params.post_id });
     const user = await User.findOne({ user_id: req.body.creatorID });
@@ -164,8 +165,8 @@ const updatePost = async (req: any, res: Response) => {
 const deletePost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id });
-    const user = await User.findOne({ user_id: req.body.creatorID });
-    if (post?.creatorID === req.body.creatorID) {
+    const user = await User.findOne({ user_id: req.body.uid });
+    if (post?.creatorID === req.body.uid) {
       await post?.deleteOne();
       await user?.updateOne({ $pull: { posts: req.params.post_id } });
       return res.status(200).json({
