@@ -76,7 +76,6 @@ const JobSettingsModal: FC<{
   };
 
   const handleJobPositionChange = (_: any, value: any) => {
-    console.log(value)
     onChange("position", value);
   };
 
