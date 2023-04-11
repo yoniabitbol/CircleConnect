@@ -20,6 +20,7 @@ const ChatDisplay: React.FC<{
   threadProfile: UserProfileModel | undefined;
   thread: ThreadModel;
 }> = ({ threadProfile, messages, setMessages, uid, thread }) => {
+  console.log(messages);
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
@@ -55,7 +56,8 @@ const ChatDisplay: React.FC<{
             const { message } = values;
             if (threadProfile) {
               saveMessage(thread._id, uid, message).then((res) => {
-                if (res.ok) {
+                console.log(res);
+                if (res.status === "success" || res.ok) {
                   setMessages([
                     ...messages,
                     {

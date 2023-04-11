@@ -75,7 +75,7 @@ const Sessions: React.FC<{
                 return;
               } else {
                 createNewThread(chatTarget).then((res) => {
-                  if (res.ok) {
+                  if (res.status === "success" || res.ok) {
                     refreshThreads();
                   }
                 });
