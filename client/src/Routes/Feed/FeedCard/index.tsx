@@ -346,7 +346,7 @@ const FeedCard: React.FC<{
         />
       </div>
     </Card>
-        <PostModal open={openModal} postInfo={postInfo} postSettings={postSettings} userInfo={userInfo} profilePic={userProfilePic} date={howLongAgo(postInfo.date)} onModalClose={handleModalClose}/>
+        <PostModal open={openModal} postInfo={postInfo} postSettings={postSettings} userInfo={userInfo} profilePic={userProfilePic} date={howLongAgo(postInfo.date)} onModalClose={handleModalClose} editable={editable}/>
         </>
   );
 };
