@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, useState, useEffect } from "react";
 import NavLinks from "./NavLinks";
-import { Link } from "react-router-dom";
+import { Link,NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar";
 import { Avatar, Button } from "@mui/material";
 import useLogout from "../../hooks/useLogout";
@@ -14,6 +14,8 @@ import usersInSearchModel from "../../Models/UsersInSearchModel";
 import getUserProfilePic from "../../http/getUserPicturePic";
 import style from "./style.module.css";
 import { useTranslation } from "react-i18next";
+
+
 
 const NavBar: React.FC<{
   openSearch: boolean;
@@ -52,6 +54,9 @@ const NavBar: React.FC<{
     });
     setUsersInSearch(filteredArray);
   };
+  const navLinkClass = "hover:bg-[rgba(75,71,183,0.5)] rounded-[50%] p-1"
+  const navActiveClass = "bg-[rgba(75,71,183,0.5)] rounded-[50%] p-1"
+
   return (
     <div className="p-2 flex items-center border sticky z-20 top-0 bg-white">
       <div className="lg:hidden left-0 relative w-min" onClick={outsideClicked}>
@@ -89,10 +94,11 @@ const NavBar: React.FC<{
         onClick={outsideClicked}
       >
         <div className="flex">
-          <Link to="/myprofile">
+          {/* eslint-disable-next-line react/jsx-no-undef */}
+          <NavLink to="/myprofile" className={({isActive}) => isActive ? navActiveClass : navLinkClass }>
             <Avatar src={userProfilePic} />
-          </Link>
-          <Button onClick={logout} sx={{ color: "#4B47B7" }}>
+          </NavLink>
+          <Button onClick={logout} sx={{ color: "rgba(75,71,183,1)" }}>
             {t('loginAndRegistration.buttons.logout')}
           </Button>
         </div>
