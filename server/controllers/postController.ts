@@ -227,7 +227,7 @@ const getSocialFeed = async (req: Request, res: Response) => {
     const connectionsPosts = await Promise.all(
       currentUser?.connections.map((connectionID: string) => Post.find({ creatorID: connectionID, isJobListing: false }).populate('creator', 'name picture title')),
     );
-    const feedArray = currentUserPosts.concat(...connectionsPosts).sort((a: any, b: any) => b.createdAt - a.createdAt);
+    const feedArray = currentUserPosts.concat(...connectionsPosts).sort((a: any, b: any) => b.updatedAt - a.updatedAt);
     const feed = feedArray.filter((post: any, index:number) => feedArray.findIndex((p: any) => p._id.toString() === post._id.toString()) === index);
     return res.status(200).json({
       status: 'success',
@@ -249,7 +249,7 @@ const getJobFeed = async (req: Request, res: Response) => {
     const recruiterPosts = await Promise.all(
       currentUser?.preferenceTags.map((preferenceTag: string) => Post.find({ preferenceTags: { $in: [preferenceTag] }, isJobListing: true }).populate('creator', 'name picture title')),
     );
-    const feedArray = currentUserPosts.concat(...recruiterPosts).sort((a: any, b: any) => b.createdAt - a.createdAt);
+    const feedArray = currentUserPosts.concat(...recruiterPosts).sort((a: any, b: any) => b.updatedAt - a.updatedAt);
     const feed = feedArray.filter((post: any, index: number) => feedArray.findIndex((p: any) => p._id.toString() === post._id.toString()) === index);
     return res.status(200).json({
       status: 'success',
