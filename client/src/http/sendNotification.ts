@@ -2,10 +2,11 @@ import { auth } from "../firebase/config";
 const host = process.env.REACT_APP_HOST || 'localhost';
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 
-async function sendNotification (target_user_id: string,  initiator_id: string, type: string) {
+async function sendNotification (target_user_id: string, type: string) {
     const currentUser = auth.currentUser;
     const token = currentUser && (await currentUser.getIdToken());
     const url = `http://${host}:${port}/api/notifications/${target_user_id}`;
+    const currentUserId = currentUser && currentUser.uid;
 
     const res = await fetch(url, {
         method: "POST",
@@ -14,8 +15,8 @@ async function sendNotification (target_user_id: string,  initiator_id: string, 
             Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-            type,
-            initiator_id,
+            type: type,
+            initiator_id: currentUserId,
         }),
         });
 
