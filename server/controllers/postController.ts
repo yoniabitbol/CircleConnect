@@ -49,7 +49,7 @@ const createPost = async (req: any, res: Response) => {
       position: req.body.position,
       text: req.body.text,
       image: req.files && req.files.image ? req.files.image[0].filename : req.body.image,
-      preferenceTags: req.body.preferenceTags,
+      preferenceTags: req.body.preferenceTags.split(','),
       uploadDeadline: req.body.uploadDeadline,
       isThirdParty: req.body.isThirdParty,
       thirdPartyLink: req.body.thirdPartyLink,

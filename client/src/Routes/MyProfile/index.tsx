@@ -62,6 +62,8 @@ const MyProfile: React.FC = () => {
         description: "",
       },
     ],
+    applications: [],
+    posts: [],
   });
 
   const [fetchedUser, setFetchedUser] = useState(false);

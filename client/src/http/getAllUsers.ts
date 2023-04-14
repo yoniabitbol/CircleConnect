@@ -1,7 +1,8 @@
 import { auth } from "../firebase/config";
 
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
-const url = `http://localhost:${port}/api/users/`;
+const host = process.env.REACT_APP_HOST || 'localhost';
+const url = `http://${host}:${port}/api/users/`;
 
 async function getAllUsers() {
     const user = auth.currentUser;

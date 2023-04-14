@@ -25,27 +25,40 @@ const style = {
     transform: 'translate(-50%, -50%)',
     bgColor: 'white',
 };
-const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void}> = (props) => {
+
+const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:() => void, postStatus: (value: boolean) => void}> = (props) => {
     const {t} = useTranslation();
-    const {showModal, handleModalClose, fetchFeed} = props;
+    const {showModal, handleModalClose, fetchFeed, postStatus} = props;
     const formik = useFormik<any>({
-            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[], isThirdParty:false, thirdPartyLink: ''},
+            initialValues: {text: '', isJobListing: false,  isResumeRequired:false, isCoverLetterRequired:false, preferenceTags:[], isThirdParty:false, thirdPartyLink: '', position: null},
             onSubmit: (values,{resetForm}) => {
                 const formData = new FormData();
                 for (const key in values) {
                     formData.append(key, values[key]);
                 }
 
-                createPost(formData)
-                resetForm();
-                handleModalClose();
-                fetchFeed();
+                    createPost(formData).then((res) => {
+                        if(res.status === 'success') {
+                            resetForm();
+                            handleModalClose();
+                            postStatus(true);
+                            fetchFeed();
+                        }else {
+                            handleModalClose();
+                            postStatus(false);
+                        }
+                    }).catch(() => {
+                        handleModalClose();
+                        postStatus(false);
+                    })
+
+
             }
         })
     const [showTagSelection, setShowTagSelection] =useState<boolean>(false);
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [showJobSettings, setShowJobSettings] = useState<boolean>(false);
-    const [settings, setSettings] = useState<{isResumeRequired: boolean, isCoverLetterRequired: boolean, uploadDeadline: Date | null}>({isResumeRequired: false, isCoverLetterRequired: false, uploadDeadline: null});
+    const [settings, setSettings] = useState<{isResumeRequired: boolean, isCoverLetterRequired: boolean, uploadDeadline: Date | null, thirdPartyLink: string | null, position: string | null}>({isResumeRequired: false, isCoverLetterRequired: false, uploadDeadline: null, thirdPartyLink:null, position: null});
     const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -72,6 +85,22 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
         formik.setFieldValue('preferenceTags', []);
         handleModalClose();
     }
+
+    const resetJobSettings = () => {
+        setSettings({isResumeRequired: false, isCoverLetterRequired: false, uploadDeadline: null, thirdPartyLink: '', position: null});
+        formik.setFieldValue('isResumeRequired', false);
+        formik.setFieldValue('isCoverLetterRequired', false);
+        formik.setFieldValue('thirdPartyLink', '');
+        formik.setFieldValue('position', null);
+    }
+    useEffect(() => {
+        if(!formik.values.isJobListing){
+            resetJobSettings();
+        }else{
+            setShowJobSettings(true)
+        }
+    },[formik.values.isJobListing])
+
     const jobSettingsChangeHandler = (type: string, value: any) => {
         const newSettings = {...settings, [type]: value};
         setSettings(newSettings);
@@ -82,8 +111,11 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             formik.setFieldValue(key, newSettings[key]);
+
         }
     }
+
+    const disablePostButton = formik.values.text === '' || formik.values.isJobListing && !formik.values.position
     return (
             <Modal
                 open={showModal}
@@ -101,8 +133,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                         </div>
                         <form onSubmit={formik.handleSubmit}>
                             <div className="p-2 relative bottom-0">
-                                <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder={t('common.label.onYourMind') as string}/>
-
+                     <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder="Whats on your mind?"/>
                                 {formik.values.image && <div className="flex items-center space-x-1">
                                 <h6 className="font-semibold mt-2 p-2">Image</h6>
                                 <div className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">
@@ -125,7 +156,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                             <CardActions className="fixed bottom-0 w-full p-2 z-20 flex">
                                 <div className="w-fit flex justify-start">
                                     <FormControlLabel name="isJobListing"  control={<Checkbox onChange={formik.handleChange} checked={formik.values.isJobListing}  sx={{color:'#4D47C3','&.Mui-checked': {color: '#4D47C3'},'label':{width: 'fit-content', color: 'red'}}}/>} color='success' label={t('jobPosted.label.jobPosting')}/>
-                                    <IconButton disabled={!formik.values.isJobListing} sx={{marginRight: 50}} onClick={()=> setShowJobSettings(true)}>
+                                    <IconButton disabled={!formik.values.isJobListing} sx={{marginRight: 50,color: `${formik.values.isJobListing && !formik.values.position && 'red'}`}} onClick={()=> setShowJobSettings(true)}>
                                         <Settings/>
                                     </IconButton>
                                 </div>
@@ -134,7 +165,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                                         <Tag/>
                                     </IconButton>
                                     <IconButton component="label" sx={{display:'flex', justifyContent: 'end'}}>
-                                        <input hidden name="image"  onChange={(event) => {
+                                        <input hidden name="image"  onChange={(event)=> {
                                             const file: FileList | null = event.currentTarget.files;
                                             if (!file) return;
                                             else {
@@ -150,7 +181,7 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                                         disableElevation
                                         className={styles.sendButton}
                                         type="submit"
-                                        disabled={formik.values.text === ''}
+                                        disabled={disablePostButton}
                                     >
                                         <span className={styles.buttonText}>{t('common.buttons.post')}</span>
                                         <Send className={styles.sendIcon}/>
@@ -161,11 +192,9 @@ const NewPostModal:FC<{showModal: boolean, handleModalClose:()=>void, fetchFeed:
                     </Card>
                     <div>
                         <TagSelection showModal={showTagSelection} handleModalClose={handleTagSelectionClose} onSelectTag={handleTagsSelection} onDeleteTag={handleTagDeletion} selectedTags={selectedTags}/>
-                        <JobSettingsModal showModal={showJobSettings} handleModalClose={()=>setShowJobSettings(false)} values={formik.values.jobSettings} onChange={jobSettingsChangeHandler}/>
+                        <JobSettingsModal showModal={showJobSettings} handleModalClose={()=>setShowJobSettings(false)} values={{position: formik.values.position, uploadDeadline: formik.values.uploadDeadline, isResumeRequired: formik.values.isResumeRequired, isCoverLetterRequired: formik.values.isCoverLetterRequired,isThirdParty: formik.values.isThirdParty, thirdPartyLink: formik.values.thirdPartyLink}} onChange={jobSettingsChangeHandler}/>
                     </div>
-
                 </>
-
             </Modal>
 
 
