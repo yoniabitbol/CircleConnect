@@ -7,7 +7,7 @@ async function sendNotification(target_user_id: string, type: string) {
   const token = currentUser && (await currentUser.getIdToken());
   const url = `http://${host}:${port}/api/notifications/${target_user_id}`;
   const currentUserId = currentUser && currentUser.uid;
-  console.log("Current user id: ", currentUserId);
+
   const res = await fetch(url, {
     method: "POST",
     headers: {
