@@ -25,8 +25,8 @@ const sendNotification = async (req: Request, res: Response) => {
 	console.log(req.body);
 	try {
 		if (
-			req.body.type !== 'message' ||
-			req.body.type !== 'connection' ||
+			req.body.type !== 'message' &&
+			req.body.type !== 'connection' &&
 			req.body.type !== 'relatedPost'
 		) {
 			return res.status(400).json({
