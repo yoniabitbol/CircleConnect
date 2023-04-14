@@ -1,30 +1,32 @@
 import { auth } from "../firebase/config";
-const host = process.env.REACT_APP_HOST || 'localhost';
+const host = process.env.REACT_APP_HOST || "localhost";
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 
-async function sendNotification (target_user_id: string, type: string) {
-    const currentUser = auth.currentUser;
-    const token = currentUser && (await currentUser.getIdToken());
-    const url = `http://${host}:${port}/api/notifications/${target_user_id}`;
-    const currentUserId = currentUser && currentUser.uid;
+async function sendNotification(target_user_id: string, type: string) {
+  const currentUser = auth.currentUser;
+  const token = currentUser && (await currentUser.getIdToken());
+  const url = `http://${host}:${port}/api/notifications/${target_user_id}`;
+  const currentUserId = currentUser && currentUser.uid;
+  console.log("Current user id: ", currentUserId);
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      type: type,
+      initiator_id: currentUserId,
+    }),
+  });
 
-    const res = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-            type: type,
-            initiator_id: currentUserId,
-        }),
-        });
+  console.log(res.body);
 
-    if (!res.ok) {
-        throw new Error("Failed to send notification.");
-    }
+  if (!res.ok) {
+    throw new Error("Failed to send notification.");
+  }
 
-    return res.json();
+  return res.json();
 }
 
 export default sendNotification;

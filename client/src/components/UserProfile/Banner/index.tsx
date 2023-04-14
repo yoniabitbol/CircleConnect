@@ -14,6 +14,7 @@ import cancelConnectionRequest from "../../../http/cancelConnectionRequest";
 import { useParams } from "react-router-dom";
 
 import sendConnectionRequest from "../../../http/sendConnectionRequest";
+import sendNotification from "../../../http/sendNotification";
 
 const Banner: React.FC<{
   banner: {
@@ -49,7 +50,7 @@ const Banner: React.FC<{
         // if (banner.backdrop === "" || banner.picture === "") return;
         const backdropUrl = await getUserBackdrop(banner.backdrop);
         const profilePicUrl = await getUserProfilePic(banner.picture);
-        
+
         setBackdropUrl(backdropUrl);
         setProfilePicUrl(profilePicUrl);
       } catch (error) {
@@ -161,6 +162,7 @@ const Banner: React.FC<{
                 }
                 sendConnectionRequest(profileId);
                 setConnectionState("sent");
+                sendNotification("Hello", "connection"); // send notification of new connection request
               }}
             >
               Connect
