@@ -1,11 +1,49 @@
 import {Box, Avatar, Button} from "@mui/material";
 import {Link} from "react-router-dom";
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useTranslation } from "react-i18next";
+import getUserProfilePic from "../../http/getUserPicturePic";
+import Usertypes from "../../Models/UserProfileModel";
+
+type ConnectionType = Omit<
+  Usertypes,
+  | "location"
+  | "email"
+  | "phone"
+  | "website"
+  | "backdrop"
+  | "summary"
+  | "projects"
+  | "skills"
+  | "experience"
+  | "education"
+  | "languages"
+  | "awards"
+  | "courses"
+  | "preferenceTags"
+>;
+
 
 const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
     const {t} = useTranslation();
     const {connections} = props;
+    const [userProfilePic, setUserProfilePic] = useState<string[]>();
+
+
+    useEffect(() => {
+        async function fetchUserProfile() {
+          const profilePicUrls = await Promise.all(
+            connections.map(async (user: ConnectionType) => {
+              const profilePicUrl = await getUserProfilePic(user.picture);
+    
+              return profilePicUrl;
+            })
+          );
+          setUserProfilePic(profilePicUrls);
+        }
+        fetchUserProfile();
+      }, [connections]);
+      
     return (
        <div className="pb-5 bg-white w-full drop-shadow-md shadow-purple-500">
            <div className="p-3">
@@ -13,10 +51,10 @@ const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
                <hr className="w-full bg-gray-400 h-0.5 mt-2"/>
            </div>
            <div className="px-3">
-               {connections.slice(0,3).map((connection:any) => {
-                   return <Box key={connection._id}  sx={{border: 1, borderColor: '#D4D4D4', marginBottom: 1, width: 1, borderRadius:2, padding: 2, display:'flex', alignItems:'center'}}>
+               {connections.slice(0,3).map((connection:ConnectionType, index: number) => {
+                   return <Box key={connection.user_id}  sx={{border: 1, borderColor: '#D4D4D4', marginBottom: 1, width: 1, borderRadius:2, padding: 2, display:'flex', alignItems:'center'}}>
                        <Link className=" items-center flex w-4/5 hover:underline" to={`/profile/${connection.user_id}`}>
-                           <Avatar sx={{width:50, height:50}}  src={connection.picture}/>
+                           <Avatar sx={{width:50, height:50}}  src={userProfilePic ? userProfilePic[index] : ""}/>
                            <div className="flex-col w-fit">
                                <div className="ml-2 font-bold text-lg">
                                    {connection.name}
@@ -25,7 +63,7 @@ const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
                         </Link>
                        <Link to="/chat">
                            <Button
-                               sx={{width:'100%',backgroundColor: '#4D47C3', height: 30 ,'&:hover':{backgroundColor: '#3b3799'}}}
+                               sx={{width:'100%', height: 30 }}
                                variant="contained"
                                disableElevation>
                                {t('notifications.buttons.chat')}

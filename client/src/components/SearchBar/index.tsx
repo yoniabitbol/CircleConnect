@@ -1,12 +1,9 @@
-import { TextField, Autocomplete, Box, Avatar } from "@mui/material";
-// import {InputAdornment} from "@mui/material";
+import { TextField, Autocomplete, Box } from "@mui/material";
 import {  Search, } from "@mui/icons-material";
 import {CircularProgress} from "@mui/material";
 import UserInSearch from "../../Models/UsersInSearchModel";
-import React, { MouseEventHandler, useEffect } from "react";
-import { Link } from "react-router-dom";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import usersInSearchModel from "../../Models/UsersInSearchModel";
+import React, {MouseEventHandler, useEffect} from 'react';
+import SearchResultsBox from './SearchResultsBox';
 
 const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (value: string) => void, loading:boolean, searchOpen: boolean, outsideClicked: MouseEventHandler}> = (props) => {
   const {searchResults, inputChangeHandler, loading, searchOpen} = props;
@@ -38,38 +35,7 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
     setResults([])
     setValue('')
   }
-  
-  const searchBoxClickHandler = () => {
-    setTimeout(() => {
-      window.location.reload();
-    }, 1)
-  }
 
-  
-  const SearchResultsBox = (props: object , option: usersInSearchModel) => {
-    return (
-      <Link key={option.id}  to={`profile/${option.id}`} onClick={searchBoxClickHandler}>
-        <div className="highlighted:bg-red-600">
-          <Box component='li' sx={{border: 1, borderColor: '#D4D4D4', marginBottom: 1, width: 1, borderRadius:2, '&:hover':{boxShadow: "inset 0px 4px 4px rgba(0, 0, 0, 0.25)" }}}  {...props}>
-            <div className=" items-center flex" >
-              <Avatar src={option.avatar}/>
-              <div className="flex-col min-w-fit">
-                <div className="ml-2 font-sans text-sm ">
-                  {option.name}
-                </div>
-                <div className="ml-2 font-light text-sm">
-                  {option.position}
-                </div>
-              </div>
-            </div>
-            <div className="ml-10 text-[10px]">
-              <ArrowForwardIosIcon fontSize='inherit' sx={{color:'#D4D4D4'}}/>
-            </div>
-          </Box>
-        </div>
-      </Link>
-    );
-  };
   return (
       <Autocomplete
         open={searchOpen}
@@ -94,7 +60,7 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
         )}
         renderOption={SearchResultsBox}
         renderInput={(params) => (
-          <TextField
+          <TextField data-testid="link-click-0"
             {...params}
             onClick={textBoxClickHandler}
             sx={{ height: '100%'}}
@@ -110,8 +76,7 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
           
             }}
           />
-        )}
-      />
+        )}></Autocomplete>
   );
 };
 

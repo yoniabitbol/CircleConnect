@@ -25,28 +25,28 @@ const NavBar: React.FC<{
   const { logout } = useLogout();
   const [userProfilePic, setUserProfilePic] = useState<string>();
   const [usersInSearch, setUsersInSearch] = useState<UserInSearch[]>([]);
-  // console.log(openSearch);
 
   useEffect(() => {
     async function fetchUserProfile() {
       const res = await getCurrentUserProfile();
-      const profilePicUrl = await getUserProfilePic(res.data.user.picture);
+      const profilePicUrl = await getUserProfilePic(res ? res.data.user.picture : '');
       setUserProfilePic(profilePicUrl);
     }
     fetchUserProfile();
   }, []);
 
-
   const onChangeHandler = async () => {
     const res = await getAllUsers();
     const filteredArray: usersInSearchModel[] = [];
-    res.data.users.map((user: Usertypes) => {
+    let userPic = '';
+    res.data.users.map(async (user: Usertypes) => {
+      userPic = await getUserProfilePic(user.picture)
       filteredArray.push({
         id: user.user_id,
         position: user.title,
         name: user.name,
         type: "USERS",
-        avatar: user.picture,
+        picture: userPic,
         label: user.name,
       });
     });
@@ -58,7 +58,7 @@ const NavBar: React.FC<{
         <MobileNav links={NavLinkModels} />
       </div>
       <div className="flex w-1/2 h-max max-lg:hidden" onClick={outsideClicked}>
-        <Link className="ml-5 w-1/5" to="/">
+        <Link className="ml-5 w-1/5" to="feed">
           <img
             style={{ maxWidth: "5rem" }}
             src={process.env.PUBLIC_URL + "/Brand Logo/officccccc.png"}

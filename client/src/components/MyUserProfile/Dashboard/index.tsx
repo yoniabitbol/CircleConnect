@@ -1,26 +1,47 @@
 import JobPosting from "./JobPosting";
 import JobApplied from "./JobApplied";
-import { useTranslation } from "react-i18next";
-import React from "react";
+import PropTypes from "prop-types";
+import { applicationType, postType } from "../../../Models/UserProfileModel";
 
-const Dashboard: React.FC = () => {
-  const {t} = useTranslation();
+interface DashboardProps {
+  posts: postType[];
+  applications: applicationType[];
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ posts, applications }) => {
   return (
     <div>
       <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      {t('jobPosted.label.posted')} 
-        <JobPosting />
-        <JobPosting />
-        <JobPosting />
+        Jobs you posted:
+        {posts.length == 0 ? (
+          <div className="text-sm">You have not posted any jobs yet...</div>
+        ) : (
+          posts.map((post: postType) => (
+            <div key={post._id}>
+              {post.isJobListing ? <JobPosting post={post} /> : null}
+            </div>
+          ))
+        )}
       </div>
       <div className="mt-2 w-full p-5 rounded-md bg-slate-200 mx-auto">
-        {t('jobApplied.label.appliedTo')} 
-        <JobApplied />
-        <JobApplied />
-        <JobApplied />
+        Jobs you applied to:
+        {applications.length == 0 ? (
+          <div className="text-sm">You have not applied to any jobs yet...</div>
+        ) : (
+          applications.map((application: applicationType) => (
+            <div key={application._id}>
+              <JobApplied application={application} />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
+};
+
+Dashboard.propTypes = {
+  posts: PropTypes.arrayOf(PropTypes.any).isRequired,
+  applications: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default Dashboard;

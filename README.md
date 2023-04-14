@@ -83,14 +83,22 @@
 
 ## :star2: About the Project
 
+<div align="center"> 
+  <p align="justify">CircleConnect is a professional networking platform that aims to connect professionals and businesses from all industries. Similar to LinkedIn, CircleConnect allows users to create and share professional profiles, connect with other users, and share and view job listings. With its user-friendly interface, CircleConnect makes it easy for professionals to connect with others in their industry and expand their professional network. Whether you're looking for a new job opportunity, seeking to connect with other professionals in your field, or looking to expand your business, CircleConnect provides the tools you need to succeed.
+  </p>
+</div>
+
 <!-- Screenshots -->
 
 ### :camera: Screenshots
 
 <div align="center"> 
+<img src="https://cdn.discordapp.com/attachments/974721169284550707/1093240140937306264/image.png" alt="screenshot" width='400'/>
+  <img src="https://media.discordapp.net/attachments/974721169284550707/1093240027691089951/image.png" alt="screenshot" width='400'/>
   <img src="https://user-images.githubusercontent.com/91300383/212593657-21f3cb91-9dbe-4f1e-8f0f-881aaedbaa4d.png" alt="screenshot" width='400'/>
-  <p align="justify">CircleConnect is a professional networking platform that aims to connect professionals and businesses from all industries. Similar to LinkedIn, CircleConnect allows users to create and share professional profiles, connect with other users, and share and view job listings. With its user-friendly interface, CircleConnect makes it easy for professionals to connect with others in their industry and expand their professional network. Whether you're looking for a new job opportunity, seeking to connect with other professionals in your field, or looking to expand your business, CircleConnect provides the tools you need to succeed.
-  </p>
+  <img src="https://cdn.discordapp.com/attachments/974721169284550707/1093241412495085668/3._Network.png" alt="screenshot" width='400'/>
+  <img src="https://cdn.discordapp.com/attachments/974721169284550707/1093241614853480538/6._Notices.png" alt="screenshot" width='400'/>
+   <img src="https://cdn.discordapp.com/attachments/974721169284550707/1093241725327245423/5._Chat.png" alt="screenshot" width='400'/>
 </div>
 
 <!-- TechStack -->

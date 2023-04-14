@@ -1,6 +1,7 @@
 import { auth } from "../firebase/config";
+const host = process.env.REACT_APP_HOST || 'localhost';
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
-const url = `http://localhost:${port}/img/users/posts/`;
+const url = `http://${host}:${port}/img/users/posts/`;
 
 async function getPostImage(postImage: string) {
   const currentUser = auth.currentUser;
@@ -13,11 +14,13 @@ async function getPostImage(postImage: string) {
       Authorization: `Bearer ${token}`,
     },
   });
+  if(!res.ok) {
+    throw new Error("Failed to fetch post image.");
+  }
   if (res.ok) {
     const blob = await res.blob();
     return URL.createObjectURL(blob);
   }
-  throw new Error("Failed to fetch post image.");
 }
 
 export default getPostImage;

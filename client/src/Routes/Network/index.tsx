@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import ConnectionRow from "../../components/ConnectionRow";
 import Usertypes from "../../Models/UserProfileModel";
 import getCurrentUserConnections from "../../http/getCurrentUserConnections";
-import getUserProfilePic from "../../http/getUserPicturePic";
 import { useTranslation } from "react-i18next";
-
 type ConnectionType = Omit<
   Usertypes,
   | "location"
@@ -20,15 +18,16 @@ type ConnectionType = Omit<
   | "languages"
   | "awards"
   | "courses"
+  | "applications"
+  | "posts"
   | "preferenceTags"
 >;
 
 const Network: React.FC = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const [connections, setConnections] = useState<any>([]);
   const [search, setSearch] = useState<string>("");
   const [filteredConnections, setFilteredConnections] = useState<any>([]);
-  const [userProfilePic, setUserProfilePic] = useState<string[]>();
 
   useEffect(() => {
     getCurrentUserConnections().then((res) => {
@@ -38,20 +37,6 @@ const Network: React.FC = () => {
       setFilteredConnections(res.data.connections);
     });
   }, []);
-
-  useEffect(() => {
-    async function fetchUserProfile() {
-      const profilePicUrls = await Promise.all(
-        connections.map(async (user: ConnectionType) => {
-          const profilePicUrl = await getUserProfilePic(user.picture);
-
-          return profilePicUrl;
-        })
-      );
-      setUserProfilePic(profilePicUrls);
-    }
-    fetchUserProfile();
-  }, [connections]);
 
   const onInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -74,25 +59,25 @@ const Network: React.FC = () => {
       <div className="flex justify-center sm:text-left py-2">
         <div className="grid grid-cols-4 flex items-center gap-4 p-4 sm:text-sm text-xs w-full sm:w-7/12 bg-white">
           <div className="col-span-3 font-bold">
-            {connections.length} {t('common.label.connections')}
+            {connections.length} {t("common.label.connections")}
           </div>
           <input
-            placeholder={t('common.label.search') as string}
+            placeholder={t("common.label.search") as string}
             onChange={onInputChangeHandler}
             value={search}
             className="border p-2"
           ></input>
         </div>
       </div>
-      {filteredConnections.map((connection: ConnectionType, index: number) => {
+      {filteredConnections.map((connection: ConnectionType) => {
         return (
           <ConnectionRow
-            key={index}
+            key={connection.user_id}
             user_id={connection.user_id}
             name={connection.name}
             title={connection.title}
             connections={connection.connections}
-            picture={userProfilePic ? userProfilePic[index] : ""}
+            picture={connection.picture && connection.picture}
           />
         );
       })}

@@ -3,7 +3,7 @@ interface UserInSearch {
   name: string,
   type: string,
   position: string,
-  avatar:  string,
+  picture: string,
   label: string
 }
 
