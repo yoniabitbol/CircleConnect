@@ -13,7 +13,6 @@ async function deletePost(post_id: string) {
     const res = await fetch(url, {
         method: "DELETE",
         headers: {Authorization: `Bearer ${token}`,},
-        body: JSON.stringify({creatorID})
     });
     if (res.ok) {
         return res;
