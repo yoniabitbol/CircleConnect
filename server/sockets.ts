@@ -27,7 +27,8 @@ io.on('connection', (socket: Socket) => {
       const recipientId = userSocketMap.get(recipient);
       if (recipientId) {
         io.to(recipientId).emit('receive-message', {
-          sender: userId,
+          threadID,
+          senderID: userId,
           text,
           file,
         });

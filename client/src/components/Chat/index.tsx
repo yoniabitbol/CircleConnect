@@ -21,14 +21,14 @@ const Chat: React.FC<{
 
   useEffect(() => {
     // Listen for the "new message" event
-    socket.on('receive-message', (message) => {
+    socket.on("receive-message", (message) => {
       // Update the messages state with the new message
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     // Clean up the event listener on unmount
     return () => {
-      socket.off('receive-message');
+      socket.off("receive-message");
     };
   }, []);
 
@@ -52,7 +52,7 @@ const Chat: React.FC<{
 
   return (
     <div className="lg:ml-5 m-5 grid gap-0 grid-cols-1 md:grid-cols-[30%_70%]">
-      {threadProfiles && (
+      {threadProfiles && threadProfiles.length > 0 ? (
         <Sessions
           threads={threads}
           threadProfiles={threadProfiles}
@@ -61,6 +61,8 @@ const Chat: React.FC<{
           connections={connections}
           refreshThreads={refreshThreads}
         />
+      ) : (
+        <div> Retreiving sessions ...</div>
       )}
 
       {selected != -1 ? (
@@ -75,6 +77,7 @@ const Chat: React.FC<{
           messages={messages}
           setMessages={setMessages}
           uid={uid}
+          socket={socket}
         />
       ) : (
         <div className="p-10">{"<<< Select a conversation!"}</div>

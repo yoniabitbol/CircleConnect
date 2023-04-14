@@ -6,6 +6,7 @@ import MessageModel from "../../../Models/MessageModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
 import saveMessage from "../../../http/saveMessage";
 import ThreadModel from "../../../Models/ThreadModel";
+import { Socket } from "socket.io-client";
 
 export interface MessageType {
   id: number;
@@ -19,7 +20,8 @@ const ChatDisplay: React.FC<{
   uid: string;
   threadProfile: UserProfileModel | undefined;
   thread: ThreadModel;
-}> = ({ threadProfile, messages, setMessages, uid, thread }) => {
+  socket: Socket;
+}> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
@@ -56,21 +58,25 @@ const ChatDisplay: React.FC<{
             if (threadProfile) {
               saveMessage(thread._id, uid, message).then((res) => {
                 if (res.status === "success" || res.ok) {
-                  setMessages([
-                    ...messages,
-                    {
-                      _id: Math.random().toString().substring(2),
-                      threadID: thread._id,
-                      senderID: uid,
-                      sender: {
-                        name: threadProfile?.name,
-                        picture: threadProfile?.picture,
-                      },
-                      text: message,
-                      file: null,
-                      createdAt: new Date().toISOString(),
-                      updatedAt: new Date().toISOString(),
+                  const newMsg = {
+                    _id: Math.random().toString().substring(2),
+                    threadID: thread._id,
+                    senderID: uid,
+                    sender: {
+                      name: threadProfile?.name,
+                      picture: threadProfile?.picture,
                     },
+                    text: message,
+                    file: null,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                  };
+                  setMessages([...messages, newMsg]);
+                  socket.emit("send-message", [
+                    newMsg.senderID,
+                    newMsg.threadID,
+                    newMsg.text,
+                    newMsg.file,
                   ]);
                 }
               });
