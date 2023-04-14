@@ -1,24 +1,28 @@
 import express from 'express';
 import UserController from '../controllers/userController';
-import { uploadImages, resizePhoto } from '../middleware/multer';
+import { uploadFiles, resizeFile } from '../middleware/multer';
 
 const router = express.Router();
 
-// User Profile Routes
+// Default route for users
 router
   .route('/')
   .get(UserController.getAllUsers)
   .post(UserController.createUser)
   .patch(
-    uploadImages,
-    resizePhoto,
+    uploadFiles,
+    resizeFile,
     UserController.updateUser,
   );
 
+// Routes based on user id
 router
   .route('/:user_id')
   .get(UserController.getUser)
   .delete(UserController.deleteUser);
+
+router.route('/:user_id/tags')
+  .put(UserController.updateUserPreferenceTags);
 
 // User Connections Routes
 router.route('/:user_id/connections').get(UserController.getUserConnections);

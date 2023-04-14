@@ -3,6 +3,7 @@ import { Field } from "formik";
 import { useState, useEffect } from "react";
 import getUserBackdrop from "../../../http/getUserBackdrop";
 import getUserProfilePic from "../../../http/getUserPicturePic";
+import { useTranslation } from "react-i18next";
 
 const Banner: React.FC<{
   banner: {
@@ -22,6 +23,7 @@ const Banner: React.FC<{
 }> = ({ banner, edit, formik }) => {
   const [backdropUrl, setBackdropUrl] = useState("");
   const [profilePicUrl, setProfilePicUrl] = useState("");
+  const {t} = useTranslation();
 
   useEffect(() => {
     async function fetchUserProfile() {
@@ -45,7 +47,7 @@ const Banner: React.FC<{
         <div className="w-full pb-5 rounded-md bg-slate-200 mx-auto">
           <div className="w-2/3 mx-auto pt-5">
             <label className="text-sm font-semibold text-gray-600 py-2">
-              Backdrop URL
+            {t('editProfile.label.backdropURL')}
             </label>
             {/* <Field name="backdrop" className="w-full rounded-sm" type="text" /> */}
             <input
@@ -63,7 +65,7 @@ const Banner: React.FC<{
             />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
-              Profile Picture URL
+            {t('editProfile.label.profilePictureURL')}
             </label>
             {/* <Field name="picture" className="w-full rounded-sm" type="text" /> */}
             <input
@@ -81,32 +83,32 @@ const Banner: React.FC<{
             />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
-              Name
+            {t('editProfile.label.name')}
             </label>
             <Field name="name" className="w-full rounded-sm" type="text" />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
-              Title
+            {t('editProfile.label.title')}
             </label>
             <Field name="title" className="w-full rounded-sm" type="text" />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
-              Location
+            {t('editProfile.label.location')}
             </label>
             <Field name="location" className="w-full rounded-sm" type="text" />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
-              Email
+            {t('editProfile.label.email')}
             </label>
             <Field name="email" className="w-full rounded-sm" type="text" />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
-              Phone
+            {t('editProfile.label.phone')}
             </label>
             <Field name="phone" className="w-full rounded-sm" type="text" />
 
             <label className="text-sm font-semibold text-gray-600 py-2">
-              Website
+            {t('editProfile.label.website')}
             </label>
             <Field name="website" className="w-full rounded-sm" type="text" />
           </div>
@@ -116,7 +118,7 @@ const Banner: React.FC<{
               type="submit"
               className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
             >
-              Save Profile
+               {t('editProfile.buttons.saveProfile')}
             </button>
           </div>
 
@@ -156,7 +158,7 @@ const Banner: React.FC<{
           </div>
           <div className="flex flex-col justify-center mt-5 ml-5">
             <h1 className="text-lg font-semibold ">
-              {banner.connections.length} Connections
+              {banner.connections.length}  {t('editProfile.label.connections')}
             </h1>
           </div>
           {formik != null ? (
@@ -165,7 +167,7 @@ const Banner: React.FC<{
                 type="submit"
                 className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
               >
-                Edit Profile
+                 {t('editProfile.buttons.editProfile')}
               </button>
             </div>
           ) : (

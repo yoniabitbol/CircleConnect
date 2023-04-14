@@ -16,13 +16,54 @@ const MyProfile: React.FC = () => {
     picture: "",
     backdrop: "",
     summary: "",
-    projects: [],
-    skills: [],
-    experience: [],
-    education: [],
-    languages: [],
-    awards: [],
-    courses: [],
+    preferenceTags: [""],
+    projects: [
+      {
+        title: "",
+        description: "",
+        startDate: "",
+        endDate: "",
+        technologies: "",
+        picture: "",
+      },
+    ],
+    skills: [{ name: "", level: "" }],
+    experience: [
+      {
+        title: "",
+        startDate: "",
+        endDate: "",
+        company: "",
+        logo: "",
+        location: "",
+        description: "",
+      },
+    ],
+    education: [
+      {
+        school: "",
+        logo: "",
+        degree: "",
+        location: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+      },
+    ],
+    languages: [{ name: "", level: "" }],
+    awards: [{ title: "", date: "", awarder: "", summary: "" }],
+    courses: [
+      {
+        title: "",
+        number: "",
+        school: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+      },
+    ],
+    applications: [],
+    posts: [],
   });
 
   const [fetchedUser, setFetchedUser] = useState(false);
@@ -30,6 +71,9 @@ const MyProfile: React.FC = () => {
     if (fetchedUser) return;
     getCurrentUserProfile().then((res) => {
       // This bug should eventually be fixed
+      if (res.data.user.preferenceTags[0] === "") {
+        res.data.user.preferenceTags = [];
+      }
       if (res.data.user.projects[0] === "") {
         res.data.user.projects = [];
       }
@@ -52,7 +96,6 @@ const MyProfile: React.FC = () => {
         res.data.user.courses = [];
       }
 
-      console.log("fetched user");
       setMyUser(res.data.user);
     });
     setFetchedUser(true);

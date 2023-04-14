@@ -1,0 +1,22 @@
+.modal {
+    filter: drop-shadow(2px 2px 50px rgba(75, 71, 182, 0.5));
+    width: 766px;
+    height: 500px;
+}
+
+.box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 20px;
+    min-height: fit-content;
+    max-width: 35rem;
+    overflowY: scroll;
+    display:flex;
+    flex-direction: column;
+
+}

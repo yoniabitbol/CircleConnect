@@ -2,15 +2,15 @@ import { auth } from "../firebase/config";
 // import Usertypes from "../Models/UserProfileModel";
 
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
-const url = `http://localhost:${port}/api/users`;
+const host = process.env.REACT_APP_HOST || 'localhost';
+const url = `http://${host}:${port}/api/users`;
 
 async function updateUserProfile(formData: FormData) {
   const user = auth.currentUser;
   const token = user && (await user.getIdToken());
 
   const user_id = user && user.uid;
-  console.log(token);
-  console.log(user_id);
+
   if (!user_id) {
     return;
   }

@@ -24,6 +24,7 @@ const Profile: React.FC<Props> = ({ id }) => {
     picture: "",
     backdrop: "",
     summary: "",
+    preferenceTags: [""],
     projects: [
       {
         title: "",
@@ -69,6 +70,8 @@ const Profile: React.FC<Props> = ({ id }) => {
         description: "",
       },
     ],
+    applications: [],
+    posts: [],
   });
 
   useEffect(() => {

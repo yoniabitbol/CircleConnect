@@ -1,56 +1,15 @@
 import request from 'supertest';
-import app from './app';
-import User from './models/userModel';
+import User from '../models/userModel';
+import app from '../app';
 
 const mockingoose = require('mockingoose');
 
-jest.mock('./usingAuth', () => ({
+jest.mock('../usingAuth', () => ({
   default: () => false,
   __esModule: true,
 }));
 
-// jest.mock('./firebase/config', () => {
-//   return {
-//     initializeApp: () => {},
-//     auth: async () => {
-//       return {
-//         deleteUser: async () => {return null;}
-//       };
-//     },
-//     __esModule: true,
-//   };
-// });
-
-describe('Server tests', () => {
-  // test('Request auth error', (done) => {
-  //   request(app)
-  //     .get('/')
-  //     .then((response) => {
-  //       expect(response.statusCode).toBe(401);
-  //       expect(response.text).toBe('{"status":"failure","message":"You are not authorized to ' +
-  //         'access this route"}');
-  //       done();
-  //     });
-  // });
-
-  test('Request default route', (done) => {
-    request(app)
-      .get('/')
-      .then((response) => {
-        expect(response.statusCode).toBe(200);
-        done();
-      });
-  });
-
-  test('Request invalid route', (done) => {
-    request(app)
-      .get('/test')
-      .then((response) => {
-        expect(response.statusCode).toBe(400);
-        done();
-      });
-  });
-
+describe('User route tests', () => {
   test('Request create user for already existing user', (done) => {
     mockingoose(User).toReturn(
       { user_id: 'testUser', name: 'testUser', email: 'testUser' },
@@ -63,7 +22,7 @@ describe('Server tests', () => {
       .then((response) => {
         expect(response.statusCode).toBe(200);
         expect(response.text).toContain('{"status":"user exists","data":{"user":{"user_id":'
-          + '"testUser","name":"testUser","email":"testuser"');
+                    + '"testUser","name":"testUser","email":"testuser"');
         done();
       });
   });
@@ -357,7 +316,7 @@ describe('Server tests', () => {
 
     mockingoose(User).toReturn(
       {},
-      'updateOne',
+      'update',
     );
 
     request(app)
@@ -387,7 +346,7 @@ describe('Server tests', () => {
     mockingoose(User).toReturn(
       {},
 
-      'updateOne',
+      'findOneAndUpdate',
     );
 
     request(app)
@@ -461,7 +420,7 @@ describe('Server tests', () => {
 
     mockingoose(User).toReturn(
       {},
-      'updateOne',
+      'findOneAndUpdate',
     );
 
     request(app)
@@ -488,5 +447,46 @@ describe('Server tests', () => {
         expect(response.text).toBe('{"status":"ERROR: Error","message":"Error removing connection"}');
         done();
       });
+  });
+
+  describe('updateUserPreferenceTags', () => {
+    it('should update the user preference tags and return 200', async () => {
+      const mockUser = { user_id: 'test-user' };
+      mockingoose(User).toReturn(mockUser, 'findOne');
+
+      const response = await request(app)
+        .put('/api/users/test-user/tags')
+        .send({ preferenceTags: ['tag1', 'tag2'] })
+        .expect(200);
+
+      expect(response.body).toEqual({ status: 'success', message: 'Job preference tags updated' });
+    });
+
+    it('should return an error if the user does not exist', async () => {
+      mockingoose(User).toReturn(null, 'findOne');
+
+      const response = await request(app)
+        .put('/api/users/non-existent-user/tags')
+        .send({ preferenceTags: ['tag1', 'tag2'] })
+        .expect(400);
+
+      expect(response.body.status).toEqual('error');
+      expect(response.body.message).toEqual('User does not exist');
+    });
+
+    it('should return an error if there is an error updating the user', async () => {
+      const mockUser = { user_id: 'test-user' };
+      mockingoose(User).toReturn(mockUser, 'findOne');
+
+      mockingoose(User).toReturn(new Error(), 'updateOne');
+
+      const response = await request(app)
+        .put('/api/users/test-user/tags')
+        .send({ preferenceTags: ['tag1', 'tag2'] })
+        .expect(400);
+
+      expect(response.body.status).toEqual('ERROR: Error');
+      expect(response.body.message).toEqual('Error updating preference tags');
+    });
   });
 });

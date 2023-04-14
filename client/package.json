@@ -8,7 +8,16 @@
       "src/reportWebVitals",
       "src/firebase",
       "src/lib",
-      "src/Models"
+      "src/Models",
+      "src/components/MyUserProfile/",
+      "src/Routes/ScreenContent",
+      "src/i18n",
+      "src/Routes/Feed/FilterCard",
+      "src/components/Footer/LanguageDropdown",
+      "src/components/Footer/LanguageDropdown"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!@mui)/"
     ]
   },
   "version": "0.1.0",
@@ -43,9 +52,11 @@
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.7",
+    "@mui/x-date-pickers": "^6.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "dayjs": "^1.11.7",
     "firebase": "^9.16.0",
     "formik": "^2.2.9",
     "history": "^5.3.0",
@@ -53,6 +64,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
+    "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
@@ -72,7 +84,9 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.32.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "i18next": "^22.4.12",
     "prettier": "2.8.3",
+    "react-i18next": "^12.2.0",
     "tailwindcss": "^3.2.4",
     "typescript": "^4.9.4"
   }

@@ -5,6 +5,7 @@ import Usertypes from "../../Models/UserProfileModel";
 import updateUserProfile from "../../http/updateUserProfile";
 
 import Banner from "./Banner";
+import Tags from "./Tags";
 import Summary from "./Summary";
 import Projects from "./Projects";
 import Skills from "./Skills";
@@ -41,6 +42,7 @@ const MyUserProfile: React.FC<{
       picture: values.picture,
       backdrop: values.backdrop,
       summary: values.summary,
+      preferenceTags: User.preferenceTags,
       projects: values.projects,
       skills: values.skills,
       experience: values.experience,
@@ -48,6 +50,8 @@ const MyUserProfile: React.FC<{
       languages: values.languages,
       awards: values.awards,
       courses: values.courses,
+      applications: User.applications,
+      posts: User.posts,
     });
 
     values.projects = JSON.stringify(values.projects);
@@ -58,10 +62,12 @@ const MyUserProfile: React.FC<{
     values.awards = JSON.stringify(values.awards);
     values.courses = JSON.stringify(values.courses);
 
-
+    // Do not append connections to form data
     const formData = new FormData();
     for (const value in values) {
-      formData.append(value, values[value]);
+      if (value !== "connections") {
+        formData.append(value, values[value]);
+      }
     }
 
     if (editable) {
@@ -112,22 +118,47 @@ const MyUserProfile: React.FC<{
                     email: User.email,
                     phone: User.phone,
                     website: User.website,
-                    connections: User.connections,
+                    connections: User.connections ? User.connections : [],
                     picture: User.picture,
                     backdrop: User.backdrop,
                   }}
                 />
+                <Tags preferenceTags={User.preferenceTags} />
                 <Summary edit={editable} summary={User.summary} />
-                <Projects edit={editable} projects={User.projects} />
-                <Skills edit={editable} skills={User.skills} />
-                <Experience edit={editable} experience={User.experience} />
-                <Education edit={editable} education={User.education} />
-                <Languages edit={editable} languages={User.languages} />
-                <Awards edit={editable} awards={User.awards} />
-                <Courses edit={editable} courses={User.courses} />
+                <Projects
+                  edit={editable}
+                  projects={User.projects ? User.projects : []}
+                />
+                <Skills
+                  edit={editable}
+                  skills={User.skills ? User.skills : []}
+                />
+                <Experience
+                  edit={editable}
+                  experience={User.experience ? User.experience : []}
+                />
+                <Education
+                  edit={editable}
+                  education={User.education ? User.education : []}
+                />
+                <Languages
+                  edit={editable}
+                  languages={User.languages ? User.languages : []}
+                />
+                <Awards
+                  edit={editable}
+                  awards={User.awards ? User.awards : []}
+                />
+                <Courses
+                  edit={editable}
+                  courses={User.courses ? User.courses : []}
+                />
               </LeftSection>
               <RightSection>
-                <Dashboard />
+                <Dashboard
+                  applications={User.applications}
+                  posts={User.posts}
+                />
               </RightSection>
             </Layout>
           </Form>

@@ -12,22 +12,24 @@ import getAllUsers from "../../http/getAllUsers";
 import Usertypes from "../../Models/UserProfileModel";
 import usersInSearchModel from "../../Models/UsersInSearchModel";
 import getUserProfilePic from "../../http/getUserPicturePic";
+import style from "./style.module.css";
+import { useTranslation } from "react-i18next";
 
 const NavBar: React.FC<{
   openSearch: boolean;
   searchClicked: MouseEventHandler<HTMLDivElement>;
   outsideClicked: MouseEventHandler<HTMLDivElement>;
 }> = (props) => {
+  const {t} = useTranslation();
   const { openSearch, searchClicked, outsideClicked } = props;
   const { logout } = useLogout();
   const [userProfilePic, setUserProfilePic] = useState<string>();
   const [usersInSearch, setUsersInSearch] = useState<UserInSearch[]>([]);
-  // console.log(openSearch);
 
   useEffect(() => {
     async function fetchUserProfile() {
       const res = await getCurrentUserProfile();
-      const profilePicUrl = await getUserProfilePic(res.data.user.picture);
+      const profilePicUrl = await getUserProfilePic(res ? res.data.user.picture : '');
       setUserProfilePic(profilePicUrl);
     }
     fetchUserProfile();
@@ -36,25 +38,27 @@ const NavBar: React.FC<{
   const onChangeHandler = async () => {
     const res = await getAllUsers();
     const filteredArray: usersInSearchModel[] = [];
-    res.data.users.map((user: Usertypes) => {
+    let userPic = '';
+    res.data.users.map(async (user: Usertypes) => {
+      userPic = await getUserProfilePic(user.picture)
       filteredArray.push({
         id: user.user_id,
         position: user.title,
         name: user.name,
         type: "USERS",
-        avatar: user.picture,
+        picture: userPic,
         label: user.name,
       });
     });
     setUsersInSearch(filteredArray);
   };
   return (
-    <div className="p-2 flex items-center border sticky top-0 bg-white">
+    <div className="p-2 flex items-center border sticky z-20 top-0 bg-white">
       <div className="lg:hidden left-0 relative w-min" onClick={outsideClicked}>
         <MobileNav links={NavLinkModels} />
       </div>
       <div className="flex w-1/2 h-max max-lg:hidden" onClick={outsideClicked}>
-        <Link className="ml-5 w-1/5" to="/">
+        <Link className="ml-5 w-1/5" to="feed">
           <img
             style={{ maxWidth: "5rem" }}
             src={process.env.PUBLIC_URL + "/Brand Logo/officccccc.png"}
@@ -66,9 +70,7 @@ const NavBar: React.FC<{
 
       <div className={` flex relative justify-center  w-min`}>
         <div
-          className={`p-2.5 ${
-            openSearch ? "w-[17rem]" : "max-lg:min-w-max"
-          } lg:w-[20rem]`}
+          className={openSearch ? style.searchBarOpen : style.searchBar}
           onClick={searchClicked}
         >
           <SearchBar
@@ -91,7 +93,7 @@ const NavBar: React.FC<{
             <Avatar src={userProfilePic} />
           </Link>
           <Button onClick={logout} sx={{ color: "#4B47B7" }}>
-            Logout
+            {t('loginAndRegistration.buttons.logout')}
           </Button>
         </div>
       </div>

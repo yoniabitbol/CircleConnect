@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 import Usertypes from "../../../Models/UserProfileModel";
+import { useTranslation } from "react-i18next";
 
 const Languages: React.FC<{
   languages: Usertypes["languages"];
   edit: boolean;
 }> = ({ languages, edit }) => {
+  const {t} = useTranslation();
   const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
@@ -19,7 +21,7 @@ const Languages: React.FC<{
         console.log(languages);
       }}
     >
-      Add new
+      {t('userProfile.buttons.addNew')}
     </button>
   );
 
@@ -34,7 +36,7 @@ const Languages: React.FC<{
           setAddOrDelete(!addOrDelete);
         }}
       >
-        Delete
+        {t('userProfile.buttons.delete')}
       </button>
     );
   };
@@ -43,7 +45,7 @@ const Languages: React.FC<{
     return (
       <>
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Language
+        {t('userProfile.label.language')}
         </label>
         <input
           name={`languages[${index}].name`}
@@ -55,7 +57,7 @@ const Languages: React.FC<{
           }}
         />
         <label className="text-sm font-semibold text-gray-600 py-2">
-          Level
+          {t('userProfile.label.level')}
         </label>
         <input
           name={`languages[${index}].level`}
@@ -90,7 +92,7 @@ const Languages: React.FC<{
   const component = edit ? (
     form
   ) : languages.length < 1 ? (
-    <p>Add at least 1 language</p>
+    <p>{t('userProfile.label.addLang')}</p>
   ) : (
     <div className="grid grid-cols-3 gap-4 my-4">
       {languages?.map((language) => {
@@ -101,7 +103,7 @@ const Languages: React.FC<{
           >
             <h1 className="text-lg font-semibold pt-2">{language.name}</h1>
             <h2 className="">
-              Level <span className="font-bold">{language.level}</span>
+            {t('userProfile.label.level')} <span className="font-bold">{language.level}</span>
             </h2>
           </div>
         );
@@ -111,7 +113,7 @@ const Languages: React.FC<{
 
   return (
     <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
-      <h1 className="text-2xl font-bold ">Languages</h1>
+      <h1 className="text-2xl font-bold ">{t('userProfile.label.languages')}</h1>
       {component}
     </div>
   );

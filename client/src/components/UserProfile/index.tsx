@@ -39,14 +39,14 @@ const UserProfile: React.FC<{
         }}
       />
       <Summary  summary={User.summary} />
-      <Projects  projects={User.projects} />
-      <Skills skills={User.skills} />
-      <Experience  experience={User.experience} />
-      <Education  education={User.education} />
-      <Languages languages={User.languages} />
-      <Awards awards={User.awards} />
-      <Courses  courses={User.courses} />
-    </div>
+      <Projects  projects={User.projects ? User.projects : []}/>
+          <Skills skills={User.skills ? User.skills : []}/>
+          <Experience experience={User.experience ? User.experience : []}/>
+          <Education education={User.education ? User.education : []}/>
+          <Languages languages={User.languages ? User.languages : []}/>
+          <Awards awards={User.awards ? User.awards : []}/>
+          <Courses courses={User.courses ? User.courses : []}/>
+      </div>
   );
 };
 

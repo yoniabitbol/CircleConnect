@@ -1,0 +1,13 @@
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 10px;
+    max-width: 35rem;
+    overflow: scroll;
+    max-height:25rem
+}
