@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sessions from "./Sessions";
 import ChatDisplay from "./ChatDisplay";
 import ThreadModel from "../../Models/ThreadModel";
 import UserProfileModel from "../../Models/UserProfileModel";
 import MessageModel from "../../Models/MessageModel";
 import getThreadMessages from "../../http/getThreadMessages";
+import io from "socket.io-client";
 
 const Chat: React.FC<{
   threads: ThreadModel[];
@@ -15,6 +16,21 @@ const Chat: React.FC<{
 }> = ({ threads, connections, receivingParticipants, uid, refreshThreads }) => {
   const [selected, setSelected] = useState<number>(-1);
   const [messages, setMessages] = useState<MessageModel[]>([]);
+
+  const socket = io("http://localhost:4000", { query: { user_id: uid } });
+
+  useEffect(() => {
+    // Listen for the "new message" event
+    socket.on('receive-message', (message) => {
+      // Update the messages state with the new message
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    // Clean up the event listener on unmount
+    return () => {
+      socket.off('receive-message');
+    };
+  }, []);
 
   const selectThread = (event: any) => {
     const index = event.currentTarget.getAttribute("data-key");
