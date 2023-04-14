@@ -20,7 +20,6 @@ mongoose.connect(DB, connectionOptions).then(() => {
 
 // Start server
 const server = http.createServer(app);
-
 const port = process.env.DEV_SERVER_PORT || 4000;
 
 // Attach socket.io to server

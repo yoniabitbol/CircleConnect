@@ -17,9 +17,12 @@ const Chat: React.FC<{
   const [selected, setSelected] = useState<number>(-1);
   const [messages, setMessages] = useState<MessageModel[]>([]);
 
-  const socket = io("http://localhost:4000", { query: { user_id: uid } });
+  const socket = io("http://localhost:4000", { query: { userId: uid } });
 
   useEffect(() => {
+    socket.connect();
+    console.log(socket);
+
     // Listen for the "new message" event
     socket.on("receive-message", (message) => {
       // Update the messages state with the new message
@@ -29,6 +32,7 @@ const Chat: React.FC<{
     // Clean up the event listener on unmount
     return () => {
       socket.off("receive-message");
+      socket.disconnect();
     };
   }, []);
 

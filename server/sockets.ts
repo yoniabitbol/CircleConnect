@@ -1,6 +1,7 @@
 import { Server, Socket } from 'socket.io';
 import Thread from './models/threadModel';
 import { Logger } from './middleware/logger';
+import { createServer } from "http";
 
 const userSocketMap = new Map();
 const io = new Server();
@@ -38,5 +39,4 @@ io.on('connection', (socket: Socket) => {
     }
   });
 });
-
 export default io;

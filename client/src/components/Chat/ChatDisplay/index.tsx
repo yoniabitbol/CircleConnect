@@ -72,12 +72,12 @@ const ChatDisplay: React.FC<{
                     updatedAt: new Date().toISOString(),
                   };
                   setMessages([...messages, newMsg]);
-                  socket.emit("send-message", [
-                    newMsg.senderID,
-                    newMsg.threadID,
-                    newMsg.text,
-                    newMsg.file,
-                  ]);
+                  socket.emit("send-message", {
+                    senderID: newMsg.senderID,
+                    threadID: newMsg.threadID,
+                    text: newMsg.text,
+                    file: newMsg.file,
+                  });
                 }
               });
             }
