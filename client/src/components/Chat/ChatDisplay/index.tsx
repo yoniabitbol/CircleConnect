@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Message from "../Message";
 import { Field, Form, Formik } from "formik";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
@@ -22,6 +22,17 @@ const ChatDisplay: React.FC<{
   thread: ThreadModel;
   socket: Socket;
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
+
+  useEffect(() => {
+    socket.on("receive-message", (newMsg) => {
+      setMessages((prevMessages) => [...prevMessages, newMsg]);
+    });
+
+    return () => {
+      socket.off("receive-message");
+    };
+  }, [socket]);
+  
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
