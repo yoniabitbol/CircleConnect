@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useRef} from "react";
 import Message from "../Message";
 import { Field, Form, Formik } from "formik";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
@@ -23,17 +23,24 @@ const ChatDisplay: React.FC<{
   socket: Socket;
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
 
+  const lastMessageRef = useRef<HTMLDivElement>(null);
+
+
   useEffect(() => {
     socket.on("receive-message", (newMsg) => {
       setMessages((prevMessages) => [...prevMessages, newMsg]);
     });
 
+    // Scroll to the last message whenever the messages state changes
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+
     return () => {
       socket.off("receive-message");
       socket.disconnect();
-
     };
-  }, [socket]);
+  }, [socket, messages]);
 
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-white">
@@ -47,8 +54,8 @@ const ChatDisplay: React.FC<{
       </div>
       <hr className="border-gray-100 border" />
 
-      <div className="w-11/12 h-[20rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
-        {messages.map((message) => (
+      <div className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
+      {messages.map((message, index) => (
           <div
             key={message._id}
             className={
@@ -56,6 +63,8 @@ const ChatDisplay: React.FC<{
                 ? "ml-20 mt-2 justify-end flex"
                 : "mx-5 mt-2 justify-start flex" + " flex"
             }
+            // Set the ref to the last message element
+            ref={index === messages.length - 1 ? lastMessageRef : null}
           >
             <Message outbound={message.senderID == uid} text={message.text} />
           </div>
