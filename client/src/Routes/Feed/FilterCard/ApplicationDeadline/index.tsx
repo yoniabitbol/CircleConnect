@@ -11,6 +11,7 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import defaultJobPositions from "../../../../lib/Constants/defaultJobPositions";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 const ApplicationDeadline: FC<{
   onBeforeDeadlineSwitch: (event: any) => void;
@@ -24,12 +25,13 @@ const ApplicationDeadline: FC<{
     onCoverLetterOptionalSwitch,
     onJobPositionChange,
   } = props;
+  const {t} = useTranslation();
   return (
     <Accordion
       sx={{ backgroundColor: "#ffffff", overflowY: "scroll", boxShadow: 2 }}
     >
       <AccordionSummary expandIcon={<ExpandMore />}>
-        <h1 className="font-bold">Application</h1>
+        <h1 className="font-bold">{t('filterFeed.buttons.application')}</h1>
       </AccordionSummary>
       <AccordionDetails className="">
         <Autocomplete
@@ -40,7 +42,7 @@ const ApplicationDeadline: FC<{
           freeSolo={true}
           onChange={onJobPositionChange}
           renderInput={(params) => (
-            <TextField {...params} label="Job Postion" />
+            <TextField {...params} label={t('filterFeed.buttons.jobPosition')} />
           )}
         />
         <div className=" mt-2">
@@ -48,13 +50,13 @@ const ApplicationDeadline: FC<{
             onChange={onBeforeDeadlineSwitch}
             labelPlacement="start"
             control={<Switch color="primary" className="mr-4" />}
-            label={<Typography className="">Before Deadline</Typography>}
+            label={<Typography className="">{t('filterFeed.buttons.bfrDeadline')}</Typography>}
           />
           <Typography
             variant="h5"
             className="w-full text-center border-b-2 mt-4"
           >
-            Make Optional
+            {t('filterFeed.label.makeOptional')}
           </Typography>
           <div className="mt-3">
             <FormControlLabel
@@ -62,14 +64,14 @@ const ApplicationDeadline: FC<{
               labelPlacement="end"
               className="w-full"
               control={<Switch color="primary" />}
-              label={<Typography className="">Resume/CV</Typography>}
+              label={<Typography className="">{t('filterFeed.buttons.resume')}</Typography>}
             />
             <FormControlLabel
               onChange={onCoverLetterOptionalSwitch}
               labelPlacement="end"
               className="w-full"
               control={<Switch color="primary" />}
-              label={<Typography className="">Cover Letter</Typography>}
+              label={<Typography className="">{t('filterFeed.buttons.coverLetter')}</Typography>}
             />
           </div>
         </div>

@@ -8,6 +8,7 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 import React, { FC } from "react";
 import defaultTags from "../../../../lib/Constants/defaultTags";
+import { useTranslation } from "react-i18next";
 
 const TagDropdown: FC<{
   followedTags: string[];
@@ -25,6 +26,8 @@ const TagDropdown: FC<{
     onApplyAll,
     followedTags,
   } = props;
+
+  const {t} = useTranslation();
 
   const handleTagSelection = (value: string) => {
     onSelectTag(value);
@@ -60,12 +63,12 @@ const TagDropdown: FC<{
         sx={{ textAlign: "center" }}
         expandIcon={<ExpandMore />}
       >
-        <h1 className="font-bold">Tags</h1>
+        <h1 className="font-bold">{t('filterFeed.buttons.tags')}</h1>
       </AccordionSummary>
       <AccordionDetails sx={{ overflowY: "scroll", maxHeight: 400 }}>
         <input
           type="text"
-          placeholder="Insert tags"
+          placeholder={t('filterFeed.label.insertTags')||"Insert tags"}
           className="w-full h-10 outline-1 focus:outline-none p-3 rounded-md"
           onKeyDown={handleKeyDown}
         />
@@ -81,7 +84,7 @@ const TagDropdown: FC<{
               "&:hover": { backgroundColor: "rgba(77,71,195, .05)" },
             }}
           >
-            Remove all
+            {t('filterFeed.buttons.removeAll')}
           </Button>
         )}
         <div className="mt-4 overflow-scroll max-h-[7rem]">
@@ -104,7 +107,7 @@ const TagDropdown: FC<{
         </div>
         <div>
           <div className="flex items-center mt-3">
-            <h2 className="">Followed Tags</h2>
+            <h2 className="">{t('filterFeed.label.followeTags')}</h2>
             {!arrayEquals(selectedTags, followedTags) && (
               <Button
                   variant="text"
@@ -117,7 +120,7 @@ const TagDropdown: FC<{
                 }}
                 onClick={handleApplyAll}
               >
-                Apply All
+                {t('filterFeed.buttons.applyAll')}
               </Button>
             )}
           </div>
@@ -138,7 +141,7 @@ const TagDropdown: FC<{
           </div>
         </div>
         <div className="mt-2">
-          <h2>Other Tags</h2>
+          <h2>{t('filterFeed.label.otherTags')}</h2>
           <div className="max-h-[10rem] overflow-auto rouder-2xl">
             {defaultTags.map((tag, index) => {
               {
