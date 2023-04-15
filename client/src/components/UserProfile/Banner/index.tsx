@@ -141,11 +141,11 @@ const Banner: React.FC<{
         <div className="flex flex-col justify-center ml-5">
           <h1 className="text-2xl font-bold ">{banner.name}</h1>
           <h2 className="text-lg font-semibold">
-            {banner.title == 'undefined' ? "(No title)" : banner.title}
+            {banner.title == 'undefined' ? "" : banner.title}
           </h2>
           <h3 className="text-lg font-semibold">
             {banner.location == 'undefined'
-              ? "Location unavailable"
+              ? ""
               : banner.location}
           </h3>
         </div>
