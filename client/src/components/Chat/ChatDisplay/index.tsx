@@ -30,9 +30,11 @@ const ChatDisplay: React.FC<{
 
     return () => {
       socket.off("receive-message");
+      socket.disconnect();
+
     };
   }, [socket]);
-  
+
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
