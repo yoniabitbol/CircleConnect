@@ -3,8 +3,10 @@ import {MapsUgc} from '@mui/icons-material';
 import {useState, FC} from 'react';
 import {useFormik} from 'formik';
 import commentPost from '../../../../http/commentPost';
+import { useTranslation } from "react-i18next";
 
 const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
+    const {t} = useTranslation();
     const {userPic, comments, postId} = props;
     const [commentsList, setCommentsList] = useState<any>(comments);
     const formik = useFormik({
@@ -24,7 +26,7 @@ const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
                     <Avatar src={userPic}/>
                     <form className="w-full" onSubmit={formik.handleSubmit}>
                         <div className="flex items-center ml-3 w-full border-slate-100 border-2 rounded-2xl">
-                            <input name="comment" value={formik.values.comment} onChange={formik.handleChange} className="w-full p-3 outline-none " placeholder="Share your thoughts"/>
+                            <input name="comment" value={formik.values.comment} onChange={formik.handleChange} className="w-full p-3 outline-none " placeholder={t('common.label.shareThoughts')|| "Share your thoughts"}/>
                             <IconButton type="submit" disabled={formik.values.comment === ''}>
                                 <MapsUgc sx={{color: `${formik.values.comment !== '' ? '#4D47C3' : 'grey'}`}}/>
                             </IconButton>
