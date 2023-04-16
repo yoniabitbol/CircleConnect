@@ -27,6 +27,7 @@ import getUserProfilePic from '../../../http/getUserPicturePic';
 import likePost from "../../../http/likePost";
 import getPostImage from "../../../http/getPostImage";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import PostModal from './PostModal'
 
 function getCount(str: string) {
@@ -66,6 +67,7 @@ const FeedCard: React.FC<{
     fetchFeed,
       postStatus,
   } = props;
+  const {t} = useTranslation();
   const [readMore, setReadMore] = useState(false);
   const [numberLikes, setNumberLikes] = useState(numLikes);
   const [like, setLike] = useState(false);
@@ -206,7 +208,7 @@ const FeedCard: React.FC<{
               variant="h2"
               gutterBottom
             >
-              Looking for <span className="font-extrabold">{postInfo.position && postInfo.position}</span>
+                  {t('common.label.lookingFor')} <span className="font-extrabold">{postInfo.position && postInfo.position}</span>
             </Typography>
           </div>
         )}

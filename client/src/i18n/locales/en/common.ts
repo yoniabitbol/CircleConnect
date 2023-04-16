@@ -14,6 +14,8 @@ const common = {
             connectionLc:'Connections',
             search:'Search',
             message:'Message',
+            shareThoughts: 'Share your thoughts',
+            lookingFor: 'Looking for',
             
         },
         buttons: {

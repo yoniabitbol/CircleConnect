@@ -15,7 +15,8 @@ import loginAndRegistrationEn from './locales/en/loginAndRegistration';
 import loginAndRegistrationFr from './locales/fr/loginAndRegistration';
 import notificationsEn from './locales/en/notifications';
 import notificationsFr from './locales/fr/notifications';
-
+import filterFeedFr from './locales/fr/filterFeed';
+import filterFeedEn from './locales/en/filterFeed';
 
 const namespaceEnCommon = {
     ...commonEn,
@@ -25,6 +26,7 @@ const namespaceEnCommon = {
     ...editProfileEn,
     ...loginAndRegistrationEn,
     ...notificationsEn,
+    ...filterFeedEn,
 };
 
 const namespaceFrCommon = {
@@ -35,7 +37,7 @@ const namespaceFrCommon = {
     ...editProfileFr,
     ...loginAndRegistrationFr,
     ...notificationsFr,
-
+    ...filterFeedFr,
 };
 
 i18n.use(initReactI18next)
