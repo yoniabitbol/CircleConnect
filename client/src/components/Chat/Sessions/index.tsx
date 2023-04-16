@@ -82,7 +82,7 @@ const Sessions: React.FC<{
                 session={{
                   user: {
                     name: threadProfiles[index]?.name,
-                    picture: userProfilePic && userProfilePic[index]
+                    picture: userProfilePic ? userProfilePic[index] : "",
                   },
                   latestMsg: "",
                 }}
