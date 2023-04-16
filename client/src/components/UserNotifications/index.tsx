@@ -6,6 +6,7 @@ import ConnectionInvite from "./ConnectionInvite";
 import { useTranslation } from "react-i18next";
 import getUnreadNotification from "../../http/getUnreadNotifications";
 import { notificationType } from "../../Models/UserProfileModel";
+// import markNoficationsRead from "../../http/markNotificationsRead";
 
 const UserNotifications: React.FC = () => {
   const { t } = useTranslation();
@@ -60,6 +61,8 @@ const UserNotifications: React.FC = () => {
                     key={notification.initiatorID}
                   />
                 );
+              } else if (notification.type === "message") {
+                return "Message row"; // Change this to react component
               }
             })}
           </div>
