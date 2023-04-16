@@ -42,6 +42,9 @@ const Sessions: React.FC<{
     (conn) =>
       !threadProfiles.map((profile) => profile.user_id).includes(conn.user_id)
   );
+
+console.log(threadProfiles);
+  
   return (
     <div>
       <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto">
@@ -62,7 +65,7 @@ const Sessions: React.FC<{
                 selected={selected == index}
                 session={{
                   user: {
-                    name: threadProfiles[index].name,
+                    name: threadProfiles[index]?.name,
                     picture: "default-avatar.jpeg",
                   },
                   latestMsg: "",
