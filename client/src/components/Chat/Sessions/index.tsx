@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SessionItem from "../SessionItem";
 import ThreadModel from "../../../Models/ThreadModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
 import createNewThread from "../../../http/createNewThread";
 import { Avatar } from "@mui/material";
+import getUserProfilePic from "../../../http/getUserPicturePic";
 
 export type Thread = {
   id: number;
@@ -43,7 +44,22 @@ const Sessions: React.FC<{
       !threadProfiles.map((profile) => profile.user_id).includes(conn.user_id)
   );
 
-console.log(threadProfiles);
+  const [userProfilePic, setUserProfilePic] = useState<string[] | undefined>();
+
+
+    useEffect(() => {
+        async function fetchUserProfile() {
+          const profilePicUrls = await Promise.all(
+            connections.map(async (user: any) => {
+              const profilePicUrl = await getUserProfilePic(user.picture);
+    
+              return profilePicUrl;
+            })
+          );
+          setUserProfilePic(profilePicUrls);
+        }
+        fetchUserProfile();
+      }, [connections]);
   
   return (
     <div>
@@ -66,7 +82,7 @@ console.log(threadProfiles);
                 session={{
                   user: {
                     name: threadProfiles[index]?.name,
-                    picture: "default-avatar.jpeg",
+                    picture: userProfilePic && userProfilePic[index]
                   },
                   latestMsg: "",
                 }}
