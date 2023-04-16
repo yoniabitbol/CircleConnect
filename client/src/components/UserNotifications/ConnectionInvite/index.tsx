@@ -1,29 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
+import getUserProfile from "../../../http/getUserProfile";
+import { Usertypes } from "../../UserProfile";
+import getUserProfilePic from "../../../http/getUserPicturePic";
 
 const ConnectionInvite: React.FC<{
-  name: string;
-  job_title: string;
-  connections: number;
-  connection_message: string;
+  initiatorID: string;
 }> = (props) => {
-  const { name, job_title, connections, connection_message } = props;
-  const [userProfilePic] = React.useState<string>();
+  const { initiatorID } = props;
+  //const [userProfilePic] = useState<string>();
+  const [user, setUser] = useState<Usertypes>();
+  const [picture, setPicture] = useState<any>();
+
+  console.log(initiatorID);
+
+  useEffect(() => {
+    async function fetchUser(user_id: string) {
+      try {
+        if (user_id === null) return;
+        const user = await getUserProfile(user_id);
+        setUser(user.data.user); // get post from the response object
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchUser(initiatorID);
+  }, []);
+
+  useEffect(() => {
+    async function fetchUserProfilePic() {
+      try {
+        if (user?.picture == null) return;
+        const profilePicUrl = await getUserProfilePic(user?.picture);
+        setPicture(profilePicUrl);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchUserProfilePic();
+  }, []);
+
+  console.log(user);
+
   return (
-    <div className="w-full lg:w-10/12 m-4 p-3 rounded-md bg-white mx-auto h-auto">
-      <div className="flex flex-row justify-between">
-        <div className="flex flex-row space-x-8">
-          <div className="w-1/12 pt-2 pl-1">
+    <div className="w-full m-4 py-3 rounded-md bg-white h-auto">
+      <div className="flex flex-row justify-between px-3">
+        <div className="flex flex-row space-x-8 ">
+          <div className="pt-2">
             <Link to="/profile">
-              <Avatar src={userProfilePic} />
+              <Avatar sx={{ width: 50, height: 50 }} src={picture} />
             </Link>
           </div>
-          <div className="flex flex-col lg:pl-5 pl-3">
-            <h1 className="text-md font-bold pt-2">{name}</h1>
-            <h2 className="text-xs font-semibold">{job_title}</h2>
+          <div className="flex flex-col">
+            <h1 className="text-md font-bold">{user?.name}</h1>
+            <h2 className="text-xs font-semibold">{user?.title}</h2>
             <h3 className="text-xs" style={{ color: "#4B47B7" }}>
-              {connections} connections
+              {user?.connections.length} connections
             </h3>
           </div>
         </div>
@@ -31,7 +64,7 @@ const ConnectionInvite: React.FC<{
           <h1 className="text-4xl pr-2" style={{ color: "#4B47B7" }}>
             |
           </h1>
-          <h3 className="text-sm text-gray-400">{connection_message}</h3>
+          <h3 className="text-sm text-gray-400">{"Hey! Let's connect..."}</h3>
         </div>
         <div className="flex flex-row space-x-1 lg:space-x-4 mt-4">
           <button

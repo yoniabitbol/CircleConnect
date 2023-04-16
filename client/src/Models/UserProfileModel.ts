@@ -102,4 +102,9 @@ export interface notificationType {
   initiatorID: string;
   type: string;
   isRead: boolean;
+  initiator: {
+    name: string;
+    picture: string;
+    user_id: string;
+  };
 }

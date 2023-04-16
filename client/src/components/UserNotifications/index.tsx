@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Alert from "./Alert";
+// import Alert from "./Alert";
 import Dashboard from "./Dashboard";
 import NavSettings from "./NavSettings";
 import ConnectionInvite from "./ConnectionInvite";
 import { useTranslation } from "react-i18next";
 import getUnreadNotification from "../../http/getUnreadNotifications";
-// import { notificationType } from "../../Models/UserProfileModel";
+import { notificationType } from "../../Models/UserProfileModel";
 
 const UserNotifications: React.FC = () => {
   const { t } = useTranslation();
 
-  const [unreadNotifications, setUnreadNotifications] = useState([]);
+  const [unreadNotifications, setUnreadNotifications] =
+    useState<notificationType[]>();
 
   useEffect(() => {
     async function fetchUnreadNotifications() {
@@ -49,28 +50,18 @@ const UserNotifications: React.FC = () => {
             <div className="">{t("notifications.label.recent")}</div>
             <hr className="w-1/3 h-px mx-auto my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
           </div>
+
           <div className="row-span-2 col-span-2">
-            <Alert
-              type="Alert"
-              description="Samuel Jackson accepted your connection request"
-              time={3}
-            />
-            <ConnectionInvite
-              name="Brandon Wilson"
-              job_title="Senior UX Designer"
-              connections={623}
-              connection_message="Hey, I saw your works. I like it! Can we do something together? Or maybe you have project for UX at the moment?"
-            />
-            <Alert
-              type="Alert"
-              description="Audrey Alexander and 10 others viewed your profile"
-              time={9}
-            />
-            <Alert
-              type="Alert"
-              description="We found jobs that you may be interested"
-              time={15}
-            />
+            {unreadNotifications?.map((notification) => {
+              if (notification.type === "connection") {
+                return (
+                  <ConnectionInvite
+                    initiatorID={notification.initiatorID}
+                    key={notification.initiatorID}
+                  />
+                );
+              }
+            })}
           </div>
         </div>
       </div>
