@@ -162,7 +162,7 @@ const Banner: React.FC<{
                 }
                 sendConnectionRequest(profileId);
                 setConnectionState("sent");
-                sendNotification("Hello", "connection"); // send notification of new connection request
+                sendNotification(profileId, "connection"); // send notification of new connection request
               }}
             >
               Connect
