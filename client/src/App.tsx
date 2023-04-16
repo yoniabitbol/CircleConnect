@@ -42,7 +42,7 @@ function App() {
             <Route
               path="/"
               element={
-                user ? <Navigate to="/myprofile" /> : <Navigate to="/login" />
+                user ? <Navigate to="/feed" /> : <Navigate to="/login" />
               }
             />
             <Route path="/*" element={<ScreenContent />}>

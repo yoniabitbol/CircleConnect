@@ -62,6 +62,9 @@ useEffect(() => {
   }
   fetchUserProfilePics();
 }, [connections]);
+
+console.log(threads);
+
   
   return (
     <div>
@@ -73,6 +76,7 @@ useEffect(() => {
         {threads.map((thread, index) => {
       const threadProfile = threadProfiles[index];
       const userProfilePic = userProfilePics[threadProfile?.user_id || ""];
+      if (!threadProfile) return null;
       return (
         <button
           className="w-full h-full"
@@ -85,8 +89,8 @@ useEffect(() => {
             selected={selected == index}
             session={{
               user: {
-                name: threadProfile?.name || "",
-                picture: userProfilePic ? userProfilePic : "",
+                name: threadProfile?.name || 'USER DELETED',
+                picture: userProfilePic ? userProfilePic : "default-user.jpg",
               },
               latestMsg: "",
             }}
