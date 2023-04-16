@@ -44,22 +44,24 @@ const Sessions: React.FC<{
       !threadProfiles.map((profile) => profile.user_id).includes(conn.user_id)
   );
 
-  const [userProfilePic, setUserProfilePic] = useState<string[] | undefined>();
+  const [userProfilePics, setUserProfilePics] = useState<{ [key: string]: string }>({});
 
-
-    useEffect(() => {
-        async function fetchUserProfile() {
-          const profilePicUrls = await Promise.all(
-            connections.map(async (user: any) => {
-              const profilePicUrl = await getUserProfilePic(user.picture);
-    
-              return profilePicUrl;
-            })
-          );
-          setUserProfilePic(profilePicUrls);
-        }
-        fetchUserProfile();
-      }, [connections]);
+useEffect(() => {
+  async function fetchUserProfilePics() {
+    const profilePicUrls = await Promise.all(
+      connections.map(async (user: any) => {
+        const profilePicUrl = await getUserProfilePic(user.picture);
+        return { userId: user.user_id, profilePicUrl };
+      })
+    );
+    const profilePicMap = profilePicUrls.reduce((map: { [key: string]: string }, obj: { userId: string, profilePicUrl: string }) => {
+      map[obj.userId] = obj.profilePicUrl;
+      return map;
+    }, {});
+    setUserProfilePics(profilePicMap);
+  }
+  fetchUserProfilePics();
+}, [connections]);
   
   return (
     <div>
@@ -69,27 +71,29 @@ const Sessions: React.FC<{
         </div>
         <hr className="border-gray-100 border" />
         {threads.map((thread, index) => {
-          return (
-            <button
-              className="w-full h-full"
-              key={thread._id}
-              data-key={index}
-              type="submit"
-              onClick={(event) => selectThread(event)}
-            >
-              <SessionItem
-                selected={selected == index}
-                session={{
-                  user: {
-                    name: threadProfiles[index]?.name,
-                    picture: userProfilePic ? userProfilePic[index] : "",
-                  },
-                  latestMsg: "",
-                }}
-              />
-            </button>
-          );
-        })}
+      const threadProfile = threadProfiles[index];
+      const userProfilePic = userProfilePics[threadProfile.user_id ?? ""];
+      return (
+        <button
+          className="w-full h-full"
+          key={thread._id}
+          data-key={index}
+          type="submit"
+          onClick={(event) => selectThread(event)}
+        >
+          <SessionItem
+            selected={selected == index}
+            session={{
+              user: {
+                name: threadProfile.name,
+                picture: userProfilePic ? userProfilePic : "",
+              },
+              latestMsg: "",
+            }}
+          />
+        </button>
+      );
+    })}
       </div>
 
       <div className="mt-10 pb-5 rounded-md bg-white">
