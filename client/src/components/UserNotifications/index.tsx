@@ -5,13 +5,12 @@ import NavSettings from "./NavSettings";
 import ConnectionInvite from "./ConnectionInvite";
 import { useTranslation } from "react-i18next";
 import getUnreadNotification from "../../http/getUnreadNotifications";
-import { notificationType } from "../../Models/UserProfileModel";
+// import { notificationType } from "../../Models/UserProfileModel";
 
 const UserNotifications: React.FC = () => {
   const { t } = useTranslation();
 
-  const [unreadNotifications, setUnreadNotifications] =
-    useState<notificationType[]>();
+  const [unreadNotifications, setUnreadNotifications] = useState([]);
 
   useEffect(() => {
     async function fetchUnreadNotifications() {

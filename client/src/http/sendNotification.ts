@@ -25,6 +25,8 @@ async function sendNotification(target_user_id: string, type: string) {
 
   if (!res.ok) {
     throw new Error("Failed to send notification.");
+  } else {
+    console.log("Notification sent!");
   }
 
   return res.json();

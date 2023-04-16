@@ -22,7 +22,6 @@ const getUnreadNotifications = async (req: Request, res: Response) => {
 };
 
 const sendNotification = async (req: Request, res: Response) => {
-	console.log(req.body);
 	try {
 		if (
 			req.body.type !== 'message' &&
@@ -34,7 +33,6 @@ const sendNotification = async (req: Request, res: Response) => {
 				message: 'Invalid notification type',
 			});
 		}
-
 		const notification = await Notification.create({
 			user_id: req.params.user_id,
 			type: req.body.type,
