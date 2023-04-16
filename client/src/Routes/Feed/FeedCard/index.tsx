@@ -17,7 +17,8 @@ import {
   ThumbUpAlt,
   ChatBubble,
   Error,
-} from "@mui/icons-material";
+  Edit
+} from '@mui/icons-material';
 import ApplyDropUp from "../../../components/ApplyDropUp";
 import React, { useEffect, useState } from "react";
 import Comments from "./Comments";
@@ -27,6 +28,7 @@ import likePost from "../../../http/likePost";
 import getPostImage from "../../../http/getPostImage";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import PostModal from './PostModal'
 
 function getCount(str: string) {
   return str.split(" ").filter(function (num: string) {
@@ -49,6 +51,9 @@ const FeedCard: React.FC<{
   userPic: string;
   postSettings: any;
   scrollTo: () => void;
+  editable?: boolean;
+  fetchFeed?: any;
+  postStatus?: any;
 }> = (props) => {
   const {
     userInfo,
@@ -58,6 +63,9 @@ const FeedCard: React.FC<{
     userPic,
     postSettings,
     scrollTo,
+    editable,
+    fetchFeed,
+      postStatus,
   } = props;
   const {t} = useTranslation();
   const [readMore, setReadMore] = useState(false);
@@ -66,6 +74,7 @@ const FeedCard: React.FC<{
   const [showComments, setShowComments] = useState(false);
   const [userProfilePic, setUserProfilePic] = useState<string>("");
   const [postImage, setPostImage] = useState<string | null>(null);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   useEffect(() => {
     getUserProfilePic(userInfo.picture).then(res => {
         if(res)
@@ -75,6 +84,7 @@ const FeedCard: React.FC<{
     })
     setUserProfilePic("");
   }, []);
+
 
   const isIndeedLink = postSettings.isThirdParty
     ? postSettings.thirdPartyLink.includes("ca.indeed.com")
@@ -161,6 +171,10 @@ const FeedCard: React.FC<{
     }
   };
 
+  const handleModalClose = () => {
+    setOpenModal(false);
+  }
+
   const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip placement="top" {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
@@ -173,11 +187,21 @@ const FeedCard: React.FC<{
     },
   }));
 
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  }
+
   return (
-    <Card id={postInfo.id} sx={{ marginTop: 2, borderRadius: 5, padding: 0 }}>
+      <>
+    <Card id={postInfo.id} sx={{ marginTop: 2, borderRadius: 5, padding: 0, position: 'relative' }}>
       <CardContent sx={{ padding: 0 }}>
-        {postInfo.position && (
-          <div className="pl-3 pt-2 flex items-center border-gray-100 border-b-2">
+        {editable && <div className='absolute right-0'>
+          <IconButton onClick={handleOpenModal}>
+            <Edit/>
+          </IconButton>
+        </div>}
+        {postSettings.isJobListing && postInfo.position && (
+          <div className="ml-3 p-1.5 flex items-center border-gray-100 border-b-2">
             <Typography
               sx={{ fontSize: 14, width: "100%" }}
               color="text.secondary"
@@ -186,9 +210,6 @@ const FeedCard: React.FC<{
             >
                   {t('common.label.lookingFor')} <span className="font-extrabold">{postInfo.position && postInfo.position}</span>
             </Typography>
-            {/*<div className='relative right-0'>*/}
-            {/*    <MoreHoriz/>*/}
-            {/*</div>*/}
           </div>
         )}
         <div>
@@ -332,6 +353,8 @@ const FeedCard: React.FC<{
         />
       </div>
     </Card>
+        <PostModal image={postImage} postStatus={postStatus} fetchFeed={fetchFeed} open={openModal} postInfo={postInfo} postSettings={postSettings} userInfo={userInfo} profilePic={userProfilePic} date={howLongAgo(postInfo.date)} onModalClose={handleModalClose} editable={editable}/>
+        </>
   );
 };
 

@@ -12,6 +12,9 @@ router.route('/')
     resizeFile,
     postController.createPost,
   );
+// Routes based on user id
+router.route('/user/:user_id')
+  .get(postController.getUserPosts);
 
 // Routes based on post id
 router.route('/:post_id')
