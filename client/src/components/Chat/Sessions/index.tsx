@@ -72,7 +72,7 @@ useEffect(() => {
         <hr className="border-gray-100 border" />
         {threads.map((thread, index) => {
       const threadProfile = threadProfiles[index];
-      const userProfilePic = userProfilePics[threadProfile.user_id ?? ""];
+      const userProfilePic = userProfilePics[threadProfile?.user_id || ""];
       return (
         <button
           className="w-full h-full"
@@ -85,7 +85,7 @@ useEffect(() => {
             selected={selected == index}
             session={{
               user: {
-                name: threadProfile.name,
+                name: threadProfile?.name || "",
                 picture: userProfilePic ? userProfilePic : "",
               },
               latestMsg: "",
