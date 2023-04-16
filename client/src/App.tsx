@@ -3,6 +3,7 @@ import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
 import MyProfile from "./Routes/MyProfile";
 import Profile from "./Routes/Profile";
+import ChatPage from "./Routes/Chat";
 import Notifications from "./Routes/Notifications";
 import useAuthContext from "./hooks/useAuthContext";
 import AuthHeader from "./components/AuthHeader";
@@ -41,13 +42,17 @@ function App() {
             <Route
               path="/"
               element={
-                user ? <Navigate to="/myprofile" /> : <Navigate to="/login" />
+                user ? <Navigate to="/feed" /> : <Navigate to="/login" />
               }
             />
             <Route path="/*" element={<ScreenContent />}>
               <Route
                 path="profile/:id"
                 element={user ? <Profile /> : <Navigate to="/" />}
+              />
+              <Route
+                path="chat"
+                element={user ? <ChatPage /> : <Navigate to="/" />}
               />
               <Route
                 path="myprofile"
