@@ -1,0 +1,18 @@
+.modal {
+    filter: drop-shadow(2px 2px 50px rgba(75, 71, 182, 0.5));
+    width: 766px;
+    height: fit-content;
+}
+
+@media (max-width: 768px) {
+    .modal {
+        width: 100%;
+
+    }
+}
+
+@media (max-width:640px) {
+    .modal {
+        height: 100%;
+    }
+}
