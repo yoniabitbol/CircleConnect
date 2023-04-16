@@ -40,6 +40,26 @@ const getPost = async (req: Request, res: Response) => {
   }
 };
 
+// Get all posts by a user
+const getUserPosts = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({ user_id: req.params.user_id });
+    let posts = await Post.find({ creatorID: user?.user_id }).populate('creator', 'name picture title');
+    posts = posts.sort((a: any, b: any) => b.updatedAt - a.updatedAt);
+    res.status(200).json({
+      status: 'success',
+      data: {
+        posts,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `ERROR ${err}`,
+      message: 'Error getting user posts',
+    });
+  }
+};
+
 // Creates a post document
 const createPost = async (req: any, res: Response) => {
   try {
@@ -94,13 +114,14 @@ const updatePost = async (req: any, res: Response) => {
     const update = {
       creatorID: req.body.creatorID,
       isJobListing: req.body.isJobListing,
-      position: req.body.jobTitle,
+      position: req.body.position,
       text: req.body.text,
       image: req.files && req.files.image ? req.files.image[0].filename : req.body.image,
       preferenceTags: req.body.preferenceTags,
       uploadDeadline: req.body.uploadDeadline,
       isThirdParty: req.body.isThirdParty,
-      requiredDocuments: req.body.requiredDocuments,
+      isResumeRequired: req.body.isResumeRequired,
+      isCoverLetterRequired: req.body.isCoverLetterRequired,
     };
     const post = await Post.findOne({ _id: req.params.post_id });
     const user = await User.findOne({ user_id: req.body.creatorID });
@@ -144,8 +165,8 @@ const updatePost = async (req: any, res: Response) => {
 const deletePost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findOne({ _id: req.params.post_id });
-    const user = await User.findOne({ user_id: req.body.creatorID });
-    if (post?.creatorID === req.body.creatorID) {
+    const user = await User.findOne({ user_id: req.body.uid });
+    if (post?.creatorID === req.body.uid) {
       await post?.deleteOne();
       await user?.updateOne({ $pull: { posts: req.params.post_id } });
       return res.status(200).json({
@@ -227,7 +248,7 @@ const getSocialFeed = async (req: Request, res: Response) => {
     const connectionsPosts = await Promise.all(
       currentUser?.connections.map((connectionID: string) => Post.find({ creatorID: connectionID, isJobListing: false }).populate('creator', 'name picture title')),
     );
-    const feedArray = currentUserPosts.concat(...connectionsPosts).sort((a: any, b: any) => b.createdAt - a.createdAt);
+    const feedArray = currentUserPosts.concat(...connectionsPosts).sort((a: any, b: any) => b.updatedAt - a.updatedAt);
     const feed = feedArray.filter((post: any, index:number) => feedArray.findIndex((p: any) => p._id.toString() === post._id.toString()) === index);
     return res.status(200).json({
       status: 'success',
@@ -249,7 +270,7 @@ const getJobFeed = async (req: Request, res: Response) => {
     const recruiterPosts = await Promise.all(
       currentUser?.preferenceTags.map((preferenceTag: string) => Post.find({ preferenceTags: { $in: [preferenceTag] }, isJobListing: true }).populate('creator', 'name picture title')),
     );
-    const feedArray = currentUserPosts.concat(...recruiterPosts).sort((a: any, b: any) => b.createdAt - a.createdAt);
+    const feedArray = currentUserPosts.concat(...recruiterPosts).sort((a: any, b: any) => b.updatedAt - a.updatedAt);
     const feed = feedArray.filter((post: any, index: number) => feedArray.findIndex((p: any) => p._id.toString() === post._id.toString()) === index);
     return res.status(200).json({
       status: 'success',
@@ -266,6 +287,7 @@ const getJobFeed = async (req: Request, res: Response) => {
 export default {
   getAllPosts,
   getPost,
+  getUserPosts,
   createPost,
   updatePost,
   deletePost,
