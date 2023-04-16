@@ -29,6 +29,8 @@ const Sessions: React.FC<{
   connections,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [userProfilePics, setUserProfilePics] = useState<{ [key: string]: string }>({});
+  
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -43,8 +45,6 @@ const Sessions: React.FC<{
     (conn) =>
       !threadProfiles.map((profile) => profile.user_id).includes(conn.user_id)
   );
-
-  const [userProfilePics, setUserProfilePics] = useState<{ [key: string]: string }>({});
 
 useEffect(() => {
   async function fetchUserProfilePics() {

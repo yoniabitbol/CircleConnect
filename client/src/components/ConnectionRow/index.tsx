@@ -3,6 +3,7 @@ import { ConnectionType } from "../../Routes/Network";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import getUserProfilePic from '../../http/getUserPicturePic';
+import createNewThread from '../../http/createNewThread';
 
 const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
   const [picture, setPicture] = useState<any>();
@@ -43,6 +44,11 @@ const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
             type="submit"
             className="block lg:mt-4 w-auto px-5 py-2 rounded-md bg-signup-button
                text-white hover:bg-signup-button-hover"
+               onClick={() => {
+                createNewThread(props.user_id ?? "").then(() => {
+                  window.location.href = `/chat`;
+                });
+              }}
           >
             {t('common.label.message')}
           </button>
