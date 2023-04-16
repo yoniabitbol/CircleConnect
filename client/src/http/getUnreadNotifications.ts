@@ -6,7 +6,7 @@ async function getUnreadNotification () {
     const currentUser = auth.currentUser;
     const token = currentUser && (await currentUser.getIdToken());
     const currentUserId = currentUser && currentUser.uid;
-    const url = `http://${host}:${port}/api/notifications/${currentUserId}`;
+    const url = `http://${host}:${port}/api/notifications/${currentUserId}/unread`;
 
     const res = await fetch(url, {
         method: "GET",
