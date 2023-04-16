@@ -9,7 +9,6 @@ const ConnectionInvite: React.FC<{
   initiatorID: string;
 }> = (props) => {
   const { initiatorID } = props;
-  //const [userProfilePic] = useState<string>();
   const [user, setUser] = useState<Usertypes>();
   const [picture, setPicture] = useState<any>();
 
