@@ -113,7 +113,7 @@ const Banner: React.FC<{
             <Field name="website" className="w-full rounded-sm" type="text" />
           </div>
 
-          <div>
+          <div className="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold py-2 px-4 rounded">
             <button
               type="submit"
               className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
@@ -147,8 +147,14 @@ const Banner: React.FC<{
           </div>
           <div className="flex flex-col justify-center ml-5">
             <h1 className="text-2xl font-bold ">{banner.name}</h1>
-            <h2 className="text-lg font-semibold">{banner.title}</h2>
-            <h3 className="text-lg font-semibold">{banner.location}</h3>
+            <h2 className="text-lg font-semibold">
+              {banner.title === "undefined" ? "Add a title!" : banner.title}
+            </h2>
+            <h3 className="text-lg font-semibold">
+              {banner.location === "undefined"
+                ? "Add your location (optional)"
+                : banner.location}
+            </h3>
           </div>
           <div className="flex flex-col justify-center mt-5 ml-5">
             <h1 className="text-lg font-semibold ">

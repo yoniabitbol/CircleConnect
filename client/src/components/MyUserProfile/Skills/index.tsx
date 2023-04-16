@@ -38,7 +38,7 @@ const Skills: React.FC<{
           setAddOrDelete(!addOrDelete);
         }}
       >
-        {t('userProfile.label.delete')}
+        {t('userProfile.buttons.delete')}
       </button>
     );
   };
