@@ -20,7 +20,7 @@ const SearchResultsBox = (props:object, option: UsersInSearchModel) => {
                   {option.name}
                 </div>
                 <div className="ml-2 font-light text-sm">
-                  {option.position}
+                  {option.position == 'undefined' ? '' : option.position}
                 </div>
               </div>
             </div>
