@@ -9,6 +9,7 @@ router.route('/:user_id')
   .post(notificationController.sendNotification)
   .patch(notificationController.markNotificationAsRead);
 
+// Unread notification API route (May be removed)
 router.route('/:user_id/unread')
   .get(notificationController.getUnreadNotifications);
 
