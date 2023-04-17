@@ -94,7 +94,6 @@ const PostModal: FC<{
 
         }
     })
-    console.log(postSettings)
     const style = {
         position: 'absolute',
         top: '50%',
