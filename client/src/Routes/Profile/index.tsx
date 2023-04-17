@@ -20,10 +20,11 @@ const Profile: React.FC<Props> = ({ id }) => {
     email: "",
     phone: "",
     website: "",
-    connections: [""],
+    connections: [],
     picture: "",
     backdrop: "",
     summary: "",
+    preferenceTags: [""],
     projects: [
       {
         title: "",
@@ -69,6 +70,8 @@ const Profile: React.FC<Props> = ({ id }) => {
         description: "",
       },
     ],
+    applications: [],
+    posts: [],
   });
 
   useEffect(() => {

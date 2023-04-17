@@ -12,10 +12,11 @@ const MyProfile: React.FC = () => {
     email: "",
     phone: "",
     website: "",
-    connections: [""],
+    connections: [],
     picture: "",
     backdrop: "",
     summary: "",
+    preferenceTags: [""],
     projects: [
       {
         title: "",
@@ -61,6 +62,8 @@ const MyProfile: React.FC = () => {
         description: "",
       },
     ],
+    applications: [],
+    posts: [],
   });
 
   const [fetchedUser, setFetchedUser] = useState(false);
@@ -68,6 +71,9 @@ const MyProfile: React.FC = () => {
     if (fetchedUser) return;
     getCurrentUserProfile().then((res) => {
       // This bug should eventually be fixed
+      if (res.data.user.preferenceTags[0] === "") {
+        res.data.user.preferenceTags = [];
+      }
       if (res.data.user.projects[0] === "") {
         res.data.user.projects = [];
       }

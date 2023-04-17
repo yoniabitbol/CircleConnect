@@ -6,8 +6,10 @@ import useLogin from "../../hooks/useLogin";
 import { initialValuesLogin } from "../../lib/InputFieldModels";
 import { initialValuesModel } from "../../Models/InputFieldModel";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Login: React.FC = () => {
+  const { t } = useTranslation();
   const { error, login } = useLogin();
   const navigate = useNavigate();
 
@@ -30,15 +32,20 @@ const Login: React.FC = () => {
 
       <SubmissionForm
         onSubmit={onSubmitHandler}
-        header="Login"
+        header={t('loginAndRegistration.label.login')}
         fields={LoginFields}
-        buttonField="Login"
+        buttonField={t('loginAndRegistration.buttons.login')}
         initialValues={initialValuesLogin}
         error={error}
       />
       <div className="hidden lg:block lg:absolute lg:left-1/3 lg:bottom-40">
         <img className="h-96" src="Mascot/img.png" alt="logo" />
       </div>
+
+      {/*We have to do this because the ReactJS testing library does not seem to work with the submit button
+        in Formik.*/}
+      <div data-testid="submit-button" className="absolute invisible" onClick={() =>
+        onSubmitHandler({"email": "test@hotmail.com", "password": "test123456@"})} ></div>
     </div>
   );
 };

@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import getUserBackdrop from "../../../http/getUserBackdrop";
 import getUserProfilePic from "../../../http/getUserPicturePic";
 import { auth } from "../../../firebase/config";
@@ -48,9 +47,9 @@ const Banner: React.FC<{
     async function fetchUserProfile() {
       try {
         // if (banner.backdrop === "" || banner.picture === "") return;
-        const backdropUrl = await getUserBackdrop("default-backdrop.jpg");
-        const profilePicUrl = await getUserProfilePic("default-user.jpg");
-
+        const backdropUrl = await getUserBackdrop(banner.backdrop);
+        const profilePicUrl = await getUserProfilePic(banner.picture);
+        
         setBackdropUrl(backdropUrl);
         setProfilePicUrl(profilePicUrl);
       } catch (error) {
@@ -141,13 +140,19 @@ const Banner: React.FC<{
 
         <div className="flex flex-col justify-center ml-5">
           <h1 className="text-2xl font-bold ">{banner.name}</h1>
-          <h2 className="text-lg font-semibold">{banner.title}</h2>
-          <h3 className="text-lg font-semibold">{banner.location}</h3>
+          <h2 className="text-lg font-semibold">
+            {banner.title == 'undefined' ? "" : banner.title}
+          </h2>
+          <h3 className="text-lg font-semibold">
+            {banner.location == 'undefined'
+              ? ""
+              : banner.location}
+          </h3>
         </div>
 
         <div className="flex flex-col justify-center mt-5 ml-5">
           <h1 className="text-lg font-semibold ">
-            {banner.connections.length} Connections
+            {banner.connections ? banner.connections.length : 0} Connections
           </h1>
         </div>
 

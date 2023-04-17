@@ -6,7 +6,6 @@
 .tooltip {
     color: #4D47C3;
     background-color: white;
-    display:none;
 }
 @media (max-width: 768px) {
     .modal {
@@ -15,6 +14,11 @@
     }
     .tooltip {
         display: none;
+    }
+}
+@media (max-width:640px) {
+    .modal {
+        height: 100%;
     }
 }
 /*.sendButton:hover {*/
