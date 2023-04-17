@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-// import Alert from "./Alert";
 import Dashboard from "./Dashboard";
 import NavSettings from "./NavSettings";
 import ConnectionInvite from "./ConnectionInvite";
 import { useTranslation } from "react-i18next";
-import getUnreadNotification from "../../http/getUnreadNotifications";
 import { notificationType } from "../../Models/UserProfileModel";
-// import markNoficationsRead from "../../http/markNotificationsRead";
+import getUserNotifications from "../../http/getUserNotifications";
+import ConnectionInviteRead from "./ConnectionInviteRead";
+import markNoficationsRead from "../../http/markNotificationsRead";
+import getUnreadNotification from "../../http/getUnreadNotifications";
 
 const UserNotifications: React.FC = () => {
   const { t } = useTranslation();
 
   const [unreadNotifications, setUnreadNotifications] =
+    useState<notificationType[]>();
+
+  const [userNotifications, setUserNotifications] =
     useState<notificationType[]>();
 
   const [viewAll, setViewAll] = useState(false);
@@ -20,7 +24,6 @@ const UserNotifications: React.FC = () => {
     async function fetchUnreadNotifications() {
       try {
         const unreadNotifications = await getUnreadNotification();
-        console.log(unreadNotifications);
         setUnreadNotifications(unreadNotifications.data.notifications); // get post from the response object
       } catch (error) {
         console.log(error);
@@ -29,7 +32,20 @@ const UserNotifications: React.FC = () => {
     fetchUnreadNotifications();
   }, []);
 
-  console.log("Unread Notifications Type: " + unreadNotifications);
+  useEffect(() => {
+    async function fetchUserNotifications() {
+      try {
+        const userNotifications = await getUserNotifications();
+        setUserNotifications(userNotifications.data.notifications); // get post from the response object
+        console.log(userNotifications.data.notifications);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchUserNotifications();
+  }, []);
+
+  console.log("THIS: ", userNotifications);
 
   return (
     <body
@@ -60,8 +76,11 @@ const UserNotifications: React.FC = () => {
                 You have no recent notifications...
               </div>
             ) : (
-              unreadNotifications?.map((notification) => {
-                if (notification.type === "connection") {
+              userNotifications?.map((notification) => {
+                if (
+                  notification.isRead == false &&
+                  notification.type === "connection"
+                ) {
                   return (
                     <ConnectionInvite
                       initiatorID={notification.initiatorID}
@@ -76,6 +95,19 @@ const UserNotifications: React.FC = () => {
           </div>
 
           <div>
+            {unreadNotifications?.length == 0 ? null : (
+              <button
+                type="submit"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm ml-9 w-32 h-8"
+                onClick={(e) => {
+                  e.preventDefault();
+                  markNoficationsRead();
+                  window.location.reload();
+                }}
+              >
+                MARK AS READ
+              </button>
+            )}
             {!viewAll ? (
               <button
                 type="submit"
@@ -89,7 +121,19 @@ const UserNotifications: React.FC = () => {
               </button>
             ) : (
               <div>
-                <div>Old notifications</div>
+                {userNotifications?.map((notification) => {
+                  if (
+                    notification.isRead == true &&
+                    notification.type == "connection"
+                  ) {
+                    return (
+                      <ConnectionInviteRead
+                        initiatorID={notification.initiatorID}
+                        key={notification.initiatorID}
+                      />
+                    );
+                  }
+                })}
                 <button
                   type="submit"
                   className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm mx-9 my-4 w-24 h-8"
