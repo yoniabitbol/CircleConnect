@@ -8,7 +8,7 @@ import getThreadMessages from "../../http/getThreadMessages";
 import io from "socket.io-client";
 
 const port = process.env.REACT_APP_PORT || 4000;
-const host = process.env.REACT_APP_HOST || "http://localhost";
+const host = process.env.REACT_APP_HOST || "localhost";
 
 const Chat: React.FC<{
   threads: ThreadModel[];
