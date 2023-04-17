@@ -1,5 +1,4 @@
 import { auth } from "../firebase/config";
-
 const host = process.env.REACT_APP_HOST || 'localhost';
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 
