@@ -63,9 +63,6 @@ useEffect(() => {
   fetchUserProfilePics();
 }, [connections]);
 
-console.log(threads);
-
-  
   return (
     <div>
       <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto">
