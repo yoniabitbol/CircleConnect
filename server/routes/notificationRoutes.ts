@@ -7,7 +7,7 @@ const router = express.Router();
 router.route('/:user_id')
   .get(notificationController.getUserNotifications)
   .post(notificationController.sendNotification)
-  .patch(notificationController.markNotificationAsRead);
+  .patch(notificationController.markAllNotifsRead);
 
 // Unread notification API route (May be removed)
 router.route('/:user_id/unread')

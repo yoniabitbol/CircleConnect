@@ -75,7 +75,7 @@ const sendNotification = async (req: Request, res: Response) => {
 };
 
 // Marks all of a user's notifications as read
-const markNotificationAsRead = async (req: Request, res: Response) => {
+const markAllNotifsRead = async (req: Request, res: Response) => {
   try {
     const notification = await Notification.updateMany(
       { user_id: req.params.user_id },
@@ -99,5 +99,5 @@ export default {
   getUserNotifications,
   getUnreadNotifications,
   sendNotification,
-  markNotificationAsRead,
+  markAllNotifsRead,
 };
