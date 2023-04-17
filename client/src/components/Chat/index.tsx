@@ -7,6 +7,9 @@ import MessageModel from "../../Models/MessageModel";
 import getThreadMessages from "../../http/getThreadMessages";
 import io from "socket.io-client";
 
+const port = process.env.REACT_APP_PORT || 4000;
+const host = process.env.REACT_APP_HOST || "localhost";
+
 const Chat: React.FC<{
   threads: ThreadModel[];
   connections: UserProfileModel[];
@@ -16,11 +19,11 @@ const Chat: React.FC<{
 }> = ({ threads, connections, receivingParticipants, uid, refreshThreads }) => {
   const [selected, setSelected] = useState<number>(-1);
   const [messages, setMessages] = useState<MessageModel[]>([]);
-
-  const socket = io("http://localhost:4000", { query: { userId: uid } });
+  
+  const socket = io(`http://${host}:${port}`, { query: { userId: uid } });
 
   const selectThread = (event: any) => {
-    const index = event.currentTarget.getAttribute("data-key");
+    const index = event.currentTarget.getAttribute("data -key");
     setSelected(index);
 
     getThreadMessages(threads[index]?._id || '').then((res) => {
