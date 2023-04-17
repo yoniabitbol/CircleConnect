@@ -14,6 +14,8 @@ const UserNotifications: React.FC = () => {
   const [unreadNotifications, setUnreadNotifications] =
     useState<notificationType[]>();
 
+  const [viewAll, setViewAll] = useState(false);
+
   useEffect(() => {
     async function fetchUnreadNotifications() {
       try {
@@ -47,24 +49,59 @@ const UserNotifications: React.FC = () => {
         </div>
         <div className="flex flex-col">
           <div className="flex flex-row">
-            <hr className="w-1/3 h-px mx-auto my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
-            <div className="">{t("notifications.label.recent")}</div>
-            <hr className="w-1/3 h-px mx-auto my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
+            <hr className="w-1/3 h-px mx-4 my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
+            <div className="mx-4">{t("notifications.label.recent")}</div>
+            <hr className="w-1/3 h-px mx-4 my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
           </div>
 
           <div className="row-span-2 col-span-2">
-            {unreadNotifications?.map((notification) => {
-              if (notification.type === "connection") {
-                return (
-                  <ConnectionInvite
-                    initiatorID={notification.initiatorID}
-                    key={notification.initiatorID}
-                  />
-                );
-              } else if (notification.type === "message") {
-                return "Message row"; // Change this to react component
-              }
-            })}
+            {unreadNotifications?.length == 0 ? (
+              <div className="mx-9 my-4">
+                You have no recent notifications...
+              </div>
+            ) : (
+              unreadNotifications?.map((notification) => {
+                if (notification.type === "connection") {
+                  return (
+                    <ConnectionInvite
+                      initiatorID={notification.initiatorID}
+                      key={notification.initiatorID}
+                    />
+                  );
+                } else if (notification.type === "message") {
+                  return "Message row"; // Change this to react component
+                }
+              })
+            )}
+          </div>
+
+          <div>
+            {!viewAll ? (
+              <button
+                type="submit"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm mx-9 w-24 h-8"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setViewAll(true);
+                }}
+              >
+                VIEW ALL
+              </button>
+            ) : (
+              <div>
+                <div>Old notifications</div>
+                <button
+                  type="submit"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm mx-9 my-4 w-24 h-8"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setViewAll(false);
+                  }}
+                >
+                  CLOSE
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
