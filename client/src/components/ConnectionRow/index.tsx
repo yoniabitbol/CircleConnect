@@ -3,9 +3,14 @@ import { ConnectionType } from "../../Routes/Network";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import getUserProfilePic from '../../http/getUserPicturePic';
+import createNewThread from '../../http/createNewThread';
+import removeConnection from '../../http/removeConnection';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material';
 
 const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
   const [picture, setPicture] = useState<any>();
+  const [open, setOpen] = useState(false);
+
   const {t} = useTranslation();
   const ConnectionClickHandler = () => {
     setTimeout(() => {
@@ -18,6 +23,19 @@ const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
       setPicture(res);
     })
   },[])
+
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    removeConnection(props.user_id ?? "").then(() => {
+      window.location.reload();
+    });
+    setOpen(false);
+  };
+
 
   return (
     <div className="flex justify-center sm:text-left text-center py-2">
@@ -43,15 +61,34 @@ const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
             type="submit"
             className="block lg:mt-4 w-auto px-5 py-2 rounded-md bg-signup-button
                text-white hover:bg-signup-button-hover"
+               onClick={() => {
+                createNewThread(props.user_id ?? "").then(() => {
+                  window.location.href = `/chat`;
+                });
+              }}
           >
             {t('common.label.message')}
           </button>
         </div>
-        <div className="">
-          <button type="submit">
-            <b>•••</b>
-          </button>
-        </div>
+        <div>
+      <button type="button" onClick={() => setOpen(true)}>
+        <b>•••</b>
+      </button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to delete this connection?</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} color="primary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
       </div>
     </div>
   );

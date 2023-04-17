@@ -162,15 +162,12 @@ const NewPostModal: FC<{
                                         sx={{position: 'absolute', right: 0}}><Close/></IconButton>
                         </div>
 
-                        <hr className="ml-4 w-9/10 bg-gray-300"/>
-                    </div>
-                    <form onSubmit={formik.handleSubmit}>
-                        <div className="p-2 relative bottom-0">
-                            <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text}
-                                              minRows={textAreaRows} maxRows={textAreaRows}
-                                              className="w-full  outline-none relative resize-none"
-                                              placeholder="Whats on your mind?"/>
-                            {formik.values.image && <div className="flex items-center space-x-1">
+                            <hr className="ml-4 w-9/10 bg-gray-300"/>
+                        </div>
+                        <form onSubmit={formik.handleSubmit}>
+                            <div className="p-2 relative bottom-0">
+                     <TextareaAutosize name="text" onChange={formik.handleChange} value={formik.values.text} minRows={textAreaRows} maxRows={textAreaRows} className="w-full  outline-none relative resize-none" placeholder={t('common.label.onYourMind') || "Whats on your mind?"}/>
+                                {formik.values.image && <div className="flex items-center space-x-1">
                                 <h6 className="font-semibold mt-2 p-2">Image</h6>
                                 <div
                                     className="flex space-x-1 mt-2 overscroll-x-auto max-w-9/10 overflow-x-auto items-center">

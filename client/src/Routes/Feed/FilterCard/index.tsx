@@ -4,6 +4,7 @@ import TagDropdown from "./TagDropdown";
 import ApplicationDeadline from "./ApplicationDeadline";
 import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { useTranslation } from "react-i18next";
 
 const followedTags = [
   "software",
@@ -34,6 +35,7 @@ const FilterCard: FC<{
   useEffect(() => {
     formik.setFieldValue("tags", selectedTags);
   }, [selectedTags]);
+  const {t} = useTranslation();
   const handleTagSelection = (value: string) => {
     if (selectedTags?.includes(value)) return;
     setSelectedTags([...selectedTags, value]);
@@ -78,7 +80,7 @@ const FilterCard: FC<{
   return (
     <Paper className="w-full h-1/3 p-3">
       <div className="flex align-center items-center justify-center">
-        <h1 className="font-bold text-center p-2">Filter Feed</h1>
+        <h1 className="font-bold text-center p-2"> {t('filterFeed.label.filterFeed')}</h1>
         <FilterAlt />
       </div>
 
@@ -112,7 +114,7 @@ const FilterCard: FC<{
           component="label"
           endIcon={<FilterAlt />}
         >
-          Remove
+             {t('filterFeed.buttons.remove')}
         </Button>
         <Button
           onClick={formik.submitForm}
@@ -130,7 +132,7 @@ const FilterCard: FC<{
           }}
           endIcon={<FilterAlt />}
         >
-          Apply
+          {t('filterFeed.buttons.apply')}
         </Button>
       </div>
     </Paper>

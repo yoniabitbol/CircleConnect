@@ -14,6 +14,9 @@ const common = {
             connectionLc:'Relations',
             search:'Recherche',
             message:'Message',
+            shareThoughts: 'Partage tes pensées',
+            lookingFor: 'À la recherche de'
+
         },
         buttons: {
             chat:'CLAVARDER',
