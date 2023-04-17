@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Avatar } from "@mui/material";
-import { Link } from "react-router-dom";
 import getUserProfile from "../../../http/getUserProfile";
 import { Usertypes } from "../../UserProfile";
 import getUserProfilePic from "../../../http/getUserPicturePic";
@@ -45,9 +44,7 @@ const ConnectionInviteRead: React.FC<{
       <div className="flex flex-row justify-between px-3">
         <div className="flex flex-row space-x-8 ">
           <div className="pt-2">
-            <Link to="/profile">
-              <Avatar sx={{ width: 50, height: 50 }} src={picture} />
-            </Link>
+            <Avatar sx={{ width: 50, height: 50 }} src={picture} />
           </div>
           <div className="flex flex-col">
             <h1 className="text-md font-bold">{user?.name}</h1>

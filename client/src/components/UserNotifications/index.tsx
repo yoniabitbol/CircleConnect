@@ -37,7 +37,6 @@ const UserNotifications: React.FC = () => {
       try {
         const userNotifications = await getUserNotifications();
         setUserNotifications(userNotifications.data.notifications); // get post from the response object
-        console.log(userNotifications.data.notifications);
       } catch (error) {
         console.log(error);
       }
