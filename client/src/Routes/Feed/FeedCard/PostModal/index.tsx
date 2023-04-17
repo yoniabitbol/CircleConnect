@@ -94,7 +94,6 @@ const PostModal: FC<{
 
         }
     })
-    console.log(postSettings)
     const style = {
         position: 'absolute',
         top: '50%',
@@ -107,7 +106,6 @@ const PostModal: FC<{
 
     const handleDeletePost = () => {
         deletePost(postInfo.id).then((res:any) => {
-            console.log(res)
             if (res.status === 200) {
                 onModalClose();
                 fetchFeed();

@@ -23,7 +23,7 @@ const Chat: React.FC<{
   const socket = io(`http://${host}:${port}`, { query: { userId: uid } });
 
   const selectThread = (event: any) => {
-    const index = event.currentTarget.getAttribute("data -key");
+    const index = event.currentTarget.getAttribute("data-key");
     setSelected(index);
 
     getThreadMessages(threads[index]._id).then((res) => {
