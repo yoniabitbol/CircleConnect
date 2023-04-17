@@ -26,7 +26,7 @@ const Chat: React.FC<{
     const index = event.currentTarget.getAttribute("data-key");
     setSelected(index);
 
-    getThreadMessages(threads[index]?._id || '').then((res) => {
+    getThreadMessages(threads[index]._id).then((res) => {
       setMessages(res.data.messages);
     });
   };
@@ -59,7 +59,7 @@ const Chat: React.FC<{
         <ChatDisplay
           thread={threads[selected]}
           threadProfile={threadProfiles.find((profile) => {
-            const [participant1, participant2] = threads[selected]?.participants || [];
+            const [participant1, participant2] = threads[selected].participants;
             return (
               profile.user_id == participant1 || profile.user_id == participant2
             );
