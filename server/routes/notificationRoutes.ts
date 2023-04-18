@@ -13,7 +13,7 @@ router.route('/:user_id')
 router.route('/:user_id/messages')
   .patch(notificationController.markMessagesRead);
 
-// Unread notification API route (May be removed)
+// Unread notification API route
 router.route('/:user_id/unread')
   .get(notificationController.getUnreadNotifications);
 
