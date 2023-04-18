@@ -44,7 +44,7 @@ const UserNotifications: React.FC = () => {
     fetchUserNotifications();
   }, []);
 
-  console.log("THIS: ", userNotifications);
+  console.log("THIS: ", unreadNotifications);
 
   return (
     <body
