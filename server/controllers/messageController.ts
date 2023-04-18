@@ -31,6 +31,7 @@ const createMessage = async (req: any, res: Response) => {
       text: req.body.text,
       file: req.files && req.files.messageFile ? req.files.messageFile[0].filename : req.body.image,
     });
+    console.log('wtf', message);
     await Thread.findOneAndUpdate(message.threadID, {
       $push: { messages: message._id },
     });
