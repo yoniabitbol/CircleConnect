@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from 'react';
 import Sessions from "./Sessions";
 import ChatDisplay from "./ChatDisplay";
 import ThreadModel from "../../Models/ThreadModel";
@@ -6,6 +6,10 @@ import UserProfileModel from "../../Models/UserProfileModel";
 import MessageModel from "../../Models/MessageModel";
 import getThreadMessages from "../../http/getThreadMessages";
 import io from "socket.io-client";
+// import {Route,Routes} from "react-router-dom";
+
+const port = process.env.REACT_APP_PORT || 4000;
+const host = process.env.REACT_APP_HOST || "localhost";
 
 const Chat: React.FC<{
   threads: ThreadModel[];
@@ -13,20 +17,32 @@ const Chat: React.FC<{
   uid: string;
   receivingParticipants: string[];
   refreshThreads: () => void;
-}> = ({ threads, connections, receivingParticipants, uid, refreshThreads }) => {
-  const [selected, setSelected] = useState<number>(-1);
+  chatId: string | null;
+}> = ({chatId, threads, connections, receivingParticipants, uid, refreshThreads }) => {
   const [messages, setMessages] = useState<MessageModel[]>([]);
-
-  const socket = io("http://localhost:4000", { query: { userId: uid } });
-
-  const selectThread = (event: any) => {
-    const index = event.currentTarget.getAttribute("data-key");
-    setSelected(index);
-
-    getThreadMessages(threads[index]._id).then((res) => {
-      setMessages(res.data.messages);
+    const [selected, setSelected] = useState<number | any>();
+    const socket = io(`http://${host}:${port}`, { query: { userId: uid } });
+    useEffect(() => {
+        if(selected){
+            getThreadMessages(selected._id).then((res) => {
+                setMessages(res.data.messages);
+            });
+        }
+    }, [selected]);
+    useEffect(() => {
+        if(chatId){
+            selectThread();
+        }
+    }, [chatId]);
+  const selectThread = () => {
+    const sel = threads.find((thread) => {
+         return chatId && thread.participants.includes(chatId)
     });
-  };
+            if (sel){
+                setSelected(sel);
+            }
+            return sel;
+    };
 
   // Get only the profiles which the user has a conversation/thread with
   const threadProfiles: UserProfileModel[] = [];
@@ -51,24 +67,23 @@ const Chat: React.FC<{
       ) : (
         <div> Retreiving sessions ...</div>
       )}
-
-      {selected != -1 ? (
-        <ChatDisplay
-          thread={threads[selected]}
-          threadProfile={threadProfiles.find((profile) => {
-            const [participant1, participant2] = threads[selected].participants;
-            return (
-              profile.user_id == participant1 || profile.user_id == participant2
-            );
-          })}
-          messages={messages}
-          setMessages={setMessages}
-          uid={uid}
-          socket={socket}
-        />
-      ) : (
-        <div className="p-10">{"Chat with your Connections"}</div>
-      )}
+        {selected || selectThread() ? (
+            <ChatDisplay
+                thread={selected || selectThread()}
+                threadProfile={selected && threadProfiles.find((profile) => {
+                    const [participant1, participant2] = selected.participants;
+                    if(profile.user_id == participant1 || profile.user_id == participant2){
+                        return profile
+                    };
+                })}
+                messages={messages && messages}
+                setMessages={setMessages}
+                uid={uid}
+                socket={socket}
+            />
+        ) : (
+            <div className="p-10">{"Chat with your Connections"}</div>
+        )}
     </div>
   );
 };

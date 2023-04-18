@@ -75,7 +75,7 @@ const Network: React.FC = () => {
             key={connection.user_id}
             user_id={connection.user_id}
             name={connection.name}
-            title={connection.title}
+            title={connection.title === "undefined" ? "" : connection.title}
             connections={connection.connections}
             picture={connection.picture && connection.picture}
           />

@@ -61,7 +61,7 @@ const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
                                </div>
                            </div>
                         </Link>
-                       <Link to="/chat">
+                       <Link to={`/chat/${connection.user_id}`}>
                            <Button
                                sx={{width:'100%', height: 30 }}
                                variant="contained"
