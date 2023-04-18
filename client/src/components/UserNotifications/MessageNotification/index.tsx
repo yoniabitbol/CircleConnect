@@ -41,30 +41,32 @@ const MessageNotification: React.FC<{
   return (
     <div>
       {user != null ? (
-        <div className="w-full m-4 py-3 rounded-md bg-white h-auto">
-          <div className="flex flex-row justify-between px-3">
-            <div className="flex flex-row space-x-8 ">
-              <div className="pt-2">
-                <Avatar sx={{ width: 50, height: 50 }} src={picture} />
+        <a href={"/chat/" + initiatorID}>
+          <div className="w-full m-4 py-3 rounded-md bg-white h-auto">
+            <div className="flex flex-row justify-between px-3">
+              <div className="flex flex-row space-x-8 ">
+                <div className="pt-2">
+                  <Avatar sx={{ width: 50, height: 50 }} src={picture} />
+                </div>
+                <div className="flex flex-col">
+                  <h1 className="text-md font-bold">{user?.name}</h1>
+                  <h2 className="text-xs font-semibold">{user?.title}</h2>
+                  <h3 className="text-xs" style={{ color: "#4B47B7" }}>
+                    {user?.connections.length} connections
+                  </h3>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <h1 className="text-md font-bold">{user?.name}</h1>
-                <h2 className="text-xs font-semibold">{user?.title}</h2>
-                <h3 className="text-xs" style={{ color: "#4B47B7" }}>
-                  {user?.connections.length} connections
+              <div className="hidden md:flex flex-row w-1/3">
+                <h1 className="text-4xl pr-2" style={{ color: "#4B47B7" }}>
+                  |
+                </h1>
+                <h3 className="text-sm text-gray-400">
+                  {user?.name + " sent you a message!"}
                 </h3>
               </div>
             </div>
-            <div className="hidden md:flex flex-row w-1/3">
-              <h1 className="text-4xl pr-2" style={{ color: "#4B47B7" }}>
-                |
-              </h1>
-              <h3 className="text-sm text-gray-400">
-                {user?.name + " sent you a message!"}
-              </h3>
-            </div>
           </div>
-        </div>
+        </a>
       ) : null}
     </div>
   );
