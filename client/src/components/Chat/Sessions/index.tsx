@@ -5,6 +5,7 @@ import UserProfileModel from "../../../Models/UserProfileModel";
 import createNewThread from "../../../http/createNewThread";
 import { Avatar } from "@mui/material";
 import getUserProfilePic from "../../../http/getUserPicturePic";
+import { Link } from "react-router-dom";
 
 export type Thread = {
   id: number;
@@ -17,7 +18,7 @@ const Sessions: React.FC<{
   threads: ThreadModel[];
   refreshThreads: () => void;
   selectThread: (event: any) => void;
-  selected: number;
+  selected: number | any;
   threadProfiles: UserProfileModel[];
   connections: UserProfileModel[];
 }> = ({
@@ -75,7 +76,8 @@ useEffect(() => {
       const userProfilePic = userProfilePics[threadProfile?.user_id || ""];
       if (!threadProfile) return null;
       return (
-        <button
+        <Link
+            to={`/chat/${thread._id}`}
           className="w-full h-full"
           key={thread._id}
           data-key={index}
@@ -83,7 +85,7 @@ useEffect(() => {
           onClick={(event) => selectThread(event)}
         >
           <SessionItem
-            selected={selected == index}
+            selected={selected._id === thread._id}
             session={{
               user: {
                 name: threadProfile?.name || 'USER DELETED',
@@ -92,7 +94,7 @@ useEffect(() => {
               latestMsg: "",
             }}
           />
-        </button>
+        </Link>
       );
     })}
       </div>

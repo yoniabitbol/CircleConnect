@@ -23,7 +23,7 @@ const ChatDisplay: React.FC<{
   thread: ThreadModel;
   socket: Socket;
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
-
+  console.log('threadprofile: ', threadProfile)
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
 
