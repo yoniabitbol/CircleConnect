@@ -14,6 +14,9 @@ router.route('/')
 router.route('/:id/report')
   .patch(threadController.reportThread);
 
+router.route('/reported')
+  .get(threadController.getReportedThreads);
+
 // Routes based on user id
 router.route('/:user_id')
   .get(threadController.getUserThreads);

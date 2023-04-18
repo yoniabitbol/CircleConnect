@@ -79,7 +79,7 @@ const createThread = async (req: Request, res: Response) => {
 const reportThread = async (req: Request, res: Response) => {
   try {
     const thread = await Thread.findByIdAndUpdate(
-      { _id: req.params.thread_id },
+      req.params.id,
       { reported: true },
       { new: true },
     );
@@ -97,9 +97,27 @@ const reportThread = async (req: Request, res: Response) => {
   }
 };
 
+const getReportedThreads = async (req: Request, res: Response) => {
+  try {
+    const threads = await Thread.find({ reported: true });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        threads,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: `ERROR ${err}`,
+      message: 'Failed to get reported threads',
+    });
+  }
+};
+
 export default {
   getAllThreads,
   getUserThreads,
   createThread,
   reportThread,
+  getReportedThreads,
 };
