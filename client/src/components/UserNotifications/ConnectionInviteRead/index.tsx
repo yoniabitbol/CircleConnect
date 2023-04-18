@@ -37,8 +37,6 @@ const ConnectionInviteRead: React.FC<{
     fetchUserProfilePic();
   }, []);
 
-  console.log(user);
-
   return (
     <div className="w-full m-4 py-3 rounded-md bg-white h-auto">
       <div className="flex flex-row justify-between px-3">

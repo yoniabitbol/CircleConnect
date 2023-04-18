@@ -8,6 +8,7 @@ import getUserNotifications from "../../http/getUserNotifications";
 import ConnectionInviteRead from "./ConnectionInviteRead";
 import markNoficationsRead from "../../http/markNotificationsRead";
 import getUnreadNotification from "../../http/getUnreadNotifications";
+import MessageNotification from "./MessageNotification";
 
 const UserNotifications: React.FC = () => {
   const { t } = useTranslation();
@@ -86,8 +87,16 @@ const UserNotifications: React.FC = () => {
                       key={notification.initiatorID}
                     />
                   );
-                } else if (notification.type === "message") {
-                  return "Message row"; // Change this to react component
+                } else if (
+                  notification.isRead == false &&
+                  notification.type === "message"
+                ) {
+                  return (
+                    <MessageNotification
+                      initiatorID={notification.initiatorID}
+                      key={notification.initiatorID}
+                    />
+                  );
                 }
               })
             )}

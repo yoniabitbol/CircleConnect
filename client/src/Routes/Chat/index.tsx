@@ -7,8 +7,11 @@ import getUserConnections from "../../http/getUserConnections";
 import { auth } from "../../firebase/config";
 import UserProfileModel from "../../Models/UserProfileModel";
 import { useParams } from "react-router-dom";
+import markMessageNotificationsRead from "../../http/markMessageNotificationsRead";
 
 const ChatPage: React.FC = () => {
+  markMessageNotificationsRead();
+
   const [threads, setThreads] = useState<ThreadModel[]>([]);
   let receivingParticipants: string[] = [];
   const [connections, setConnections] = useState<UserProfileModel[]>([]);
@@ -19,8 +22,7 @@ const ChatPage: React.FC = () => {
     if (id) {
       setChatId(id);
     }
-  },[id]);
-
+  }, [id]);
 
   const refreshThreads = () => {
     getCurrentUserThreads().then((res) => {
@@ -51,7 +53,7 @@ const ChatPage: React.FC = () => {
     <>
       {threads && connections && uid && receivingParticipants ? (
         <Chat
-            chatId={chatId}
+          chatId={chatId}
           threads={threads}
           connections={connections}
           receivingParticipants={receivingParticipants}
