@@ -2,7 +2,7 @@ import { auth } from "../firebase/config";
 const host = process.env.REACT_APP_HOST || 'localhost';
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 
-async function markMessagesRead () {
+async function markMessageNotificationsRead () {
     const currentUser = auth.currentUser;
     const token = currentUser && (await currentUser.getIdToken());
     const currentUserId = currentUser && currentUser.uid;
@@ -23,4 +23,4 @@ async function markMessagesRead () {
     return res.json();
 }
 
-export default markMessagesRead;
+export default markMessageNotificationsRead;
