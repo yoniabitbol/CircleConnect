@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Message from "../Message";
-import { Field, Form, Formik } from "formik";
+import {useFormik } from "formik";
 import SendIcon from "@mui/icons-material/Send";
 import MessageModel from "../../../Models/MessageModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
@@ -9,6 +9,7 @@ import ThreadModel from "../../../Models/ThreadModel";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Socket } from "socket.io-client";
 import sendNotification from "../../../http/sendNotification";
+import { Button, IconButton, Chip } from "@mui/material";
 
 export interface MessageType {
   id: number;
@@ -36,12 +37,64 @@ const ChatDisplay: React.FC<{
       lastMessageRef.current.scrollTop = lastMessageRef.current.scrollHeight;
     }
 
+
     return () => {
       socket.off("receive-message");
       socket.disconnect();
     };
   }, [socket, messages]);
 
+    const formik = useFormik({
+        initialValues: {
+            thread_id: thread._id,
+            outbound: true,
+            text: "",
+            messageFile: null,
+        },
+        onSubmit: (values: any, { resetForm }) => {
+            //prevent default
+
+            if (values.text.trim() === "" && values.messageFile === null) {
+                // Check if message is empty or contains only whitespace
+                return; // Exit early without sending message
+            }
+            //create formData
+            const formData = new FormData();
+            console.log('values',values);
+            for (const key in values) {
+                formData.append(key, values[key]);
+            }
+            formData.append("senderID", uid);
+            if (threadProfile) {
+                saveMessage(formData).then((res) => {
+                    if (res.status === "success" || res.ok) {
+                        const newMsg = {
+                            _id: Math.random().toString().substring(2),
+                            threadID: thread._id,
+                            senderID: uid,
+                            sender: {
+                                name: threadProfile?.name,
+                                picture: threadProfile?.picture,
+                            },
+                            text: values.text,
+                            file: values.messageFile,
+                            createdAt: new Date().toISOString(),
+                            updatedAt: new Date().toISOString(),
+                        };
+                        setMessages([...messages, newMsg]);
+                        socket.emit("send-message", {
+                            senderID: newMsg.senderID,
+                            threadID: newMsg.threadID,
+                            text: newMsg.text,
+                            file: newMsg.file,
+                        });
+                    }
+                });
+            }
+
+            resetForm();
+        },
+    });
   return (
     <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
@@ -74,70 +127,57 @@ const ChatDisplay: React.FC<{
       </div>
       <hr className="border-gray-100 border" />
       <div className="ml-8 my-2">
-        <Formik
-          initialValues={{ outbound: true, message: "" }}
-          enableReinitialize
-          onSubmit={(values, { resetForm }) => {
-            const { message } = values;
-            if (message.trim() === "") {
-              // Check if message is empty or contains only whitespace
-              return; // Exit early without sending message
-            }
-            if (threadProfile) {
-              saveMessage(thread._id, uid, message).then((res) => {
-                if (res.status === "success" || res.ok) {
-                  const newMsg = {
-                    _id: Math.random().toString().substring(2),
-                    threadID: thread._id,
-                    senderID: uid,
-                    sender: {
-                      name: threadProfile?.name,
-                      picture: threadProfile?.picture,
-                    },
-                    text: message,
-                    file: null,
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString(),
-                  };
-                  setMessages([...messages, newMsg]);
-                  socket.emit("send-message", {
-                    senderID: newMsg.senderID,
-                    threadID: newMsg.threadID,
-                    text: newMsg.text,
-                    file: newMsg.file,
-                  });
-                  if (threadProfile?.user_id == null) return;
-                  sendNotification(threadProfile?.user_id, "message"); // send notification of new message
-                }
-              });
-            }
-
-            resetForm();
-          }}
-        >
-          <Form>
+          <form onSubmit={formik.handleSubmit}>
             <div className="flex items-center">
-              <Field
+              <input
                 className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent mr-2 outline-none"
-                type="message"
-                name="message"
+                type="text"
+                name="text"
                 placeholder="Write your message"
+                value={formik.values.text}
+                onChange={formik.handleChange}
               />
-              <div className="flex">
-                <button className="border h-10 w-10 rounded-lg">
-                  <AttachFileIcon className="stroke-white" />
-                </button>
+              <div className="flex items-center">
+                  {formik.values.messageFile && <Chip
+                  label={formik.values.messageFile.name.substring(0, 10) + "..."}
+                  sx={{
+                    margin: 1,
+                    backgroundColor: "#4D47C3",
+                    color: "white",
+                    "& .MuiChip-deletable": { backgroundColor: "white" },
+                  }}
+                    onDelete={() => {
+                        formik.setFieldValue("messageFile", null);
+                    }}
+                />}
+                <IconButton component="label" size="large" className="mr-4">
+                  <input
+                    type="file"
+                    name="file"
+                    hidden
+                    onChange={(event: any) => {
+                        const file: FileList | null = event.currentTarget.files;
+                        if (!file) return;
+                        else {
+                            formik.setFieldValue('messageFile', file[0]);
+                        }
+                    }}
 
-                <button
+                    accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                        text/plain, application/pdf, image/*"
+                  />
+                  <AttachFileIcon />
+                </IconButton>
+                <Button
                   className="mx-5 border h-10 w-10 rounded-lg"
                   type="submit"
+                  variant="contained"
                 >
-                  <SendIcon className="text-indigo-700" />
-                </button>
+                  <SendIcon className="text-white" />
+                </Button>
               </div>
             </div>
-          </Form>
-        </Formik>
+          </form>
       </div>
     </div>
   );

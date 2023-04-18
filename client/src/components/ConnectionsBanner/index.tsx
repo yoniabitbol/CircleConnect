@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import { useTranslation } from "react-i18next";
 import getUserProfilePic from "../../http/getUserPicturePic";
 import Usertypes from "../../Models/UserProfileModel";
+import createNewThread from '../../http/createNewThread';
 
 type ConnectionType = Omit<
   Usertypes,
@@ -61,7 +62,11 @@ const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
                                </div>
                            </div>
                         </Link>
-                       <Link to={`/chat/${connection.user_id}`}>
+                       <Link to="" onClick={() => {
+                           createNewThread(connection.user_id ?? "").then(() => {
+                               window.location.href = `/chat/${connection.user_id}`;
+                           });
+                       }}>
                            <Button
                                sx={{width:'100%', height: 30 }}
                                variant="contained"
