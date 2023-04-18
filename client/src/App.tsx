@@ -51,10 +51,10 @@ function App() {
                 element={user ? <Profile /> : <Navigate to="/" />}
               />
               <Route
-                path="chat/"
+                path="chat"
                 element={user ? <ChatPage /> : <Navigate to="/" />}
               >
-                <Route path=":id"/>
+                <Route path=":id" element={<ChatPage/>}/>
               </Route>
               <Route
                 path="myprofile"

@@ -23,7 +23,6 @@ const ChatDisplay: React.FC<{
   thread: ThreadModel;
   socket: Socket;
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
-  console.log('threadprofile: ', threadProfile)
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
 
@@ -56,7 +55,7 @@ const ChatDisplay: React.FC<{
       <hr className="border-gray-100 border" />
 
       <div ref={lastMessageRef} className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
-      {messages.map((message) => (
+      {messages && messages.map((message) => (
           <div
             key={message._id}
             className={
