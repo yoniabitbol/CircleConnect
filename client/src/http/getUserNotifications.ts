@@ -2,34 +2,25 @@ import { auth } from "../firebase/config";
 const host = process.env.REACT_APP_HOST || "localhost";
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 
-async function sendNotification(target_user_id: string, type: string) {
+async function getUserNotifications() {
   const currentUser = auth.currentUser;
   const token = currentUser && (await currentUser.getIdToken());
-  const url = `http://${host}:${port}/api/notifications/${target_user_id}`;
   const currentUserId = currentUser && currentUser.uid;
-
-  console.log("TUI: ", target_user_id);
-  console.log("CUI: ", currentUserId);
+  const url = `http://${host}:${port}/api/notifications/${currentUserId}`;
 
   const res = await fetch(url, {
-    method: "POST",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({
-      type: type,
-      initiatorID: currentUserId,
-    }),
   });
 
   if (!res.ok) {
-    throw new Error("Failed to send notification.");
-  } else {
-    console.log("Notification sent!");
+    throw new Error("Failed to get user notifications.");
   }
 
   return res.json();
 }
 
-export default sendNotification;
+export default getUserNotifications;

@@ -96,3 +96,15 @@ export interface applicationType {
   updatedAt: string;
   _id: string;
 }
+
+export interface notificationType {
+  user_id: string;
+  initiatorID: string;
+  type: string;
+  isRead: boolean;
+  initiator: {
+    name: string;
+    picture: string;
+    user_id: string;
+  };
+}
