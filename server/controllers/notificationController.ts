@@ -95,6 +95,27 @@ const markAllNotifsRead = async (req: Request, res: Response) => {
   }
 };
 
+const markNotificationRead = async (req: Request, res: Response) => {
+  try {
+    const notification = await Notification.findByIdAndUpdate(
+      req.params.id,
+      { isRead: true },
+      { new: true },
+    );
+    res.status(200).json({
+      status: 'success',
+      data: {
+        notification,
+      },
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: `ERROR ${err}`,
+      message: 'Failed to mark notification as read',
+    });
+  }
+};
+
 const markMessagesRead = async (req: Request, res: Response) => {
   try {
     const notification = await Notification.updateMany(
@@ -120,5 +141,6 @@ export default {
   getUnreadNotifications,
   sendNotification,
   markAllNotifsRead,
+  markNotificationRead,
   markMessagesRead,
 };
