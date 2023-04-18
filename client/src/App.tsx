@@ -53,7 +53,9 @@ function App() {
               <Route
                 path="chat"
                 element={user ? <ChatPage /> : <Navigate to="/" />}
-              />
+              >
+                <Route path=":id" element={<ChatPage/>}/>
+              </Route>
               <Route
                 path="myprofile"
                 element={user ? <MyProfile /> : <Navigate to="/" />}

@@ -1,11 +1,12 @@
 import React, {useEffect, useRef} from "react";
 import Message from "../Message";
 import { Field, Form, Formik } from "formik";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import SendIcon from '@mui/icons-material/Send';
 import MessageModel from "../../../Models/MessageModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
 import saveMessage from "../../../http/saveMessage";
 import ThreadModel from "../../../Models/ThreadModel";
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Socket } from "socket.io-client";
 
 export interface MessageType {
@@ -22,7 +23,6 @@ const ChatDisplay: React.FC<{
   thread: ThreadModel;
   socket: Socket;
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
-
   const lastMessageRef = useRef<HTMLDivElement>(null);
 
 
@@ -55,7 +55,7 @@ const ChatDisplay: React.FC<{
       <hr className="border-gray-100 border" />
 
       <div ref={lastMessageRef} className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
-      {messages.map((message) => (
+      {messages && messages.map((message) => (
           <div
             key={message._id}
             className={
@@ -75,6 +75,9 @@ const ChatDisplay: React.FC<{
           enableReinitialize
           onSubmit={(values, { resetForm }) => {
             const { message } = values;
+            if (message.trim() === "") { // Check if message is empty or contains only whitespace
+              return; // Exit early without sending message
+            }
             if (threadProfile) {
               saveMessage(thread._id, uid, message).then((res) => {
                 if (res.status === "success" || res.ok) {
@@ -106,18 +109,27 @@ const ChatDisplay: React.FC<{
           }}
         >
           <Form>
-            <Field
-              className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent"
-              type="message"
-              name="message"
-              placeholder="Write your message"
-            />
-            <button
-              className="mx-5 bg-indigo-700 h-10 w-10 rounded-lg"
-              type="submit"
-            >
-              <PaperAirplaneIcon className="stroke-white" />
-            </button>
+          <div className="flex items-center">
+  <Field
+    className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent mr-2 outline-none"
+    type="message"
+    name="message"
+    placeholder="Write your message"
+  />
+  <div className="flex">
+    <button className="border h-10 w-10 rounded-lg">
+      <AttachFileIcon className="stroke-white" />
+    </button>
+
+    <button
+      className="mx-5 border h-10 w-10 rounded-lg"
+      type="submit"
+    >
+      <SendIcon className="text-indigo-700" />
+    </button>
+  </div>
+</div>
+
           </Form>
         </Formik>
       </div>
