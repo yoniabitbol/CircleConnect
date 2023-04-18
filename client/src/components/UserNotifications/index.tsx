@@ -53,14 +53,10 @@ const UserNotifications: React.FC = () => {
       style={{ backgroundColor: "#F7F9FB" }}
     >
       <div className="lg:flex lg:flex-row justify-center">
-        <div className="flex flex-col">
+        <div className="flex flex-col mr-14">
           <div className="lg:pl-24">
             <NavSettings />
-            <Dashboard
-              views_today="367"
-              posts_views="15"
-              search_appearances="9"
-            />
+            <Dashboard unreadNotifications={unreadNotifications?.length} />
           </div>
         </div>
         <div className="flex flex-col">
@@ -136,6 +132,16 @@ const UserNotifications: React.FC = () => {
                   ) {
                     return (
                       <ConnectionInviteRead
+                        initiatorID={notification.initiatorID}
+                        key={notification.initiatorID}
+                      />
+                    );
+                  } else if (
+                    notification.isRead == true &&
+                    notification.type === "message"
+                  ) {
+                    return (
+                      <MessageNotification
                         initiatorID={notification.initiatorID}
                         key={notification.initiatorID}
                       />
