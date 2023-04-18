@@ -10,7 +10,12 @@ import { useParams } from "react-router-dom";
 import markMessageNotificationsRead from "../../http/markMessageNotificationsRead";
 
 const ChatPage: React.FC = () => {
-  markMessageNotificationsRead();
+  useEffect(() => {
+    markMessageNotificationsRead();
+    return () => {
+      markMessageNotificationsRead();
+    };
+  });
 
   const [threads, setThreads] = useState<ThreadModel[]>([]);
   let receivingParticipants: string[] = [];
