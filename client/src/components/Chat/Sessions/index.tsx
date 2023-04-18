@@ -83,9 +83,7 @@ const Sessions: React.FC<{
         </div>
         <hr className="border-gray-100 border" />
         {connectionsWithThread.map((conn, index) => {
-          const threadProfile = threadProfiles[index];
-          const userProfilePic = userProfilePics[threadProfile?.user_id || ""];
-          if (!threadProfile) return null;
+          const userProfilePic = userProfilePics[conn.user_id || ""];
           return (
             <Link
               to={`${conn.user_id}`}
@@ -98,7 +96,7 @@ const Sessions: React.FC<{
                 selected={selected && selected.participants.includes(conn.user_id)}
                 session={{
                   user: {
-                    name: threadProfile?.name || "USER DELETED",
+                    name: conn.name || "USER DELETED",
                     picture: userProfilePic
                       ? userProfilePic
                       : "default-user.jpg",
