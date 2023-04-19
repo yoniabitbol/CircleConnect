@@ -3,13 +3,19 @@ import { Avatar } from "@mui/material";
 import getUserProfile from "../../../http/getUserProfile";
 import { Usertypes } from "../../UserProfile";
 import getUserProfilePic from "../../../http/getUserPicturePic";
-import acceptConnectionRequest from "../../../http/acceptConnectionRequest";
+// import acceptConnectionRequest from "../../../http/acceptConnectionRequest";
 import declineConnectionRequest from "../../../http/declineConnectionRequest";
+import markSingleNoficationsRead from "../../../http/markSingleNotificationRead";
 
 const ConnectionInvite: React.FC<{
   initiatorID: string;
+  notificationID: string;
+  notificationIsRead: boolean;
 }> = (props) => {
-  const { initiatorID } = props;
+  const { initiatorID, notificationID, notificationIsRead } = props;
+
+  console.log(notificationID);
+
   const [user, setUser] = useState<Usertypes>();
   const [picture, setPicture] = useState<any>();
   const [connectionState, setConnectionState] = useState("unset");
@@ -72,8 +78,10 @@ const ConnectionInvite: React.FC<{
                     type="submit"
                     className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm w-24 h-8"
                     onClick={() => {
-                      acceptConnectionRequest(initiatorID);
-                      setConnectionState("connected");
+                      // acceptConnectionRequest(initiatorID);
+                      // setConnectionState("connected");
+                      markSingleNoficationsRead(notificationID);
+                      console.log(notificationIsRead);
                     }}
                   >
                     ACCEPT

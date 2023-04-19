@@ -107,4 +107,5 @@ export interface notificationType {
     picture: string;
     user_id: string;
   };
+  _id: string;
 }

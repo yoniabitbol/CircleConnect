@@ -45,12 +45,10 @@ const UserNotifications: React.FC = () => {
     fetchUserNotifications();
   }, []);
 
-  console.log("THIS: ", unreadNotifications);
+  console.log(unreadNotifications);
 
   return (
-    <body
-      className="justify-center bg-[#F7F9FB] py-6 dark:background-dark"
-    >
+    <body className="justify-center bg-[#F7F9FB] py-6 dark:background-dark">
       <div className="lg:flex lg:flex-row justify-center">
         <div className="flex flex-col mr-14">
           <div className="lg:pl-24">
@@ -79,7 +77,9 @@ const UserNotifications: React.FC = () => {
                   return (
                     <ConnectionInvite
                       initiatorID={notification.initiatorID}
-                      key={notification.initiatorID}
+                      key={notification._id}
+                      notificationID={notification._id}
+                      notificationIsRead={notification.isRead}
                     />
                   );
                 } else if (
