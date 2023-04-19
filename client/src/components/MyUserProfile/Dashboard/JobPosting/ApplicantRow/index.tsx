@@ -1,11 +1,17 @@
 interface ApplicantRowProps {
   applicant: string;
+  applicantID: string | undefined;
 }
 
-const ApplicantRow: React.FC<ApplicantRowProps> = ({ applicant }) => {
+const ApplicantRow: React.FC<ApplicantRowProps> = ({
+  applicant,
+  applicantID,
+}) => {
   return (
     <div>
-      <p className="mx-2">{applicant}</p>
+      <a href={"/profile/" + applicantID} className="mx-2">
+        {applicant}
+      </a>
     </div>
   );
 };
