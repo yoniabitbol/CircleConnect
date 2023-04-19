@@ -21,7 +21,6 @@ const Languages: React.FC<{
         languages.push({ name: "", level: "" });
         // Force form to re-render
         setAddOrDelete(!addOrDelete);
-        console.log(languages);
       }}
     >
       {t('userProfile.buttons.addNew')}

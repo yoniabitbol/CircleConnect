@@ -1,30 +1,58 @@
-import {useEffect, useState,FC} from 'react';
-import getMessageFile from '../../../http/getMessageFile';
-import {FilePresent} from '@mui/icons-material';
+import { useEffect, useState, FC } from "react";
+import getMessageFile from "../../../http/getMessageFile";
+import { Download } from "@mui/icons-material";
+import { Chip } from "@mui/material";
 
 const Message: FC<{
   outbound: boolean;
   text: string;
   file: string | null;
 }> = ({ outbound, text, file }) => {
-  const textBoxStyle = outbound ? "bg-slate-100" : "bg-indigo-700 text-sky-50";
+  const textBoxStyle = outbound
+    ? "bg-slate-100"
+    : "bg-indigo-700 text-sky-50 w-fit";
   const [fileData, setFileData] = useState<string | null>(null);
   useEffect(() => {
     if (file) {
-      getMessageFile(file).then((res:any) => {
-          console.log(res)
+      getMessageFile(file).then((res: any) => {
         setFileData(res);
       });
     }
-  },[file]);
-  console.log('fileData: ', fileData)
+  }, [file]);
+  if ((!text || text == "") && !fileData) return null;
   return (
-    <div>
+    <div className={`mt-3  grid ${outbound && "justify-items-end"}`}>
       {outbound ? <span className="" /> : <span />}
-      <div className={"rounded-md inline-block px-3 py-1 " + textBoxStyle}>
-        <span>{text}</span>
-        {fileData && <a download href={fileData}><FilePresent /></a>}
-      </div>
+      {text && (
+        <div className={"rounded-md px-3 py-1" + " " + textBoxStyle}>
+          <div className="">{text}</div>
+        </div>
+      )}
+      {fileData && (
+        <div className="flex justify-end w-full mt-2">
+          <a download href={fileData}>
+            <Chip
+              clickable
+              sx={{
+                backgroundColor: `${outbound ? "#4D47C3" : "#F1F5F9"}`,
+                color: `${outbound ? "white" : "#4D47C3"}`,
+                "&:hover": { backgroundColor: `${outbound && "#3d389a"}` },
+              }}
+              icon={
+                <Download
+                  color="primary"
+                  sx={{ color: `${outbound ? "white" : "#4D47C3"}` }}
+                />
+              }
+              label={
+                file?.substring(0, 10) +
+                `${file && file?.length > 20 && "..."}` +
+                file?.substring(file?.length - 10, file?.length)
+              }
+            />
+          </a>
+        </div>
+      )}
     </div>
   );
 };
