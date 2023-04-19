@@ -30,7 +30,7 @@ const NavLinks: React.FC<{links: NavLinkModel[]}> = (props) => {
     <ul className="flex list-none items-center">
         {links.map((link : NavLinkModel) => (
             <li key={link.key} className="mr-10 max-md:mr-5">
-              {unreadNotifications?.length == 0 && link.key == 5? (
+              {unreadNotifications?.length != 0 && link.key == 5? (
                 <Badge color="secondary" variant="dot">
                     <NavLink className={({isActive}) => isActive ? navLinkClass+  navActiveClass : navLinkClass } to={link.path}>{link.icon}
                       <span className="max-md:hidden  mt-2">{link.text}</span>
@@ -41,8 +41,7 @@ const NavLinks: React.FC<{links: NavLinkModel[]}> = (props) => {
                 <span className="max-md:hidden  mt-2">{link.text}</span>
               </NavLink>
             )}
-
-</li>
+            </li>
         ))}
     </ul>
     </nav>
