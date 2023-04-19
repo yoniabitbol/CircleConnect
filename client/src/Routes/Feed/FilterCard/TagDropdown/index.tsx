@@ -69,7 +69,7 @@ const TagDropdown: FC<{
         <input
           type="text"
           placeholder={t('filterFeed.label.insertTags')||"Insert tags"}
-          className="w-full h-10 outline-1 focus:outline-none p-3 rounded-md"
+          className="w-full h-10 outline-1 focus:outline-none p-3 rounded-md dark:primary-dark"
           onKeyDown={handleKeyDown}
         />
         <hr className="" />

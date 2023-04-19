@@ -3,7 +3,7 @@ import { Box, Skeleton} from '@mui/material';
 
 const ConnectionsBannerSkeleton = () => {
     return (
-        <div className="pb-5 bg-white w-full drop-shadow-md shadow-purple-500">
+        <div className="pb-5 bg-white w-full drop-shadow-md shadow-purple-500 dark:primary-dark">
             <div className="p-3">
                 <Skeleton variant="text" animation="wave" width={100} height={30}/>
                 <hr className="w-full bg-gray-400 h-0.5 mt-2"/>

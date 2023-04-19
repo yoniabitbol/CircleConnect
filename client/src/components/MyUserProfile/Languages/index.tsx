@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 import Usertypes from "../../../Models/UserProfileModel";
 import { useTranslation } from "react-i18next";
+import {Button} from '@mui/material';
 
 const Languages: React.FC<{
   languages: Usertypes["languages"];
@@ -11,9 +12,11 @@ const Languages: React.FC<{
   const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
-    <button
+    <Button
       type="button"
-      className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full my-5"
+        disableElevation={true}
+        variant="contained"
+        sx={{mt:2}}
       onClick={() => {
         languages.push({ name: "", level: "" });
         // Force form to re-render
@@ -22,7 +25,7 @@ const Languages: React.FC<{
       }}
     >
       {t('userProfile.buttons.addNew')}
-    </button>
+    </Button>
   );
 
   const deleteBtn = (index: number) => {
@@ -44,24 +47,24 @@ const Languages: React.FC<{
   function languageFields(index: number) {
     return (
       <>
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
         {t('userProfile.label.language')}
         </label>
         <input
           name={`languages[${index}].name`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={languages[index].name || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             languages[index].name = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.level')}
         </label>
         <input
           name={`languages[${index}].level`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={languages[index].level || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +102,7 @@ const Languages: React.FC<{
         return (
           <div
             key={language.name}
-            className="flex flex-col bg-white rounded-md p-5"
+            className="flex flex-col bg-white rounded-md p-5 dark:secondary-dark"
           >
             <h1 className="text-lg font-semibold pt-2">{language.name}</h1>
             <h2 className="">
@@ -112,7 +115,7 @@ const Languages: React.FC<{
   );
 
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold ">{t('userProfile.label.languages')}</h1>
       {component}
     </div>

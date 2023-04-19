@@ -29,3 +29,17 @@ code {
     left: 892px;
     top: 100px;
 }
+
+@layer components {
+    .background-dark {
+        @apply bg-[#202124];
+    }
+    .primary-dark {
+        @apply bg-[#373737];
+        color: #BCBCBC;
+    }
+    .secondary-dark {
+        @apply bg-[#2F2F2F];
+        color: #BCBCBC;
+    }
+}

@@ -2,6 +2,7 @@ import Divider from "@mui/material/Divider";
 import React, { useState } from "react";
 import Usertypes from "../../../Models/UserProfileModel";
 import { useTranslation } from "react-i18next";
+import {Button} from '@mui/material';
 
 const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
   courses,
@@ -11,9 +12,11 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
   const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
-    <button
+    <Button
       type="button"
-      className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full my-5"
+        disableElevation={true}
+        variant="contained"
+        sx={{mt:2}}
       onClick={() => {
         courses.push({
           title: "",
@@ -28,7 +31,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
       }}
     >
       {t('userProfile.buttons.addNew')}
-    </button>
+    </Button>
   );
 
   const deleteBtn = (index: number) => {
@@ -50,71 +53,71 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
   function courseFields(index: number) {
     return (
       <>
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
         {t('userProfile.label.title')}
         </label>
         <input
           name={`courses[${index}].title`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={courses[index].title || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             courses[index].title = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.number')}
         </label>
         <input
           name={`courses[${index}].number`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={courses[index].number || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             courses[index].number = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.school')}
         </label>
         <input
           name={`courses[${index}].school`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={courses[index].school || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             courses[index].school = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
         {t('userProfile.label.description')}
         </label>
         <input
           name={`courses[${index}].description`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           defaultValue={courses[index].description || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             courses[index].description = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
         {t('userProfile.label.startDate')}
         </label>
         <input
           name={`courses[${index}].startDate`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="textarea"
           defaultValue={courses[index].startDate || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             courses[index].startDate = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
         {t('userProfile.label.endDate')}
         </label>
         <input
           name={`courses[${index}].endDate`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           defaultValue={courses[index].endDate || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             courses[index].endDate = e.target.value;
@@ -151,7 +154,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
         return (
           <div
             key={course.title}
-            className="flex flex-col bg-white rounded-md p-5"
+            className="flex flex-col bg-white rounded-md p-5 dark:secondary-dark"
           >
             <h1 className="text-lg font-semibold pt-2">{course.title}</h1>
             <h2 className="">{course.number}</h2>
@@ -166,7 +169,7 @@ const Courses: React.FC<{ courses: Usertypes["courses"]; edit: boolean }> = ({
   );
 
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold ">{t('userProfile.label.courses')}</h1>
       {component}
     </div>

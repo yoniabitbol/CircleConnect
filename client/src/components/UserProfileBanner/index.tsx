@@ -3,7 +3,7 @@ import React from 'react';
 const UserProfileBanner:React.FC<{name:any, title:any, location:any, profilePic:any, userBackdrop:any}> = (props) => {
     const {name, title, location, profilePic, userBackdrop} = props;
     return (
-            <div className="pb-5 bg-white w-full drop-shadow-md shadow-purple-500 rounded-t-2xl">
+            <div className="pb-5 bg-white w-full drop-shadow-md shadow-purple-500 rounded-t-2xl dark:primary-dark">
                     <img
                         className="w-full max-h-20 object-cover rounded-t-2xl"
                         src={userBackdrop}

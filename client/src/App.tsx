@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignUp from "./Routes/SignUp";
 import Login from "./Routes/Login";
 import MyProfile from "./Routes/MyProfile";
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Profile from "./Routes/Profile";
 import ChatPage from "./Routes/Chat";
 import Notifications from "./Routes/Notifications";
@@ -14,10 +15,10 @@ import Feed from "./Routes/Feed";
 import './i18n/i18n'
 import { createTheme, ThemeProvider } from "@mui/material";
 
-
 function App() {
   const { user, authIsReady } = useAuthContext();
-  const theme = createTheme({
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const lightTheme = createTheme({
     palette: { primary: { main: "#4D47C3" } },
     typography: {fontFamily: "Poppins, sans-serif",},
     components: {
@@ -31,11 +32,39 @@ function App() {
           },
         },
       },
+        MuiIconButton: {styleOverrides: {root:{color:'#4D47C3'},}},
+
     },
   });
+    const darkTheme = createTheme({
+    palette: { primary: { main: "#706CC3" }, mode: "dark" },
+    typography: {fontFamily: "Poppins, sans-serif"},
+    components: {
+        MuiButton: {
+        styleOverrides: {
+            root:{fontFamily: "Poppins, sans-serif"},
+            contained: { color: "white", backgroundColor: "#4D47C3","&:hover": { backgroundColor: "#413b9f" } },
+            text: {
+              color:'white',
+                "&:hover": { backgroundColor: "rgba(77,71,195, .05)" },
+            }
+        }
+        },
+        MuiTypography: {styleOverrides: {root:{fontFamily: "Poppins, sans-serif", color:'#BCBCBC'},}},
+        MuiCard: {styleOverrides: {root:{backgroundColor:'#2D2D2D',color:'#BCBCBC'},}},
+        MuiIconButton: {styleOverrides: {root:{color:'#706CC3'},}},
+        MuiCheckbox: {styleOverrides: {root:{color:'#706CC3'},checked:{color:'#706CC3'}}},
+        MuiAutocomplete: {styleOverrides: {input:{borderColor:'red'},}},
+        MuiPaper: {styleOverrides: {root:{backgroundColor:'#2D2D2D',color:'#BCBCBC'},}},
+        MuiAccordionSummary: {styleOverrides: {root:{backgroundColor:'#2D2D2D',color:'#BCBCBC'},}},
+        MuiAccordionDetails: {styleOverrides: {root:{backgroundColor:'#2D2D2D',color:'#BCBCBC'},}},
+
+
+    }
+    })
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={prefersDarkMode ? darkTheme : lightTheme}>
       {authIsReady && (
         <BrowserRouter>
           <Routes>

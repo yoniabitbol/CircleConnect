@@ -1,7 +1,7 @@
 import { Skeleton} from '@mui/material';
 const UserBannerSkeleton = () => {
     return (
-        <div className="pb-5 rounded-t-2xl bg-white w-full">
+        <div className="pb-5 rounded-t-2xl bg-white w-full dark:primary-dark">
             <div  className="w-full h-20 rounded-t-2xl object-cover">
                 <Skeleton variant="rectangular" width="100%" height="100%"/>
             </div>

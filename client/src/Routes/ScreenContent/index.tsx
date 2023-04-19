@@ -16,7 +16,7 @@ const ScreenContent = () => {
   return (
     <>
       <Navbar openSearch={isOpen} searchClicked={expand} outsideClicked={collapse}/>
-      <div className="min-h-screen flex flex-col min-h-screen justify-between" style={{ backgroundColor: "#F7F9FB" }} onClick={collapse}>
+      <div className="min-h-screen flex flex-col min-h-screen justify-between dark:background-dark" onClick={collapse}>
         <Outlet/>
       </div>
       <Footer/>
