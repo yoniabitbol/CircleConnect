@@ -59,7 +59,7 @@ const Chat: React.FC<{
   });
 
   return (
-    <div className="lg:ml-5 m-5 grid gap-0 grid-cols-1 md:grid-cols-[30%_70%]">
+    <div className="lg:ml-5 m-5 grid gap-0 grid-cols-1 md:grid-cols-[30%_70%] dark:background-dark">
       {threadProfiles && threadProfiles.length >= 0 ? (
         <Sessions
           threads={threads}

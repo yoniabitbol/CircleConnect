@@ -102,7 +102,7 @@ const ChatDisplay: React.FC<{
     },
   });
   return (
-    <div className="mx-5 mt-5 h-min rounded-md bg-white">
+    <div className="mx-5 mt-5 h-min rounded-md bg-white dark:primary-dark">
       <div className="justify-start ml-10 my-3">
         <span className="text-sm font-bold">
           CHAT WITH{" "}

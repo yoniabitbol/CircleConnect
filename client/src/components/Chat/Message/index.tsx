@@ -9,7 +9,7 @@ const Message: FC<{
   file: string | null;
 }> = ({ outbound, text, file }) => {
   const textBoxStyle = outbound
-    ? "bg-slate-100"
+    ? "bg-slate-100 dark:secondary-dark"
     : "bg-indigo-700 text-sky-50 w-fit";
   const [fileData, setFileData] = useState<string | null>(null);
   useEffect(() => {
