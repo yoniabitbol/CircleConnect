@@ -33,6 +33,7 @@ function App() {
         },
       },
         MuiIconButton: {styleOverrides: {root:{color:'#4D47C3'},}},
+        MuiChip: {styleOverrides: {root:{backgroundColor:'#4D47C3',color:'white'},}},
 
     },
   });
@@ -45,7 +46,7 @@ function App() {
             root:{fontFamily: "Poppins, sans-serif"},
             contained: { color: "white", backgroundColor: "#4D47C3","&:hover": { backgroundColor: "#413b9f" } },
             text: {
-              color:'white',
+              color:'primary.main',
                 "&:hover": { backgroundColor: "rgba(77,71,195, .05)" },
             }
         }

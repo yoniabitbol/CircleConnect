@@ -7,7 +7,7 @@ const Summary: React.FC<{
   const {t} = useTranslation();
 
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold ">{t('userProfile.label.about')}</h1>
       {summary == 'undefined' ? '' : summary}
     </div>

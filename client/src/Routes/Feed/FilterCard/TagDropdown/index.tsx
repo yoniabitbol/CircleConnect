@@ -79,7 +79,6 @@ const TagDropdown: FC<{
             size="small"
             variant="text"
             sx={{
-              color: "#4D47C3",
               width: "fit-content",
               "&:hover": { backgroundColor: "rgba(77,71,195, .05)" },
             }}
