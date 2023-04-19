@@ -83,7 +83,7 @@ const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDelete} color="primary" autoFocus>
+          <Button onClick={handleDelete}  variant={'outlined'} autoFocus>
             Delete
           </Button>
         </DialogActions>

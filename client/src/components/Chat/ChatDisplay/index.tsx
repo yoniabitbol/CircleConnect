@@ -106,7 +106,7 @@ const ChatDisplay: React.FC<{
       <div className="justify-start ml-10 my-3">
         <span className="text-sm font-bold">
           CHAT WITH{" "}
-          <span style={{ color: "#4B47B7" }}>
+          <span className="text-[#4B47B7], dark:text-[#706CC3]">
             {threadProfile ? threadProfile.name.toUpperCase() : ""}
           </span>
         </span>
