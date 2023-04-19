@@ -25,8 +25,8 @@ const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
                 <div className="flex items-center">
                     <Avatar src={userPic}/>
                     <form className="w-full" onSubmit={formik.handleSubmit}>
-                        <div className="flex items-center ml-3 w-full border-slate-100 border-2 rounded-2xl">
-                            <input name="comment" value={formik.values.comment} onChange={formik.handleChange} className="w-full p-3 outline-none " placeholder={t('common.label.shareThoughts')|| "Share your thoughts"}/>
+                        <div className="flex items-center ml-3 w-full  rounded-2xl">
+                            <input name="comment" value={formik.values.comment} onChange={formik.handleChange} className="w-full p-3 outline-none dark:secondary-dark rounded-2xl" placeholder={t('common.label.shareThoughts')|| "Share your thoughts"}/>
                             <IconButton type="submit" disabled={formik.values.comment === ''}>
                                 <MapsUgc sx={{color: `${formik.values.comment !== '' ? '#4D47C3' : 'grey'}`}}/>
                             </IconButton>

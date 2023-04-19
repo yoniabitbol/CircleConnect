@@ -49,8 +49,7 @@ const UserNotifications: React.FC = () => {
 
   return (
     <body
-      className="justify-center py-6"
-      style={{ backgroundColor: "#F7F9FB" }}
+      className="justify-center bg-[#F7F9FB] py-6 dark:background-dark"
     >
       <div className="lg:flex lg:flex-row justify-center">
         <div className="flex flex-col mr-14">
@@ -61,7 +60,7 @@ const UserNotifications: React.FC = () => {
         </div>
         <div className="flex flex-col">
           <div className="flex flex-row">
-            <hr className="w-1/3 h-px mx-4 my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
+            <hr className="w-1/3 h-px mx-4 my-2 bg-gray-300 border-0 rounded md:my-5 bg-gray-300" />
             <div className="mx-4">{t("notifications.label.recent")}</div>
             <hr className="w-1/3 h-px mx-4 my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
           </div>

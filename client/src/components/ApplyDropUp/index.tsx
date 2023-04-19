@@ -77,7 +77,7 @@ const ApplyDropUp: FC<{ postSettings: any; postId: string }> = (props) => {
           onClick={handleClick}
           sx={{
             color: "white",
-            "&:disabled": { backgroundColor: "#E0E0E0" },
+            "&:disabled": { backgroundColor: "#4f4d4d", color: "white" },
             backgroundColor: "#4D47C3",
             ":hover": { backgroundColor: "#4D47C3" },
           }}

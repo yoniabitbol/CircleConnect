@@ -10,9 +10,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    background-color: white;
-    border-radius: 1rem;
-    padding: 20px;
     min-height: fit-content;
     max-width: 35rem;
     overflowY: scroll;

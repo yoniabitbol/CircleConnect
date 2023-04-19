@@ -45,10 +45,10 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
   const [showApplicants, setShowApplicants] = useState(false);
 
   return (
-    <div className="flex bg-white mt-2">
+    <div className="flex bg-white mt-2 dark:secondary-dark">
       <div className="grow py-2 ml-4">
         <a href="/" className="font-bold"></a>
-        <p className="text-md" style={{ color: "#4c47bc" }}>
+        <p className="text-md text-[#4c47bc] dark:text-[#706CC3]">
           {postInfo?.position}
         </p>
         <p className="text-sm">
@@ -75,7 +75,7 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
               <div className="text-sm mt-2">
                 {applicantsInfo?.map((applicant: Usertypes) => (
                   <div key={applicant.name}>
-                    <div className="mt-2 lg:text-xs mr-3 bg-input-purple px-2 py-2">
+                    <div className="mt-2 lg:text-xs mr-3 bg-input-purple dark:bg-[#2A2956FF] px-2 py-2">
                       <ApplicantRow applicant={applicant.name} />
                       <DownloadCV applicant={applicant} postID={post._id} />
                     </div>

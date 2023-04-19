@@ -9,14 +9,14 @@ const Education: React.FC<{
   const {t} = useTranslation();
 
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold ">{t('userProfile.label.education')}</h1>
       <div className="grid grid-cols-2 gap-4 my-4">
         {education.map((edu) => {
           return (
             <div
               key={edu.school}
-              className="flex flex-col bg-white rounded-md p-5"
+              className="flex flex-col bg-white rounded-md p-5 dark:secondary-dark"
             >
               <h1 className="text-lg font-semibold pt-2">{edu.school}</h1>
               <h2 className="">{edu.degree}</h2>
