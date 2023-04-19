@@ -44,7 +44,6 @@ const JobSettingsModal: FC<{
   const handleCoverLetterChange = (event: any) => {
     onChange("isCoverLetterRequired", event.target.checked);
   };
-  console.log(props.values)
 
   const handleThirdPartyChange = (event: any) => {
     setThirdParty(event.target.checked);
