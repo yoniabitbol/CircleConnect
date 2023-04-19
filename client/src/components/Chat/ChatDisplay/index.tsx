@@ -1,12 +1,14 @@
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import Message from "../Message";
 import { Field, Form, Formik } from "formik";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import SendIcon from "@mui/icons-material/Send";
 import MessageModel from "../../../Models/MessageModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
 import saveMessage from "../../../http/saveMessage";
 import ThreadModel from "../../../Models/ThreadModel";
+import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Socket } from "socket.io-client";
+import sendNotification from "../../../http/sendNotification";
 
 export interface MessageType {
   id: number;
@@ -22,9 +24,7 @@ const ChatDisplay: React.FC<{
   thread: ThreadModel;
   socket: Socket;
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
-
   const lastMessageRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     socket.on("receive-message", (newMsg) => {
@@ -43,7 +43,7 @@ const ChatDisplay: React.FC<{
   }, [socket, messages]);
 
   return (
-    <div  className="mx-5 mt-5 h-min rounded-md bg-white">
+    <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
         <span className="text-sm font-bold">
           CHAT WITH{" "}
@@ -54,19 +54,23 @@ const ChatDisplay: React.FC<{
       </div>
       <hr className="border-gray-100 border" />
 
-      <div ref={lastMessageRef} className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
-      {messages.map((message) => (
-          <div
-            key={message._id}
-            className={
-              message.senderID == uid
-                ? "ml-20 mt-2 justify-end flex"
-                : "mx-5 mt-2 justify-start flex" + " flex"
-            }
-          >
-            <Message outbound={message.senderID == uid} text={message.text} />
-          </div>
-        ))}
+      <div
+        ref={lastMessageRef}
+        className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch"
+      >
+        {messages &&
+          messages.map((message) => (
+            <div
+              key={message._id}
+              className={
+                message.senderID == uid
+                  ? "ml-20 mt-2 justify-end flex"
+                  : "mx-5 mt-2 justify-start flex" + " flex"
+              }
+            >
+              <Message outbound={message.senderID == uid} text={message.text} />
+            </div>
+          ))}
       </div>
       <hr className="border-gray-100 border" />
       <div className="ml-8 my-2">
@@ -75,6 +79,10 @@ const ChatDisplay: React.FC<{
           enableReinitialize
           onSubmit={(values, { resetForm }) => {
             const { message } = values;
+            if (message.trim() === "") {
+              // Check if message is empty or contains only whitespace
+              return; // Exit early without sending message
+            }
             if (threadProfile) {
               saveMessage(thread._id, uid, message).then((res) => {
                 if (res.status === "success" || res.ok) {
@@ -98,6 +106,8 @@ const ChatDisplay: React.FC<{
                     text: newMsg.text,
                     file: newMsg.file,
                   });
+                  if (threadProfile?.user_id == null) return;
+                  sendNotification(threadProfile?.user_id, "message"); // send notification of new message
                 }
               });
             }
@@ -106,18 +116,26 @@ const ChatDisplay: React.FC<{
           }}
         >
           <Form>
-            <Field
-              className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent"
-              type="message"
-              name="message"
-              placeholder="Write your message"
-            />
-            <button
-              className="mx-5 bg-indigo-700 h-10 w-10 rounded-lg"
-              type="submit"
-            >
-              <PaperAirplaneIcon className="stroke-white" />
-            </button>
+            <div className="flex items-center">
+              <Field
+                className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent mr-2 outline-none"
+                type="message"
+                name="message"
+                placeholder="Write your message"
+              />
+              <div className="flex">
+                <button className="border h-10 w-10 rounded-lg">
+                  <AttachFileIcon className="stroke-white" />
+                </button>
+
+                <button
+                  className="mx-5 border h-10 w-10 rounded-lg"
+                  type="submit"
+                >
+                  <SendIcon className="text-indigo-700" />
+                </button>
+              </div>
+            </div>
           </Form>
         </Formik>
       </div>

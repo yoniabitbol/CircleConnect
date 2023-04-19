@@ -63,7 +63,7 @@ const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
                text-white hover:bg-signup-button-hover"
                onClick={() => {
                 createNewThread(props.user_id ?? "").then(() => {
-                  window.location.href = `/chat`;
+                  window.location.href = `/chat/${props.user_id}`;
                 });
               }}
           >

@@ -1,6 +1,7 @@
 import { auth } from "../firebase/config";
 const port = process.env.REACT_APP_BACKEND_PORT || 4000;
-const url = `http://localhost:${port}/files/applications/coverLetter/`;
+const host = process.env.REACT_APP_BACKEND_HOST || "localhost";
+const url = `http://${host}:${port}/files/applications/coverLetter/`;
 
 async function getCoverLetter(coverLetter: string) {
   const currentUser = auth.currentUser;
