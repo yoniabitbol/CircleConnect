@@ -76,7 +76,10 @@ const JobPosting: React.FC<JobPostingProps> = ({ post }) => {
                 {applicantsInfo?.map((applicant: Usertypes) => (
                   <div key={applicant.name}>
                     <div className="mt-2 lg:text-xs mr-3 bg-input-purple dark:bg-[#2A2956FF] px-2 py-2">
-                      <ApplicantRow applicant={applicant.name} />
+                      <ApplicantRow
+                        applicantID={applicant.user_id}
+                        applicant={applicant.name}
+                      />
                       <DownloadCV applicant={applicant} postID={post._id} />
                     </div>
                   </div>
