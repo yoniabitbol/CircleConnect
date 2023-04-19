@@ -44,6 +44,7 @@ const JobSettingsModal: FC<{
   const handleCoverLetterChange = (event: any) => {
     onChange("isCoverLetterRequired", event.target.checked);
   };
+  console.log(props.values)
 
   const handleThirdPartyChange = (event: any) => {
     setThirdParty(event.target.checked);
@@ -107,6 +108,7 @@ const JobSettingsModal: FC<{
                       label="Application Deadline"
                       disablePast={true}
                       onChange={handleDateChange}
+                        value={props.values.uploadDeadline}
                   />
                 </LocalizationProvider>
               </div>
@@ -117,12 +119,14 @@ const JobSettingsModal: FC<{
                   labelPlacement="start"
                   control={<Switch/>}
                   label="Require CV"
+                  checked={props.values.isResumeRequired}
               />
               <FormControlLabel
                   onChange={handleCoverLetterChange}
                   labelPlacement="start"
                   control={<Switch  />}
                   label="Require Cover Letter"
+                  checked={props.values.isCoverLetterRequired}
               />
             </div>
           </div>
@@ -141,6 +145,7 @@ const JobSettingsModal: FC<{
                 }
                 color="success"
                 label="Third Party Post"
+                checked={thirdParty}
             />
             <div className="w-full flex">
               <TextField
@@ -152,6 +157,7 @@ const JobSettingsModal: FC<{
                   type="text"
                   variant="filled"
                   label="Enter 3rd party link"
+                  placeholder={props.values.thirdPartyLink}
               />
               <Button
                   disabled={!thirdPartyLink}
