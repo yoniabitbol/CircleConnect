@@ -96,6 +96,15 @@ const deleteApplication = async (req: Request, res: Response) => {
 // Sends an application based on the post ID
 const sendApplication = async (req: any, res: Response) => {
   try {
+    const existingApplication = await Application.findOne({ applicantID: req.body.applicantID, postID: req.params.post_id });
+
+    if (existingApplication) {
+      return res.status(403).json({
+        status: 'failure',
+        message: 'Cannot apply to the same post twice',
+      });
+    }
+
     const application: any = await Application.create(
       {
         applicantID: req.body.applicantID,
@@ -114,6 +123,7 @@ const sendApplication = async (req: any, res: Response) => {
     const post: any = await Post.findOne({ _id: req.params.post_id });
     const user = await User.findOne({ user_id: req.body.applicantID });
     await application.populate({ path: 'postID', model: 'Post', select: 'jobTitle' });
+
     if (!post) {
       return res.status(403).json({
         status: 'failure',
@@ -132,13 +142,6 @@ const sendApplication = async (req: any, res: Response) => {
       return res.status(403).json({
         status: 'failure',
         message: 'Cannot apply to your own post',
-      });
-    }
-
-    if (post.applications.includes(application._id)) {
-      return res.status(403).json({
-        status: 'failure',
-        message: 'Application already sent',
       });
     }
 
