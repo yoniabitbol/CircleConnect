@@ -8,14 +8,13 @@ const Dashboard: React.FC<{
   const { t } = useTranslation();
   const { unreadNotifications } = props;
   return (
-    <div className="my-4 py-5 rounded-md bg-white">
+    <div className="my-4 py-5 rounded-md bg-white dark:secondary-dark">
       <div className="flex flex-col justify-center mb-2">
         <div className="flex justify-around text-sm">
           <h1 className="">{t("notifications.label.dashboard")}</h1>
           <Link
             to="/profile"
-            style={{ color: "#4B47B7" }}
-            className="underline decoration-solid"
+            className="underline decoration-solid text-[#4B47B7] dark:text-[#706CC3]"
           >
             {t("notifications.label.stats")}
           </Link>

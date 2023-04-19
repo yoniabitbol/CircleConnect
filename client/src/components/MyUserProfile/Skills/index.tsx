@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 import { useTranslation } from "react-i18next";
+import {Button} from '@mui/material';
 
 const Skills: React.FC<{
   skills: {
@@ -14,9 +15,11 @@ const Skills: React.FC<{
   const [addOrDelete, setAddOrDelete] = useState(false);
 
   const addNewBtn = (
-    <button
+    <Button
       type="button"
-      className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full my-5"
+      variant="contained"
+        disableElevation={true}
+        sx={{mt:2}}
       onClick={() => {
         skills.push({ name: "", level: "" });
         // Force form to re-render
@@ -24,7 +27,7 @@ const Skills: React.FC<{
       }}
     >
       {t('userProfile.buttons.addNew')}
-    </button>
+    </Button>
   );
 
   const deleteBtn = (index: number) => {
@@ -46,24 +49,24 @@ const Skills: React.FC<{
   function skillFields(index: number) {
     return (
       <>
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold py-2">
         {t('userProfile.label.skill')}
         </label>
         <input
           name={`skills[${index}].name`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={skills[index].name || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             skills[index].name = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold py-2">
           Level
         </label>
         <input
           name={`skills[${index}].level`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={skills[index].level || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,7 +104,7 @@ const Skills: React.FC<{
         return (
           <div
             key={skill.name}
-            className="flex flex-col bg-white rounded-md p-5"
+            className="flex flex-col bg-white rounded-md p-5 dark:primary-dark"
           >
             <h1 className="text-lg font-semibold pt-2">{skill.name}</h1>
             <h2 className="">
@@ -114,7 +117,7 @@ const Skills: React.FC<{
   );
 
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold ">{t('userProfile.label.skills')}</h1>
       {component}
     </div>

@@ -38,8 +38,8 @@ const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
 
 
   return (
-    <div className="flex justify-center sm:text-left text-center py-2">
-      <div className="flex items-center gap-4 p-4 sm:text-sm text-xs w-full sm:w-7/12 bg-white">
+    <div className="flex justify-center sm:text-left text-center py-2 ">
+      <div className="flex items-center gap-4 p-4 sm:text-sm text-xs w-full sm:w-7/12 bg-white dark:primary-dark">
         <Link key={props.user_id} to={`/profile/${props.user_id}`} onClick={ConnectionClickHandler}>
         <div className="">
           <img
@@ -52,15 +52,15 @@ const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
           <Link key={props.user_id} to={`/profile/${props.user_id}`} onClick={ConnectionClickHandler}>
           <p className="font-bold">{props.name}</p>
           </Link>
-          <p className="text-gray-500">{props.title}</p>
-          <p className="text-gray-500">{props.connections.length} {t('common.label.connectionLc')}</p>
+          <p className="text-gray-500 dark:primary-dark">{props.title}</p>
+          <p className="text-gray-500 dark:primary-dark">{props.connections.length} {t('common.label.connectionLc')}</p>
         </div>
 
         <div className="">
-          <button
+          <Button
             type="submit"
-            className="block lg:mt-4 w-auto px-5 py-2 rounded-md bg-signup-button
-               text-white hover:bg-signup-button-hover"
+            variant={"contained"}
+            disableElevation={true}
                onClick={() => {
                 createNewThread(props.user_id ?? "").then(() => {
                   window.location.href = `/chat/${props.user_id}`;
@@ -68,7 +68,7 @@ const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
               }}
           >
             {t('common.label.message')}
-          </button>
+          </Button>
         </div>
         <div>
       <button type="button" onClick={() => setOpen(true)}>
@@ -83,7 +83,7 @@ const ConnectionRow: FC<ConnectionType> = (props:ConnectionType) => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDelete} color="primary" autoFocus>
+          <Button onClick={handleDelete}  variant={'outlined'} autoFocus>
             Delete
           </Button>
         </DialogActions>

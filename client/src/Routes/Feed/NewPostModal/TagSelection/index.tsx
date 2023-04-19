@@ -27,24 +27,27 @@ const TagSelection:React.FC<{showModal: boolean, handleModalClose:() => void, on
                sx={{overflow:'scroll'}}
         >
             <Box className={style.box}>
-                <h1>{t('userProfile.label.tags')}</h1>
-                <input type="text" placeholder="Insert tags" className="w-full h-10 outline-1 focus:outline-none" onKeyDown={handleKeyDown}/>
-                <hr className=""/>
-                <div className="mt-4">
-                    {selectedTags && selectedTags.map((tag, index) => {
+                <div className="bg-white dark:secondary-dark p-[20px] rounded-[1rem]">
+                    <h1>{t('userProfile.label.tags')}</h1>
+                    <input type="text" placeholder="Insert tags" className="w-full h-10 outline-1 focus:outline-none dark:secondary-dark" onKeyDown={handleKeyDown}/>
+                    <hr className=""/>
+                    <div className="mt-4">
+                        {selectedTags && selectedTags.map((tag, index) => {
+                            return (
+                                <Chip key={index} label={tag} sx={{margin:1, backgroundColor: '#4D47C3', color:'white','& .MuiChip-deletable':{backgroundColor: 'white'}}} onDelete={()=>handleTagDeletion(tag)}/>
+                            )
+                        })
+                        }
+                    </div>
+                    {defaultTags.map((tag, index) => {
+                        {if(selectedTags?.includes(tag)) return}
                         return (
-                            <Chip key={index} label={tag} sx={{margin:1, backgroundColor: '#4D47C3', color:'white','& .MuiChip-deletable':{backgroundColor: 'white'}}} onDelete={()=>handleTagDeletion(tag)}/>
+                            <Chip key={index} label={tag} sx={{margin:1}} onClick={() => handleTagSelection(tag)}/>
                         )
                     })
                     }
                 </div>
-                {defaultTags.map((tag, index) => {
-                    {if(selectedTags?.includes(tag)) return}
-                    return (
-                       <Chip key={index} label={tag} sx={{margin:1}} onClick={() => handleTagSelection(tag)}/>
-                    )
-                })
-                }
+
             </Box>
 
         </Modal>

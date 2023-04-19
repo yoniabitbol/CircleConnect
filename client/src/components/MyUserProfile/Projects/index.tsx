@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 import { useTranslation } from "react-i18next";
+import {Button} from '@mui/material';
 
 const Projects: React.FC<{
   projects: {
@@ -18,9 +19,11 @@ const Projects: React.FC<{
   const {t} = useTranslation();
 
   const addNewBtn = (
-    <button
+    <Button
       type="button"
-      className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full my-5"
+      disableElevation={true}
+        variant="contained"
+      sx={{mt:2}}
       onClick={() => {
         projects.push({
           title: "",
@@ -35,7 +38,7 @@ const Projects: React.FC<{
       }}
     >
       {t('userProfile.buttons.addNew')}
-    </button>
+    </Button>
   );
 
   const deleteBtn = (index: number) => {
@@ -57,12 +60,12 @@ const Projects: React.FC<{
   const projectFields = (index: number) => {
     return (
       <>
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold py-2">
           {t('userProfile.label.title')}
         </label>
         <input
           name={`projects[${index}].title`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={projects[index].title || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,60 +73,60 @@ const Projects: React.FC<{
           }}
         />
 
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.description')}
         </label>
         <input
           name={`projects[${index}].description`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="textarea"
           defaultValue={projects[index].description || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             projects[index].description = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold py-2">
           {t('userProfile.label.startDate')}
         </label>
         <input
           name={`projects[${index}].startDate`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={projects[index].startDate || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             projects[index].startDate = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold py-2">
           {t('userProfile.label.endDate')}
         </label>
         <input
           name={`projects[${index}].endDate`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={projects[index].endDate || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             projects[index].endDate = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold py-2">
           Technologies (seperate with a comma)
         </label>
         <input
           name={`projects[${index}].technologies`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={projects[index].technologies || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             projects[index].technologies = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold py-2">
         {t('userProfile.label.picture')}
         </label>
         <input
           name={`projects[${index}].picture`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           disabled={true}
           // defaultValue={projects[index].picture || ""}
@@ -158,12 +161,12 @@ const Projects: React.FC<{
   ) : projects.length < 1 ? (
     <p>{t('userProfile.label.addProject')}</p>
   ) : (
-    <div className="grid grid-cols-2 gap-4 my-4">
+    <div className="grid grid-cols-2 gap-4 my-4 ">
       {projects?.map((project) => {
         return (
           <div
             key={project.title}
-            className="flex flex-col bg-white rounded-md p-5"
+            className="flex flex-col bg-white rounded-md p-5 dark:secondary-dark"
           >
             <h1 className="text-lg font-semibold pt-2">{project.title}</h1>
             <h2 className="">{project.description}</h2>
@@ -190,7 +193,7 @@ const Projects: React.FC<{
   );
 
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold "> {t('userProfile.label.project')}</h1>
       {component}
     </div>

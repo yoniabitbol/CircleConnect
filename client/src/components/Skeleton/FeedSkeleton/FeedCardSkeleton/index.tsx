@@ -3,7 +3,7 @@ import {ThumbUpOutlined,ChatBubbleOutline} from '@mui/icons-material';
 
 const FeedCardSkeleton = () => {
     return (
-        <div className="bg-white h-fit p-0 rounded-2xl p-4 mt-2">
+        <div className="bg-white h-fit p-0 rounded-2xl p-4 mt-2 dark:primary-dark">
             <div className="p-1 border-gray-100 border-b-2">
                 <Skeleton animation="wave" variant="text" height="100%" width={250}/>
             </div>

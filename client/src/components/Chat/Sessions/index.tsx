@@ -77,7 +77,7 @@ const Sessions: React.FC<{
 
   return (
     <div>
-      <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto">
+      <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto dark:primary-dark">
         <div className="justify-start ml-10 my-6">
           <span className="text-sm font-bold">CHATS</span>
         </div>
@@ -109,7 +109,7 @@ const Sessions: React.FC<{
         })}
       </div>
 
-      <div className="mt-10 pb-5 rounded-md bg-white">
+      <div className="mt-10 pb-5 rounded-md bg-white dark:primary-dark">
         <div className="flex justify-center">
           <button
             className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg"
@@ -144,7 +144,7 @@ const Sessions: React.FC<{
               aria-modal="true"
               aria-labelledby="modal-headline"
             >
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:primary-dark">
                 <div className="sm:flex sm:items-start">
                   <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
                     <svg
@@ -165,7 +165,7 @@ const Sessions: React.FC<{
                   </div>
                   <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <h3
-                      className="text-lg leading-6 font-medium text-gray-900"
+                      className="text-lg leading-6 font-medium"
                       id="modal-headline"
                     >
                       Select a Connection
@@ -188,7 +188,7 @@ const Sessions: React.FC<{
                               }
                             });
                           }}
-                          className="mt-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black hover:bg-indigo-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 flex items-center"
+                          className="mt-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black hover:bg-indigo-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 flex items-center dark:secondary-dark"
                         >
                           <Avatar className="mr-2" src={conn.picture} />
                           {conn.name}
@@ -198,7 +198,7 @@ const Sessions: React.FC<{
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse dark:primary-dark">
                 <button
                   onClick={handleCloseModal}
                   type="button"

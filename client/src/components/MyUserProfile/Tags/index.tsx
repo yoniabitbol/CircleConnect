@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import updateUserPreferenceTags from "../../../http/updateUserPreferenceTags";
 import { useTranslation } from "react-i18next";
+import {Button, Chip} from '@mui/material';
 
 interface TagsProps {
   preferenceTags: string[];
@@ -34,39 +35,35 @@ const Tags: React.FC<TagsProps> = ({ preferenceTags }) => {
   }, [preferenceTags]);
 
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold">{t('userProfile.label.tags')}</h1>
-      <div className="flex flex-wrap font-bold">
+      <div className="flex font-bold mt-3 space-x-2">
         {tags.map((tag: string) => (
-          <div
+          <Chip
             key={tag}
-            className="flex bg-slate-500 text-white py-2 px-4 rounded-xl m-2 w-fit items-center"
-          >
-            <div className="">{tag}</div>
-            <button
-              className="ml-2 hover:bg-red-500 px-2 rounded-full"
-              onClick={() => deleteTag(tag)} // Call deleteTag function with the current tag
-              type="button"
-            >
-              X
-            </button>
-          </div>
+            label={tag}
+            onDelete={() => deleteTag(tag)}
+            sx={{backgroundColor: '#4F46E5'}}
+          />
         ))}
       </div>
-      <input
-        type="text"
-        placeholder={t('userProfile.label.addTag') as string}
-        onChange={handleChange}
-        value={newTag}
-        className="bg-white text-slate-500 py-2 px-4 rounded-xl m-2 w-fit"
-      />
-      <button
-        type="button"
-        className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
-        onClick={addTag}
-      >
-        {t('userProfile.label.add')}
-      </button>
+        <div className="flex items-center">
+            <input
+                type="text"
+                placeholder={t('userProfile.label.addTag') as string}
+                onChange={handleChange}
+                value={newTag}
+                className="bg-white text-slate-500 py-2 px-4 rounded-xl m-2 w-fit dark:secondary-dark"
+            />
+            <Button
+                variant="contained"
+                disableElevation={true}
+                onClick={addTag}
+            >
+                {t('userProfile.label.add')}
+            </Button>
+        </div>
+
     </div>
   );
 };

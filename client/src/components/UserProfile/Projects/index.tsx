@@ -11,14 +11,14 @@ const Projects: React.FC<{
   }[];
 }> = ({ projects }) => {
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold ">Projects</h1>
       <div className="grid grid-cols-2 gap-4 my-4">
         {projects?.map((project) => {
           return (
             <div
               key={project.title}
-              className="flex flex-col bg-white rounded-md p-5"
+              className="flex flex-col bg-white rounded-md p-5 dark:secondary-dark"
             >
               <h1 className="text-lg font-semibold pt-2">{project.title}</h1>
               <h2 className="">{project.description}</h2>
@@ -31,7 +31,7 @@ const Projects: React.FC<{
                   return (
                     <div
                       key={technology}
-                      className="rounded-md bg-slate-500 px-2"
+                      className="rounded-md bg-slate-500 px-2 dark:bg-[#4B47B7]"
                     >
                       {technology}
                     </div>

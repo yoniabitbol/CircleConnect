@@ -19,14 +19,19 @@ const Chat: React.FC<{
   refreshThreads: () => void;
   chatId: string | null;
 }> = ({chatId, threads, connections, receivingParticipants, uid, refreshThreads }) => {
-  const [messages, setMessages] = useState<MessageModel[]>([]);
+  const [messages, setMessages] = useState<MessageModel[] | any>([]);
     const [selected, setSelected] = useState<number | any>();
     const socket = io(`http://${host}:${port}`, { query: { userId: uid } });
     useEffect(() => {
         if(selected){
-            getThreadMessages(selected._id).then((res) => {
-                setMessages(res.data.messages);
-            });
+            setMessages(null)
+            //set Timeout 1 second to allow the state to update
+            setTimeout(() => {
+                getThreadMessages(selected._id).then((res) => {
+                    setMessages(res.data.messages);
+                });
+            },500)
+
         }
     }, [selected]);
     useEffect(() => {
@@ -54,7 +59,7 @@ const Chat: React.FC<{
   });
 
   return (
-    <div className="lg:ml-5 m-5 grid gap-0 grid-cols-1 md:grid-cols-[30%_70%]">
+    <div className="lg:ml-5 m-5 grid gap-0 grid-cols-1 md:grid-cols-[30%_70%] dark:background-dark">
       {threadProfiles && threadProfiles.length >= 0 ? (
         <Sessions
           threads={threads}
