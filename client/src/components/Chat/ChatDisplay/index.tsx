@@ -8,7 +8,6 @@ import saveMessage from "../../../http/saveMessage";
 import ThreadModel from "../../../Models/ThreadModel";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Socket } from "socket.io-client";
-import sendNotification from "../../../http/sendNotification";
 import { Button, IconButton, Chip, CircularProgress } from "@mui/material";
 
 export interface MessageType {
