@@ -4,6 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
@@ -33,6 +35,7 @@ code {
 @layer components {
     .background-dark {
         @apply bg-[#202124];
+        color: #BCBCBC;
     }
     .primary-dark {
         @apply bg-[#373737];

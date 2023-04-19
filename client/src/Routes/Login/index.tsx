@@ -27,9 +27,8 @@ const Login: React.FC = () => {
     }
   };
   return (
-    <div className="lg:flex justify-center lg:text-left text-center">
+    <div className="lg:flex justify-center lg:text-left text-center dark:background-dark h-screen">
       <AuthContent />
-
       <SubmissionForm
         onSubmit={onSubmitHandler}
         header={t('loginAndRegistration.label.login')}
