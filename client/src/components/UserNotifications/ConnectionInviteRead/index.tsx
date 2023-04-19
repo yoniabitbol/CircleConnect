@@ -38,7 +38,7 @@ const ConnectionInviteRead: React.FC<{
   }, []);
 
   return (
-    <div className="w-full m-4 py-3 rounded-md bg-white h-auto">
+    <div className="w-full m-4 py-3 rounded-md bg-white h-auto dark:primary-dark">
       <div className="flex flex-row justify-between px-3">
         <div className="flex flex-row space-x-8 ">
           <div className="pt-2">
@@ -47,7 +47,7 @@ const ConnectionInviteRead: React.FC<{
           <div className="flex flex-col">
             <h1 className="text-md font-bold">{user?.name}</h1>
             <h2 className="text-xs font-semibold">{user?.title}</h2>
-            <h3 className="text-xs" style={{ color: "#4B47B7" }}>
+            <h3 className="text-xs text-[#4B47B7] dark:main-color">
               {user?.connections.length} connections
             </h3>
           </div>

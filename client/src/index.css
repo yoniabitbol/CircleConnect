@@ -45,4 +45,7 @@ code {
         @apply bg-[#2F2F2F];
         color: #BCBCBC;
     }
+    .main-color{
+        color:#706CC3;
+    }
 }

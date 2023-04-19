@@ -11,7 +11,7 @@ const NavSettings: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col mb-2 py-5 rounded-md bg-white lg:w-72">
+    <div className="flex flex-col mb-2 py-5 rounded-md bg-white lg:w-72 dark:secondary-dark">
       <Link data-testid="link-click-0" className={`px-6 text-sm 
       ${isClicked === 'notif' ? 'text-gray-400 ' : ''}`} 
         to="/notifications" onClick={() => handleClick('notif')}>
