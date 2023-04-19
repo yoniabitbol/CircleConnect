@@ -60,7 +60,6 @@ const ChatDisplay: React.FC<{
             }
             //create formData
             const formData = new FormData();
-            console.log('values',values);
             for (const key in values) {
                 formData.append(key, values[key]);
             }
@@ -121,7 +120,7 @@ const ChatDisplay: React.FC<{
                   : "mx-5 mt-2 justify-start flex" + " flex"
               }
             >
-              <Message outbound={message.senderID == uid} text={message.text} />
+              <Message outbound={message.senderID == uid} text={message.text} file={message.file} />
             </div>
           ))}
       </div>
@@ -163,8 +162,7 @@ const ChatDisplay: React.FC<{
                         }
                     }}
 
-                    accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                                        text/plain, application/pdf, image/*"
+                    accept="=.pdf, .doc, .docx, .txt, .xlsx"
                   />
                   <AttachFileIcon />
                 </IconButton>
