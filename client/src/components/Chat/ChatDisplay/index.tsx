@@ -36,7 +36,7 @@ const ChatDisplay: React.FC<{
 
     // Scroll to the last message whenever the messages state changes
     if (lastMessageRef.current) {
-      lastMessageRef.current.scrollTop = lastMessageRef.current.scrollHeight;
+      lastMessageRef.current.scrollTop = 0;
     }
 
     return () => {
@@ -44,7 +44,12 @@ const ChatDisplay: React.FC<{
       socket.disconnect();
     };
   }, [socket, messages]);
+ useEffect(() => {
+    if (lastMessageRef.current) {
 
+      lastMessageRef.current.scrollTop = lastMessageRef.current.scrollHeight;
+    }
+ },[lastMessageRef.current, messages])
   const formik = useFormik({
     initialValues: {
       thread_id: thread._id,
@@ -110,7 +115,7 @@ const ChatDisplay: React.FC<{
       <hr className="border-gray-100 border" />
         <div
           ref={lastMessageRef}
-          className="w-11/12 min-h-[25rem] max-h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch"
+          className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch"
         >
           {messages ? messages.map((message) => (
               <div
@@ -121,13 +126,14 @@ const ChatDisplay: React.FC<{
                     : "mx-5 mt-2 justify-start flex" + " flex"
                 }
               >
-                <Message
-                  outbound={message.senderID == uid}
-                  text={message.text}
-                  file={message.file}
-                />
+                  <Message
+                      outbound={message.senderID == uid}
+                      text={message.text}
+                      file={message.file}
+                  />
+
               </div>
-            )): <CircularProgress color="primary" className="absolute right-[35%] top-[45%]" />}
+            )): <CircularProgress color="primary" className="relative left-[50%] top-[45%]" />}
         </div>
       <hr className="border-gray-100 border" />
       <div className="ml-8 my-2">
