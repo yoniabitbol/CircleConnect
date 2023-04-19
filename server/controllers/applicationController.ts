@@ -128,6 +128,20 @@ const sendApplication = async (req: any, res: Response) => {
       });
     }
 
+    if (post.creatorID === req.body.applicantID) {
+      return res.status(403).json({
+        status: 'failure',
+        message: 'Cannot apply to your own post',
+      });
+    }
+
+    if (post.applications.includes(application._id)) {
+      return res.status(403).json({
+        status: 'failure',
+        message: 'Application already sent',
+      });
+    }
+
     await post.updateOne({ $push: { applications: application._id } });
     await user?.updateOne({ $push: { applications: application._id } });
     return res.status(200).json({
