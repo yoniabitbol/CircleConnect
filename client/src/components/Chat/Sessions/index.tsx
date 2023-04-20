@@ -5,6 +5,7 @@ import UserProfileModel from "../../../Models/UserProfileModel";
 import createNewThread from "../../../http/createNewThread";
 import { Avatar } from "@mui/material";
 import getUserProfilePic from "../../../http/getUserPicturePic";
+import { useTranslation } from "react-i18next";
 
 export type Thread = {
   id: number;
@@ -28,104 +29,104 @@ const Sessions: React.FC<{
   threadProfiles,
   connections,
 }) => {
-  const [showModal, setShowModal] = useState(false);
-  const [userProfilePics, setUserProfilePics] = useState<{ [key: string]: string }>({});
-  
+    const [showModal, setShowModal] = useState(false);
+    const [userProfilePics, setUserProfilePics] = useState<{ [key: string]: string }>({});
+    const { t } = useTranslation();
 
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
+    const handleOpenModal = () => {
+      setShowModal(true);
+    };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+    const handleCloseModal = () => {
+      setShowModal(false);
+    };
 
-  // Get the profiles who you DON'T have a conversation with yet
-  const filteredConnections = connections.filter(
-    (conn) =>
-      !threadProfiles.map((profile) => profile.user_id).includes(conn.user_id)
-  );
-
-useEffect(() => {
-  async function fetchUserProfilePics() {
-    const profilePicUrls = await Promise.all(
-      connections.map(async (user: any) => {
-        const profilePicUrl = await getUserProfilePic(user.picture);
-        return { userId: user.user_id, profilePicUrl };
-      })
+    // Get the profiles who you DON'T have a conversation with yet
+    const filteredConnections = connections.filter(
+      (conn) =>
+        !threadProfiles.map((profile) => profile.user_id).includes(conn.user_id)
     );
-    const profilePicMap = profilePicUrls.reduce((map: { [key: string]: string }, obj: { userId: string, profilePicUrl: string }) => {
-      map[obj.userId] = obj.profilePicUrl;
-      return map;
-    }, {});
-    setUserProfilePics(profilePicMap);
-  }
-  fetchUserProfilePics();
-}, [connections]);
 
-console.log(threads);
+    useEffect(() => {
+      async function fetchUserProfilePics() {
+        const profilePicUrls = await Promise.all(
+          connections.map(async (user: any) => {
+            const profilePicUrl = await getUserProfilePic(user.picture);
+            return { userId: user.user_id, profilePicUrl };
+          })
+        );
+        const profilePicMap = profilePicUrls.reduce((map: { [key: string]: string }, obj: { userId: string, profilePicUrl: string }) => {
+          map[obj.userId] = obj.profilePicUrl;
+          return map;
+        }, {});
+        setUserProfilePics(profilePicMap);
+      }
+      fetchUserProfilePics();
+    }, [connections]);
 
-  
-  return (
-    <div>
-      <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto">
-        <div className="justify-start ml-10 my-6">
-          <span className="text-sm font-bold">CHATS</span>
+    console.log(threads);
+
+
+    return (
+      <div>
+        <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto">
+          <div className="justify-start ml-10 my-6">
+            <span className="text-sm font-bold">{t('chat.label.chats')}</span>
+          </div>
+          <hr className="border-gray-100 border" />
+          {threads.map((thread, index) => {
+            const threadProfile = threadProfiles[index];
+            const userProfilePic = userProfilePics[threadProfile?.user_id || ""];
+            if (!threadProfile) return null;
+            return (
+              <button
+                className="w-full h-full"
+                key={thread._id}
+                data-key={index}
+                type="submit"
+                onClick={(event) => selectThread(event)}
+              >
+                <SessionItem
+                  selected={selected == index}
+                  session={{
+                    user: {
+                      name: threadProfile?.name || 'USER DELETED',
+                      picture: userProfilePic ? userProfilePic : "default-user.jpg",
+                    },
+                    latestMsg: "",
+                  }}
+                />
+              </button>
+            );
+          })}
         </div>
-        <hr className="border-gray-100 border" />
-        {threads.map((thread, index) => {
-      const threadProfile = threadProfiles[index];
-      const userProfilePic = userProfilePics[threadProfile?.user_id || ""];
-      if (!threadProfile) return null;
-      return (
-        <button
-          className="w-full h-full"
-          key={thread._id}
-          data-key={index}
-          type="submit"
-          onClick={(event) => selectThread(event)}
-        >
-          <SessionItem
-            selected={selected == index}
-            session={{
-              user: {
-                name: threadProfile?.name || 'USER DELETED',
-                picture: userProfilePic ? userProfilePic : "default-user.jpg",
-              },
-              latestMsg: "",
-            }}
-          />
-        </button>
-      );
-    })}
-      </div>
 
-      <div className="mt-10 pb-5 rounded-md bg-white">
-        <div className="flex justify-center">
-          <button
-            className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg"
-            type="button"
-            style={{ background: "#4B47B7" }}
-            onClick={handleOpenModal}
-          >
-            <div className="flex justify-center pt-1">START NEW CHAT</div>
-          </button>
+        <div className="mt-10 pb-5 rounded-md bg-white">
+          <div className="flex justify-center">
+            <button
+              className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg"
+              type="button"
+              style={{ background: "#4B47B7" }}
+              onClick={handleOpenModal}
+            >
+              <div className="flex justify-center pt-1">{t('chat.buttons.startChat')}</div>
+            </button>
+          </div>
         </div>
-      </div>
 
-      {showModal && (
-        <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
+        {showModal && (
+          <div className="fixed z-10 inset-0 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
 
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-            <div
-              className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="modal-headline"
+              <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+              <div
+                className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-headline"
               >
                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
@@ -153,27 +154,27 @@ console.log(threads);
                         className="text-lg leading-6 font-medium text-gray-900"
                         id="modal-headline"
                       >
-                        Select a Connection
+                        {t('chat.label.selectConnection')}
                       </h3>
                       <div className="mt-2">
                         {filteredConnections.map((conn) => (
                           <button
-                          key={conn.user_id}
-                          onClick={() => {
-                            if (!conn.user_id) {
-                              alert("Unable to create thread with selected user.");
-                              return;
-                            }
-                            createNewThread(conn.user_id).then((res) => {
-                              if (res.status === "success" || res.ok) {
-                                refreshThreads();
-                                handleCloseModal();
+                            key={conn.user_id}
+                            onClick={() => {
+                              if (!conn.user_id) {
+                                alert("Unable to create thread with selected user.");
+                                return;
                               }
-                            });
-                          }}
-                          className="mt-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black hover:bg-indigo-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 flex items-center"
-                        >
-                          <Avatar className="mr-2" src={conn.picture}/>
+                              createNewThread(conn.user_id).then((res) => {
+                                if (res.status === "success" || res.ok) {
+                                  refreshThreads();
+                                  handleCloseModal();
+                                }
+                              });
+                            }}
+                            className="mt-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black hover:bg-indigo-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 flex items-center"
+                          >
+                            <Avatar className="mr-2" src={conn.picture} />
                             {conn.name}
                           </button>
                         ))}
@@ -187,16 +188,16 @@ console.log(threads);
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-500 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 sm:ml-3 sm:w-auto sm:text-sm"
                   >
-                    Close
+                    {t('chat.buttons.close')}
                   </button>
                 </div>
               </div>
             </div>
-        </div>
-      )}
-    </div>
-  );
-};
+          </div>
+        )}
+      </div>
+    );
+  };
 
 
 export default Sessions;

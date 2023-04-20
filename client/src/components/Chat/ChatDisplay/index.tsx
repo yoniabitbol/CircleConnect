@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, { useEffect, useRef } from "react";
 import Message from "../Message";
 import { Field, Form, Formik } from "formik";
 import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
@@ -7,6 +7,7 @@ import UserProfileModel from "../../../Models/UserProfileModel";
 import saveMessage from "../../../http/saveMessage";
 import ThreadModel from "../../../Models/ThreadModel";
 import { Socket } from "socket.io-client";
+import { useTranslation } from "react-i18next";
 
 export interface MessageType {
   id: number;
@@ -24,7 +25,7 @@ const ChatDisplay: React.FC<{
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
 
   const lastMessageRef = useRef<HTMLDivElement>(null);
-
+  const { t } = useTranslation();
 
   useEffect(() => {
     socket.on("receive-message", (newMsg) => {
@@ -43,10 +44,10 @@ const ChatDisplay: React.FC<{
   }, [socket, messages]);
 
   return (
-    <div  className="mx-5 mt-5 h-min rounded-md bg-white">
+    <div className="mx-5 mt-5 h-min rounded-md bg-white">
       <div className="justify-start ml-10 my-3">
         <span className="text-sm font-bold">
-          CHAT WITH{" "}
+          {t('chat.label.chatWith')}{" "}
           <span style={{ color: "#4B47B7" }}>
             {threadProfile ? threadProfile.name.toUpperCase() : ""}
           </span>
@@ -55,7 +56,7 @@ const ChatDisplay: React.FC<{
       <hr className="border-gray-100 border" />
 
       <div ref={lastMessageRef} className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch">
-      {messages.map((message) => (
+        {messages.map((message) => (
           <div
             key={message._id}
             className={
@@ -110,7 +111,7 @@ const ChatDisplay: React.FC<{
               className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent"
               type="message"
               name="message"
-              placeholder="Write your message"
+              placeholder={t('chat.label.writeMessage')}
             />
             <button
               className="mx-5 bg-indigo-700 h-10 w-10 rounded-lg"

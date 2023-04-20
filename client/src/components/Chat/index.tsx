@@ -6,6 +6,7 @@ import UserProfileModel from "../../Models/UserProfileModel";
 import MessageModel from "../../Models/MessageModel";
 import getThreadMessages from "../../http/getThreadMessages";
 import io from "socket.io-client";
+import { useTranslation } from "react-i18next";
 
 const Chat: React.FC<{
   threads: ThreadModel[];
@@ -14,6 +15,8 @@ const Chat: React.FC<{
   receivingParticipants: string[];
   refreshThreads: () => void;
 }> = ({ threads, connections, receivingParticipants, uid, refreshThreads }) => {
+
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<number>(-1);
   const [messages, setMessages] = useState<MessageModel[]>([]);
 
@@ -49,7 +52,7 @@ const Chat: React.FC<{
           refreshThreads={refreshThreads}
         />
       ) : (
-        <div> Retreiving sessions ...</div>
+        <div>{t('chat.label.retrieving')}</div>
       )}
 
       {selected != -1 ? (
@@ -67,7 +70,7 @@ const Chat: React.FC<{
           socket={socket}
         />
       ) : (
-        <div className="p-10">{"Chat with your Connections"}</div>
+        <div className="p-10">{t('chat.label.chatwithConnxn')}</div>
       )}
     </div>
   );

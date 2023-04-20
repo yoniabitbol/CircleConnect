@@ -15,7 +15,14 @@ const common = {
             search:'Recherche',
             message:'Message',
             shareThoughts: 'Partage tes pensées',
-            lookingFor: 'À la recherche de'
+            lookingFor: 'À la recherche de',
+            today: "Aujourd'hui",
+            oneDayAgo: "1 jour auparavant",
+            daysAgo: "jours ont passé",
+            oneWeekAgo: "il y a une semaine",
+            monthsAgo: "mois ont passé",
+            weeksAgo: "semaines ont passé",
+            yearsAgo: "années ont passé"
 
         },
         buttons: {
