@@ -18,7 +18,7 @@ router.route('/:user_id/unread')
   .get(notificationController.getUnreadNotifications);
 
 // Mark notification as read
-router.route('/:id')
+router.route('/:id/read')
   .patch(notificationController.markNotificationRead);
 
 export default router;
