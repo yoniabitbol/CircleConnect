@@ -225,9 +225,7 @@ const NewPostModal: FC<{
                               margin: 1,
                               backgroundColor: "#4D47C3",
                               color: "white",
-                              "& .MuiChip-deletable": {
-                                backgroundColor: "white",
-                              },
+                              "& .MuiChip-deletable": {backgroundColor: "white",},
                             }}
                             key={index}
                             label={tag}
