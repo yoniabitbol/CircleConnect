@@ -84,8 +84,8 @@ const UserNotifications: React.FC = () => {
                   return (
                     <ConnectionInvite
                       initiatorID={notification.initiatorID}
-                      key={notification._id}
-                      notificationID={notification._id}
+                      key={notification.id}
+                      notificationID={notification.id}
                       handleBtnClick={handleBtnClick}
                     />
                   );
