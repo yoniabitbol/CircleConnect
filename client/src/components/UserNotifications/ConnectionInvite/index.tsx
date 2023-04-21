@@ -3,7 +3,7 @@ import { Avatar } from "@mui/material";
 import getUserProfile from "../../../http/getUserProfile";
 import { Usertypes } from "../../UserProfile";
 import getUserProfilePic from "../../../http/getUserPicturePic";
-// import acceptConnectionRequest from "../../../http/acceptConnectionRequest";
+import acceptConnectionRequest from "../../../http/acceptConnectionRequest";
 import declineConnectionRequest from "../../../http/declineConnectionRequest";
 
 const ConnectionInvite: React.FC<{
@@ -17,7 +17,6 @@ const ConnectionInvite: React.FC<{
 
   const [user, setUser] = useState<Usertypes>();
   const [picture, setPicture] = useState<any>();
-  const [connectionState, setConnectionState] = useState("unset");
 
   useEffect(() => {
     async function fetchUser(user_id: string) {
@@ -71,43 +70,28 @@ const ConnectionInvite: React.FC<{
               </h3>
             </div>
             <div className="flex flex-row space-x-1 lg:space-x-4 mt-4">
-              {connectionState == "unset" ? (
-                <div className="flex flex-row space-x-1 lg:space-x-4 mt-4">
-                  <button
-                    type="submit"
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm w-24 h-8"
-                    onClick={() => {
-                      // acceptConnectionRequest(initiatorID);
-                      // setConnectionState("connected");
-                      if (notificationID == null) return;
-                      handleBtnClick(notificationID);
-                    }}
-                  >
-                    ACCEPT
-                  </button>
-                  <button
-                    type="submit"
-                    className="bg-slate-400 hover:bg-slate-500 text-white rounded-md text-sm w-24 h-8"
-                    onClick={() => {
-                      declineConnectionRequest(initiatorID);
-
-                      setConnectionState("notConnected");
-                    }}
-                  >
-                    DECLINE
-                  </button>
-                </div>
-              ) : null}
-              {connectionState === "connected" ? (
-                <div className="text-xs text-b">
-                  {user?.name + " is now a connection."}
-                </div>
-              ) : null}
-              {connectionState === "notConnected" ? (
-                <div className="text-xs text-b">
-                  {"Connection request declined."}
-                </div>
-              ) : null}
+              <div className="flex flex-row space-x-1 lg:space-x-4 mt-4">
+                <button
+                  type="submit"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm w-24 h-8"
+                  onClick={() => {
+                    acceptConnectionRequest(initiatorID);
+                    handleBtnClick(notificationID);
+                  }}
+                >
+                  ACCEPT
+                </button>
+                <button
+                  type="submit"
+                  className="bg-slate-400 hover:bg-slate-500 text-white rounded-md text-sm w-24 h-8"
+                  onClick={() => {
+                    declineConnectionRequest(initiatorID);
+                    handleBtnClick(notificationID);
+                  }}
+                >
+                  DECLINE
+                </button>
+              </div>
             </div>
           </div>
         </div>
