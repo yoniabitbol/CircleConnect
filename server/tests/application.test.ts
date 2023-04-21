@@ -171,6 +171,18 @@ describe('Application routes', () => {
       expect(response.body.status).toBe('ERROR Error');
       expect(response.body.message).toBe('Error sending application');
     });
+
+    it('error application already exists', async () => {
+      mockingoose(Application).toReturn(testApplication, 'findOne');
+
+      const response = await request(app)
+        .patch('/api/applications/123/apply')
+        .send(testApplication)
+        .expect(403);
+
+      expect(response.body.status).toBe('failure');
+      expect(response.body.message).toBe('Cannot apply to the same post twice');
+    });
   });
 
   describe('patch /applications/:application_id/withdraw', () => {
