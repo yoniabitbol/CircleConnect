@@ -34,6 +34,8 @@ function App() {
       },
         MuiIconButton: {styleOverrides: {root:{color:'#4D47C3'},}},
         MuiChip: {styleOverrides: {root:{backgroundColor:'#4D47C3',color:'white'},}},
+        MuiToolbar: {styleOverrides: {root:{backgroundColor:'white',color:'white'},}},
+        MuiIcon: {styleOverrides: {root:{color:'#4D47C3'},}},
 
     },
   });
