@@ -5,14 +5,13 @@ import { Usertypes } from "../../UserProfile";
 import getUserProfilePic from "../../../http/getUserPicturePic";
 // import acceptConnectionRequest from "../../../http/acceptConnectionRequest";
 import declineConnectionRequest from "../../../http/declineConnectionRequest";
-import markSingleNoficationsRead from "../../../http/markSingleNotificationRead";
 
 const ConnectionInvite: React.FC<{
   initiatorID: string;
   notificationID: string;
-  notificationIsRead: boolean;
+  handleBtnClick: any;
 }> = (props) => {
-  const { initiatorID, notificationID, notificationIsRead } = props;
+  const { initiatorID, notificationID, handleBtnClick } = props;
 
   console.log(notificationID);
 
@@ -80,8 +79,8 @@ const ConnectionInvite: React.FC<{
                     onClick={() => {
                       // acceptConnectionRequest(initiatorID);
                       // setConnectionState("connected");
-                      markSingleNoficationsRead(notificationID);
-                      console.log(notificationIsRead);
+                      if (notificationID == null) return;
+                      handleBtnClick(notificationID);
                     }}
                   >
                     ACCEPT

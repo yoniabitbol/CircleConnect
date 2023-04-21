@@ -17,8 +17,6 @@ async function markSingleNoficationsRead(notification_id: string) {
 
   if (!res.ok) {
     throw new Error("Failed to mark notification as read.");
-  } else {
-    console.log("success");
   }
 
   return res.json();

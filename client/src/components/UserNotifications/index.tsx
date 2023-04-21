@@ -9,6 +9,7 @@ import ConnectionInviteRead from "./ConnectionInviteRead";
 import markNoficationsRead from "../../http/markNotificationsRead";
 import getUnreadNotification from "../../http/getUnreadNotifications";
 import MessageNotification from "./MessageNotification";
+import markSingleNoficationsRead from "../../http/markSingleNotificationRead";
 
 const UserNotifications: React.FC = () => {
   const { t } = useTranslation();
@@ -45,7 +46,13 @@ const UserNotifications: React.FC = () => {
     fetchUserNotifications();
   }, []);
 
+  const handleBtnClick = (notificationID: string) => {
+    markSingleNoficationsRead(notificationID);
+    window.location.reload();
+  };
+
   console.log(unreadNotifications);
+  console.log(userNotifications);
 
   return (
     <body className="justify-center bg-[#F7F9FB] py-6 dark:background-dark">
@@ -79,7 +86,7 @@ const UserNotifications: React.FC = () => {
                       initiatorID={notification.initiatorID}
                       key={notification._id}
                       notificationID={notification._id}
-                      notificationIsRead={notification.isRead}
+                      handleBtnClick={handleBtnClick}
                     />
                   );
                 } else if (
