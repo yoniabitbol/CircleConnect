@@ -91,7 +91,7 @@ const Chat: React.FC<{
           socket={socket}
         />
       ) : (
-        <div className="p-10">{"Chat with your Connections"}</div>
+        <div className="p-10">{t('chat.label.chatwithConnxn')}</div>
       )}
     </div>
   );

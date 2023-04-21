@@ -6,6 +6,7 @@ import createNewThread from "../../../http/createNewThread";
 import { Avatar } from "@mui/material";
 import getUserProfilePic from "../../../http/getUserPicturePic";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export type Thread = {
   id: number;
@@ -23,6 +24,7 @@ const Sessions: React.FC<{
   connections: UserProfileModel[];
 }> = (props
 ) => {
+    const { t } = useTranslation();
     const { threadProfiles, connections, selected, refreshThreads } = props;
     const [showModal, setShowModal] = useState(false);
     const [userProfilePics, setUserProfilePics] = useState<{
@@ -79,7 +81,7 @@ const Sessions: React.FC<{
       <div>
         <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto dark:primary-dark">
           <div className="justify-start ml-10 my-6">
-            <span className="text-sm font-bold">CHATS</span>
+            <span className="text-sm font-bold">{t('chat.label.chats')}</span>
           </div>
           <hr className="border-gray-100 border" />
           {connectionsWithThread.map((conn, index) => {
@@ -117,7 +119,7 @@ const Sessions: React.FC<{
               style={{ background: "#4B47B7" }}
               onClick={handleOpenModal}
             >
-              <div className="flex justify-center pt-1">START NEW CHAT</div>
+              <div className="flex justify-center pt-1">{t('chat.buttons.startChat')}</div>
             </button>
           </div>
         </div>
@@ -168,7 +170,7 @@ const Sessions: React.FC<{
                         className="text-lg leading-6 font-medium"
                         id="modal-headline"
                       >
-                        Select a Connection
+                        {t('chat.label.selectConnxn')}
                       </h3>
                       <div className="mt-2">
                         {filteredConnections.map((conn) => (
@@ -177,7 +179,7 @@ const Sessions: React.FC<{
                             onClick={() => {
                               if (!conn.user_id) {
                                 alert(
-                                  "Unable to create thread with selected user."
+                                  t('chat.label.unableToCreate')
                                 );
                                 return;
                               }
@@ -204,7 +206,7 @@ const Sessions: React.FC<{
                     type="button"
                     className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-500 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 sm:ml-3 sm:w-auto sm:text-sm"
                   >
-                    Close
+                    {t('chat.buttons.close')}
                   </button>
                 </div>
               </div>

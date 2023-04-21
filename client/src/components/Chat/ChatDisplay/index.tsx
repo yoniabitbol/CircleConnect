@@ -144,7 +144,7 @@ const ChatDisplay: React.FC<{
               className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent mr-2 outline-none"
               type="text"
               name="text"
-              placeholder="Write your message"
+              placeholder={t('chat.label.writeMessage')!}
               value={formik.values.text}
               onChange={formik.handleChange}
             />
