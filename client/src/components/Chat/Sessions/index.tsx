@@ -6,6 +6,7 @@ import createNewThread from "../../../http/createNewThread";
 import { Avatar } from "@mui/material";
 import getUserProfilePic from "../../../http/getUserPicturePic";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export type Thread = {
   id: number;
@@ -23,196 +24,197 @@ const Sessions: React.FC<{
   connections: UserProfileModel[];
 }> = (props
 ) => {
+    const { t } = useTranslation();
     const { threadProfiles, connections, selected, refreshThreads } = props;
-  const [showModal, setShowModal] = useState(false);
-  const [userProfilePics, setUserProfilePics] = useState<{
-    [key: string]: string;
-  }>({});
+    const [showModal, setShowModal] = useState(false);
+    const [userProfilePics, setUserProfilePics] = useState<{
+      [key: string]: string;
+    }>({});
 
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
+    const handleOpenModal = () => {
+      setShowModal(true);
+    };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+    const handleCloseModal = () => {
+      setShowModal(false);
+    };
 
-  // Get the profiles who you DON'T have a conversation with yet
-  const filteredConnections = connections.filter(
-    (conn) =>
-      !threadProfiles.map((profile) => profile.user_id).includes(conn.user_id)
-  );
+    // Get the profiles who you DON'T have a conversation with yet
+    const filteredConnections = connections.filter(
+      (conn) =>
+        !threadProfiles.map((profile) => profile.user_id).includes(conn.user_id)
+    );
 
-  const connectionsWithThread = connections.filter((conn) => {
-    return threadProfiles
-      .map((profile) => profile.user_id)
-      .includes(conn.user_id);
-  });
-  useEffect(() => {
-    async function fetchUserProfilePics() {
-      const profilePicUrls = await Promise.all(
-        connections.map(async (user: any) => {
-          const profilePicUrl = await getUserProfilePic(user.picture);
-          return { userId: user.user_id, profilePicUrl };
-        })
-      );
-      const profilePicMap = profilePicUrls.reduce(
-        (
-          map: { [key: string]: string },
-          obj: {
-            userId: string;
-            profilePicUrl: string;
-          }
-        ) => {
-          map[obj.userId] = obj.profilePicUrl;
-          return map;
-        },
-        {}
-      );
-      setUserProfilePics(profilePicMap);
-    }
+    const connectionsWithThread = connections.filter((conn) => {
+      return threadProfiles
+        .map((profile) => profile.user_id)
+        .includes(conn.user_id);
+    });
+    useEffect(() => {
+      async function fetchUserProfilePics() {
+        const profilePicUrls = await Promise.all(
+          connections.map(async (user: any) => {
+            const profilePicUrl = await getUserProfilePic(user.picture);
+            return { userId: user.user_id, profilePicUrl };
+          })
+        );
+        const profilePicMap = profilePicUrls.reduce(
+          (
+            map: { [key: string]: string },
+            obj: {
+              userId: string;
+              profilePicUrl: string;
+            }
+          ) => {
+            map[obj.userId] = obj.profilePicUrl;
+            return map;
+          },
+          {}
+        );
+        setUserProfilePics(profilePicMap);
+      }
 
-    fetchUserProfilePics();
-  }, [connections]);
+      fetchUserProfilePics();
+    }, [connections]);
 
-  return (
-    <div>
-      <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto dark:primary-dark">
-        <div className="justify-start ml-10 my-6">
-          <span className="text-sm font-bold">CHATS</span>
+    return (
+      <div>
+        <div className="ml-15 mt-5 pb-5 rounded-md bg-white overflow-auto dark:primary-dark">
+          <div className="justify-start ml-10 my-6">
+            <span className="text-sm font-bold">{t('chat.label.chats')}</span>
+          </div>
+          <hr className="border-gray-100 border" />
+          {connectionsWithThread.map((conn, index) => {
+            const userProfilePic = userProfilePics[conn.user_id || ""];
+            return (
+              <Link
+                to={`${conn.user_id}`}
+                className="w-full h-full"
+                key={conn.user_id}
+                data-key={index}
+                onClick={() => props.selectThread(conn.user_id)}
+              >
+                <SessionItem
+                  selected={selected && selected.participants.includes(conn.user_id)}
+                  session={{
+                    user: {
+                      name: conn.name || "USER DELETED",
+                      picture: userProfilePic
+                        ? userProfilePic
+                        : "default-user.jpg",
+                    },
+                    latestMsg: "",
+                  }}
+                />
+              </Link>
+            );
+          })}
         </div>
-        <hr className="border-gray-100 border" />
-        {connectionsWithThread.map((conn, index) => {
-          const userProfilePic = userProfilePics[conn.user_id || ""];
-          return (
-            <Link
-              to={`${conn.user_id}`}
-              className="w-full h-full"
-              key={conn.user_id}
-              data-key={index}
-              onClick={()=> props.selectThread(conn.user_id)}
-            >
-              <SessionItem
-                selected={selected && selected.participants.includes(conn.user_id)}
-                session={{
-                  user: {
-                    name: conn.name || "USER DELETED",
-                    picture: userProfilePic
-                      ? userProfilePic
-                      : "default-user.jpg",
-                  },
-                  latestMsg: "",
-                }}
-              />
-            </Link>
-          );
-        })}
-      </div>
 
-      <div className="mt-10 pb-5 rounded-md bg-white dark:primary-dark">
-        <div className="flex justify-center">
-          <button
-            className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg"
-            type="button"
-            style={{ background: "#4B47B7" }}
-            onClick={handleOpenModal}
-          >
-            <div className="flex justify-center pt-1">START NEW CHAT</div>
-          </button>
+        <div className="mt-10 pb-5 rounded-md bg-white dark:primary-dark">
+          <div className="flex justify-center">
+            <button
+              className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg"
+              type="button"
+              style={{ background: "#4B47B7" }}
+              onClick={handleOpenModal}
+            >
+              <div className="flex justify-center pt-1">{t('chat.buttons.startChat')}</div>
+            </button>
+          </div>
         </div>
-      </div>
 
-      {showModal && (
-        <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div
-              className="fixed inset-0 transition-opacity"
-              aria-hidden="true"
-            >
-              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
+        {showModal && (
+          <div className="fixed z-10 inset-0 overflow-y-auto">
+            <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+              <div
+                className="fixed inset-0 transition-opacity"
+                aria-hidden="true"
+              >
+                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
 
-            <span
-              className="hidden sm:inline-block sm:align-middle sm:h-screen"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-            <div
-              className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="modal-headline"
-            >
-              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:primary-dark">
-                <div className="sm:flex sm:items-start">
-                  <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <svg
-                      className="h-6 w-6 text-green-600"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3
-                      className="text-lg leading-6 font-medium"
-                      id="modal-headline"
-                    >
-                      Select a Connection
-                    </h3>
-                    <div className="mt-2">
-                      {filteredConnections.map((conn) => (
-                        <button
-                          key={conn.user_id}
-                          onClick={() => {
-                            if (!conn.user_id) {
-                              alert(
-                                "Unable to create thread with selected user."
-                              );
-                              return;
-                            }
-                            createNewThread(conn.user_id).then((res) => {
-                              if (res.status === "success" || res.ok) {
-                                refreshThreads();
-                                handleCloseModal();
+              <span
+                className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                aria-hidden="true"
+              >
+                &#8203;
+              </span>
+              <div
+                className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="modal-headline"
+              >
+                <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 dark:primary-dark">
+                  <div className="sm:flex sm:items-start">
+                    <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                      <svg
+                        className="h-6 w-6 text-green-600"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
+                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                      <h3
+                        className="text-lg leading-6 font-medium"
+                        id="modal-headline"
+                      >
+                        {t('chat.label.selectConnxn')}
+                      </h3>
+                      <div className="mt-2">
+                        {filteredConnections.map((conn) => (
+                          <button
+                            key={conn.user_id}
+                            onClick={() => {
+                              if (!conn.user_id) {
+                                alert(
+                                  t('chat.label.unableToCreate')
+                                );
+                                return;
                               }
-                            });
-                          }}
-                          className="mt-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black hover:bg-indigo-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 flex items-center dark:secondary-dark"
-                        >
-                          <Avatar className="mr-2" src={conn.picture} />
-                          {conn.name}
-                        </button>
-                      ))}
+                              createNewThread(conn.user_id).then((res) => {
+                                if (res.status === "success" || res.ok) {
+                                  refreshThreads();
+                                  handleCloseModal();
+                                }
+                              });
+                            }}
+                            className="mt-2 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-black hover:bg-indigo-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 flex items-center dark:secondary-dark"
+                          >
+                            <Avatar className="mr-2" src={conn.picture} />
+                            {conn.name}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse dark:primary-dark">
-                <button
-                  onClick={handleCloseModal}
-                  type="button"
-                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-500 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 sm:ml-3 sm:w-auto sm:text-sm"
-                >
-                  Close
-                </button>
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse dark:primary-dark">
+                  <button
+                    onClick={handleCloseModal}
+                    type="button"
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-500 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 sm:ml-3 sm:w-auto sm:text-sm"
+                  >
+                    {t('chat.buttons.close')}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
-};
+        )}
+      </div>
+    );
+  };
 
 export default Sessions;
