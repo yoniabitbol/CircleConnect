@@ -5,7 +5,7 @@ const port = process.env.REACT_APP_BACKEND_PORT || 4000;
 async function markSingleNoficationsRead(notification_id: string) {
   const currentUser = auth.currentUser;
   const token = currentUser && (await currentUser.getIdToken());
-  const url = `http://${host}:${port}/api/notifications/${notification_id}`;
+  const url = `http://${host}:${port}/api/notifications/${notification_id}/read`;
 
   const res = await fetch(url, {
     method: "PATCH",
