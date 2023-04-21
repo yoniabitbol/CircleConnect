@@ -20,8 +20,6 @@ const UserNotifications: React.FC = () => {
   const [userNotifications, setUserNotifications] =
     useState<notificationType[]>();
 
-  const [viewAll, setViewAll] = useState(false);
-
   useEffect(() => {
     async function fetchUnreadNotifications() {
       try {
@@ -32,7 +30,7 @@ const UserNotifications: React.FC = () => {
       }
     }
     fetchUnreadNotifications();
-  }, []);
+  }, [unreadNotifications?.length]);
 
   useEffect(() => {
     async function fetchUserNotifications() {
@@ -44,71 +42,61 @@ const UserNotifications: React.FC = () => {
       }
     }
     fetchUserNotifications();
-  }, []);
+  }, [userNotifications?.length]);
 
   const handleBtnClick = (notificationID: string) => {
     markSingleNoficationsRead(notificationID);
     window.location.reload();
   };
 
-  console.log(unreadNotifications);
-  console.log(userNotifications);
-
   return (
     <body className="justify-center bg-[#F7F9FB] py-6 dark:background-dark">
       <div className="lg:flex lg:flex-row justify-center">
-        <div className="flex flex-col mr-14">
-          <div className="lg:pl-24">
+        <div className="flex flex-col mr-28">
+          <div className="sm: ml-6">
             <NavSettings />
             <Dashboard unreadNotifications={unreadNotifications?.length} />
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col ml-0">
           <div className="flex flex-row">
             <hr className="w-1/3 h-px mx-4 my-2 bg-gray-300 border-0 rounded md:my-5 bg-gray-300" />
             <div className="mx-4">{t("notifications.label.recent")}</div>
             <hr className="w-1/3 h-px mx-4 my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
           </div>
 
-          <div className="row-span-2 col-span-2">
-            {unreadNotifications?.length == 0 ? (
-              <div className="mx-9 my-4">
-                You have no recent notifications...
-              </div>
-            ) : (
-              userNotifications?.map((notification) => {
-                if (
-                  notification.isRead == false &&
-                  notification.type === "connection"
-                ) {
-                  return (
-                    <ConnectionInvite
-                      initiatorID={notification.initiatorID}
-                      key={notification.id}
-                      notificationID={notification.id}
-                      handleBtnClick={handleBtnClick}
-                    />
-                  );
-                } else if (
-                  notification.isRead == false &&
-                  notification.type === "message"
-                ) {
-                  return (
-                    <MessageNotification
-                      initiatorID={notification.initiatorID}
-                      key={notification.initiatorID}
-                    />
-                  );
-                }
-              })
-            )}
-          </div>
-
-          <div>
+          <div className="justify-center">
+            <div className="row-span-2 col-span-2">
+              {unreadNotifications?.length == 0 ? (
+                <div className="mx-9 my-4">
+                  You have no recent notifications...
+                </div>
+              ) : (
+                unreadNotifications?.map((notification) => {
+                  if (notification.type === "connection") {
+                    return (
+                      <ConnectionInvite
+                        initiatorID={notification.initiatorID}
+                        key={notification.id}
+                        notificationID={notification.id}
+                        handleBtnClick={handleBtnClick}
+                      />
+                    );
+                  } else if (notification.type === "message") {
+                    return (
+                      <MessageNotification
+                        initiatorID={notification.initiatorID}
+                        key={notification.initiatorID}
+                      />
+                    );
+                  }
+                })
+              )}
+            </div>
             {unreadNotifications?.length == 0 ? null : (
               <button
                 type="submit"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm ml-9 w-32 h-8"
+                className="bg-indigo-600 mt-2 mb-4 hover:bg-indigo-700 text-white rounded-md text-sm ml-9 w-32 h-8"
                 onClick={(e) => {
                   e.preventDefault();
                   markNoficationsRead();
@@ -118,23 +106,24 @@ const UserNotifications: React.FC = () => {
                 MARK AS READ
               </button>
             )}
-            {!viewAll ? (
-              <button
-                type="submit"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm mx-9 w-24 h-8"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setViewAll(true);
-                }}
-              >
-                VIEW ALL
-              </button>
+          </div>
+
+          <div>
+            <div className="flex flex-row">
+              <hr className="w-1/3 h-px mx-4 my-2 bg-gray-300 border-0 rounded md:my-5 bg-gray-300" />
+              <div className="mx-4">{"PREVIOUS"}</div>
+              <hr className="w-1/3 h-px mx-4 my-2 bg-gray-300 border-0 rounded md:my-5 dark:bg-gray-300" />
+            </div>
+            {userNotifications?.length == 0 ? (
+              <div className="mx-9 my-4">
+                You have no previous notifications...
+              </div>
             ) : (
               <div>
                 {userNotifications?.map((notification) => {
                   if (
                     notification.isRead == true &&
-                    notification.type == "connection"
+                    notification.type === "connection"
                   ) {
                     return (
                       <ConnectionInviteRead
@@ -154,16 +143,6 @@ const UserNotifications: React.FC = () => {
                     );
                   }
                 })}
-                <button
-                  type="submit"
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm mx-9 my-4 w-24 h-8"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setViewAll(false);
-                  }}
-                >
-                  CLOSE
-                </button>
               </div>
             )}
           </div>
