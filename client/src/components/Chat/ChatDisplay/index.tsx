@@ -11,6 +11,7 @@ import { Socket } from "socket.io-client";
 import { Button, IconButton, Chip, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import sendNotification from "../../../http/sendNotification";
+import markMessageNotificationsRead from "../../../http/markMessageNotificationsRead";
 
 export interface MessageType {
   id: number;
@@ -28,6 +29,13 @@ const ChatDisplay: React.FC<{
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
   const lastMessageRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    markMessageNotificationsRead();
+    return () => {
+      markMessageNotificationsRead();
+    };
+  });
 
   useEffect(() => {
     socket.on("receive-message", (newMsg) => {
