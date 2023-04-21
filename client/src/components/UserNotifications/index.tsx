@@ -45,6 +45,7 @@ const UserNotifications: React.FC = () => {
   }, [userNotifications?.length]);
 
   const handleBtnClick = (notificationID: string) => {
+    // handle connection invite Accept or Decline
     markSingleNoficationsRead(notificationID);
     window.location.reload();
   };
