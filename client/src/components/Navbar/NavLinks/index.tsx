@@ -4,7 +4,7 @@ import NavLinkModel from "../../../Models/NavLinkModel";
 const NavLinks: React.FC<{links: NavLinkModel[]}> = (props) => {
   const {links} = props;
   const navLinkClass = "items-center flex flex-col text-sm font-normal justify-center leading-normal ";
-  const navActiveClass = " text-violet-900 border-b-2 border-violet-900";
+  const navActiveClass = " text-violet-900 dark:text-[#706CC3] border-b-2 border-violet-900 dark:border-[#706CC3] ";
   
   return (
     <nav className="  pt-3 ">

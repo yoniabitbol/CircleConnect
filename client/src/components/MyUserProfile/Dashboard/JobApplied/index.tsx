@@ -41,7 +41,7 @@ const JobApplied: React.FC<JobAppliedProps> = ({ application }) => {
   }, []);
 
   return (
-    <div className="flex bg-white mt-2">
+    <div className="flex bg-white mt-2 dark:secondary-dark">
       <div className="grow ml-4 py-2">
         <p className="text-md" style={{ color: "#4c47bc" }}>
           {postInfo?.position}

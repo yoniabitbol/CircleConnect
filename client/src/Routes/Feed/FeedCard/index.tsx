@@ -296,11 +296,7 @@ const FeedCard: React.FC<{
               <IconButton
                 onClick={likeClickHandler}
                 size="small"
-                style={{
-                  borderWidth: "2px",
-                  borderColor: "#4D47C3",
-                  color: "#4D47C3",
-                }}
+                style={{ borderWidth: "2px", }}
               >
                 {like ? <ThumbUpAlt /> : <ThumbUpOffAlt />}
               </IconButton>
@@ -310,11 +306,7 @@ const FeedCard: React.FC<{
               <IconButton
                 onClick={commentClickHandler}
                 size="small"
-                style={{
-                  borderWidth: "2px",
-                  borderColor: "#4D47C3",
-                  color: "#4D47C3",
-                }}
+                style={{ borderWidth: "2px", }}
               >
                 {showComments ? <ChatBubble /> : <ChatBubbleOutline />}
               </IconButton>

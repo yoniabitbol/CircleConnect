@@ -12,14 +12,14 @@ const Experience: React.FC<{
   }[];
 }> = ({ experience }) => {
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold ">Experience</h1>
       <div className="grid grid-cols-2 gap-4 my-4">
         {experience?.map((experience) => {
           return (
             <div
               key={experience.company}
-              className="flex flex-col bg-white rounded-md p-5"
+              className="flex flex-col bg-white rounded-md p-5 dark:secondary-dark"
             >
               <h1 className="text-lg font-semibold ">{experience.company}</h1>
               <h2 className="">Position: {experience.title}</h2>

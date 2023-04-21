@@ -55,9 +55,9 @@ const Network: React.FC = () => {
   };
 
   return (
-    <body style={{ backgroundColor: "#F7F9FB" }}>
+    <body className="bg-[#F7F9FB] dark:background-dark">
       <div className="flex justify-center sm:text-left py-2">
-        <div className="grid grid-cols-4 flex items-center gap-4 p-4 sm:text-sm text-xs w-full sm:w-7/12 bg-white">
+        <div className="grid grid-cols-4 flex items-center gap-4 p-4 sm:text-sm text-xs w-full sm:w-7/12 bg-white dark:primary-dark">
           <div className="col-span-3 font-bold">
             {connections.length} {t("common.label.connections")}
           </div>
@@ -65,7 +65,7 @@ const Network: React.FC = () => {
             placeholder={t("common.label.search") as string}
             onChange={onInputChangeHandler}
             value={search}
-            className="border p-2"
+            className="border p-2 dark:secondary-dark outline-none"
           ></input>
         </div>
       </div>
@@ -75,7 +75,7 @@ const Network: React.FC = () => {
             key={connection.user_id}
             user_id={connection.user_id}
             name={connection.name}
-            title={connection.title}
+            title={connection.title === "undefined" ? "" : connection.title}
             connections={connection.connections}
             picture={connection.picture && connection.picture}
           />

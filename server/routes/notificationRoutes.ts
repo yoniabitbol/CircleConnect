@@ -5,8 +5,16 @@ const router = express.Router();
 
 // Notification API routes
 router.route('/:user_id')
-  .get(notificationController.getUnreadNotifications)
+  .get(notificationController.getUserNotifications)
   .post(notificationController.sendNotification)
-  .patch(notificationController.markNotificationAsRead);
+  .patch(notificationController.markAllNotifsRead);
+
+// Mark only messages as read
+router.route('/:user_id/messages')
+  .patch(notificationController.markMessagesRead);
+
+// Unread notification API route
+router.route('/:user_id/unread')
+  .get(notificationController.getUnreadNotifications);
 
 export default router;

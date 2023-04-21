@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import { useTranslation } from "react-i18next";
 import getUserProfilePic from "../../http/getUserPicturePic";
 import Usertypes from "../../Models/UserProfileModel";
+import createNewThread from '../../http/createNewThread';
 
 type ConnectionType = Omit<
   Usertypes,
@@ -45,7 +46,7 @@ const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
       }, [connections]);
       
     return (
-       <div className="pb-5 bg-white w-full drop-shadow-md shadow-purple-500">
+       <div className="pb-5 bg-white w-full drop-shadow-md shadow-purple-500 dark:primary-dark ">
            <div className="p-3">
                <h5 className="font-bold">{t('notifications.label.network')}</h5>
                <hr className="w-full bg-gray-400 h-0.5 mt-2"/>
@@ -61,7 +62,11 @@ const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
                                </div>
                            </div>
                         </Link>
-                       <Link to="/chat">
+                       <Link to="" onClick={() => {
+                           createNewThread(connection.user_id ?? "").then(() => {
+                               window.location.href = `/chat/${connection.user_id}`;
+                           });
+                       }}>
                            <Button
                                sx={{width:'100%', height: 30 }}
                                variant="contained"
@@ -75,7 +80,7 @@ const ConnectionsBanner:React.FC<{connections:any}> = (props) => {
                }
            </div>
            <div className="p-2 ml-2">
-               <Link to='/network' className="text-[#4D47C3] hover:underline text-sm">{t('notifications.buttons.showAll')} <span>({connections.length})</span></Link>
+               <Link to='/network' className="text-[#4D47C3] dark:text-white hover:underline text-sm">{t('notifications.buttons.showAll')} <span>({connections.length})</span></Link>
            </div>
 
        </div>

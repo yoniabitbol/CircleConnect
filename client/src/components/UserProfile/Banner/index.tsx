@@ -14,6 +14,8 @@ import cancelConnectionRequest from "../../../http/cancelConnectionRequest";
 import { useParams } from "react-router-dom";
 
 import sendConnectionRequest from "../../../http/sendConnectionRequest";
+import sendNotification from "../../../http/sendNotification";
+import {Button} from '@mui/material';
 
 const Banner: React.FC<{
   banner: {
@@ -49,7 +51,7 @@ const Banner: React.FC<{
         // if (banner.backdrop === "" || banner.picture === "") return;
         const backdropUrl = await getUserBackdrop(banner.backdrop);
         const profilePicUrl = await getUserProfilePic(banner.picture);
-        
+
         setBackdropUrl(backdropUrl);
         setProfilePicUrl(profilePicUrl);
       } catch (error) {
@@ -122,7 +124,7 @@ const Banner: React.FC<{
 
   return (
     <div>
-      <div className="w-full pb-5 rounded-md bg-slate-200 mx-auto">
+      <div className="w-full pb-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
         <div>
           <img
             className="w-full lg:h-64 h-32 object-cover rounded-t-md"
@@ -158,8 +160,11 @@ const Banner: React.FC<{
 
         <div>
           {connectionState === "notConnected" ? (
-            <button
-              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+            <Button
+                variant="contained"
+                disableElevation={true}
+                sx={{ml:3,mt:3, borderRadius:20, fontSize:15}}
+
               onClick={() => {
                 if (profileId === undefined) {
                   alert("Error: profileId is undefined");
@@ -167,14 +172,17 @@ const Banner: React.FC<{
                 }
                 sendConnectionRequest(profileId);
                 setConnectionState("sent");
+                sendNotification(profileId, "connection"); // send notification of new connection request
               }}
             >
               Connect
-            </button>
+            </Button>
           ) : connectionState === "sent" ? (
-            <button
+            <Button
               type="submit"
-              className="bg-slate-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full m-5 relative"
+              variant={'text'}
+              sx={{ml:3,mt:3, borderRadius:20, fontSize:15, border:2, borderColor:'primary.main'}}
+
               onClick={() => {
                 if (profileId === undefined) {
                   alert("Error: profileId is undefined");
@@ -187,12 +195,14 @@ const Banner: React.FC<{
               onMouseOut={() => setCancelConnection("Sent Request")}
             >
               {cancelConnection}
-            </button>
+            </Button>
           ) : connectionState === "received" ? (
             <div>
-              <button
+              <Button
                 type="button"
-                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+                variant={'contained'}
+                sx={{ml:3,mt:3, borderRadius:20, fontSize:15, border:2, borderColor:'primary.main'}}
+                disableElevation={true}
                 onClick={() => {
                   if (profileId === undefined) {
                     alert("Error: profileId is undefined");
@@ -203,9 +213,12 @@ const Banner: React.FC<{
                 }}
               >
                 Accept Connection
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
+                variant={'contained'}
+                sx={{ml:3,mt:3, borderRadius:20, fontSize:15, border:2, borderColor:'primary.main'}}
+                disableElevation={true}
                 className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
                 onClick={() => {
                   if (profileId === undefined) {
@@ -217,12 +230,14 @@ const Banner: React.FC<{
                 }}
               >
                 Decline Connection
-              </button>
+              </Button>
             </div>
           ) : connectionState === "connected" ? (
-            <button
+            <Button
               type="button"
-              className="bg-slate-500 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full m-5 relative"
+              variant={'contained'}
+                sx={{ml:3,mt:3, borderRadius:20, fontSize:15, border:2, borderColor:'primary.main'}}
+                disableElevation={true}
               onClick={() => {
                 if (profileId === undefined) {
                   alert("Error: profileId is undefined");
@@ -239,7 +254,7 @@ const Banner: React.FC<{
               }}
             >
               {connectedButtonMessage}
-            </button>
+            </Button>
           ) : (
             <div className="text-red-500 font-semibold text-center">
               Error retrieving connection state!

@@ -58,7 +58,7 @@ const NavBar: React.FC<{
   const navActiveClass = "bg-[rgba(75,71,183,0.5)] rounded-[50%] p-1"
 
   return (
-    <div className="p-2 flex items-center border sticky z-20 top-0 bg-white">
+    <div className="p-2 flex items-center sticky z-20 top-0 bg-white dark:secondary-dark">
       <div className="lg:hidden left-0 relative w-min" onClick={outsideClicked}>
         <MobileNav links={NavLinkModels} />
       </div>
@@ -98,7 +98,7 @@ const NavBar: React.FC<{
           <NavLink to="/myprofile" className={({isActive}) => isActive ? navActiveClass : navLinkClass }>
             <Avatar src={userProfilePic} />
           </NavLink>
-          <Button onClick={logout} sx={{ color: "rgba(75,71,183,1)" }}>
+          <Button onClick={logout}>
             {t('loginAndRegistration.buttons.logout')}
           </Button>
         </div>

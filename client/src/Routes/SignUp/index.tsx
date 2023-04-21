@@ -20,7 +20,7 @@ const SignUp: React.FC = () => {
     }
 
   return (
-    <div className="lg:flex justify-center lg:text-left text-center">
+    <div  className="lg:flex justify-center lg:text-left text-center dark:background-dark h-screen">
       <AuthContent />
       <SubmissionForm
         header={t('loginAndRegistration.label.signup')}

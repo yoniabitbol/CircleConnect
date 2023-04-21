@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Divider from "@mui/material/Divider";
 import { useTranslation } from "react-i18next";
+import {Button} from '@mui/material';
 
 
 const Experience: React.FC<{
@@ -19,9 +20,11 @@ const Experience: React.FC<{
   const {t} = useTranslation();
 
   const addNewBtn = (
-    <button
+    <Button
       type="button"
-      className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full my-5"
+        disableElevation={true}
+        variant="contained"
+        sx={{mt:2}}
       onClick={() => {
         experience.push({
           title: "",
@@ -37,7 +40,7 @@ const Experience: React.FC<{
       }}
     >
       {t('userProfile.buttons.addNew')}
-    </button>
+    </Button>
   );
 
   const deleteBtn = (index: number) => {
@@ -59,72 +62,72 @@ const Experience: React.FC<{
   function experienceFields(index: number) {
     return (
       <>
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.company')}
         </label>
         <input
           name={`experience[${index}].company`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={experience[index].company || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             experience[index].company = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.title')}
         </label>
         <input
           name={`experience[${index}].title`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={experience[index].title || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             experience[index].title = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.description')}
         </label>
         <input
           name={`experience[${index}].description`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="textarea"
           defaultValue={experience[index].description || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             experience[index].description = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.startDate')}
         </label>
         <input
           name={`experience[${index}].startDate`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={experience[index].startDate || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             experience[index].startDate = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.endDate')}
         </label>
         <input
           name={`experience[${index}].endDate`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={experience[index].endDate || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             experience[index].endDate = e.target.value;
           }}
         />
-        <label className="text-sm font-semibold text-gray-600 py-2">
+        <label className="text-sm font-semibold  py-2">
           {t('userProfile.label.location')}
         </label>
         <input
           name={`experience[${index}].location`}
-          className="w-full rounded-sm"
+          className="w-full rounded-sm dark:secondary-dark  p-2 outline-none"
           type="text"
           defaultValue={experience[index].description || ""}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -162,7 +165,7 @@ const Experience: React.FC<{
         return (
           <div
             key={experience.company}
-            className="flex flex-col bg-white rounded-md p-5"
+            className="flex flex-col bg-white rounded-md p-5 dark:secondary-dark"
           >
             <h1 className="text-lg font-semibold ">{experience.company}</h1>
             <h2 className="">{t('userProfile.label.position')}: {experience.title}</h2>
@@ -178,7 +181,7 @@ const Experience: React.FC<{
   );
 
   return (
-    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto">
+    <div className="w-full p-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
       <h1 className="text-2xl font-bold ">{t('userProfile.label.experience')}</h1>
       {component}
     </div>

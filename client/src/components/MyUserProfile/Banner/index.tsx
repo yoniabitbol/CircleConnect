@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import getUserBackdrop from "../../../http/getUserBackdrop";
 import getUserProfilePic from "../../../http/getUserPicturePic";
 import { useTranslation } from "react-i18next";
+import {Button} from '@mui/material';
 
 const Banner: React.FC<{
   banner: {
@@ -44,9 +45,9 @@ const Banner: React.FC<{
   return (
     <div>
       {edit ? (
-        <div className="w-full pb-5 rounded-md bg-slate-200 mx-auto">
+        <div className="w-full pb-5 rounded-md bg-slate-200 dark:primary-dark mx-auto">
           <div className="w-2/3 mx-auto pt-5">
-            <label className="text-sm font-semibold text-gray-600 py-2">
+            <label className="text-sm font-semibold py-2">
             {t('editProfile.label.backdropURL')}
             </label>
             {/* <Field name="backdrop" className="w-full rounded-sm" type="text" /> */}
@@ -64,7 +65,7 @@ const Banner: React.FC<{
               }}
             />
 
-            <label className="text-sm font-semibold text-gray-600 py-2">
+            <label className="text-sm font-semibold  py-2">
             {t('editProfile.label.profilePictureURL')}
             </label>
             {/* <Field name="picture" className="w-full rounded-sm" type="text" /> */}
@@ -82,44 +83,45 @@ const Banner: React.FC<{
               }}
             />
 
-            <label className="text-sm font-semibold text-gray-600 py-2">
+            <label className="text-sm font-semibold  py-2">
             {t('editProfile.label.name')}
             </label>
-            <Field name="name" className="w-full rounded-sm" type="text" />
+            <Field name="name" className="w-full rounded-sm dark:secondary-dark  p-2 outline-none" type="text" />
 
-            <label className="text-sm font-semibold text-gray-600 py-2">
+            <label className="text-sm font-semibold  py-2">
             {t('editProfile.label.title')}
             </label>
-            <Field name="title" className="w-full rounded-sm" type="text" />
+            <Field name="title" className="w-full rounded-sm dark:secondary-dark  p-2 outline-none" type="text" />
 
-            <label className="text-sm font-semibold text-gray-600 py-2">
+            <label className="text-sm font-semibold  py-2">
             {t('editProfile.label.location')}
             </label>
-            <Field name="location" className="w-full rounded-sm" type="text" />
+            <Field name="location" className="w-full rounded-sm dark:secondary-dark  p-2 outline-none" type="text" />
 
-            <label className="text-sm font-semibold text-gray-600 py-2">
+            <label className="text-sm font-semibold  py-2">
             {t('editProfile.label.email')}
             </label>
-            <Field name="email" className="w-full rounded-sm" type="text" />
+            <Field name="email" className="w-full rounded-sm dark:secondary-dark  p-2 outline-none" type="text" />
 
-            <label className="text-sm font-semibold text-gray-600 py-2">
+            <label className="text-sm font-semibold  py-2">
             {t('editProfile.label.phone')}
             </label>
-            <Field name="phone" className="w-full rounded-sm" type="text" />
+            <Field name="phone" className="w-full rounded-sm dark:secondary-dark  p-2 outline-none" type="text" />
 
-            <label className="text-sm font-semibold text-gray-600 py-2">
+            <label className="text-sm font-semibold  py-2">
             {t('editProfile.label.website')}
             </label>
-            <Field name="website" className="w-full rounded-sm" type="text" />
+            <Field name="website" className="w-full rounded-sm dark:secondary-dark  p-2 outline-none" type="text" />
           </div>
 
           <div className="fixed bottom-0 right-0 mb-4 mr-4 text-white font-bold py-2 px-4 rounded">
-            <button
+            <Button
               type="submit"
-              className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
+                variant="contained"
+              sx={{height:75,width:200, fontSize:20, borderRadius:10}}
             >
                {t('editProfile.buttons.saveProfile')}
-            </button>
+            </Button>
           </div>
 
           {/* click contact info to display a modal */}
@@ -130,7 +132,7 @@ const Banner: React.FC<{
       </div> */}
         </div>
       ) : (
-        <div className="w-full pb-5 rounded-md bg-slate-200 mx-auto">
+        <div className="w-full pb-5 rounded-md bg-slate-200 mx-auto dark:primary-dark">
           <div>
             <img
               className="w-full lg:h-64 h-32 object-cover rounded-t-md"
@@ -140,7 +142,7 @@ const Banner: React.FC<{
           </div>
           <div className="flex justify-center -mt-16">
             <img
-              className="w-32 h-32 rounded-full border-2 border-white"
+              className="w-32 h-32 rounded-full  border-white"
               src={profilePicUrl}
               alt="profile"
             />
@@ -162,13 +164,14 @@ const Banner: React.FC<{
             </h1>
           </div>
           {formik != null ? (
-            <div>
-              <button
+            <div className="m-5"
+            >
+              <Button
+                  variant={'contained'}
                 type="submit"
-                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded-full m-5"
               >
                  {t('editProfile.buttons.editProfile')}
-              </button>
+              </Button>
             </div>
           ) : (
             <div></div>

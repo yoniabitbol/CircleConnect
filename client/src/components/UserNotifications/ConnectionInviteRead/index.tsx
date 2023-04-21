@@ -3,17 +3,13 @@ import { Avatar } from "@mui/material";
 import getUserProfile from "../../../http/getUserProfile";
 import { Usertypes } from "../../UserProfile";
 import getUserProfilePic from "../../../http/getUserPicturePic";
-import acceptConnectionRequest from "../../../http/acceptConnectionRequest";
-import declineConnectionRequest from "../../../http/declineConnectionRequest";
 
-const ConnectionInvite: React.FC<{
+const ConnectionInviteRead: React.FC<{
   initiatorID: string;
 }> = (props) => {
   const { initiatorID } = props;
   const [user, setUser] = useState<Usertypes>();
   const [picture, setPicture] = useState<any>();
-  const [connectionState, setConnectionState] = useState("unset");
-
 
   useEffect(() => {
     async function fetchUser(user_id: string) {
@@ -42,7 +38,7 @@ const ConnectionInvite: React.FC<{
   }, []);
 
   return (
-    <div className="w-full m-4 py-3 rounded-md bg-white h-auto dark:secondary-dark">
+    <div className="w-full m-4 py-3 rounded-md bg-white h-auto dark:primary-dark">
       <div className="flex flex-row justify-between px-3">
         <div className="flex flex-row space-x-8 ">
           <div className="pt-2">
@@ -62,46 +58,9 @@ const ConnectionInvite: React.FC<{
           </h1>
           <h3 className="text-sm text-gray-400">{"Hey! Let's connect..."}</h3>
         </div>
-        <div className="flex flex-row space-x-1 lg:space-x-4 mt-4">
-          {connectionState == "unset" ? (
-            <div className="flex flex-row space-x-1 lg:space-x-4 mt-4">
-              <button
-                type="submit"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-sm w-24 h-8"
-                onClick={() => {
-                  acceptConnectionRequest(initiatorID);
-                  setConnectionState("connected");
-                }}
-              >
-                ACCEPT
-              </button>
-              <button
-                type="submit"
-                className="bg-slate-400 hover:bg-slate-500 text-white rounded-md text-sm w-24 h-8"
-                onClick={() => {
-                  declineConnectionRequest(initiatorID);
-
-                  setConnectionState("notConnected");
-                }}
-              >
-                DECLINE
-              </button>
-            </div>
-          ) : null}
-          {connectionState === "connected" ? (
-            <div className="text-xs text-b">
-              {user?.name + " is now a connection."}
-            </div>
-          ) : null}
-          {connectionState === "notConnected" ? (
-            <div className="text-xs text-b">
-              {"Connection request declined."}
-            </div>
-          ) : null}
-        </div>
       </div>
     </div>
   );
 };
 
-export default ConnectionInvite;
+export default ConnectionInviteRead;

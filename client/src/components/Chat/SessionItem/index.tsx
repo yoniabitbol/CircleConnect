@@ -13,9 +13,9 @@ const SessionItem: React.FC<{
 }> = ({ session, selected }) => {
   return (
     <div>
-      <div className="rounded-md bg-white">
+      <div className="rounded-md bg-white dark:primary-dark">
         {selected ? (
-          <span className="absolute left-5 w-4 h-14 justify-start bg-sky-700" />
+          <span className="absolute left-5 w-4 h-14 justify-start bg-[#4B47B7]" />
         ) : (<span />)}
 
         <div className="ml-7 my-6 flex">

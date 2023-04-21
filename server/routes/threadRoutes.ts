@@ -10,6 +10,13 @@ router.route('/')
   .get(threadController.getAllThreads)
   .post(threadController.createThread);
 
+// Routes based on thread id
+router.route('/:id/report')
+  .patch(threadController.reportThread);
+
+router.route('/reported')
+  .get(threadController.getReportedThreads);
+
 // Routes based on user id
 router.route('/:user_id')
   .get(threadController.getUserThreads);
