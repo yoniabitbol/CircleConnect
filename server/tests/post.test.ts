@@ -355,7 +355,7 @@ describe('post routes', () => {
 
       const res = await request(app)
         .delete('/api/posts/507f1f77bcf86cd799439011')
-        .send({ creatorID: 'user123' });
+        .send({ uid: 'user123' });
 
       expect(res.statusCode).toEqual(403);
       expect(res.body).toEqual({
