@@ -59,9 +59,7 @@ const NewPostModal: FC<{
         .then((res) => {
           if (res.status === "success") {
             const tags = values.preferenceTags;
-             //
             
-             console.log("Trying to send notifications: ")
              tags.forEach((tag: string) => {
                allUsers?.forEach((user) => {
                  if (user.user_id != null && user.preferenceTags.includes(tag)) {
@@ -70,7 +68,6 @@ const NewPostModal: FC<{
                })
              })
  
-             //
             resetForm();
             handleModalClose();
             postStatus(true);

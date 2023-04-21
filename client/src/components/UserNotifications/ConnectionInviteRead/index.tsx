@@ -54,8 +54,8 @@ const ConnectionInviteRead: React.FC<{
                 </h3>
               </div>
             </div>
-            <div className="hidden md:flex flex-row w-1/3">
-              <h1 className="text-4xl pr-2" style={{ color: "#4B47B7" }}>
+            <div className="md:flex flex-row w-1/3">
+              <h1 className="lg:text-4xl text-xs pr-2" style={{ color: "#4B47B7" }}>
                 |
               </h1>
               <h3 className="text-sm text-gray-400">
