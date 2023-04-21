@@ -11,6 +11,7 @@ import getUnreadNotification from "../../http/getUnreadNotifications";
 import MessageNotification from "./MessageNotification";
 import markSingleNoficationsRead from "../../http/markSingleNotificationRead";
 import RelatedPost from "./RelatedPost";
+import RelatedPostRead from "./RelatedPostRead";
 
 const UserNotifications: React.FC = () => {
   const { t } = useTranslation();
@@ -93,7 +94,7 @@ const UserNotifications: React.FC = () => {
                         key={notification.id}
                       />
                     );
-                  } else if (notification.type === "relatedPost") {
+                  } else if (notification.type === "relatedPost" && notification.initiatorID !== notification.user_id) {
                     return (<RelatedPost 
                       initiatorID={notification.initiatorID} 
                       key={notification.id} 
@@ -151,6 +152,11 @@ const UserNotifications: React.FC = () => {
                         key={notification.initiatorID}
                       />
                     );
+                  } else if (notification.type === "relatedPost" && notification.initiatorID !== notification.user_id) {
+                    return (<RelatedPostRead 
+                      initiatorID={notification.initiatorID} 
+                      key={notification.id} 
+                    />)
                   }
                 })}
               </div>
