@@ -65,7 +65,7 @@ const RelatedPost: React.FC<{
                   |
                 </h1>
                 <h3 className="text-sm">
-                  {user?.name + " posted a new job that matches your profile!"}
+                  {user?.name + " posted a job that matches your profile!"}
                 </h3>
               </div>
             </div>
