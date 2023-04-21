@@ -19,6 +19,8 @@ import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
 import Usertypes from "../../../Models/UserProfileModel";
 import getAllUsers from "../../../http/getAllUsers";
+import sendNotification from "../../../http/sendNotification";
+// import sendNotification from "../../../http/sendNotification";
 
 const style = {
   position: "absolute",
@@ -56,6 +58,19 @@ const NewPostModal: FC<{
       createPost(formData)
         .then((res) => {
           if (res.status === "success") {
+            const tags = values.preferenceTags;
+             //
+            
+             console.log("Trying to send notifications: ")
+             tags.forEach((tag: string) => {
+               allUsers?.forEach((user) => {
+                 if (user.user_id != null && user.preferenceTags.includes(tag)) {
+                   sendNotification(user.user_id, "relatedPost")
+                 }
+               })
+             })
+ 
+             //
             resetForm();
             handleModalClose();
             postStatus(true);
@@ -93,7 +108,7 @@ const NewPostModal: FC<{
     async function fetchAllUsers() {
       try {
         const allUsers = await getAllUsers();
-        setAllUsers(allUsers.data); // get post from the response object
+        setAllUsers(allUsers.data.users); // get users from the response object
       } catch (error) {
         console.log(error);
       }
@@ -163,6 +178,7 @@ const NewPostModal: FC<{
   const disablePostButton =
     formik.values.text === "" ||
     (formik.values.isJobListing && !formik.values.position);
+
   return (
     <Modal open={showModal} onClose={resetTags}>
       <>

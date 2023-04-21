@@ -10,6 +10,7 @@ import markNoficationsRead from "../../http/markNotificationsRead";
 import getUnreadNotification from "../../http/getUnreadNotifications";
 import MessageNotification from "./MessageNotification";
 import markSingleNoficationsRead from "../../http/markSingleNotificationRead";
+import RelatedPost from "./RelatedPost";
 
 const UserNotifications: React.FC = () => {
   const { t } = useTranslation();
@@ -43,6 +44,8 @@ const UserNotifications: React.FC = () => {
     }
     fetchUserNotifications();
   }, [userNotifications?.length]);
+
+  console.log(unreadNotifications)
 
   const handleBtnClick = (notificationID: string) => {
     // handle connection invite Accept or Decline
@@ -87,9 +90,15 @@ const UserNotifications: React.FC = () => {
                     return (
                       <MessageNotification
                         initiatorID={notification.initiatorID}
-                        key={notification.initiatorID}
+                        key={notification.id}
                       />
                     );
+                  } else if (notification.type === "relatedPost") {
+                    return (<RelatedPost 
+                      initiatorID={notification.initiatorID} 
+                      key={notification.id} 
+                      notificationID={notification.id} 
+                      handleBtnClick={handleBtnClick}/>)
                   }
                 })
               )}
