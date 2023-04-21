@@ -58,7 +58,7 @@ const ConnectionInvite: React.FC<{
               <div className="flex flex-col">
                 <h1 className="text-md font-bold">{user?.name}</h1>
                 <h2 className="text-xs font-semibold">{user?.title}</h2>
-                <h3 className="text-xs text-[#4B47B7] dark:main-color">
+                <h3 className="text-xs text-[#4B47B7] dark:main-color w-24">
                   {user?.connections.length} connections
                 </h3>
               </div>
