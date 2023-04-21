@@ -17,6 +17,8 @@ import TagSelection from "./TagSelection";
 import JobSettingsModal from "./JobSettingsModal";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
+import Usertypes from "../../../Models/UserProfileModel";
+import getAllUsers from "../../../http/getAllUsers";
 
 const style = {
   position: "absolute",
@@ -69,6 +71,7 @@ const NewPostModal: FC<{
         });
     },
   });
+  const [allUsers, setAllUsers] = useState<Usertypes[]>();
   const [showTagSelection, setShowTagSelection] = useState<boolean>(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showJobSettings, setShowJobSettings] = useState<boolean>(false);
@@ -86,6 +89,18 @@ const NewPostModal: FC<{
     position: null,
   });
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  useEffect(() => {
+    async function fetchAllUsers() {
+      try {
+        const allUsers = await getAllUsers();
+        setAllUsers(allUsers.data); // get post from the response object
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAllUsers();
+  }, [allUsers?.length]);
+
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -210,7 +225,9 @@ const NewPostModal: FC<{
                               margin: 1,
                               backgroundColor: "#4D47C3",
                               color: "white",
-                              "& .MuiChip-deletable": {backgroundColor: "white",},
+                              "& .MuiChip-deletable": {
+                                backgroundColor: "white",
+                              },
                             }}
                             key={index}
                             label={tag}
