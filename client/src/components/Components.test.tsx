@@ -163,8 +163,7 @@ describe('Render misc components', () => {
       })
     );
 
-    // @ts-ignore
-    global.URL = jest.fn(() => {return {createObjectURL: () => {return "";}};})
+    URL.createObjectURL = jest.fn(() => 'http://www.test.com');
   });
 
   test('Render ConnectionRow', async () => {

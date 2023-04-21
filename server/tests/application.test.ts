@@ -121,6 +121,10 @@ describe('Application routes', () => {
   });
 
   describe('patch /posts/:post_id/apply', () => {
+    beforeEach(async () => {
+      mockingoose(Application).toReturn(false, 'findOne');
+    });
+
     it('should create a new application for a job listing', async () => {
       const response = await request(app)
         .patch('/api/applications/123/apply')

@@ -351,7 +351,7 @@ describe('post routes', () => {
 
     it('should return failure if post not found', async () => {
       mockingoose(User).toReturn({}, 'findOne');
-      mockingoose(Post).toReturn(null, 'findOne');
+      mockingoose(Post).toReturn(undefined, 'findOne');
 
       const res = await request(app)
         .delete('/api/posts/507f1f77bcf86cd799439011')
