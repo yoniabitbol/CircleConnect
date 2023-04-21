@@ -17,6 +17,8 @@ import notificationsEn from './locales/en/notifications';
 import notificationsFr from './locales/fr/notifications';
 import filterFeedFr from './locales/fr/filterFeed';
 import filterFeedEn from './locales/en/filterFeed';
+import chatEn from "./locales/en/chat";
+import chatFr from "./locales/fr/chat";
 
 const namespaceEnCommon = {
     ...commonEn,
@@ -27,6 +29,7 @@ const namespaceEnCommon = {
     ...loginAndRegistrationEn,
     ...notificationsEn,
     ...filterFeedEn,
+    ...chatEn,
 };
 
 const namespaceFrCommon = {
@@ -38,6 +41,7 @@ const namespaceFrCommon = {
     ...loginAndRegistrationFr,
     ...notificationsFr,
     ...filterFeedFr,
+    ...chatFr,
 };
 
 i18n.use(initReactI18next)
