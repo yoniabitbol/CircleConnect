@@ -14,6 +14,7 @@ import Comments from "./Feed/FeedCard/Comments";
 import NewPostModal from "./Feed/NewPostModal";
 import MyProfile from "./MyProfile";
 import JobSettingsModal from "./Feed/NewPostModal/JobSettingsModal";
+import ChatPage from "./Chat";
 
 jest.mock("../firebase/config", () => ({
   auth:
@@ -206,4 +207,30 @@ describe('Test user feed', () => {
       );
     });
   });
+});
+
+describe('Test chat', () => {
+    beforeEach(async () => {
+      // @ts-ignore
+      global.fetch = jest.fn(() =>
+          Promise.resolve({
+            json: () => Promise.resolve({data: {users: "test", connections: []}}), ok: true,
+            blob: () => {
+              return "";
+            }
+          })
+      );
+    });
+
+    test('Render ChatPage', async () => {
+      await act(async () => {
+        await render(
+          <>
+            <BrowserRouter>
+              <ChatPage/>
+            </BrowserRouter>
+          </>
+        );
+      });
+    });
 });
