@@ -8,7 +8,8 @@ const chat = {
             retrieving:"Retreiving sessions ...",
             chatwithConnxn: "Chat with your Connections",
             selectConnxn: "Select a Connection",
-            unableToCreate:"Unable to create thread with selected user."
+            unableToCreate:"Unable to create thread with selected user.",
+            noProfanity: "Please refrain from using bad language"
         },
         buttons: {
             startChat:'START NEW CHAT',
