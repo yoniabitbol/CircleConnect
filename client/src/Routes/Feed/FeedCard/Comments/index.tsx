@@ -6,6 +6,7 @@ import commentPost from '../../../../http/commentPost';
 import { useTranslation } from "react-i18next";
 import getCurrentUserProfile from '../../../../http/getCurrentUserProfile';
 import getUserProfilePic from '../../../../http/getUserPicturePic';
+import getUserProfile from '../../../../http/getUserProfile';
 
 const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
     const {t} = useTranslation();
@@ -13,6 +14,7 @@ const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
     const [commentsList, setCommentsList] = useState<any>(comments);
     const [user, setUser] = useState<any>(null);
     const [userProfilePic, setUserProfilePic] = useState<string>('');
+    
     const formik = useFormik({
         initialValues: {comment: ''}, onSubmit: (values,{resetForm}) => {
 
@@ -41,6 +43,20 @@ useEffect(() => {
         });
     }
 },[user])
+
+useEffect(() => {
+    commentsList?.map((comment:any) => {
+        getUserProfile(comment.commenter).then((res: { data: any; }) => {
+            getUserProfilePic(res.data.user.picture).then((res: any) => {
+                comment.userPic = res;
+                setCommentsList(commentsList);
+            }
+            )
+        })
+    })
+},[commentsList, comments])
+
+
 
     return (
         <div className="p-3">
