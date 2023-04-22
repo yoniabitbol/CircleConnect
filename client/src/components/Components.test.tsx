@@ -16,6 +16,10 @@ import UserProfileBanner from "./UserProfileBanner";
 // import NavBar from "./Navbar";
 import NavLinks from "./Navbar/NavLinks";
 import ApplyDropUp from "./ApplyDropUp";
+import Alert from "./UserNotifications/Alert";
+import ConnectionInvite from "./UserNotifications/ConnectionInvite";
+import ConnectionInviteRead from "./UserNotifications/ConnectionInviteRead";
+import MessageNotification from "./UserNotifications/MessageNotification";
 
 jest.mock("../firebase/config", () => ({
   auth:
@@ -94,6 +98,54 @@ describe('Test user notification components', () => {
         return screen.getByTestId("link-click-1");
       });
       await userEvent.click(link1);
+    });
+  });
+
+  test('Render Alert', async () => {
+    await act(async () => {
+      await render(
+          <>
+            <BrowserRouter>
+              <Alert  description={""} time={0} type={""}/>
+            </BrowserRouter>
+          </>
+      );
+    });
+  });
+
+  test('Render ConnectionInvite', async () => {
+    await act(async () => {
+      await render(
+          <>
+            <BrowserRouter>
+              <ConnectionInvite  initiatorID={""}/>
+            </BrowserRouter>
+          </>
+      );
+    });
+  });
+
+  test('Render ConnectionInviteRead', async () => {
+    await act(async () => {
+      await render(
+          <>
+            <BrowserRouter>
+              <ConnectionInviteRead  initiatorID={""}/>
+            </BrowserRouter>
+          </>
+      );
+    });
+  });
+
+  test('Render MessageNotification', async () => {
+    await act(async () => {
+      await render(
+          <>
+            <BrowserRouter>
+              <MessageNotification  initiatorID={""}/>
+            </BrowserRouter>
+          </>
+      );
     });
   });
 });

@@ -22,6 +22,19 @@ import updateUserPreferenceTags from "./updateUserPreferenceTags";
 import withdrawFromPost from "./withdrawFromPost";
 import getUserConnections from "./getUserConnections";
 import getIncomingConnectionRequests from "./getIncomingConnectionRequests";
+import createNewThread from "./createNewThread";
+import deletePost from "./deletePost";
+import getCoverLetter from "./getCoverLetter";
+import getCurrentUserThreads from "./getCurrentUserThreads";
+import getMessageFile from "./getMessageFile";
+import getPost from "./getPost";
+import getResume from "./getResume";
+import getThreadMessages from "./getThreadMessages";
+import markMessageNotificationsRead from "./markMessageNotificationsRead";
+import markNotificationsRead from "./markNotificationsRead";
+import patchPost from "./patchPost";
+import saveMessage from "./saveMessage";
+import sendNotification from "./sendNotification";
 
 jest.mock("../firebase/config", () => ({
   auth:
@@ -145,5 +158,57 @@ describe('httpRequests', () => {
 
   test('getIncommenting', async () => {
     await getUserConnections("test");
+  });
+
+  test('createNewThread', async () => {
+    await createNewThread("test");
+  });
+
+  test('deletePost', async () => {
+    await deletePost("test");
+  });
+
+  test('getCoverLetter', async () => {
+    await getCoverLetter("test");
+  });
+
+  test('getCurrentUserThreads', async () => {
+    await getCurrentUserThreads();
+  });
+
+  test('getMessageFile', async () => {
+    await getMessageFile("test");
+  });
+
+  test('getPost', async () => {
+    await getPost("test");
+  });
+
+  test('getResume', async () => {
+    await getResume("test");
+  });
+
+  test('getThreadMessages', async () => {
+    await getThreadMessages("test");
+  });
+
+  test('markMessageNotificationsRead', async () => {
+    await markMessageNotificationsRead();
+  });
+
+  test('markNotificationsRead', async () => {
+    await markNotificationsRead();
+  });
+
+  test('patchPost', async () => {
+    await patchPost("test", new FormData());
+  });
+
+  test('saveMessage', async () => {
+    await saveMessage(new FormData());
+  });
+
+  test('sendNotification', async () => {
+    await sendNotification("test", "test");
   });
 });
