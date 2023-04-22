@@ -69,7 +69,7 @@ const SearchBar: React.FC<{searchResults: UserInSearch[], inputChangeHandler: (v
               ...params.InputProps,
               startAdornment: (
                 <div className="flex items-center">
-                  <Search sx={{color:'#4B47B7'}}/>
+                  <Search sx={{color:'primary.main'}}/>
                 </div>
               ),
               endAdornment: loading && !value ? <CircularProgress color="inherit" size={20} sx={{position:'absolute', right:6}} /> : null,
