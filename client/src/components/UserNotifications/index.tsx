@@ -46,8 +46,6 @@ const UserNotifications: React.FC = () => {
     fetchUserNotifications();
   }, [userNotifications?.length]);
 
-  console.log(unreadNotifications)
-
   const handleBtnClick = (notificationID: string) => {
     // handle connection invite Accept or Decline
     markSingleNoficationsRead(notificationID);
