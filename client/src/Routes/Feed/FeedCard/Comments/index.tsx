@@ -10,7 +10,7 @@ import getUserProfile from '../../../../http/getUserProfile';
 
 const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
     const {t} = useTranslation();
-    const { comments, postId} = props;
+    const {comments, postId} = props;
     const [commentsList, setCommentsList] = useState<any>(comments);
     const [user, setUser] = useState<any>(null);
     const [userProfilePic, setUserProfilePic] = useState<string>('');
@@ -20,9 +20,10 @@ const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
 
             commentPost(postId, values.comment).then((res) => {
                 if(res.status === 'success'){
-                    setCommentsList(commentsList.concat(values));
+                    setCommentsList([...commentsList, {comment: values.comment, commenter: user._id, userPic: userProfilePic}]);
                 }
-            })
+            });
+            
             resetForm();
     }
 })
@@ -46,17 +47,23 @@ useEffect(() => {
 
 useEffect(() => {
     commentsList?.map((comment:any) => {
-        getUserProfile(comment.commenter).then((res: { data: any; }) => {
-            getUserProfilePic(res.data.user.picture).then((res: any) => {
-                comment.userPic = res;
-                setCommentsList(commentsList);
-            }
-            )
-        })
+        // Check if the comment object already has a userPic property
+        if (!comment.userPic) {
+            getUserProfile(comment.commenter).then((res: { data: any; }) => {
+                getUserProfilePic(res.data.user.picture).then((res: any) => {
+                    comment.userPic = res;
+                    setCommentsList([...commentsList]); // Use the spread operator to create a new array and trigger a re-render
+                }).catch(() => {
+                    comment.userPic = '';
+                    setCommentsList([...commentsList]);
+                });
+            }).catch(() => {
+                comment.userPic = '';
+                setCommentsList([...commentsList]);
+            });
+        }
     })
-},[commentsList, comments])
-
-
+},[commentsList])
 
     return (
         <div className="p-3">
