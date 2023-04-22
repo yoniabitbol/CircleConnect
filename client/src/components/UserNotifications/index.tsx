@@ -94,7 +94,7 @@ const UserNotifications: React.FC = () => {
                         key={notification.id}
                       />
                     );
-                  } else if (notification.type === "relatedPost" && notification.initiatorID !== notification.user_id) {
+                  } else if (notification.type === "relatedPost") {
                     return (<RelatedPost 
                       initiatorID={notification.initiatorID} 
                       key={notification.id} 
@@ -152,7 +152,7 @@ const UserNotifications: React.FC = () => {
                         key={notification.initiatorID}
                       />
                     );
-                  } else if (notification.type === "relatedPost" && notification.initiatorID !== notification.user_id) {
+                  } else if (notification.type === "relatedPost") {
                     return (<RelatedPostRead 
                       initiatorID={notification.initiatorID} 
                       key={notification.id} 

@@ -20,7 +20,6 @@ import { useTranslation } from "react-i18next";
 import Usertypes from "../../../Models/UserProfileModel";
 import getAllUsers from "../../../http/getAllUsers";
 import sendNotification from "../../../http/sendNotification";
-// import sendNotification from "../../../http/sendNotification";
 
 const style = {
   position: "absolute",
