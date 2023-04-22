@@ -1,14 +1,18 @@
 import {Avatar, IconButton} from '@mui/material';
 import {MapsUgc} from '@mui/icons-material';
-import {useState, FC} from 'react';
+import {useState, FC, useEffect} from 'react';
 import {useFormik} from 'formik';
 import commentPost from '../../../../http/commentPost';
 import { useTranslation } from "react-i18next";
+import getCurrentUserProfile from '../../../../http/getCurrentUserProfile';
+import getUserProfilePic from '../../../../http/getUserPicturePic';
 
 const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
     const {t} = useTranslation();
-    const {userPic, comments, postId} = props;
+    const { comments, postId} = props;
     const [commentsList, setCommentsList] = useState<any>(comments);
+    const [user, setUser] = useState<any>(null);
+    const [userProfilePic, setUserProfilePic] = useState<string>('');
     const formik = useFormik({
         initialValues: {comment: ''}, onSubmit: (values,{resetForm}) => {
 
@@ -20,10 +24,28 @@ const Comments:FC<{userPic:any, comments:any, postId:any}> = (props) => {
             resetForm();
     }
 })
+
+useEffect(() => {
+    getCurrentUserProfile().then((res) => {
+        setUser(res.data.user);
+    });
+
+},[])
+
+useEffect(() => {
+    if (user) {
+        getUserProfilePic(user.picture).then((res) => {
+            setUserProfilePic(res);
+        }).catch(() => {
+            setUserProfilePic('');
+        });
+    }
+},[user])
+
     return (
         <div className="p-3">
                 <div className="flex items-center">
-                    <Avatar src={userPic}/>
+                    <Avatar src={userProfilePic}/>
                     <form className="w-full" onSubmit={formik.handleSubmit}>
                         <div className="flex items-center ml-3 w-full  rounded-2xl">
                             <input name="comment" value={formik.values.comment} onChange={formik.handleChange} className="w-full p-3 outline-none dark:secondary-dark rounded-2xl" placeholder={t('common.label.shareThoughts')|| "Share your thoughts"}/>
