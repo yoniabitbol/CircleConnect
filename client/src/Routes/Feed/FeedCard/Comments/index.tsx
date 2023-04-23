@@ -1,4 +1,4 @@
-import {Avatar, IconButton} from '@mui/material';
+import {Avatar, IconButton, Typography} from '@mui/material';
 import {MapsUgc} from '@mui/icons-material';
 import {useState, FC, useEffect} from 'react';
 import {useFormik} from 'formik';
@@ -50,6 +50,9 @@ useEffect(() => {
         // Check if the comment object already has a userPic property
         if (!comment.userPic) {
             getUserProfile(comment.commenter).then((res: { data: any; }) => {
+                comment.name = res.data.user.name;
+                console.log(comment.name);
+                
                 getUserProfilePic(res.data.user.picture).then((res: any) => {
                     comment.userPic = res;
                     setCommentsList([...commentsList]); // Use the spread operator to create a new array and trigger a re-render
@@ -82,8 +85,9 @@ useEffect(() => {
                 {commentsList?.map((comment:any) => (
                         <div key={comment._id} className="flex mt-5">
                             <Avatar src={comment.userPic}/>
-                            <div className="ml-3 bg-[#4D47C3] w-full rounded-xl p-2">
-                                <h1 className="font-bold text-white">{comment.name}</h1>
+                            <div className="ml-3  dark:main-background w-full rounded-xl p-2">
+                                <Typography variant='caption'>{comment.name}</Typography> 
+                                {/* <h1 className="font-bold text-sm text-white">{comment.name}</h1> */}
                                 <h2 className="text-white">{comment.comment}</h2>
                             </div>
                             </div>
