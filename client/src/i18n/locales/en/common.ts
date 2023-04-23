@@ -16,6 +16,13 @@ const common = {
             message:'Message',
             shareThoughts: 'Share your thoughts',
             lookingFor: 'Looking for',
+            today: "Today",
+            oneDayAgo: "1 day ago",
+            daysAgo: "days ago",
+            oneWeekAgo: "1 week ago",
+            monthsAgo: "month(s) ago",
+            weeksAgo: "weeks ago",
+            yearsAgo: "year(s) ago"
             
         },
         buttons: {

@@ -2,6 +2,7 @@ import { useEffect, useState, FC } from "react";
 import getMessageFile from "../../../http/getMessageFile";
 import { Download } from "@mui/icons-material";
 import { Chip } from "@mui/material";
+import FilterMessage from "./filterMessages";
 
 const Message: FC<{
   outbound: boolean;
@@ -25,7 +26,7 @@ const Message: FC<{
       {outbound ? <span className="" /> : <span />}
       {text && (
         <div className={"rounded-md px-3 py-1" + " " + textBoxStyle}>
-          <div className="">{text}</div>
+          <div className=""><FilterMessage text={text} /></div>
         </div>
       )}
       {fileData && (

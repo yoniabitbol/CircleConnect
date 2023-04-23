@@ -9,6 +9,7 @@ import ThreadModel from "../../../Models/ThreadModel";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Socket } from "socket.io-client";
 import { Button, IconButton, Chip, CircularProgress } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export interface MessageType {
   id: number;
@@ -25,7 +26,7 @@ const ChatDisplay: React.FC<{
   socket: Socket;
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
   const lastMessageRef = useRef<HTMLDivElement>(null);
-
+  const { t } = useTranslation();
   useEffect(() => {
     socket.on("receive-message", (newMsg) => {
       if (setMessages) {
@@ -43,12 +44,12 @@ const ChatDisplay: React.FC<{
       socket.disconnect();
     };
   }, [socket, messages]);
- useEffect(() => {
+  useEffect(() => {
     if (lastMessageRef.current) {
 
       lastMessageRef.current.scrollTop = lastMessageRef.current.scrollHeight;
     }
- },[lastMessageRef.current, messages])
+  }, [lastMessageRef.current, messages])
   const formik = useFormik({
     initialValues: {
       thread_id: thread._id,
@@ -105,35 +106,35 @@ const ChatDisplay: React.FC<{
     <div className="mx-5 mt-5 h-min rounded-md bg-white dark:primary-dark">
       <div className="justify-start ml-10 my-3">
         <span className="text-sm font-bold">
-          CHAT WITH{" "}
+          {t('chat.label.chatWith')}{" "}
           <span className="text-[#4B47B7], dark:text-[#706CC3]">
             {threadProfile ? threadProfile.name.toUpperCase() : ""}
           </span>
         </span>
       </div>
       <hr className="border-gray-100 border" />
-        <div
-          ref={lastMessageRef}
-          className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch"
-        >
-          {messages ? messages.map((message) => (
-              <div
-                key={message._id}
-                className={
-                  message.senderID == uid
-                    ? "ml-20 mt-2 justify-end flex"
-                    : "mx-5 mt-2 justify-start flex" + " flex"
-                }
-              >
-                  <Message
-                      outbound={message.senderID == uid}
-                      text={message.text}
-                      file={message.file}
-                  />
+      <div
+        ref={lastMessageRef}
+        className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch"
+      >
+        {messages ? messages.map((message) => (
+          <div
+            key={message._id}
+            className={
+              message.senderID == uid
+                ? "ml-20 mt-2 justify-end flex"
+                : "mx-5 mt-2 justify-start flex" + " flex"
+            }
+          >
+            <Message
+              outbound={message.senderID == uid}
+              text={message.text}
+              file={message.file}
+            />
 
-              </div>
-            )): <CircularProgress color="primary" className="relative left-[50%] top-[45%]" />}
-        </div>
+          </div>
+        )) : <CircularProgress color="primary" className="relative left-[50%] top-[45%]" />}
+      </div>
       <hr className="border-gray-100 border" />
       <div className="ml-8 my-2">
         <form onSubmit={formik.handleSubmit}>
@@ -142,7 +143,7 @@ const ChatDisplay: React.FC<{
               className="2xl:w-11/12 sm:w-4/5 w-3/5 h-16 bg-transparent mr-2 outline-none"
               type="text"
               name="text"
-              placeholder="Write your message"
+              placeholder={t('chat.label.writeMessage')!}
               value={formik.values.text}
               onChange={formik.handleChange}
             />
