@@ -17,6 +17,9 @@ import TagSelection from "./TagSelection";
 import JobSettingsModal from "./JobSettingsModal";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
+import Usertypes from "../../../Models/UserProfileModel";
+import getAllUsers from "../../../http/getAllUsers";
+import sendNotification from "../../../http/sendNotification";
 
 const style = {
   position: "absolute",
@@ -54,6 +57,16 @@ const NewPostModal: FC<{
       createPost(formData)
         .then((res) => {
           if (res.status === "success") {
+            const tags = values.preferenceTags;
+            
+             tags.forEach((tag: string) => {
+               allUsers?.forEach((user) => {
+                 if (user.user_id != null && user.preferenceTags.includes(tag)) {
+                   sendNotification(user.user_id, "relatedPost")
+                 }
+               })
+             })
+ 
             resetForm();
             handleModalClose();
             postStatus(true);
@@ -69,6 +82,7 @@ const NewPostModal: FC<{
         });
     },
   });
+  const [allUsers, setAllUsers] = useState<Usertypes[]>();
   const [showTagSelection, setShowTagSelection] = useState<boolean>(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showJobSettings, setShowJobSettings] = useState<boolean>(false);
@@ -86,6 +100,18 @@ const NewPostModal: FC<{
     position: null,
   });
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  useEffect(() => {
+    async function fetchAllUsers() {
+      try {
+        const allUsers = await getAllUsers();
+        setAllUsers(allUsers.data.users); // get users from the response object
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAllUsers();
+  }, [allUsers?.length]);
+
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -108,8 +134,13 @@ const NewPostModal: FC<{
   const resetTags = () => {
     setSelectedTags([]);
     formik.setFieldValue("preferenceTags", []);
-    handleModalClose();
   };
+
+  const closeModal = () => {
+    resetJobSettings();
+    resetTags();
+    handleModalClose();
+  }
 
   const resetJobSettings = () => {
     setSettings({
@@ -119,10 +150,12 @@ const NewPostModal: FC<{
       thirdPartyLink: "",
       position: null,
     });
+    formik.setFieldValue("isJobListing", false)
     formik.setFieldValue("isResumeRequired", false);
     formik.setFieldValue("isCoverLetterRequired", false);
     formik.setFieldValue("thirdPartyLink", "");
     formik.setFieldValue("position", null);
+    formik.setFieldValue('preferenceTags', []);
   };
   useEffect(() => {
     if (!formik.values.isJobListing) {
@@ -148,8 +181,10 @@ const NewPostModal: FC<{
   const disablePostButton =
     formik.values.text === "" ||
     (formik.values.isJobListing && !formik.values.position);
+
+    (formik.values.isJobListing && (!formik.values.position || formik.values.preferenceTags.length === 0));
   return (
-    <Modal open={showModal} onClose={resetTags}>
+    <Modal open={showModal} onClose={closeModal}>
       <>
         <Card className={styles.modal} sx={style}>
           <div className="w-full sticky top-0 bg-white p-2 z-20 dark:primary-dark">
@@ -253,7 +288,7 @@ const NewPostModal: FC<{
               <div className="fixed right-0 bottom-1 flex space-x-1 px-2 justify-end">
                 <IconButton
                   disabled={!formik.values.isJobListing}
-                  sx={{ display: "flex", justifyContent: "end" }}
+                  sx={{ display: "flex", justifyContent: "end", color: formik.values.isJobListing && formik.values.preferenceTags < 1 && "red"}}
                   onClick={() => setShowTagSelection(true)}
                 >
                   <Tag />

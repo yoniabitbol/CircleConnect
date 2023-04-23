@@ -215,14 +215,14 @@ const FeedCard: React.FC<{
           )}
           <div>
             <Link
-              to={`/ profile / ${userInfo.user_id} `}
+              to={`/profile/${userInfo.user_id}`}
               className="flex items-center p-2"
             >
               <Avatar sx={{ height: 70, width: 70 }} src={userProfilePic} />
               <div className="ml-2 flex-col -space-y-1">
                 <h1 className="font-bold">{userInfo.name}</h1>
                 <div className="flex-col -space-y-3">
-                  <h2>{userInfo.title}</h2>
+                  <h2>{userInfo.title === 'undefined' ? '' : userInfo.title}</h2>
                   <Typography sx={{ padding: 0 }} variant="caption">{howLongAgo(postInfo.date)}</Typography>
                 </div>
 
@@ -233,7 +233,7 @@ const FeedCard: React.FC<{
                 className={`${getCount(postInfo.text) > 60
                   ? !readMore && classes.postText
                   : classes.postTextMore
-                  } `}
+                  }`}
               >
                 <Typography sx={{ marginBottom: 2, overflowWrap: 'break-word' }} variant="body1" className="break-words">
                   {getCount(postInfo.text) > 60 && !readMore
@@ -337,7 +337,7 @@ const FeedCard: React.FC<{
             </div>
           )}
         </CardActions>
-        <div className={`${!showComments && "hidden"} `}>
+        <div className={`${!showComments && "hidden"}`}>
           <Comments
             userPic={userPic}
             comments={postInfo.comments}

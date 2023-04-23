@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import Message from "../Message";
 import { useFormik } from "formik";
 import SendIcon from "@mui/icons-material/Send";
@@ -10,6 +10,9 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Socket } from "socket.io-client";
 import { Button, IconButton, Chip, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import sendNotification from "../../../http/sendNotification";
+import markMessageNotificationsRead from "../../../http/markMessageNotificationsRead";
+import { Snackbar, Alert } from '@mui/material';
 
 export interface MessageType {
   id: number;
@@ -27,6 +30,17 @@ const ChatDisplay: React.FC<{
 }> = ({ threadProfile, messages, setMessages, uid, thread, socket }) => {
   const lastMessageRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
+  const [showFileAlert, setShowFileAlert] = useState<{ alert: boolean, type: string }>({ alert: false, type: "" });
+  const showAlert = (fileType: string) => {
+    setShowFileAlert({ alert: true, type: fileType });
+  }
+  useEffect(() => {
+    markMessageNotificationsRead();
+    return () => {
+      markMessageNotificationsRead();
+    };
+  });
+
   useEffect(() => {
     socket.on("receive-message", (newMsg) => {
       if (setMessages) {
@@ -46,10 +60,9 @@ const ChatDisplay: React.FC<{
   }, [socket, messages]);
   useEffect(() => {
     if (lastMessageRef.current) {
-
       lastMessageRef.current.scrollTop = lastMessageRef.current.scrollHeight;
     }
-  }, [lastMessageRef.current, messages])
+  }, [lastMessageRef.current, messages]);
   const formik = useFormik({
     initialValues: {
       thread_id: thread._id,
@@ -82,19 +95,21 @@ const ChatDisplay: React.FC<{
                 picture: threadProfile?.picture,
               },
               text: values.text,
-              file: values.messageFile,
+              file: res.data.message.file && res.data.message.file,
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString(),
             };
-            if (setMessages && messages) {
-              setMessages([...messages, newMsg]);
-            }
             socket.emit("send-message", {
               senderID: newMsg.senderID,
               threadID: newMsg.threadID,
               text: newMsg.text,
               file: newMsg.file,
             });
+            if (threadProfile?.user_id == null) return;
+            sendNotification(threadProfile?.user_id, "message"); // send mssg notification
+            if (setMessages && messages) {
+              setMessages([...messages, newMsg]);
+            }
           }
         });
       }
@@ -117,23 +132,29 @@ const ChatDisplay: React.FC<{
         ref={lastMessageRef}
         className="w-11/12 h-[25rem] ml-5 mt-5 pb-5 inline-block overflow-y-auto scrolling-touch"
       >
-        {messages ? messages.map((message) => (
-          <div
-            key={message._id}
-            className={
-              message.senderID == uid
-                ? "ml-20 mt-2 justify-end flex"
-                : "mx-5 mt-2 justify-start flex" + " flex"
-            }
-          >
-            <Message
-              outbound={message.senderID == uid}
-              text={message.text}
-              file={message.file}
-            />
-
-          </div>
-        )) : <CircularProgress color="primary" className="relative left-[50%] top-[45%]" />}
+        {messages ? (
+          messages.map((message) => (
+            <div
+              key={message._id}
+              className={
+                message.senderID == uid
+                  ? "ml-20 mt-2 justify-end flex"
+                  : "mx-5 mt-2 justify-start flex" + " flex"
+              }
+            >
+              <Message
+                outbound={message.senderID == uid}
+                text={message.text}
+                file={message.file}
+              />
+            </div>
+          ))
+        ) : (
+          <CircularProgress
+            color="primary"
+            className="relative left-[50%] top-[45%]"
+          />
+        )}
       </div>
       <hr className="border-gray-100 border" />
       <div className="ml-8 my-2">
@@ -169,14 +190,17 @@ const ChatDisplay: React.FC<{
                   type="file"
                   name="file"
                   hidden
+                  accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx"
                   onChange={(event: any) => {
                     const file: FileList | null = event.currentTarget.files;
                     if (!file) return;
+                    else if (file[0].type !== "application/pdf" && file[0].type !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document" && file[0].type !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" && file[0].type !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && file[0].type !== "application/vnd.ms-powerpoint" && file[0].type !== "application/vnd.ms-excel" && file[0].type !== "application/msword") {
+                      showAlert(file[0].type);
+                    }
                     else {
                       formik.setFieldValue("messageFile", file[0]);
                     }
                   }}
-                  accept="=.pdf, .doc, .docx, .txt, .xlsx"
                 />
                 <AttachFileIcon />
               </IconButton>
@@ -191,6 +215,9 @@ const ChatDisplay: React.FC<{
           </div>
         </form>
       </div>
+      <Snackbar anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }} open={showFileAlert.alert} autoHideDuration={4000} onClose={() => setShowFileAlert({ alert: false, type: "" })}>
+        <Alert severity="error" >{`File type ${showFileAlert.type} is not supported`}</Alert>
+      </Snackbar>
     </div>
   );
 };

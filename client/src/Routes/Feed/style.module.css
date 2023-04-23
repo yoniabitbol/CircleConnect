@@ -12,7 +12,6 @@
 
 
 .newPostButton {
-    background-color: #4D47C3;
     transition-property: width;
     width: 25rem;
     transition-duration: 0.3s;

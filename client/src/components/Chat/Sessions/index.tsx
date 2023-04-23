@@ -3,7 +3,7 @@ import SessionItem from "../SessionItem";
 import ThreadModel from "../../../Models/ThreadModel";
 import UserProfileModel from "../../../Models/UserProfileModel";
 import createNewThread from "../../../http/createNewThread";
-import { Avatar } from "@mui/material";
+import { Avatar, Button } from '@mui/material';
 import getUserProfilePic from "../../../http/getUserPicturePic";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -24,8 +24,8 @@ const Sessions: React.FC<{
   connections: UserProfileModel[];
 }> = (props
 ) => {
-    const { threadProfiles, connections, selected, refreshThreads } = props;
     const { t } = useTranslation();
+    const { threadProfiles, connections, selected, refreshThreads } = props;
     const [showModal, setShowModal] = useState(false);
     const [userProfilePics, setUserProfilePics] = useState<{
       [key: string]: string;
@@ -111,16 +111,16 @@ const Sessions: React.FC<{
           })}
         </div>
 
-        <div className="mt-10 pb-5 rounded-md bg-white dark:primary-dark">
+        <div>
           <div className="flex justify-center">
-            <button
-              className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg"
-              type="button"
-              style={{ background: "#4B47B7" }}
+            <Button
+              // className=" w-4/5 pb-2 mt-5 text-sky-50 rounded-lg"
+              variant="contained"
+              style={{ width: '100%', height: '100%', marginTop: 5, borderRadius: 10 }}
               onClick={handleOpenModal}
             >
               <div className="flex justify-center pt-1">{t('chat.buttons.startChat')}</div>
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -201,13 +201,12 @@ const Sessions: React.FC<{
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse dark:primary-dark">
-                  <button
+                  <Button
                     onClick={handleCloseModal}
-                    type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-500 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 sm:ml-3 sm:w-auto sm:text-sm"
+                    variant="contained"
                   >
                     {t('chat.buttons.close')}
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>

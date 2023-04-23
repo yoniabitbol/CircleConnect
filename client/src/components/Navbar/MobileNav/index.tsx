@@ -15,16 +15,15 @@ const MobileNav: React.FC<{links: NavLinkModel[]}> = (props) => {
    
   }, );
   const navLinkClass = "items-center flex flex-col text-sm font-normal justify-center leading-normal ";
-  const navActiveClass = " text-violet-900 border-b-2 border-violet-900";
+  const navActiveClass = "dark:main-color border-b-2 dark:main-color";
   return (
     <Box  sx={[{ flexGrow: 1}]}>
-      <AppBar elevation={0} position="static" sx={{backgroundColor:'white'}}>
-        <Toolbar>
-          <IconButton data-testid="icon-button"
+      <AppBar elevation={0} position="static">
+        <Toolbar sx={{backgroundColor:'none'}}>
+          <IconButton
             size="large"
             edge="start"
-            aria-label="menu"
-            sx={{ mr: 2, color:'#4B47B6'}}
+            sx={{ mr: 2}}
             onClick={() => setToggleNav(!toggleNav)}
           >
             <MenuIcon />

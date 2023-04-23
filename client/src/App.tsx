@@ -20,7 +20,7 @@ function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const lightTheme = createTheme({
     palette: { primary: { main: "#4D47C3" } },
-    typography: {fontFamily: "Poppins, sans-serif",},
+    typography: {fontFamily: "Poppins, sans-serif"},
     components: {
       MuiButton: {
         styleOverrides: {
@@ -34,6 +34,9 @@ function App() {
       },
         MuiIconButton: {styleOverrides: {root:{color:'#4D47C3'},}},
         MuiChip: {styleOverrides: {root:{backgroundColor:'#4D47C3',color:'white'},}},
+        MuiToolbar: {styleOverrides: {root:{backgroundColor:'white',color:'white'},}},
+        MuiIcon: {styleOverrides: {root:{color:'#4D47C3'},}},
+        MuiTypography: {styleOverrides: {caption:{fontFamily: "Poppins, sans-serif", color:'#9CA3AF'},}},
 
     },
   });
@@ -44,7 +47,7 @@ function App() {
         MuiButton: {
         styleOverrides: {
             root:{fontFamily: "Poppins, sans-serif"},
-            contained: { color: "white", backgroundColor: "#4D47C3","&:hover": { backgroundColor: "#413b9f" } },
+            contained: { color: "white", backgroundColor: "primary.main","&:hover": { backgroundColor: "#413b9f" } },
             text: {
               color:'primary.main',
                 "&:hover": { backgroundColor: "rgba(77,71,195, .05)" },
