@@ -4,7 +4,7 @@ import getUserProfile from "../../../http/getUserProfile";
 import { Usertypes } from "../../UserProfile";
 import getUserProfilePic from "../../../http/getUserPicturePic";
 
-const MessageNotification: React.FC<{
+const RelatedPost: React.FC<{
   initiatorID: string;
 }> = (props) => {
   const { initiatorID } = props;
@@ -39,9 +39,9 @@ const MessageNotification: React.FC<{
   }, []);
 
   return (
-    <div>
+    <div >
       {user != null ? (
-        <a href={"/chat/" + initiatorID}>
+        <a href={"/jobs"}>
           <div className="w-full m-4 py-3 rounded-md bg-white h-auto dark:secondary-dark">
             <div className="flex flex-row justify-between px-3">
               <div className="flex flex-row space-x-8 ">
@@ -61,7 +61,7 @@ const MessageNotification: React.FC<{
                   |
                 </h1>
                 <h3 className="text-sm text-gray-400">
-                  {user?.name + " sent you a message!"}
+                  {user?.name + " posted a job that matches your profile!"}
                 </h3>
               </div>
             </div>
@@ -72,4 +72,4 @@ const MessageNotification: React.FC<{
   );
 };
 
-export default MessageNotification;
+export default RelatedPost;

@@ -17,6 +17,9 @@ import TagSelection from "./TagSelection";
 import JobSettingsModal from "./JobSettingsModal";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
+import Usertypes from "../../../Models/UserProfileModel";
+import getAllUsers from "../../../http/getAllUsers";
+import sendNotification from "../../../http/sendNotification";
 
 const style = {
   position: "absolute",
@@ -54,6 +57,16 @@ const NewPostModal: FC<{
       createPost(formData)
         .then((res) => {
           if (res.status === "success") {
+            const tags = values.preferenceTags;
+            
+             tags.forEach((tag: string) => {
+               allUsers?.forEach((user) => {
+                 if (user.user_id != null && user.preferenceTags.includes(tag)) {
+                   sendNotification(user.user_id, "relatedPost")
+                 }
+               })
+             })
+ 
             resetForm();
             handleModalClose();
             postStatus(true);
@@ -69,6 +82,7 @@ const NewPostModal: FC<{
         });
     },
   });
+  const [allUsers, setAllUsers] = useState<Usertypes[]>();
   const [showTagSelection, setShowTagSelection] = useState<boolean>(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [showJobSettings, setShowJobSettings] = useState<boolean>(false);
@@ -86,6 +100,18 @@ const NewPostModal: FC<{
     position: null,
   });
   const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  useEffect(() => {
+    async function fetchAllUsers() {
+      try {
+        const allUsers = await getAllUsers();
+        setAllUsers(allUsers.data.users); // get users from the response object
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchAllUsers();
+  }, [allUsers?.length]);
+
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -154,6 +180,8 @@ const NewPostModal: FC<{
 
   const disablePostButton =
     formik.values.text === "" ||
+    (formik.values.isJobListing && !formik.values.position);
+
     (formik.values.isJobListing && (!formik.values.position || formik.values.preferenceTags.length === 0));
   return (
     <Modal open={showModal} onClose={closeModal}>

@@ -8,28 +8,24 @@ async function sendNotification(target_user_id: string, type: string) {
   const url = `http://${host}:${port}/api/notifications/${target_user_id}`;
   const currentUserId = currentUser && currentUser.uid;
 
-  console.log("TUI: ", target_user_id);
-  console.log("CUI: ", currentUserId);
+  if (currentUserId !== target_user_id) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        type: type,
+        initiatorID: currentUserId,
+      }),
+    });
 
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      type: type,
-      initiatorID: currentUserId,
-    }),
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to send notification.");
-  } else {
-    console.log("Notification sent!");
+    if (!res.ok) {
+      throw new Error("Failed to send notification.");
+    } 
+    return res.json();
   }
-
-  return res.json();
 }
 
 export default sendNotification;
