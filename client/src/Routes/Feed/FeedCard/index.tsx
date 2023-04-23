@@ -221,7 +221,7 @@ const FeedCard: React.FC<{
               <div className="ml-2 flex-col -space-y-1">
                 <h1 className="font-bold">{userInfo.name}</h1>
                 <div className="flex-col -space-y-3">
-                  <h2>{userInfo.title}</h2>
+                  <h2>{userInfo.title === 'undefined' ? '' : userInfo.title}</h2>
                   <Typography sx={{ padding: 0 }} variant="caption">{howLongAgo(postInfo.date)}</Typography>
                 </div>
 
