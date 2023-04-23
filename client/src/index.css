@@ -51,4 +51,7 @@ code {
     .main-background{
         background-color: #706CC3;
     }
+    .main-border{
+        border-color: #706CC3;
+    }
 }
