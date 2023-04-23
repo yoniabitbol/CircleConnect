@@ -10,12 +10,9 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { Socket } from "socket.io-client";
 import { Button, IconButton, Chip, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
-<<<<<<< HEAD
 import sendNotification from "../../../http/sendNotification";
 import markMessageNotificationsRead from "../../../http/markMessageNotificationsRead";
-=======
 import {Snackbar,Alert} from '@mui/material';
->>>>>>> 474e1ccb9d94dcd2ecc114ab7087dab2158f4895
 
 export interface MessageType {
   id: number;
@@ -108,14 +105,11 @@ const ChatDisplay: React.FC<{
               text: newMsg.text,
               file: newMsg.file,
             });
-<<<<<<< HEAD
             if (threadProfile?.user_id == null) return;
             sendNotification(threadProfile?.user_id, "message"); // send mssg notification
-=======
             if (setMessages && messages) {
               setMessages([...messages, newMsg]);
             }
->>>>>>> 474e1ccb9d94dcd2ecc114ab7087dab2158f4895
           }
         });
       }

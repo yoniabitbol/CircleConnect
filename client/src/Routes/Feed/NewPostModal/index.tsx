@@ -180,12 +180,9 @@ const NewPostModal: FC<{
 
   const disablePostButton =
     formik.values.text === "" ||
-<<<<<<< HEAD
     (formik.values.isJobListing && !formik.values.position);
 
-=======
     (formik.values.isJobListing && (!formik.values.position || formik.values.preferenceTags.length === 0));
->>>>>>> 474e1ccb9d94dcd2ecc114ab7087dab2158f4895
   return (
     <Modal open={showModal} onClose={closeModal}>
       <>
