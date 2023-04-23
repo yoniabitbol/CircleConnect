@@ -158,7 +158,7 @@ const Feed = () => {
                 </div>}
                 <div className="lg:w-[65rem] flex-col justify-center max-lg:order-3">
                     <div className="w-full flex items-center justify-center">
-                        <hr className={style.line}/>
+                        <hr className="w-[50%] border-[1px] border-[#4D47C3] dark:main-border"/>
                         <div className={style.buttonWrapper}>
                             <Button
                                 variant="contained"
@@ -168,7 +168,7 @@ const Feed = () => {
                                <span className="">{t('notifications.buttons.newPost')}</span>
                             </Button>
                         </div>
-                        <hr className={style.line}/>
+                        <hr className="w-[50%] border-[1px] border-[#4D47C3] dark:main-border"/>
                     </div>
                     <FeedContent feedData={feedData} />
                 </div>
