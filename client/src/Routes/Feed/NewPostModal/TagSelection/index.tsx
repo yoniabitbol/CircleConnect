@@ -31,6 +31,7 @@ const TagSelection:React.FC<{showModal: boolean, handleModalClose:() => void, on
                     <h1>{t('userProfile.label.tags')}</h1>
                     <input type="text" placeholder="Insert tags" className="w-full h-10 outline-1 focus:outline-none dark:secondary-dark" onKeyDown={handleKeyDown}/>
                     <hr className=""/>
+                    {selectedTags?.length === 0 && <p className="text-red-500 mt-2">One tag minimum if job posting</p>}
                     <div className="mt-4">
                         {selectedTags && selectedTags.map((tag, index) => {
                             return (
