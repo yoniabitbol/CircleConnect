@@ -31,7 +31,7 @@ const NavLinks: React.FC<{links: NavLinkModel[]}> = (props) => {
         {links.map((link : NavLinkModel) => (
             <li key={link.key} className="mr-10 max-md:mr-5">
               {unreadNotifications?.length != 0 && link.key == 5? (
-                <Badge color="secondary" variant="dot">
+                <Badge color="secondary" variant="dot" badgeContent={unreadNotifications?.length}>
                     <NavLink className={({isActive}) => isActive ? navLinkClass+  navActiveClass : navLinkClass } to={link.path}>{link.icon}
                       <span className="max-md:hidden  mt-2">{link.text}</span>
                     </NavLink>
