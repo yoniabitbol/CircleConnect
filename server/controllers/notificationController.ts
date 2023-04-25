@@ -6,7 +6,7 @@ const getUserNotifications = async (req: Request, res: Response) => {
   try {
     const notifications = await Notification.find({
       user_id: req.params.user_id,
-    }).populate('initiator', 'name picture');
+    }).populate('initiator', 'name picture').sort({ createdAt: -1 });
     res.status(200).json({
       status: 'success',
       data: {
@@ -27,7 +27,7 @@ const getUnreadNotifications = async (req: Request, res: Response) => {
     const notifications = await Notification.find({
       user_id: req.params.user_id,
       isRead: false,
-    }).populate('initiator', 'name picture');
+    }).populate('initiator', 'name picture').sort({ createdAt: -1 });
     res.status(200).json({
       status: 'success',
       data: {
