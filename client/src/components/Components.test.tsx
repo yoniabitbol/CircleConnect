@@ -118,7 +118,7 @@ describe('Test user notification components', () => {
       await render(
           <>
             <BrowserRouter>
-              <ConnectionInvite  initiatorID={""}/>
+              <ConnectionInvite  initiatorID={""} handleBtnClick={() => {return;}} notificationID={''}  />
             </BrowserRouter>
           </>
       );
