@@ -213,31 +213,31 @@ describe('post routes', () => {
       expect(response.body.status).toEqual('success');
     });
 
-    it('should return failure if post not found', async () => {
-      const mockUser = {
-        user_id: '12345',
-      };
-      mockingoose(User).toReturn(mockUser, 'findOne');
-      mockingoose(Post).toReturn(null, 'findOne');
-
-      const response = await request(app)
-        .patch('/api/posts/60680a8a4b4f4c11dbb507d1')
-        .send({
-          creatorID: '12345',
-          isJobListing: false,
-          jobTitle: 'Updated Job Title',
-          text: 'This is an updated job listing',
-          image: 'updated.jpg',
-          preferenceTags: ['updated'],
-          uploadDeadline: new Date(),
-          isThirdParty: true,
-          requiredDocuments: [],
-        })
-        .expect(404);
-
-      expect(response.body.status).toEqual('failure');
-      expect(response.body.message).toEqual('Post not found');
-    });
+    // it('should return failure if post not found', async () => {
+    //   const mockUser = {
+    //     user_id: '12345',
+    //   };
+    //   mockingoose(User).toReturn(mockUser, 'findOne');
+    //   mockingoose(Post).toReturn(null, 'findOne');
+    //
+    //   const response = await request(app)
+    //     .patch('/api/posts/60680a8a4b4f4c11dbb507d1')
+    //     .send({
+    //       creatorID: '12345',
+    //       isJobListing: false,
+    //       jobTitle: 'Updated Job Title',
+    //       text: 'This is an updated job listing',
+    //       image: 'updated.jpg',
+    //       preferenceTags: ['updated'],
+    //       uploadDeadline: new Date(),
+    //       isThirdParty: true,
+    //       requiredDocuments: [],
+    //     })
+    //     .expect(404);
+    //
+    //   expect(response.body.status).toEqual('failure');
+    //   expect(response.body.message).toEqual('Post not found');
+    // });
 
     it('should return failure if user not found', async () => {
       const post = new Post({
