@@ -121,6 +121,10 @@ describe('Application routes', () => {
   });
 
   describe('patch /posts/:post_id/apply', () => {
+    beforeEach(async () => {
+      mockingoose(Application).toReturn(false, 'findOne');
+    });
+
     it('should create a new application for a job listing', async () => {
       const response = await request(app)
         .patch('/api/applications/123/apply')
@@ -166,6 +170,18 @@ describe('Application routes', () => {
 
       expect(response.body.status).toBe('ERROR Error');
       expect(response.body.message).toBe('Error sending application');
+    });
+
+    it('error application already exists', async () => {
+      mockingoose(Application).toReturn(testApplication, 'findOne');
+
+      const response = await request(app)
+        .patch('/api/applications/123/apply')
+        .send(testApplication)
+        .expect(403);
+
+      expect(response.body.status).toBe('failure');
+      expect(response.body.message).toBe('Cannot apply to the same post twice');
     });
   });
 

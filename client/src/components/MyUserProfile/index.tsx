@@ -159,8 +159,8 @@ const MyUserProfile: React.FC<{
               </LeftSection>
               <RightSection>
                 <Dashboard
-                  applications={User.applications}
-                  posts={User.posts}
+                  applications={User.applications ? User.applications : []}
+                  posts={User.posts ? User.posts : []}
                 />
               </RightSection>
             </Layout>

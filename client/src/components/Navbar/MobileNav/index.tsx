@@ -20,7 +20,7 @@ const MobileNav: React.FC<{links: NavLinkModel[]}> = (props) => {
     <Box  sx={[{ flexGrow: 1}]}>
       <AppBar elevation={0} position="static">
         <Toolbar sx={{backgroundColor:'none'}}>
-          <IconButton
+          <IconButton data-testid="icon-button"
             size="large"
             edge="start"
             sx={{ mr: 2}}

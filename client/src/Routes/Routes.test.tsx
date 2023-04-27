@@ -14,6 +14,7 @@ import Comments from "./Feed/FeedCard/Comments";
 import NewPostModal from "./Feed/NewPostModal";
 import MyProfile from "./MyProfile";
 import JobSettingsModal from "./Feed/NewPostModal/JobSettingsModal";
+import ChatPage from "./Chat";
 
 jest.mock("../firebase/config", () => ({
   auth:
