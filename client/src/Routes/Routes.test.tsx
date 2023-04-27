@@ -165,7 +165,7 @@ describe('Test user feed', () => {
       await render(
         <>
           <BrowserRouter>
-            <FeedCard postSettings={{}} postInfo={{text: 'text'}} userInfo={{}}  numComments={0} numLikes={0} scrollTo={() => {return;}} userPic={''}/>
+            <FeedCard postSettings={{}} postInfo={{text: 'text', comments: []}} userInfo={{}}  numComments={0} numLikes={0} scrollTo={() => {return;}} userPic={''}/>
           </BrowserRouter>
         </>
       );
@@ -177,7 +177,7 @@ describe('Test user feed', () => {
       await render(
         <>
           <BrowserRouter>
-            <Comments  comments={['']} postId={0} userPic={''}/>
+            <Comments  comments={[]} postId={0} userPic={''}/>
           </BrowserRouter>
         </>
       );
