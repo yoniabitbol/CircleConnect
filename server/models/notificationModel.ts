@@ -21,7 +21,7 @@ const notificationSchema = new mongoose.Schema({
     default: false,
   },
 }, {
-  timestamps: false,
+  timestamps: true,
   versionKey: false,
   toObject: { virtuals: true },
   toJSON: { virtuals: true },

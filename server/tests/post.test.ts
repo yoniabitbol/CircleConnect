@@ -214,29 +214,29 @@ describe('post routes', () => {
     });
 
     it('should return failure if post not found', async () => {
-      const mockUser = {
-        user_id: '12345',
-      };
-      mockingoose(User).toReturn(mockUser, 'findOne');
-      mockingoose(Post).toReturn(null, 'findOne');
-
-      const response = await request(app)
-        .patch('/api/posts/60680a8a4b4f4c11dbb507d1')
-        .send({
-          creatorID: '12345',
-          isJobListing: false,
-          jobTitle: 'Updated Job Title',
-          text: 'This is an updated job listing',
-          image: 'updated.jpg',
-          preferenceTags: ['updated'],
-          uploadDeadline: new Date(),
-          isThirdParty: true,
-          requiredDocuments: [],
-        })
-        .expect(404);
-
-      expect(response.body.status).toEqual('failure');
-      expect(response.body.message).toEqual('Post not found');
+       const mockUser = {
+         user_id: '12345',
+       };
+       mockingoose(User).toReturn(mockUser, 'findOne');
+       mockingoose(Post).toReturn(null, 'findOne');
+    
+       const response = await request(app)
+         .patch('/api/posts/60680a8a4b4f4c11dbb507d1')
+         .send({
+           creatorID: '12345',
+           isJobListing: false,
+           jobTitle: 'Updated Job Title',
+           text: 'This is an updated job listing',
+           image: 'updated.jpg',
+           preferenceTags: ['updated'],
+           uploadDeadline: new Date(),
+           isThirdParty: true,
+           requiredDocuments: [],
+         })
+         .expect(404);
+    
+       expect(response.body.status).toEqual('failure');
+       expect(response.body.message).toEqual('Post not found');
     });
 
     it('should return failure if user not found', async () => {
@@ -351,11 +351,11 @@ describe('post routes', () => {
 
     it('should return failure if post not found', async () => {
       mockingoose(User).toReturn({}, 'findOne');
-      mockingoose(Post).toReturn(null, 'findOne');
+      mockingoose(Post).toReturn(undefined, 'findOne');
 
       const res = await request(app)
         .delete('/api/posts/507f1f77bcf86cd799439011')
-        .send({ creatorID: 'user123' });
+        .send({ uid: 'user123' });
 
       expect(res.statusCode).toEqual(403);
       expect(res.body).toEqual({
