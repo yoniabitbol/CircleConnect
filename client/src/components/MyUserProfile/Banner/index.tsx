@@ -164,8 +164,7 @@ const Banner: React.FC<{
             </h1>
           </div>
           {formik != null ? (
-            <div className="m-5"
-            >
+            <div className="m-5 w-full flex space-x-2.5">
               <Button
                   variant={'contained'}
                 type="submit"

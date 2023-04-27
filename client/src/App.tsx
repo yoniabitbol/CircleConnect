@@ -62,6 +62,7 @@ function App() {
         MuiPaper: {styleOverrides: {root:{backgroundColor:'#2D2D2D',color:'#BCBCBC'},}},
         MuiAccordionSummary: {styleOverrides: {root:{backgroundColor:'#2D2D2D',color:'#BCBCBC'},}},
         MuiAccordionDetails: {styleOverrides: {root:{backgroundColor:'#2D2D2D',color:'#BCBCBC'},}},
+        MuiChip: {styleOverrides: {root:{backgroundColor:'#706CC3',color:'white'},}},
 
 
     }

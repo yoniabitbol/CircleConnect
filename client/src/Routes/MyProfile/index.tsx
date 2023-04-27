@@ -3,7 +3,6 @@ import MyUserProfile from "../../components/MyUserProfile";
 import getCurrentUserProfile from "../../http/getCurrentUserProfile";
 import Usertypes from "../../Models/UserProfileModel";
 import { useState, useEffect } from "react";
-
 const MyProfile: React.FC = () => {
   const [myUser, setMyUser] = useState<Usertypes>({
     name: "",
@@ -97,12 +96,12 @@ const MyProfile: React.FC = () => {
       }
 
       setMyUser(res.data.user);
+      console.log('user', res.data.user)
     });
     setFetchedUser(true);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <>
       <MyUserProfile profile={myUser} />

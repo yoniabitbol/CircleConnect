@@ -18,8 +18,9 @@ import Layout from "./Layout/layout";
 import LeftSection from "./Layout/leftSection";
 import RightSection from "./Layout/rightSection";
 import Dashboard from "./Dashboard";
-import {Tabs, Tab} from '@mui/material';
+import {Tabs, Tab, Button} from '@mui/material';
 import getCurrentUserPosts from '../../http/getCurrentUserPosts';
+import UploadFileModal from '../../Routes/MyProfile/UploadFileModal';
 const MyUserProfile: React.FC<{
   profile: Usertypes;
 }> = ({ profile }) => {
@@ -27,6 +28,9 @@ const MyUserProfile: React.FC<{
   const [editable, setEditable] = useState(false);
     const [tabValue, setTabValue] = useState(0);
     const [feedData, setFeedData] = useState<any>(null);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const fetchFeed = () => {
         getCurrentUserPosts().then((res) => {
@@ -140,6 +144,7 @@ const MyUserProfile: React.FC<{
                     backdrop: User.backdrop,
                   }}
                 />
+                  <Button variant="contained" onClick={handleOpen}>Upload File</Button>
                 <Tabs value={tabValue} onChange={handleTabChange}>
                     <Tab label="Summary" />
                     <Tab label="Posts" />
@@ -167,6 +172,7 @@ const MyUserProfile: React.FC<{
           </Form>
         )}
       </Formik>
+        <UploadFileModal open={open} onClose={handleClose} />
     </div>
   );
 };
