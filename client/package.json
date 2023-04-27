@@ -14,7 +14,6 @@
       "src/i18n",
       "src/Routes/Feed/FilterCard",
       "src/components/Footer/LanguageDropdown",
-      "src/components/Footer/LanguageDropdown",
       "src/components/Chat",
       "src/Routes/Chat",
       "src/components/Navbar",
